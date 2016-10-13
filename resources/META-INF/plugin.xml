@@ -1,0 +1,36 @@
+<idea-plugin version="2">
+    <id>me.fingerart.idea.apidebugger</id>
+    <name>Api Debugger</name>
+    <version>1.0.0</version>
+    <vendor email="fingerart.me@gmail.com" url="http://fingerart.me">FingerArt</vendor>
+
+    <description><![CDATA[
+        Api Debugger
+    ]]></description>
+
+    <change-notes><![CDATA[
+        v1.0.0 Add:
+        <br>- Api Debugger<br>
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="141.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <toolWindow id="Open Uploader" icon="/image/favicon.png" anchor="right"
+                    factoryClass="me.fingerart.idea.ui.window.MainWindow"/>
+    </extensions>
+
+    <project-components>
+        <component>
+            <implementation-class>me.fingerart.idea.engine.component.StateProjectComponent</implementation-class>
+        </component>
+    </project-components>
+
+</idea-plugin>
