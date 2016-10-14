@@ -16,6 +16,10 @@ public class ArtHttp {
         return new FormRequestBuilder();
     }
 
+    public static void get() {
+
+    }
+
     public static void cancelAll() {
         for (Map.Entry<String, HttpRequestBase> entry : mTags.entrySet()) {
             entry.getValue().abort();
