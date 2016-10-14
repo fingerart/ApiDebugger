@@ -23,8 +23,7 @@ public class StreamUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            return sb.toString();
         }
+        return sb.toString();
     }
 }

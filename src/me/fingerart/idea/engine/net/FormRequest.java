@@ -14,8 +14,7 @@ public class FormRequest extends BaseRequest {
     private LinkedHashMap<String, File> mParamFile;
 
     public FormRequest(FormRequestBuilder builder) {
-        mUrl = builder.mUrl;
-        mParamStr = builder.mParamStr;
+        super(builder);
         mParamFile = builder.mParamFile;
     }
 
@@ -24,7 +23,7 @@ public class FormRequest extends BaseRequest {
         HttpPost post = new HttpPost(mUrl);
         ArtHttp.addTag(post.toString(), post);
         ProgressMultipartEntity entity = new ProgressMultipartEntity(mCallback);
-        entity.addPart(mParamStr);
+        entity.addPart(mParams);
         if (mParamFile != null)
             for (Map.Entry<String, File> entry : mParamFile.entrySet()) {
                 entity.addPart(entry.getKey(), entry.getValue());
