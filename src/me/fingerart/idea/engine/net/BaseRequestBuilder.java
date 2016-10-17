@@ -14,6 +14,11 @@ public abstract class BaseRequestBuilder<T> {
     protected LinkedHashMap<String, String> mHeaders;
     protected LinkedHashMap<String, String> mCookies;
 
+    public BaseRequestBuilder() {
+        mHeaders = new LinkedHashMap<>();
+        mHeaders.put("User-Agent", "ApiDebugger");
+    }
+
     public abstract BaseRequest build();
 
     public T url(String url) {
@@ -22,22 +27,16 @@ public abstract class BaseRequestBuilder<T> {
     }
 
     public T addHeader(String key, String value) {
-        if (mHeaders == null) {
-            mHeaders = new LinkedHashMap<>();
-        }
         mHeaders.put(key, value);
         return (T) this;
     }
 
     public T addHeader(HashMap<String, String> headers) {
-        if (mHeaders == null) {
-            mHeaders = new LinkedHashMap<>();
-        }
         mHeaders.putAll(headers);
         return (T) this;
     }
 
-    public T addCookie(String key, String value){
+    public synchronized T addCookie(String key, String value) {
         if (mCookies == null) {
             mCookies = new LinkedHashMap<>();
         }
@@ -45,7 +44,7 @@ public abstract class BaseRequestBuilder<T> {
         return (T) this;
     }
 
-    public T addCookie(HashMap<String, String> cookies) {
+    public synchronized T addCookie(HashMap<String, String> cookies) {
         if (mCookies == null) {
             mCookies = new LinkedHashMap<>();
         }
@@ -53,7 +52,7 @@ public abstract class BaseRequestBuilder<T> {
         return (T) this;
     }
 
-    public T addParam(HashMap<String, String> params) {
+    public synchronized T addParam(HashMap<String, String> params) {
         if (mParamStr == null) {
             mParamStr = new LinkedHashMap<>();
         }
@@ -61,7 +60,7 @@ public abstract class BaseRequestBuilder<T> {
         return (T) this;
     }
 
-    public T addParam(String key, String content) {
+    public synchronized T addParam(String key, String content) {
         if (mParamStr == null) {
             mParamStr = new LinkedHashMap<>();
         }

@@ -1,7 +1,7 @@
 package me.fingerart.idea.presenter;
 
 import me.fingerart.idea.engine.component.StateProjectComponent;
-import me.fingerart.idea.engine.interf.UploadProgressListener;
+import me.fingerart.idea.engine.interf.ProgressListener;
 import me.fingerart.idea.engine.log.Log;
 import me.fingerart.idea.engine.net.ArtHttp;
 import me.fingerart.idea.engine.utils.StreamUtil;
@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 /**
  * Created by FingerArt on 16/10/1.
  */
-public class MainPresenter implements UploadProgressListener {
+public class MainPresenter implements ProgressListener {
 
     private IMainWindowView mView;
 

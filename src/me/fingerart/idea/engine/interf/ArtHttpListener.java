@@ -5,12 +5,11 @@ import org.apache.http.HttpResponse;
 import java.io.IOException;
 
 /**
- * Created by FingerArt on 16/10/2.
+ * http 回调接口
+ * Created by fingerart on 16/10/18.
  */
-public interface UploadProgressListener {
+public interface ArtHttpListener {
     void onPre();
-
-    void onProgress(long total, long progress);
 
     void onSuccess(HttpResponse response);
 

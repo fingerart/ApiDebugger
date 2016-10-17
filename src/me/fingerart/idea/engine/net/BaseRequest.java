@@ -1,18 +1,13 @@
 package me.fingerart.idea.engine.net;
 
-import io.netty.handler.codec.http.DefaultCookie;
-import me.fingerart.idea.engine.interf.UploadProgressListener;
+import me.fingerart.idea.engine.interf.ArtHttpListener;
+import me.fingerart.idea.engine.interf.ProgressListener;
+import me.fingerart.idea.engine.utils.CommonUtil;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.cookie.ClientCookie;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.cookie.CookieIdentityComparator;
-import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,11 +20,13 @@ public abstract class BaseRequest<T> implements Runnable {
     protected LinkedHashMap<String, String> mHeaders;
     protected LinkedHashMap<String, String> mCookies;
     private static DefaultHttpClient httpClient = new DefaultHttpClient();
-    protected UploadProgressListener mCallback;
+    protected ArtHttpListener mCallback;
 
     public BaseRequest(BaseRequestBuilder builder) {
         mUrl = builder.mUrl;
         mParams = builder.mParamStr;
+        mHeaders = builder.mHeaders;
+        mCookies = builder.mCookies;
     }
 
     protected abstract HttpRequestBase getRelRequest();
@@ -40,18 +37,19 @@ public abstract class BaseRequest<T> implements Runnable {
 
     private HttpRequestBase mergeRequest() {
         HttpRequestBase relRequest = getRelRequest();
-        for (Map.Entry<String, String> entry : mHeaders.entrySet()) {
-            relRequest.addHeader(entry.getKey(), entry.getValue());
+        if (mHeaders != null && !mHeaders.isEmpty()) {
+            for (Map.Entry<String, String> entry : mHeaders.entrySet()) {
+                relRequest.addHeader(entry.getKey(), entry.getValue());
+            }
         }
-        BasicCookieStore cookieStore = new BasicCookieStore();
-        for (Map.Entry<String, String> entry : mCookies.entrySet()) {
-            cookieStore.addCookie(new ArtCookie(entry.getKey(), entry.getValue()));
+        if (mCookies != null && !mCookies.isEmpty()) {
+            String v = CommonUtil.mapToString(mCookies, "=", "; ");
+            relRequest.addHeader("Cookie", v);
         }
-        httpClient.setCookieStore(cookieStore);
         return relRequest;
     }
 
-    public void execute(UploadProgressListener callback) {
+    public void execute(ArtHttpListener callback) {
         if (callback == null) {
             throw new IllegalArgumentException("callback not null");
         }

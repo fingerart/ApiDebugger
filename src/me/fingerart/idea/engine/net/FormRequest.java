@@ -24,10 +24,11 @@ public class FormRequest extends BaseRequest {
         ArtHttp.addTag(post.toString(), post);
         ProgressMultipartEntity entity = new ProgressMultipartEntity(mCallback);
         entity.addPart(mParams);
-        if (mParamFile != null)
+        if (mParamFile != null) {
             for (Map.Entry<String, File> entry : mParamFile.entrySet()) {
                 entity.addPart(entry.getKey(), entry.getValue());
             }
+        }
         post.setEntity(entity);
         return post;
     }
