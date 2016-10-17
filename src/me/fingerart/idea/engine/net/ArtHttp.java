@@ -16,8 +16,8 @@ public class ArtHttp {
         return new FormRequestBuilder();
     }
 
-    public static void get() {
-
+    public static GetRequestBuilder get() {
+        return new GetRequestBuilder();
     }
 
     public static void cancelAll() {

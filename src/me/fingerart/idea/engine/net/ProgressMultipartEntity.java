@@ -1,6 +1,7 @@
 package me.fingerart.idea.engine.net;
 
-import me.fingerart.idea.engine.interf.UploadProgressListener;
+import me.fingerart.idea.engine.interf.ArtHttpListener;
+import me.fingerart.idea.engine.interf.ProgressListener;
 import me.fingerart.idea.engine.log.Log;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -20,24 +21,26 @@ import java.util.Map;
  * Created by FingerArt on 16/10/2.
  */
 public class ProgressMultipartEntity extends MultipartEntity {
-    private UploadProgressListener mListener;
+    private ProgressListener mListener;
 
-    public ProgressMultipartEntity(HttpMultipartMode mode, String boundary, Charset charset, @NotNull UploadProgressListener listener) {
+    public ProgressMultipartEntity(HttpMultipartMode mode, String boundary, Charset charset, ArtHttpListener listener) {
         super(mode, boundary, charset);
-        mListener = listener;
+        if (listener != null && listener instanceof ProgressListener) {
+            mListener = (ProgressListener) listener;
+        }
     }
 
-    public ProgressMultipartEntity(HttpMultipartMode mode, @NotNull UploadProgressListener listener) {
-        super(mode);
-        mListener = listener;
+    public ProgressMultipartEntity(HttpMultipartMode mode, ArtHttpListener listener) {
+        this(mode, null, null, listener);
     }
 
-    public ProgressMultipartEntity(@NotNull UploadProgressListener listener) {
-        mListener = listener;
+    public ProgressMultipartEntity(ArtHttpListener listener) {
+        this(HttpMultipartMode.STRICT, listener);
     }
 
     public ProgressMultipartEntity() {
-    }//Empty
+        this(null);
+    }
 
     /**
      * 添加文件参数
@@ -84,10 +87,10 @@ public class ProgressMultipartEntity extends MultipartEntity {
 
     private class ProgressOutputStream extends OutputStream {
         private OutputStream out;
-        private UploadProgressListener mListener;
+        private ProgressListener mListener;
         private long progress;
 
-        public ProgressOutputStream(OutputStream outStream, UploadProgressListener listener) {
+        public ProgressOutputStream(OutputStream outStream, ProgressListener listener) {
             out = outStream;
             mListener = listener;
             progress = 0;
