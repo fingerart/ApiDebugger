@@ -23,7 +23,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <toolWindow id="Open Uploader" icon="/image/favicon.png" anchor="right"
+        <toolWindow id="Api Debugger" icon="/image/favicon.png" anchor="right"
                     factoryClass="me.fingerart.idea.ui.window.MainWindow"/>
     </extensions>
 
