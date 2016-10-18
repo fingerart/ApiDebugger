@@ -6,14 +6,14 @@ import java.io.IOException;
 
 /**
  * http 回调接口
- * Created by fingerart on 16/10/18.
+ * Created by FingerArt on 16/10/18.
  */
 public interface ArtHttpListener {
     void onPre();
 
     void onSuccess(HttpResponse response);
 
-    void onError(HttpResponse response, IOException e);
+    void onError(IOException e);
 
     void onFinish();
 }

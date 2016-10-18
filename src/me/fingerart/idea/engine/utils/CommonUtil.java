@@ -6,6 +6,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -116,5 +117,73 @@ public class CommonUtil {
             u[0] = url;
         }
         return u;
+    }
+
+    /**
+     * 将map中的value路径转成File
+     *
+     * @param files
+     * @return
+     */
+    public static LinkedHashMap<String, File> mapToFile(LinkedHashMap<String, String> files) {
+        LinkedHashMap<String, File> fileMap = new LinkedHashMap<>();
+        for (Map.Entry<String, String> entry : files.entrySet()) {
+            String path = entry.getValue();
+            if (TextUtils.isEmpty(path)) continue;
+            File file = new File(path);
+            if (!file.exists()) continue;
+            fileMap.put(entry.getKey(), file);
+        }
+        return fileMap;
+    }
+
+    /**
+     * 格式化Json
+     *
+     * @param jsonStr
+     * @return
+     */
+    public static String formatJson(String jsonStr) {
+        if (null == jsonStr || "".equals(jsonStr)) return "";
+        StringBuilder sb = new StringBuilder();
+        char last = '\0';
+        char current = '\0';
+        int indent = 0;
+        for (int i = 0; i < jsonStr.length(); i++) {
+            last = current;
+            current = jsonStr.charAt(i);
+            switch (current) {
+                case '{':
+                case '[':
+                    sb.append(current);
+                    sb.append('\n');
+                    indent++;
+                    addIndentBlank(sb, indent);
+                    break;
+                case '}':
+                case ']':
+                    sb.append('\n');
+                    indent--;
+                    addIndentBlank(sb, indent);
+                    sb.append(current);
+                    break;
+                case ',':
+                    sb.append(current);
+                    if (last != '\\') {
+                        sb.append('\n');
+                        addIndentBlank(sb, indent);
+                    }
+                    break;
+                default:
+                    sb.append(current);
+            }
+        }
+        return sb.toString();
+    }
+
+    private static void addIndentBlank(StringBuilder sb, int indent) {
+        for (int i = 0; i < indent; i++) {
+            sb.append('\t');
+        }
     }
 }

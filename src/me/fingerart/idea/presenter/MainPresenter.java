@@ -4,15 +4,16 @@ import me.fingerart.idea.engine.component.StateProjectComponent;
 import me.fingerart.idea.engine.interf.ProgressListener;
 import me.fingerart.idea.engine.log.Log;
 import me.fingerart.idea.engine.net.ArtHttp;
+import me.fingerart.idea.engine.net.BaseRequest;
+import me.fingerart.idea.engine.utils.CommonUtil;
 import me.fingerart.idea.engine.utils.StreamUtil;
 import me.fingerart.idea.engine.utils.VerifyUtil;
 import me.fingerart.idea.engine.utils.ViewUtil;
 import me.fingerart.idea.ui.iview.IMainWindowView;
 import org.apache.http.HttpResponse;
-import org.apache.http.util.TextUtils;
 
 import javax.swing.*;
-import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -29,43 +30,64 @@ public class MainPresenter implements ProgressListener {
     }
 
     /**
-     * 处理文件上传
+     * 处理请求
      *
+     * @param method
      * @param url
-     * @param filePath
-     * @param tableParams
+     * @param paramsModel
+     * @param headersModel
+     * @param cookiesModel
+     * @param filesModel
      */
-    public void handleUploadFile(String url, String filePath, TableModel tableParams) {
+    public void executeRequest(String method, String url, DefaultTableModel paramsModel, DefaultTableModel headersModel, DefaultTableModel cookiesModel, DefaultTableModel filesModel) {
+
         if (!VerifyUtil.verifyUrl(url)) {
             mView.showE("请求的Url无效");
             return;
         }
 
-        if (TextUtils.isEmpty(filePath)) {
-            mView.showE("请选择一个上传的文件");
-            return;
-        }
+//        File file = new File(filePath);
+//        if (!file.exists()) {
+//            mView.showE("选择的文件不存在");
+//            return;
+//        }
 
-        File file = new File(filePath);
-        if (!file.exists()) {
-            mView.showE("选择的文件不存在");
-            return;
-        }
+        LinkedHashMap<String, String> params = ViewUtil.getTableContent(paramsModel);
+        LinkedHashMap<String, String> headers = ViewUtil.getTableContent(headersModel);
+        LinkedHashMap<String, String> cookies = ViewUtil.getTableContent(cookiesModel);
+        LinkedHashMap<String, String> files = ViewUtil.getTableContent(filesModel);
 
-        LinkedHashMap<String, String> params = ViewUtil.getTableContent(tableParams);
+        LinkedHashMap<String, File> mapFile = CommonUtil.mapToFile(files);
 
-        mView.startUpload();
-        upload(url, file, params);
+        upload(method, url, params, headers, cookies, mapFile);
     }
 
-    private void upload(String url, File file, LinkedHashMap<String, String> params) {
-        ArtHttp
-                .post()
-                .url(url)
-                .addParam("file", file)
-                .addParam(params)
-                .build()
-                .execute(this);
+    private void upload(String method, String url, LinkedHashMap<String, String> params, LinkedHashMap<String, String> headers, LinkedHashMap<String, String> cookies, LinkedHashMap<String, File> files) {
+        mView.startExecute();
+        BaseRequest request;
+        // @formatter:off
+        switch (method.toLowerCase()) {
+            case "post":
+                request = ArtHttp
+                            .post()
+                            .url(url)
+                            .addHeader(headers)
+                            .addParam(params)
+                            .addFile(files)
+                            .addCookie(cookies)
+                            .build();
+                break;
+            default://get
+                request = ArtHttp
+                            .get()
+                            .url(url)
+                            .addHeader(headers)
+                            .addParam(params)
+                            .addCookie(cookies)
+                            .build();
+        }
+        // @formatter:on
+        request.execute(this);
     }
 
     public void cancelUpload() {
@@ -77,7 +99,7 @@ public class MainPresenter implements ProgressListener {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                mView.startUpload();
+                mView.startExecute();
             }
         });
     }
@@ -109,7 +131,7 @@ public class MainPresenter implements ProgressListener {
     }
 
     @Override
-    public void onError(HttpResponse response, IOException e) {
+    public void onError(IOException e) {
         Log.e(e.getMessage());
     }
 
@@ -119,7 +141,7 @@ public class MainPresenter implements ProgressListener {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                mView.finishUpload();
+                mView.finishExecute();
             }
         });
     }

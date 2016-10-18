@@ -37,8 +37,8 @@ public class GetRequestTest {
             }
 
             @Override
-            public void onError(HttpResponse response, IOException e) {
-                System.out.println("response = [" + response + "], e = [" + e + "]");
+            public void onError(IOException e) {
+                System.out.println("e = [" + e + "]");
             }
 
             @Override
