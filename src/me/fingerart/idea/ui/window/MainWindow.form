@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="me.fingerart.idea.ui.window.MainWindow">
-  <grid id="27dc6" binding="mToolWindow" layout-manager="GridLayoutManager" row-count="7" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="mToolWindow" layout-manager="GridLayoutManager" row-count="10" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="507" height="869"/>
+      <xy x="20" y="20" width="507" height="951"/>
     </constraints>
-    <properties/>
+    <properties>
+      <visible value="true"/>
+    </properties>
     <border type="none"/>
     <children>
-      <grid id="37648" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="37648" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -16,70 +18,30 @@
         <properties/>
         <border type="none" title="Base"/>
         <children>
-          <component id="47619" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Url:"/>
-            </properties>
-          </component>
-          <component id="54146" class="javax.swing.JTextField" binding="mTextFieldUrl">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="http://"/>
-            </properties>
-          </component>
-          <component id="5f373" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Module:"/>
-            </properties>
-          </component>
-          <component id="9cff7" class="javax.swing.JComboBox" binding="mComboBoxModule">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <model>
-                <item value="Modules"/>
-              </model>
-            </properties>
-          </component>
-          <component id="759bb" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Path:"/>
-            </properties>
-          </component>
-          <grid id="b71c5" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="35a7d" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="ddb74" class="javax.swing.JTextField" binding="mTextFieldPath">
+              <component id="3d39f" class="javax.swing.JComboBox" binding="mCbMethod">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="26971" class="javax.swing.JButton" binding="mButtonBrowse" default-binding="true">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Browse"/>
+                  <model/>
+                </properties>
+              </component>
+              <component id="55929" class="javax.swing.JComboBox" binding="mCbUrl">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <editable value="true"/>
+                  <model/>
+                  <toolTipText value=""/>
                 </properties>
               </component>
             </children>
@@ -91,7 +53,9 @@
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <visible value="true"/>
+        </properties>
         <border type="none" title="Params"/>
         <children>
           <grid id="d53fc" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -102,21 +66,25 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="b9c4e" class="javax.swing.JButton" binding="mButtonAdd">
+              <component id="b9c4e" class="javax.swing.JButton" binding="mBtnParamAdd">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Add"/>
+                  <actionCommand value="ADD_PARAM"/>
+                  <icon value="image/add.png"/>
+                  <text value=""/>
                   <verticalAlignment value="0"/>
                 </properties>
               </component>
-              <component id="6d308" class="javax.swing.JButton" binding="mButtonDel">
+              <component id="6d308" class="javax.swing.JButton" binding="mBtnParamDel">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Delete"/>
+                  <actionCommand value="DEL_PARAM"/>
+                  <icon value="image/del.png"/>
+                  <text value=""/>
                 </properties>
               </component>
               <vspacer id="d481a">
@@ -128,7 +96,7 @@
           </grid>
           <scrollpane id="8b0b3">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <enabled value="false"/>
@@ -147,25 +115,32 @@
                   <rowMargin value="1"/>
                   <surrendersFocusOnKeystroke value="false"/>
                 </properties>
+                <clientProperties>
+                  <Table.isFileList class="java.lang.Boolean" value="false"/>
+                </clientProperties>
               </component>
             </children>
           </scrollpane>
         </children>
       </grid>
-      <grid id="e7cf9" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="e7cf9" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <focusCycleRoot value="false"/>
+        </properties>
         <border type="none"/>
         <children>
-          <component id="fa415" class="javax.swing.JButton" binding="mButtonUpload">
+          <component id="fa415" class="javax.swing.JButton" binding="mBtnExecute">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Upload"/>
+              <actionCommand value="EXECUTE"/>
+              <icon value="image/send.png"/>
+              <text value="Excute"/>
             </properties>
           </component>
           <component id="6802b" class="javax.swing.JProgressBar" binding="mProgressBar">
@@ -174,12 +149,52 @@
             </constraints>
             <properties>
               <indeterminate value="true"/>
-              <string value="0%"/>
+              <string value=""/>
               <stringPainted value="true"/>
               <value value="0"/>
               <visible value="false"/>
             </properties>
           </component>
+          <grid id="a117f" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="9bb58" class="javax.swing.JButton" binding="mBtnShowHeader">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="SHOW_JP_HEADER"/>
+                  <icon value="image/header.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="cc160" class="javax.swing.JButton" binding="mBtnShowCookie">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="SHOW_JP_COOKIE"/>
+                  <icon value="image/cookie.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="b7da0" class="javax.swing.JButton" binding="mBtnShowFile">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="SHOW_JP_FILE"/>
+                  <icon value="image/file.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
       <grid id="3cebe" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -203,7 +218,7 @@
       <grid id="8df38" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -219,7 +234,7 @@
       <grid id="2d972" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -227,8 +242,8 @@
           <component id="cefd7" class="javax.swing.JTextArea" binding="mTextAreaInfo">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <minimum-size width="-1" height="250"/>
-                <preferred-size width="150" height="250"/>
+                <minimum-size width="-1" height="150"/>
+                <preferred-size width="-1" height="150"/>
                 <maximum-size width="-1" height="250"/>
               </grid>
             </constraints>
@@ -245,7 +260,7 @@
       <grid id="532d8" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -256,6 +271,234 @@
             </constraints>
             <properties/>
           </component>
+        </children>
+      </grid>
+      <grid id="c8336" binding="mJpHeaders" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <visible value="false"/>
+        </properties>
+        <border type="none" title="Headers"/>
+        <children>
+          <grid id="17056" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="1f172" class="javax.swing.JButton" binding="mBtnHeaderAdd">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="ADD_HEADER"/>
+                  <hideActionText value="false"/>
+                  <icon value="image/add.png"/>
+                  <text value=""/>
+                  <verticalAlignment value="0"/>
+                </properties>
+              </component>
+              <component id="fb77f" class="javax.swing.JButton" binding="mBtnHeaderDel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="DEL_HEADER"/>
+                  <icon value="image/del.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <vspacer id="bab03">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+            </children>
+          </grid>
+          <scrollpane id="59301">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <enabled value="false"/>
+              <focusable value="true"/>
+              <horizontalScrollBarPolicy value="31"/>
+              <requestFocusEnabled value="true"/>
+              <wheelScrollingEnabled value="true"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="7612e" class="javax.swing.JTable" binding="mTableHeaders">
+                <constraints/>
+                <properties>
+                  <requestFocusEnabled value="true"/>
+                  <rowHeight value="25"/>
+                  <rowMargin value="1"/>
+                  <surrendersFocusOnKeystroke value="false"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <grid id="28cf" binding="mJpCookies" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <visible value="false"/>
+        </properties>
+        <border type="none" title="Cookies"/>
+        <children>
+          <grid id="8a8f4" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="c8f61" class="javax.swing.JButton" binding="mBtnCookieAdd">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="ADD_COOKIE"/>
+                  <hideActionText value="false"/>
+                  <horizontalTextPosition value="11"/>
+                  <icon value="image/add.png"/>
+                  <iconTextGap value="4"/>
+                  <label value=""/>
+                  <text value=""/>
+                  <verticalAlignment value="0"/>
+                  <visible value="true"/>
+                </properties>
+              </component>
+              <component id="f5ae5" class="javax.swing.JButton" binding="mBtnCookieDel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="DEL_COOKIE"/>
+                  <icon value="image/del.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <vspacer id="2dc1e">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+            </children>
+          </grid>
+          <scrollpane id="beff6">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <enabled value="false"/>
+              <focusable value="true"/>
+              <horizontalScrollBarPolicy value="31"/>
+              <requestFocusEnabled value="true"/>
+              <wheelScrollingEnabled value="true"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="2d320" class="javax.swing.JTable" binding="mTableCookies">
+                <constraints/>
+                <properties>
+                  <requestFocusEnabled value="true"/>
+                  <rowHeight value="25"/>
+                  <rowMargin value="1"/>
+                  <surrendersFocusOnKeystroke value="false"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <grid id="65660" binding="mJpFiles" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <visible value="false"/>
+        </properties>
+        <border type="none" title="Files"/>
+        <children>
+          <grid id="e6f4c" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="b450d" class="javax.swing.JButton" binding="mBtnFileAdd">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="ADD_FILE"/>
+                  <hideActionText value="false"/>
+                  <horizontalTextPosition value="11"/>
+                  <icon value="image/add.png"/>
+                  <iconTextGap value="4"/>
+                  <label value=""/>
+                  <text value=""/>
+                  <verticalAlignment value="0"/>
+                  <visible value="true"/>
+                </properties>
+              </component>
+              <component id="2b0d0" class="javax.swing.JButton" binding="mBtnFileDel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="DEL_FILE"/>
+                  <icon value="image/del.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <vspacer id="57aab">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+            </children>
+          </grid>
+          <scrollpane id="c8a6b">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <enabled value="false"/>
+              <focusable value="true"/>
+              <horizontalScrollBarPolicy value="31"/>
+              <requestFocusEnabled value="true"/>
+              <wheelScrollingEnabled value="true"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="94cb6" class="javax.swing.JTable" binding="mTableFiles">
+                <constraints/>
+                <properties>
+                  <requestFocusEnabled value="true"/>
+                  <rowHeight value="25"/>
+                  <rowMargin value="1"/>
+                  <surrendersFocusOnKeystroke value="false"/>
+                  <updateSelectionOnSort value="true"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
     </children>

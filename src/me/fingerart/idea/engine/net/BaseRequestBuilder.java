@@ -48,7 +48,7 @@ public abstract class BaseRequestBuilder<T> {
         if (mCookies == null) {
             mCookies = new LinkedHashMap<>();
         }
-        cookies.putAll(cookies);
+        mCookies.putAll(cookies);
         return (T) this;
     }
 

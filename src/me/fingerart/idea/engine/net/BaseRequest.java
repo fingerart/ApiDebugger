@@ -66,7 +66,7 @@ public abstract class BaseRequest<T> implements Runnable {
             response = httpClient.execute(mergeRequest());
             mCallback.onSuccess(response);
         } catch (IOException e) {
-            mCallback.onError(response, e);
+            mCallback.onError(e);
         } finally {
             mCallback.onFinish();
         }

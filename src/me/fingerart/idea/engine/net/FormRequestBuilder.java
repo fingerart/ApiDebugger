@@ -1,6 +1,7 @@
 package me.fingerart.idea.engine.net;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -10,11 +11,19 @@ public class FormRequestBuilder extends BaseRequestBuilder<FormRequestBuilder> {
 
     protected LinkedHashMap<String, File> mParamFile;
 
-    public FormRequestBuilder addParam(String key, File file) {
+    public FormRequestBuilder addFile(String key, File file) {
         if (mParamFile == null) {
             mParamFile = new LinkedHashMap<>();
         }
         mParamFile.put(key, file);
+        return this;
+    }
+
+    public FormRequestBuilder addFile(HashMap<String, File> files) {
+        if (mParamFile == null) {
+            mParamFile = new LinkedHashMap<>();
+        }
+        mParamFile.putAll(files);
         return this;
     }
 

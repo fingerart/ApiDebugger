@@ -1,56 +1,65 @@
 package me.fingerart.idea.ui.window;
 
-import com.intellij.openapi.fileChooser.FileChooser;
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
-import com.intellij.util.Consumer;
 import me.fingerart.idea.engine.component.StateProjectComponent;
 import me.fingerart.idea.engine.utils.CommonUtil;
 import me.fingerart.idea.engine.utils.ViewUtil;
 import me.fingerart.idea.presenter.MainPresenter;
 import me.fingerart.idea.ui.iview.IMainWindowView;
-import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 
 /**
  * Created by FingerArt on 16/10/1.
  */
-public class MainWindow extends IMainWindowView implements ToolWindowFactory {
+public class MainWindow extends IMainWindowView implements ToolWindowFactory, ActionListener {
     private JPanel mToolWindow;
-    private JComboBox mComboBoxModule;
-    private JTextField mTextFieldUrl;
-    private JTextField mTextFieldPath;
-    private JTextArea mTextAreaInfo;
-    private JButton mButtonBrowse;
-    private JButton mButtonAdd;
-    private JButton mButtonDel;
-    private JButton mButtonUpload;
+    private JComboBox mCbMethod;
+    private JComboBox mCbUrl;
+    private JButton mBtnParamAdd;
+    private JButton mBtnParamDel;
+    private JButton mBtnExecute;
     private JTable mTableParams;
     private JProgressBar mProgressBar;
-
+    private JPanel mJpCookies;
+    private JPanel mJpHeaders;
+    private JButton mBtnHeaderAdd;
+    private JButton mBtnHeaderDel;
+    private JButton mBtnCookieAdd;
+    private JButton mBtnCookieDel;
+    private JButton mBtnShowHeader;
+    private JButton mBtnShowCookie;
+    private JButton mBtnShowFile;
+    private JTextArea mTextAreaInfo;
+    private JPanel mJpFiles;
+    private JButton mBtnFileAdd;
+    private JButton mBtnFileDel;
+    private JTable mTableHeaders;
+    private JTable mTableCookies;
+    private JTable mTableFiles;
     private static final String[] EMPTY_ROW_DATA = {};
+
     private static final String[] DEFAULT_COLUMN_NAMES = {"Key", "Value"};
+    private static final String[] DEFAULT_FILE_COLUMN_NAMES = {"Key", "Path", "Select"};
+    private static final String[] DEFAULT_URL = {"http://"};
+    private static final String[] DEFAULT_METHOD = {"GET", "POST", "DELETE"};
     private static final String[][] DEFAULT_DATA = {{"code", "1"}, {"changeLog", ""}};
-    private String mSelectedFilePath;
-    private Project mProject;
+    private static final String[][] DEFAULT_EMPTY_DATA = {{"", ""}};
     private DefaultTableModel mParamsModel;
     private MainPresenter mPresenter;
 
     private boolean uploading;
+    private DefaultTableModel mHeadersModel;
+    private DefaultTableModel mCookiesModel;
+    private DefaultTableModel mFilesModel;
 
     public MainWindow() {
         initView();
@@ -62,53 +71,53 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory {
     }
 
     private void initEvent() {
-        mTextFieldUrl.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-            }//Empty
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                String text = mTextFieldUrl.getText();
-                if (!TextUtils.isEmpty(text)) {
-                    StateProjectComponent.getInstance().setUrl(text);
-                }
-            }
-        });
-        mComboBoxModule.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                StateProjectComponent.getInstance().setModule(e.getItem().toString());
-            }
-        });
-        mTextFieldPath.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-            }//Empty
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                mSelectedFilePath = mTextFieldPath.getText();
-                StateProjectComponent.getInstance().setPath(mSelectedFilePath);
-            }
-        });
-        mButtonBrowse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, true, true, false, false);
-                VirtualFile toSelect = ProjectManager.getInstance().getOpenProjects()[0].getBaseDir();
-                FileChooser.chooseFile(descriptor, null, toSelect, new Consumer<VirtualFile>() {
-                    @Override
-                    public void consume(VirtualFile virtualFile) {
-                        if (virtualFile.exists()) {
-                            mSelectedFilePath = virtualFile.getPath();
-                            mTextFieldPath.setText(mSelectedFilePath);
-                            StateProjectComponent.getInstance().setPath(mSelectedFilePath);
-                        }
-                    }
-                });
-            }
-        });
+//        mTextFieldUrl.addFocusListener(new FocusListener() {
+//            @Override
+//            public void focusGained(FocusEvent e) {
+//            }//Empty
+//
+//            @Override
+//            public void focusLost(FocusEvent e) {
+//                String text = mTextFieldUrl.getText();
+//                if (!TextUtils.isEmpty(text)) {
+//                    StateProjectComponent.getInstance().setUrl(text);
+//                }
+//            }
+//        });
+//        mCbMthod.addItemListener(new ItemListener() {
+//            @Override
+//            public void itemStateChanged(ItemEvent e) {
+//                StateProjectComponent.getInstance().setModule(e.getItem().toString());
+//            }
+//        });
+//        mTextFieldPath.addFocusListener(new FocusListener() {
+//            @Override
+//            public void focusGained(FocusEvent e) {
+//            }//Empty
+//
+//            @Override
+//            public void focusLost(FocusEvent e) {
+//                mSelectedFilePath = mTextFieldPath.getText();
+//                StateProjectComponent.getInstance().setPath(mSelectedFilePath);
+//            }
+//        });
+//        mButtonBrowse.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, true, true, false, false);
+//                VirtualFile toSelect = ProjectManager.getInstance().getOpenProjects()[0].getBaseDir();
+//                FileChooser.chooseFile(descriptor, null, toSelect, new Consumer<VirtualFile>() {
+//                    @Override
+//                    public void consume(VirtualFile virtualFile) {
+//                        if (virtualFile.exists()) {
+//                            mSelectedFilePath = virtualFile.getPath();
+//                            mTextFieldPath.setText(mSelectedFilePath);
+//                            StateProjectComponent.getInstance().setPath(mSelectedFilePath);
+//                        }
+//                    }
+//                });
+//            }
+//        });
         //TODO 触发保存Table数据还需优化
         mTableParams.addFocusListener(new FocusListener() {
             @Override
@@ -123,36 +132,84 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory {
                 StateProjectComponent.getInstance().addOrModParam(key, value);
             }
         });
-        mButtonAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+
+        mBtnParamAdd.addActionListener(this);
+        mBtnParamDel.addActionListener(this);
+        mBtnHeaderAdd.addActionListener(this);
+        mBtnHeaderDel.addActionListener(this);
+        mBtnCookieAdd.addActionListener(this);
+        mBtnCookieDel.addActionListener(this);
+        mBtnFileAdd.addActionListener(this);
+        mBtnFileDel.addActionListener(this);
+
+        mBtnShowHeader.addActionListener(this);
+        mBtnShowCookie.addActionListener(this);
+        mBtnShowFile.addActionListener(this);
+        mBtnExecute.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "ADD_PARAM":
                 mParamsModel.addRow(EMPTY_ROW_DATA);
-            }
-        });
-        mButtonDel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                break;
+            case "DEL_PARAM":
                 mPresenter.delTableParams(mTableParams);
                 ViewUtil.delSelectedRows(mTableParams);
-            }
-        });
-        mButtonUpload.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                break;
+            case "ADD_HEADER":
+                mHeadersModel.addRow(EMPTY_ROW_DATA);
+                break;
+            case "DEL_HEADER":
+                ViewUtil.delSelectedRows(mTableHeaders);
+                mJpHeaders.setVisible(mHeadersModel.getRowCount() != 0);
+                mBtnShowHeader.setVisible(mHeadersModel.getRowCount() == 0);
+                break;
+            case "ADD_COOKIE":
+                mCookiesModel.addRow(EMPTY_ROW_DATA);
+                break;
+            case "DEL_COOKIE":
+                ViewUtil.delSelectedRows(mTableCookies);
+                mJpCookies.setVisible(mCookiesModel.getRowCount() != 0);
+                mBtnShowCookie.setVisible(mCookiesModel.getRowCount() == 0);
+                break;
+            case "ADD_FILE":
+                mFilesModel.addRow(EMPTY_ROW_DATA);
+                break;
+            case "DEL_FILE":
+                ViewUtil.delSelectedRows(mTableFiles);
+                mJpFiles.setVisible(mFilesModel.getRowCount() != 0);
+                mBtnShowFile.setVisible(mFilesModel.getRowCount() == 0);
+                break;
+            case "SHOW_JP_HEADER":
+                mJpHeaders.setVisible(true);
+                mBtnShowHeader.setVisible(false);
+                break;
+            case "SHOW_JP_COOKIE":
+                mJpCookies.setVisible(true);
+                mBtnShowCookie.setVisible(false);
+                break;
+            case "SHOW_JP_FILE":
+                mJpFiles.setVisible(true);
+                mBtnShowFile.setVisible(false);
+                break;
+            case "EXECUTE":
                 if (uploading) {
-                    finishUpload();
+                    finishExecute();
                     mPresenter.cancelUpload();
                 } else {
-                    mPresenter.handleUploadFile(mTextFieldUrl.getText(), mSelectedFilePath, mParamsModel);
+                    String method = mCbMethod.getSelectedItem().toString();
+                    String url = mCbUrl.getEditor().getItem().toString();
+                    mPresenter.executeRequest(method, url, mParamsModel, mHeadersModel, mCookiesModel, mFilesModel);
                 }
-            }
-        });
+                break;
+        }
     }
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         mPresenter = new MainPresenter(this);
-        mProject = project;
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         Content content = contentFactory.createContent(mToolWindow, "", false);
         toolWindow.getContentManager().addContent(content);
@@ -163,22 +220,11 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory {
      * 当工具窗口被第一次打开时调用
      */
     private void onToolWindowFirstOpen() {
-        ModuleManager moduleManager = ModuleManager.getInstance(mProject);
+        //initMethod
+        mCbMethod.setModel(new DefaultComboBoxModel<>(DEFAULT_METHOD));
 
         //initUrl
-        mTextFieldUrl.setText(StateProjectComponent.getInstance().getUrl());
-
-        //initModules
-        LinkedList<String> list = new LinkedList<>();
-        for (Module module : moduleManager.getSortedModules()) {
-            list.add(module.getName());
-        }
-        String[] strings = list.toArray(new String[]{});
-        mComboBoxModule.setModel(new DefaultComboBoxModel(strings));
-        String module = StateProjectComponent.getInstance().getModule();
-        if (!TextUtils.isEmpty(module)) {
-            mComboBoxModule.setSelectedItem(module);
-        }
+        mCbUrl.setModel(new DefaultComboBoxModel<>(DEFAULT_URL));
 
         //initTable
         LinkedHashMap<String, String> params = StateProjectComponent.getInstance().getParams();
@@ -191,9 +237,14 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory {
         mParamsModel = new DefaultTableModel(data, DEFAULT_COLUMN_NAMES);
         mTableParams.setModel(mParamsModel);
 
-        //initPath
-//        String moduleFilePath = mModules[0].getModuleFilePath();
-//        String path = moduleFilePath.substring(0, moduleFilePath.lastIndexOf('/')) + "/build/outputs/apk/";
+        mHeadersModel = new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_COLUMN_NAMES);
+        mTableHeaders.setModel(mHeadersModel);
+
+        mCookiesModel = new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_COLUMN_NAMES);
+        mTableCookies.setModel(mCookiesModel);
+
+        mFilesModel = new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_FILE_COLUMN_NAMES);
+        mTableFiles.setModel(mFilesModel);
     }
 
     @Override
@@ -202,9 +253,9 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory {
     }
 
     @Override
-    public void startUpload() {
+    public void startExecute() {
         uploading = true;
-        mButtonUpload.setText("Cancel");
+        mBtnExecute.setText("Cancel");
         mProgressBar.setVisible(true);
     }
 
@@ -215,11 +266,12 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory {
     }
 
     @Override
-    public void finishUpload() {
+    public void finishExecute() {
         uploading = false;
-        mProgressBar.setString("0%");
+        mProgressBar.setString("");
         mProgressBar.setValue(0);
         mProgressBar.setVisible(false);
-        mButtonUpload.setText("Upload");
+        mBtnExecute.setText("Execute");
     }
+
 }
