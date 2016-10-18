@@ -1,4 +1,4 @@
 # ApiDebugger
 IntlliJ IDEA plugin
 
-接口调试工具
+接口调试插件
