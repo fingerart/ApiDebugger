@@ -1,10 +1,15 @@
 package me.fingerart.idea.ui.window;
 
+import com.intellij.openapi.fileChooser.FileChooser;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import com.intellij.util.Consumer;
 import me.fingerart.idea.engine.component.StateProjectComponent;
 import me.fingerart.idea.engine.utils.CommonUtil;
 import me.fingerart.idea.engine.utils.ViewUtil;
@@ -14,6 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 import java.awt.event.*;
 import java.util.LinkedHashMap;
 
@@ -48,9 +55,9 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
     private static final String[] EMPTY_ROW_DATA = {};
 
     private static final String[] DEFAULT_COLUMN_NAMES = {"Key", "Value"};
-    private static final String[] DEFAULT_FILE_COLUMN_NAMES = {"Key", "Path", "Select"};
+    private static final String[] DEFAULT_FILE_COLUMN_NAMES = {"Key", "Path"};
     private static final String[] DEFAULT_URL = {"http://"};
-    private static final String[] DEFAULT_METHOD = {"GET", "POST", "DELETE"};
+    private static final String[] DEFAULT_METHOD = {"GET", "POST"};
     private static final String[][] DEFAULT_DATA = {{"code", "1"}, {"changeLog", ""}};
     private static final String[][] DEFAULT_EMPTY_DATA = {{"", ""}};
     private DefaultTableModel mParamsModel;
@@ -71,68 +78,6 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
     }
 
     private void initEvent() {
-//        mTextFieldUrl.addFocusListener(new FocusListener() {
-//            @Override
-//            public void focusGained(FocusEvent e) {
-//            }//Empty
-//
-//            @Override
-//            public void focusLost(FocusEvent e) {
-//                String text = mTextFieldUrl.getText();
-//                if (!TextUtils.isEmpty(text)) {
-//                    StateProjectComponent.getInstance().setUrl(text);
-//                }
-//            }
-//        });
-//        mCbMthod.addItemListener(new ItemListener() {
-//            @Override
-//            public void itemStateChanged(ItemEvent e) {
-//                StateProjectComponent.getInstance().setModule(e.getItem().toString());
-//            }
-//        });
-//        mTextFieldPath.addFocusListener(new FocusListener() {
-//            @Override
-//            public void focusGained(FocusEvent e) {
-//            }//Empty
-//
-//            @Override
-//            public void focusLost(FocusEvent e) {
-//                mSelectedFilePath = mTextFieldPath.getText();
-//                StateProjectComponent.getInstance().setPath(mSelectedFilePath);
-//            }
-//        });
-//        mButtonBrowse.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, true, true, false, false);
-//                VirtualFile toSelect = ProjectManager.getInstance().getOpenProjects()[0].getBaseDir();
-//                FileChooser.chooseFile(descriptor, null, toSelect, new Consumer<VirtualFile>() {
-//                    @Override
-//                    public void consume(VirtualFile virtualFile) {
-//                        if (virtualFile.exists()) {
-//                            mSelectedFilePath = virtualFile.getPath();
-//                            mTextFieldPath.setText(mSelectedFilePath);
-//                            StateProjectComponent.getInstance().setPath(mSelectedFilePath);
-//                        }
-//                    }
-//                });
-//            }
-//        });
-        //TODO 触发保存Table数据还需优化
-        mTableParams.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-            }//Empty
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                int row = mTableParams.getSelectedRow();
-                String key = (String) mTableParams.getModel().getValueAt(row, 0);
-                String value = (String) mTableParams.getModel().getValueAt(row, 1);
-                StateProjectComponent.getInstance().addOrModParam(key, value);
-            }
-        });
-
         mBtnParamAdd.addActionListener(this);
         mBtnParamDel.addActionListener(this);
         mBtnHeaderAdd.addActionListener(this);
@@ -175,7 +120,16 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
                 mBtnShowCookie.setVisible(mCookiesModel.getRowCount() == 0);
                 break;
             case "ADD_FILE":
-                mFilesModel.addRow(EMPTY_ROW_DATA);
+                FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, true, true, false, false);
+                VirtualFile toSelect = ProjectManager.getInstance().getOpenProjects()[0].getBaseDir();
+                FileChooser.chooseFile(descriptor, null, toSelect, new Consumer<VirtualFile>() {
+                    @Override
+                    public void consume(VirtualFile virtualFile) {
+                        if (virtualFile.exists()) {
+                            mFilesModel.addRow(new String[]{"file" + (mFilesModel.getRowCount() + 1), virtualFile.getPath()});
+                        }
+                    }
+                });
                 break;
             case "DEL_FILE":
                 ViewUtil.delSelectedRows(mTableFiles);
@@ -227,13 +181,12 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
         mCbUrl.setModel(new DefaultComboBoxModel<>(DEFAULT_URL));
 
         //initTable
-        LinkedHashMap<String, String> params = StateProjectComponent.getInstance().getParams();
         String[][] data;
-        if (params.isEmpty()) {
+//        if (params.isEmpty()) {
             data = DEFAULT_DATA;
-        } else {
-            data = CommonUtil.mapToArray(params);
-        }
+//        } else {
+//            data = CommonUtil.mapToArray(params);
+//        }
         mParamsModel = new DefaultTableModel(data, DEFAULT_COLUMN_NAMES);
         mTableParams.setModel(mParamsModel);
 
@@ -243,8 +196,28 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
         mCookiesModel = new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_COLUMN_NAMES);
         mTableCookies.setModel(mCookiesModel);
 
-        mFilesModel = new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_FILE_COLUMN_NAMES);
+        mFilesModel = new DefaultTableModel(null, DEFAULT_FILE_COLUMN_NAMES);
         mTableFiles.setModel(mFilesModel);
+
+        setColumnWidth(mTableParams, 0, 100);
+        setColumnWidth(mTableHeaders, 0, 100);
+        setColumnWidth(mTableCookies, 0, 100);
+        setColumnWidth(mTableFiles, 0, 100);
+    }
+
+    /**
+     * 设置指定Table的列宽
+     *
+     * @param table
+     * @param columnIndex
+     * @param width
+     */
+    private void setColumnWidth(JTable table, int columnIndex, int width) {
+        TableColumn column = table.getColumnModel().getColumn(columnIndex);
+        JTableHeader header = table.getTableHeader();
+        column.setMinWidth(width);
+        column.setPreferredWidth(width);
+        header.setResizingColumn(column);
     }
 
     @Override

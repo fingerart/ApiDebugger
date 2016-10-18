@@ -46,12 +46,6 @@ public class MainPresenter implements ProgressListener {
             return;
         }
 
-//        File file = new File(filePath);
-//        if (!file.exists()) {
-//            mView.showE("选择的文件不存在");
-//            return;
-//        }
-
         LinkedHashMap<String, String> params = ViewUtil.getTableContent(paramsModel);
         LinkedHashMap<String, String> headers = ViewUtil.getTableContent(headersModel);
         LinkedHashMap<String, String> cookies = ViewUtil.getTableContent(cookiesModel);
@@ -149,7 +143,7 @@ public class MainPresenter implements ProgressListener {
     public void delTableParams(JTable table) {
         for (int i : table.getSelectedRows()) {
             String key = (String) table.getModel().getValueAt(i, 0);
-            StateProjectComponent.getInstance().delParam(key);
+//            StateProjectComponent.getInstance().delParam(key);
         }
     }
 }
