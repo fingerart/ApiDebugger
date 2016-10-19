@@ -10,6 +10,7 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.util.Consumer;
+import me.fingerart.idea.engine.bean.AttachAttribute;
 import me.fingerart.idea.engine.component.StateProjectComponent;
 import me.fingerart.idea.engine.utils.CommonUtil;
 import me.fingerart.idea.engine.utils.ViewUtil;
@@ -78,6 +79,21 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
     }
 
     private void initEvent() {
+        mCbMethod.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                StateProjectComponent.getInstance().setMethod(mCbMethod.getSelectedItem().toString());
+            }
+        });
+        mCbUrl.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                String url = mCbUrl.getSelectedItem().toString();
+                AttachAttribute attachAttribute = StateProjectComponent.getInstance().getAttach().get(url);
+                updateAttributeView(attachAttribute);
+            }
+        });
+
         mBtnParamAdd.addActionListener(this);
         mBtnParamDel.addActionListener(this);
         mBtnHeaderAdd.addActionListener(this);
@@ -176,33 +192,67 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
     private void onToolWindowFirstOpen() {
         //initMethod
         mCbMethod.setModel(new DefaultComboBoxModel<>(DEFAULT_METHOD));
+        mCbMethod.setSelectedItem(StateProjectComponent.getInstance().getMethod());
+
+        LinkedHashMap<String, AttachAttribute> attach = StateProjectComponent.getInstance().getAttach();
 
         //initUrl
-        mCbUrl.setModel(new DefaultComboBoxModel<>(DEFAULT_URL));
+        String[] urlData;
+        if (attach.isEmpty()) {
+            urlData = DEFAULT_URL;
+        } else {
+            urlData = attach.keySet().toArray(new String[attach.size()]);
+        }
+        mCbUrl.setModel(new DefaultComboBoxModel<>(urlData));
 
         //initTable
-        String[][] data;
-//        if (params.isEmpty()) {
-            data = DEFAULT_DATA;
-//        } else {
-//            data = CommonUtil.mapToArray(params);
-//        }
-        mParamsModel = new DefaultTableModel(data, DEFAULT_COLUMN_NAMES);
-        mTableParams.setModel(mParamsModel);
-
-        mHeadersModel = new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_COLUMN_NAMES);
-        mTableHeaders.setModel(mHeadersModel);
-
-        mCookiesModel = new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_COLUMN_NAMES);
-        mTableCookies.setModel(mCookiesModel);
-
-        mFilesModel = new DefaultTableModel(null, DEFAULT_FILE_COLUMN_NAMES);
-        mTableFiles.setModel(mFilesModel);
+        AttachAttribute attachAttribute = attach.get(urlData[0]);
+        updateAttributeView(attachAttribute);
 
         setColumnWidth(mTableParams, 0, 100);
         setColumnWidth(mTableHeaders, 0, 100);
         setColumnWidth(mTableCookies, 0, 100);
         setColumnWidth(mTableFiles, 0, 100);
+    }
+
+    /**
+     * 更新param header cookie file
+     *
+     * @param attachAttribute
+     */
+    private void updateAttributeView(AttachAttribute attachAttribute) {
+        String[][] paramData;
+        if (attachAttribute.params.isEmpty()) {
+            paramData = DEFAULT_DATA;
+        } else {
+            paramData = CommonUtil.mapToArray(attachAttribute.params);
+        }
+        mParamsModel = new DefaultTableModel(paramData, DEFAULT_COLUMN_NAMES);
+        mTableParams.setModel(mParamsModel);
+
+        String[][] headerData = null;
+        if (!attachAttribute.headers.isEmpty()) {
+            headerData = CommonUtil.mapToArray(attachAttribute.headers);
+        }
+        mJpHeaders.setVisible(!attachAttribute.headers.isEmpty());
+        mHeadersModel = new DefaultTableModel(headerData, DEFAULT_COLUMN_NAMES);
+        mTableHeaders.setModel(mHeadersModel);
+
+        String[][] cookieData = null;
+        if (!attachAttribute.cookies.isEmpty()) {
+            cookieData = CommonUtil.mapToArray(attachAttribute.cookies);
+        }
+        mJpCookies.setVisible(!attachAttribute.cookies.isEmpty());
+        mCookiesModel = new DefaultTableModel(cookieData, DEFAULT_COLUMN_NAMES);
+        mTableCookies.setModel(mCookiesModel);
+
+        String[][] fileData = null;
+        if (!attachAttribute.files.isEmpty()) {
+            fileData = CommonUtil.mapToArray(attachAttribute.files);
+        }
+        mJpFiles.setVisible(!attachAttribute.files.isEmpty());
+        mFilesModel = new DefaultTableModel(fileData, DEFAULT_FILE_COLUMN_NAMES);
+        mTableFiles.setModel(mFilesModel);
     }
 
     /**

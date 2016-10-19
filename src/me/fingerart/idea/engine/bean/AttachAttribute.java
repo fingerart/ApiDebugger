@@ -11,4 +11,14 @@ public class AttachAttribute {
     public LinkedHashMap<String, String> headers = new LinkedHashMap<>();
     public LinkedHashMap<String, String> cookies = new LinkedHashMap<>();
     public LinkedHashMap<String, String> files = new LinkedHashMap<>();
+
+    @Override
+    public String toString() {
+        return "AttachAttribute{" +
+                "params=" + params +
+                ", headers=" + headers +
+                ", cookies=" + cookies +
+                ", files=" + files +
+                '}';
+    }
 }
