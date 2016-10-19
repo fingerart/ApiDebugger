@@ -112,7 +112,7 @@
                 <properties>
                   <dragEnabled value="false"/>
                   <dropMode value="USE_SELECTION"/>
-                  <preferredScrollableViewportSize width="450" height="200"/>
+                  <preferredScrollableViewportSize width="450" height="150"/>
                   <requestFocusEnabled value="true"/>
                   <rowHeight value="25"/>
                   <rowMargin value="1"/>
@@ -228,7 +228,9 @@
         <children>
           <scrollpane id="1ef71">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="200"/>
+              </grid>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -310,6 +312,7 @@
               <component id="7612e" class="javax.swing.JTable" binding="mTableHeaders">
                 <constraints/>
                 <properties>
+                  <preferredScrollableViewportSize width="450" height="150"/>
                   <requestFocusEnabled value="true"/>
                   <rowHeight value="25"/>
                   <rowMargin value="1"/>
@@ -387,6 +390,7 @@
               <component id="2d320" class="javax.swing.JTable" binding="mTableCookies">
                 <constraints/>
                 <properties>
+                  <preferredScrollableViewportSize width="450" height="150"/>
                   <requestFocusEnabled value="true"/>
                   <rowHeight value="25"/>
                   <rowMargin value="1"/>
@@ -464,6 +468,7 @@
               <component id="94cb6" class="javax.swing.JTable" binding="mTableFiles">
                 <constraints/>
                 <properties>
+                  <preferredScrollableViewportSize width="450" height="150"/>
                   <requestFocusEnabled value="true"/>
                   <rowHeight value="25"/>
                   <rowMargin value="1"/>
