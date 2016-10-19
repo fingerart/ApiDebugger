@@ -16,9 +16,11 @@ import me.fingerart.idea.engine.utils.CommonUtil;
 import me.fingerart.idea.engine.utils.ViewUtil;
 import me.fingerart.idea.presenter.MainPresenter;
 import me.fingerart.idea.ui.iview.IMainWindowView;
+import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.plaf.TextUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -192,21 +194,25 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
     private void onToolWindowFirstOpen() {
         //initMethod
         mCbMethod.setModel(new DefaultComboBoxModel<>(DEFAULT_METHOD));
-        mCbMethod.setSelectedItem(StateProjectComponent.getInstance().getMethod());
+        String method = StateProjectComponent.getInstance().getMethod();
+        if (!TextUtils.isEmpty(method)) {
+            mCbMethod.setSelectedItem(method);
+        }
 
         LinkedHashMap<String, AttachAttribute> attach = StateProjectComponent.getInstance().getAttach();
 
+
+        AttachAttribute attachAttribute = null;
         //initUrl
         String[] urlData;
         if (attach.isEmpty()) {
             urlData = DEFAULT_URL;
         } else {
             urlData = attach.keySet().toArray(new String[attach.size()]);
+            attachAttribute = attach.get(urlData[0]);
         }
         mCbUrl.setModel(new DefaultComboBoxModel<>(urlData));
-
         //initTable
-        AttachAttribute attachAttribute = attach.get(urlData[0]);
         updateAttributeView(attachAttribute);
 
         setColumnWidth(mTableParams, 0, 100);
@@ -222,7 +228,7 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
      */
     private void updateAttributeView(AttachAttribute attachAttribute) {
         String[][] paramData;
-        if (attachAttribute.params.isEmpty()) {
+        if (attachAttribute == null || attachAttribute.params.isEmpty()) {
             paramData = DEFAULT_DATA;
         } else {
             paramData = CommonUtil.mapToArray(attachAttribute.params);
@@ -231,7 +237,7 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
         mTableParams.setModel(mParamsModel);
 
         String[][] headerData = null;
-        boolean bH = !attachAttribute.headers.isEmpty();
+        boolean bH = attachAttribute != null && !attachAttribute.headers.isEmpty();
         if (bH) {
             headerData = CommonUtil.mapToArray(attachAttribute.headers);
         }
@@ -241,7 +247,7 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
         mTableHeaders.setModel(mHeadersModel);
 
         String[][] cookieData = null;
-        boolean bC = !attachAttribute.cookies.isEmpty();
+        boolean bC = attachAttribute != null && !attachAttribute.cookies.isEmpty();
         if (bC) {
             cookieData = CommonUtil.mapToArray(attachAttribute.cookies);
         }
@@ -251,7 +257,7 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
         mTableCookies.setModel(mCookiesModel);
 
         String[][] fileData = null;
-        boolean bF = !attachAttribute.files.isEmpty();
+        boolean bF = attachAttribute != null && !attachAttribute.files.isEmpty();
         if (bF) {
             fileData = CommonUtil.mapToArray(attachAttribute.files);
         }

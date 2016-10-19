@@ -61,6 +61,7 @@ public class StateProjectComponent extends AbstractProjectComponent implements P
 
         //merge element
         rootElement.addContent(elementMethod);
+        int s = 0;
         for (Map.Entry<String, AttachAttribute> entry : attach.entrySet()) {
             Element elementUrl = new Element(ELEMENT_NAME_URL);
             String url = entry.getKey();
@@ -73,6 +74,7 @@ public class StateProjectComponent extends AbstractProjectComponent implements P
             buildAttachElement(attributes.cookies, ELEMENT_NAME_COOKIE, elementUrl);
             buildAttachElement(attributes.files, ELEMENT_NAME_FILE, elementUrl);
             rootElement.addContent(elementUrl);
+            if (++s > 10) break;
         }
         Log.d("StateProjectComponent.getState");
         return rootElement;
