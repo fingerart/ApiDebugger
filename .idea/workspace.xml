@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c9307372-640a-4f49-bc3f-77b10c2de5e8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/me/fingerart/idea/ui/window/MainWindow.form" afterPath="$PROJECT_DIR$/src/me/fingerart/idea/ui/window/MainWindow.form" />
-    </list>
+    <list default="true" id="c9307372-640a-4f49-bc3f-77b10c2de5e8" name="Default" comment="" />
     <ignored path="ApiDebugger.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -712,12 +709,12 @@
       <workItem from="1476842227123" duration="9343000" />
       <workItem from="1476854770001" duration="88000" />
       <workItem from="1476854881574" duration="4605000" />
-      <workItem from="1476859603137" duration="447000" />
+      <workItem from="1476859603137" duration="592000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51396000" />
+    <option name="totallyTimeSpent" value="51541000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
