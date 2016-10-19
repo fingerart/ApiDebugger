@@ -231,26 +231,32 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
         mTableParams.setModel(mParamsModel);
 
         String[][] headerData = null;
-        if (!attachAttribute.headers.isEmpty()) {
+        boolean bH = !attachAttribute.headers.isEmpty();
+        if (bH) {
             headerData = CommonUtil.mapToArray(attachAttribute.headers);
         }
-        mJpHeaders.setVisible(!attachAttribute.headers.isEmpty());
+        mJpHeaders.setVisible(bH);
+        mBtnShowHeader.setVisible(!bH);
         mHeadersModel = new DefaultTableModel(headerData, DEFAULT_COLUMN_NAMES);
         mTableHeaders.setModel(mHeadersModel);
 
         String[][] cookieData = null;
-        if (!attachAttribute.cookies.isEmpty()) {
+        boolean bC = !attachAttribute.cookies.isEmpty();
+        if (bC) {
             cookieData = CommonUtil.mapToArray(attachAttribute.cookies);
         }
-        mJpCookies.setVisible(!attachAttribute.cookies.isEmpty());
+        mJpCookies.setVisible(bC);
+        mBtnShowCookie.setVisible(!bC);
         mCookiesModel = new DefaultTableModel(cookieData, DEFAULT_COLUMN_NAMES);
         mTableCookies.setModel(mCookiesModel);
 
         String[][] fileData = null;
-        if (!attachAttribute.files.isEmpty()) {
+        boolean bF = !attachAttribute.files.isEmpty();
+        if (bF) {
             fileData = CommonUtil.mapToArray(attachAttribute.files);
         }
-        mJpFiles.setVisible(!attachAttribute.files.isEmpty());
+        mJpFiles.setVisible(bF);
+        mBtnShowFile.setVisible(!bF);
         mFilesModel = new DefaultTableModel(fileData, DEFAULT_FILE_COLUMN_NAMES);
         mTableFiles.setModel(mFilesModel);
     }
