@@ -1,5 +1,6 @@
 package me.fingerart.idea.presenter;
 
+import me.fingerart.idea.engine.bean.AttachAttribute;
 import me.fingerart.idea.engine.component.StateProjectComponent;
 import me.fingerart.idea.engine.interf.ProgressListener;
 import me.fingerart.idea.engine.log.Log;
@@ -53,6 +54,12 @@ public class MainPresenter implements ProgressListener {
 
         LinkedHashMap<String, File> mapFile = CommonUtil.mapToFile(files);
 
+        AttachAttribute a = new AttachAttribute();
+        a.params = params;
+        a.headers = headers;
+        a.cookies = cookies;
+        a.files = files;
+        StateProjectComponent.getInstance().addAttach(url, a);
         upload(method, url, params, headers, cookies, mapFile);
     }
 

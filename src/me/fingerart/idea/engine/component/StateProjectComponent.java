@@ -3,6 +3,7 @@ package me.fingerart.idea.engine.component;
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.project.Project;
 import me.fingerart.idea.engine.bean.AttachAttribute;
+import me.fingerart.idea.engine.log.Log;
 import me.fingerart.idea.engine.utils.CommonUtil;
 import org.apache.batik.transcoder.wmf.tosvg.TextureFactory;
 import org.apache.http.util.TextUtils;
@@ -51,16 +52,17 @@ public class StateProjectComponent extends AbstractProjectComponent implements P
     @Nullable
     @Override
     public Element getState() {
-        System.out.println("StateProjectComponent.getState");
         //init element
         Element rootElement = new Element(ELEMENT_ROOT_NAME);
-        Element elementUrl = new Element(ELEMENT_NAME_URL);
         Element elementMethod = new Element(ELEMENT_NAME_METHOD);
 
         //init attribute
         elementMethod.setText(method);
 
+        //merge element
+        rootElement.addContent(elementMethod);
         for (Map.Entry<String, AttachAttribute> entry : attach.entrySet()) {
+            Element elementUrl = new Element(ELEMENT_NAME_URL);
             String url = entry.getKey();
             elementUrl.setAttribute(ATTRIBUTE_NAME_VAL, url);
             if (TextUtils.isEmpty(url)) continue;
@@ -70,19 +72,14 @@ public class StateProjectComponent extends AbstractProjectComponent implements P
             buildAttachElement(attributes.headers, ELEMENT_NAME_HEADER, elementUrl);
             buildAttachElement(attributes.cookies, ELEMENT_NAME_COOKIE, elementUrl);
             buildAttachElement(attributes.files, ELEMENT_NAME_FILE, elementUrl);
+            rootElement.addContent(elementUrl);
         }
-
-        //merge element
-        rootElement
-                .addContent(elementMethod)
-                .addContent(elementUrl);
-        System.out.println(rootElement);
+        Log.d("StateProjectComponent.getState");
         return rootElement;
     }
 
     @Override
     public void loadState(Element element) {
-        System.out.println("element = [" + element + "]");
         if (ELEMENT_ROOT_ITEM_NAME.equals(element.getName())) {
             Iterator<Content> iterator = element.getDescendants();
             while (iterator.hasNext()) {
@@ -95,8 +92,6 @@ public class StateProjectComponent extends AbstractProjectComponent implements P
                     method = e.getText();
                 } else if (ELEMENT_NAME_URL.equals(e.getName())) {
                     String url = e.getAttributeValue(ATTRIBUTE_NAME_VAL);
-                    if (TextUtils.isEmpty(url)) continue;
-
                     AttachAttribute attribute = new AttachAttribute();
                     for (Element ce : e.getChildren()) {
                         String key = ce.getAttributeValue(ATTRIBUTE_NAME_KEY);
@@ -112,10 +107,11 @@ public class StateProjectComponent extends AbstractProjectComponent implements P
                             attribute.files.put(key, val);
                         }
                     }
+                    attach.put(url, attribute);
                 }
             }
         }
-        System.out.println(method + " -- " + attach);
+        Log.d(attach.toString());
     }
 
     private void buildAttachElement(HashMap<String, String> list, String eName, Element pElement) {
@@ -144,24 +140,28 @@ public class StateProjectComponent extends AbstractProjectComponent implements P
         this.attach = attach;
     }
 
+    public void addAttach(String url, AttachAttribute a) {
+        attach.put(url, a);
+    }
+
     @Override
     public void projectOpened() {
-        System.out.println("StateProjectComponent.projectOpened");
+        Log.d("StateProjectComponent.projectOpened");
     }
 
     @Override
     public void projectClosed() {
-        System.out.println("StateProjectComponent.projectClosed");
+        Log.d("StateProjectComponent.projectClosed");
     }
 
     @Override
     public void initComponent() {
-        System.out.println("StateProjectComponent.initComponent");
+        Log.d("StateProjectComponent.initComponent");
     }
 
     @Override
     public void disposeComponent() {
-        System.out.println("StateProjectComponent.disposeComponent");
+        Log.d("StateProjectComponent.disposeComponent");
     }
 
     @NotNull

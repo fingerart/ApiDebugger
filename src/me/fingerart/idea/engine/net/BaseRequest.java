@@ -1,7 +1,6 @@
 package me.fingerart.idea.engine.net;
 
 import me.fingerart.idea.engine.interf.ArtHttpListener;
-import me.fingerart.idea.engine.interf.ProgressListener;
 import me.fingerart.idea.engine.utils.CommonUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -43,7 +42,7 @@ public abstract class BaseRequest<T> implements Runnable {
             }
         }
         if (mCookies != null && !mCookies.isEmpty()) {
-            String v = CommonUtil.mapToString(mCookies, "=", "; ");
+            String v = CommonUtil.mapToCookieVal(mCookies, "=", "; ");
             relRequest.addHeader("Cookie", v);
         }
         return relRequest;

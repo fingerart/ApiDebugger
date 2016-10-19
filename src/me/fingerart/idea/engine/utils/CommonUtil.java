@@ -1,5 +1,7 @@
 package me.fingerart.idea.engine.utils;
 
+import clojure.lang.Obj;
+import me.fingerart.idea.engine.bean.AttachAttribute;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -44,14 +46,14 @@ public class CommonUtil {
     }
 
     /**
-     * map 2 String
+     * map 2 Cookie
      *
      * @param map
      * @param kvs 键值分隔符
      * @param s   键值对分隔符
      * @return
      */
-    public static String mapToString(@NotNull HashMap<String, String> map, String kvs, String s) {
+    public static String mapToCookieVal(@NotNull HashMap<String, String> map, String kvs, String s) {
         StringBuffer sBuff = new StringBuffer();
         if (map != null && !map.isEmpty()) {
             Set<Map.Entry<String, String>> set = map.entrySet();
@@ -89,12 +91,12 @@ public class CommonUtil {
         } else {
             parse = new ArrayList<>();
         }
-        System.out.println(parse);
+//        System.out.println(parse);
         for (Map.Entry<String, String> entry : params.entrySet()) {
             parse.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
         }
         String p = URLEncodedUtils.format(parse, Charset.defaultCharset());
-        System.out.println(p);
+//        System.out.println(p);
         return s[0] + "?" + p;
     }
 
