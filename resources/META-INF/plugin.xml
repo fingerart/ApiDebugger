@@ -1,16 +1,22 @@
 <idea-plugin version="2">
     <id>me.fingerart.idea.apidebugger</id>
     <name>Api Debugger</name>
-    <version>1.0.0</version>
-    <vendor email="fingerart.me@gmail.com" url="http://fingerart.me">FingerArt</vendor>
+    <version>2.0.0</version>
+    <vendor email="fingerart.me@gmail.com" url="http://fingerart.me?f=idea">FingerArt</vendor>
 
     <description><![CDATA[
-        Api Debugger
+        A plug-in used to debug network interface for IntlliJ IDEA.
     ]]></description>
 
     <change-notes><![CDATA[
+        v2.0.0 Upgrade:
+        <br/>
+        -
+        <br/>
         v1.0.0 Add:
-        <br>- Api Debugger<br>
+        <br/>
+        - Support GET、POST method;
+        - Support param、cookie、header、file addition.
     ]]>
     </change-notes>
 
