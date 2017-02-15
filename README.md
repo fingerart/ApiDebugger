@@ -29,3 +29,4 @@ I welcome and encourage all pull requests. It usually will take me within 24-48 
 ## Uninstalling
 
 Inside your IDE, select Preferences -> Plugins, then find the `Api Debugger` plugin. Click Uninstall.
+
