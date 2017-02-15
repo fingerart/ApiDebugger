@@ -14,5 +14,4 @@ hs_err_pid*
 
 *.iml
 
-codeStyleSettings.xml
-uiDesigner.xml
+.idea/
