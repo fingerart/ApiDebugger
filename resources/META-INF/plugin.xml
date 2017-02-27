@@ -11,12 +11,16 @@
     <change-notes><![CDATA[
         v2.0.0 Upgrade:
         <br/>
-        -
-        <br/>
+        - 支持delete、put请求方法; <br/>
+        - 优化消息提示; <br/>
+        - 加密; <br/>
+        - 多语言（暂支持 中文、英文）; <br/>
+        - 格式化响应数据(json/xml). <br/> <br/>
+
         v1.0.0 Add:
         <br/>
-        - Support GET、POST method;
-        - Support param、cookie、header、file addition.
+        - Support GET、POST method;<br/>
+        - Support param、cookie、header、file addition. <br/>
     ]]>
     </change-notes>
 
@@ -29,14 +33,15 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <!--<toolWindow id="Api Debugger" icon="DebuggerIcons.LOGO" anchor="right" factoryClass="io.chengguo.apidebugger.ui.window.MainWindow"/>-->
         <toolWindow id="Api Debugger" icon="/image/favicon.png" anchor="right"
-                    factoryClass="me.fingerart.idea.ui.window.MainWindow"/>
+                    factoryClass="io.chengguo.apidebugger.ui.ApiDebuggerToolWindowFactory"/>
     </extensions>
 
     <project-components>
         <component>
-            <implementation-class>me.fingerart.idea.engine.component.StateProjectComponent</implementation-class>
+            <!--<implementation-class>io.chengguo.apidebugger.engine.component.StateProjectComponent</implementation-class>-->
+            <implementation-class>io.chengguo.apidebugger.ui.ApiDebuggerView</implementation-class>
         </component>
     </project-components>
-
 </idea-plugin>
