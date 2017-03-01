@@ -2,13 +2,9 @@ package io.chengguo.apidebugger.ui.window;
 
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowFactory;
-import com.intellij.ui.content.Content;
-import com.intellij.ui.content.ContentFactory;
+import com.intellij.ui.components.JBTextField;
 import com.intellij.util.Consumer;
 import io.chengguo.apidebugger.engine.bean.AttachAttribute;
 import io.chengguo.apidebugger.engine.component.StateProjectComponent;
@@ -17,7 +13,6 @@ import io.chengguo.apidebugger.engine.utils.ViewUtil;
 import io.chengguo.apidebugger.presenter.MainPresenter;
 import io.chengguo.apidebugger.ui.iview.IMainWindowView;
 import org.apache.http.util.TextUtils;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -32,10 +27,9 @@ import java.util.LinkedHashMap;
 /**
  * Created by FingerArt on 16/10/1.
  */
-public class MainWindow extends IMainWindowView implements ToolWindowFactory, ActionListener {
-    private JPanel mToolWindow;
+public class MainWindow extends IMainWindowView implements ActionListener {
+    public JPanel mToolWindow;
     private JComboBox mCbMethod;
-    private JComboBox mCbUrl;
     private JButton mBtnParamAdd;
     private JButton mBtnParamDel;
     private JButton mBtnExecute;
@@ -57,6 +51,7 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
     private JTable mTableHeaders;
     private JTable mTableCookies;
     private JTable mTableFiles;
+    private JBTextField mTextUri;
     private static final String[] EMPTY_ROW_DATA = {};
 
     private static final String[] DEFAULT_COLUMN_NAMES = {"Key", "Value"};
@@ -76,6 +71,7 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
     public MainWindow() {
         initView();
         initEvent();
+        onToolWindowFirstOpen();
     }
 
     private void initView() {
@@ -87,14 +83,6 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
             @Override
             public void itemStateChanged(ItemEvent e) {
                 StateProjectComponent.getInstance().setMethod(mCbMethod.getSelectedItem().toString());
-            }
-        });
-        mCbUrl.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                String url = mCbUrl.getSelectedItem().toString();
-                AttachAttribute attachAttribute = StateProjectComponent.getInstance().getAttach().get(url);
-                updateAttributeView(attachAttribute);
             }
         });
 
@@ -173,20 +161,11 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
                     mPresenter.cancelUpload();
                 } else {
                     String method = mCbMethod.getSelectedItem().toString();
-                    String url = mCbUrl.getEditor().getItem().toString();
+                    String url = null;
                     mPresenter.executeRequest(method, url, mParamsModel, mHeadersModel, mCookiesModel, mFilesModel);
                 }
                 break;
         }
-    }
-
-    @Override
-    public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        mPresenter = new MainPresenter(this);
-        ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-        Content content = contentFactory.createContent(mToolWindow, "", false);
-        toolWindow.getContentManager().addContent(content);
-        onToolWindowFirstOpen();
     }
 
     /**
@@ -212,7 +191,7 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
             urlData = attach.keySet().toArray(new String[attach.size()]);
             attachAttribute = attach.get(urlData[0]);
         }
-        mCbUrl.setModel(new DefaultComboBoxModel<>(urlData));
+        mTextUri.setText(urlData[0]);
         //initTable
         updateAttributeView(attachAttribute);
 
@@ -309,5 +288,4 @@ public class MainWindow extends IMainWindowView implements ToolWindowFactory, Ac
         mProgressBar.setVisible(false);
         mBtnExecute.setText("Execute");
     }
-
 }

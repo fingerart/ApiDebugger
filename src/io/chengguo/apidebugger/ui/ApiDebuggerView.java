@@ -6,7 +6,6 @@ import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.ActionToolbar;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
-import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
@@ -14,6 +13,7 @@ import com.intellij.openapi.wm.ex.ToolWindowManagerEx;
 import com.intellij.openapi.wm.ex.ToolWindowManagerListener;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import io.chengguo.apidebugger.engine.component.StateProjectComponent;
 import io.chengguo.apidebugger.engine.eventbus.DebuggerEventBus;
 import io.chengguo.apidebugger.engine.eventbus.event.NoActionSessionsEvent;
 import io.chengguo.apidebugger.engine.log.Log;
@@ -26,11 +26,12 @@ import javax.swing.*;
 /**
  * Created by fingerart on 17/2/19.
  */
-public class ApiDebuggerView implements ProjectComponent {
+public class ApiDebuggerView extends StateProjectComponent {
 
     private Project mProject;
 
     public ApiDebuggerView(Project project) {
+        super(project);
         mProject = project;
         DebuggerEventBus.getDefault().register(this);
     }
