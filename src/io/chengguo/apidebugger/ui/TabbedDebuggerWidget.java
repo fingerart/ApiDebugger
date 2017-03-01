@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.ui.components.JBPanel;
 import io.chengguo.apidebugger.engine.eventbus.DebuggerEventBus;
 import io.chengguo.apidebugger.engine.eventbus.event.NoActionSessionsEvent;
+import io.chengguo.apidebugger.ui.window.Test;
 
 import javax.swing.*;
 import java.awt.*;
@@ -101,7 +102,7 @@ public class TabbedDebuggerWidget extends JPanel implements DebuggerWidget {
     }
 
     private JComponent createInnerDebuggerWidget() {
-        return new ApiDebuggerWidget().getComponent();
+        return new Test().container;
     }
 
     @Override
