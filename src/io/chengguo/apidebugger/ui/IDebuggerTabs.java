@@ -8,18 +8,18 @@ import javax.swing.*;
 /**
  * Created by fingerart on 17/2/27.
  */
-public interface DebuggerTabs {
-    DebuggerTabs addListener(DebuggerTabsIml.DebuggerTabListener listener);
+public interface IDebuggerTabs {
+    IDebuggerTabs addListener(DebuggerTabsIml.DebuggerTabListener listener);
 
-    DebuggerTabs addTab(JComponent component, String name);
+    IDebuggerTabs addTab(JComponent component, String name);
 
     int getTabCount();
 
     TabInfo getTabAt(int i);
 
-    DebuggerTabs closeTab(int index);
+    IDebuggerTabs closeTab(int index);
 
-    DebuggerTabs closeCurrentTab();
+    IDebuggerTabs closeCurrentTab();
 
     JBEditorTabs getComponent();
 

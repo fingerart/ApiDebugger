@@ -3,16 +3,16 @@ package io.chengguo.apidebugger.ui.action;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import io.chengguo.apidebugger.ui.DebuggerWidget;
+import io.chengguo.apidebugger.ui.ITabbedDebuggerWidget;
 
 /**
  * Created by fingerart on 17/2/20.
  */
 public class AddTabAction extends AnAction {
 
-    private final DebuggerWidget mDebuggerWidget;
+    private final ITabbedDebuggerWidget mDebuggerWidget;
 
-    public AddTabAction(DebuggerWidget debuggerWidget) {
+    public AddTabAction(ITabbedDebuggerWidget debuggerWidget) {
         super("Add Tab", "Create New ApiDebugger Tab", AllIcons.General.Add);
         mDebuggerWidget = debuggerWidget;
     }

@@ -35,13 +35,13 @@
         <!-- Add your extensions here -->
         <!--<toolWindow id="Api Debugger" icon="DebuggerIcons.LOGO" anchor="right" factoryClass="io.chengguo.apidebugger.ui.window.MainWindow"/>-->
         <toolWindow id="Api Debugger" icon="/image/favicon.png" anchor="right"
-                    factoryClass="io.chengguo.apidebugger.ui.ApiDebuggerToolWindowFactory"/>
+                    factoryClass="io.chengguo.apidebugger.ui.DebuggerToolWindowFactory"/>
     </extensions>
 
     <project-components>
         <component>
             <!--<implementation-class>io.chengguo.apidebugger.engine.component.StateProjectComponent</implementation-class>-->
-            <implementation-class>io.chengguo.apidebugger.ui.ApiDebuggerView</implementation-class>
+            <implementation-class>io.chengguo.apidebugger.ui.DebuggerComponent</implementation-class>
         </component>
     </project-components>
 </idea-plugin>

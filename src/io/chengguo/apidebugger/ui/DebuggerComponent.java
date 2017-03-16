@@ -6,6 +6,10 @@ import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.ActionToolbar;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.components.AbstractProjectComponent;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.components.StoragePathMacros;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
@@ -13,7 +17,6 @@ import com.intellij.openapi.wm.ex.ToolWindowManagerEx;
 import com.intellij.openapi.wm.ex.ToolWindowManagerListener;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
-import io.chengguo.apidebugger.engine.component.StateProjectComponent;
 import io.chengguo.apidebugger.engine.eventbus.DebuggerEventBus;
 import io.chengguo.apidebugger.engine.eventbus.event.NoActionSessionsEvent;
 import io.chengguo.apidebugger.engine.log.Log;
@@ -26,18 +29,19 @@ import javax.swing.*;
 /**
  * Created by fingerart on 17/2/19.
  */
-public class ApiDebuggerView extends StateProjectComponent {
+@State(name = "ApiDebugger", storages = {@Storage(StoragePathMacros.PROJECT_FILE)})
+public class DebuggerComponent extends AbstractProjectComponent {
 
     private Project mProject;
 
-    public ApiDebuggerView(Project project) {
+    public DebuggerComponent(Project project) {
         super(project);
         mProject = project;
         DebuggerEventBus.getDefault().register(this);
     }
 
-    public static ApiDebuggerView getInstance(@NotNull Project project) {
-        return project.getComponent(ApiDebuggerView.class);
+    public static DebuggerComponent getInstance(@NotNull Project project) {
+        return project.getComponent(DebuggerComponent.class);
     }
 
     public void initApiDebugger(ToolWindow toolWindow) {
@@ -55,10 +59,10 @@ public class ApiDebuggerView extends StateProjectComponent {
 
             @Override
             public void stateChanged() {
-                ToolWindow toolWindow = ToolWindowManager.getInstance(mProject).getToolWindow(ApiDebuggerToolWindowFactory.TOOL_WINDOW_ID);
+                ToolWindow toolWindow = ToolWindowManager.getInstance(mProject).getToolWindow(DebuggerToolWindowFactory.TOOL_WINDOW_ID);
                 if (toolWindow != null) {
                     if (toolWindow.isVisible() && toolWindow.getContentManager().getContentCount() == 0) {
-                        Log.d("ApiDebuggerView.isVisible ContentCount>0");
+                        Log.d("DebuggerComponent.isVisible ContentCount>0");
                         initApiDebugger(toolWindow);
                     }
                 }
@@ -69,10 +73,10 @@ public class ApiDebuggerView extends StateProjectComponent {
     private Content createApiDebuggerContentPanel(ToolWindow toolWindow) {
         toolWindow.setToHideOnEmptyContent(true);
 
-        ApiDebuggerToolWindowPanel panel = new ApiDebuggerToolWindowPanel(PropertiesComponent.getInstance(mProject), toolWindow);
+        DebuggerToolWindowPanel panel = new DebuggerToolWindowPanel(PropertiesComponent.getInstance(mProject), toolWindow);
         Content content = ContentFactory.SERVICE.getInstance().createContent(panel, "", false);
 
-        DebuggerWidget debuggerWidget = createContent(content);
+        ITabbedDebuggerWidget debuggerWidget = createContent(content);
         ActionToolbar toolBar = createToolBar(debuggerWidget);
 
         panel.setToolbar(toolBar.getComponent());
@@ -81,7 +85,7 @@ public class ApiDebuggerView extends StateProjectComponent {
         return content;
     }
 
-    private ActionToolbar createToolBar(DebuggerWidget debuggerWidget) {
+    private ActionToolbar createToolBar(ITabbedDebuggerWidget debuggerWidget) {
         DefaultActionGroup group = new DefaultActionGroup();
         group.addAll(new AddTabAction(debuggerWidget), new CloseTabAction(debuggerWidget));
         ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.UNKNOWN, group, false);
@@ -89,41 +93,41 @@ public class ApiDebuggerView extends StateProjectComponent {
         return toolbar;
     }
 
-    private DebuggerWidget createContent(Content content) {
-        DebuggerWidget debuggerWidget = new TabbedDebuggerWidget(mProject, content);
+    private ITabbedDebuggerWidget createContent(Content content) {
+        ITabbedDebuggerWidget debuggerWidget = new TabbedDebuggerWidget(mProject, content);
         debuggerWidget.createDebuggerSession();
         return debuggerWidget;
     }
 
     @Subscribe
     public void onNoActiveSessions(NoActionSessionsEvent event) {
-        Log.d("ApiDebuggerView.onNoActionSessions");
-        ToolWindowManager.getInstance(mProject).getToolWindow(ApiDebuggerToolWindowFactory.TOOL_WINDOW_ID).getContentManager().removeAllContents(true);
+        Log.d("DebuggerComponent.onNoActionSessions");
+        ToolWindowManager.getInstance(mProject).getToolWindow(DebuggerToolWindowFactory.TOOL_WINDOW_ID).getContentManager().removeAllContents(true);
     }
 
     @Override
     public void projectOpened() {
-        Log.d("ApiDebuggerView.projectOpened");
+        Log.d("DebuggerComponent.projectOpened");
     }
 
     @Override
     public void projectClosed() {
-        Log.d("ApiDebuggerView.projectClosed");
+        Log.d("DebuggerComponent.projectClosed");
     }
 
     @Override
     public void initComponent() {
-        Log.d("ApiDebuggerView.initComponent");
+        Log.d("DebuggerComponent.initComponent");
     }
 
     @Override
     public void disposeComponent() {
-        Log.d("ApiDebuggerView.disposeComponent");
+        Log.d("DebuggerComponent.disposeComponent");
     }
 
     @NotNull
     @Override
     public String getComponentName() {
-        return ApiDebuggerView.class.getSimpleName();
+        return DebuggerComponent.class.getSimpleName();
     }
 }

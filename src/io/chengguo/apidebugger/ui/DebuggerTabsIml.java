@@ -12,9 +12,11 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 
 /**
+ * Tabs管理实现
+ * <p>
  * Created by fingerart on 17/2/27.
  */
-public class DebuggerTabsIml implements DebuggerTabs {
+public class DebuggerTabsIml implements IDebuggerTabs {
     private JBEditorTabs mTabs;
     private DebuggerTabListener mListener;
 
@@ -25,13 +27,13 @@ public class DebuggerTabsIml implements DebuggerTabs {
     }
 
     @Override
-    public DebuggerTabs addListener(DebuggerTabListener listener) {
+    public IDebuggerTabs addListener(DebuggerTabListener listener) {
         mListener = listener;
         return this;
     }
 
     @Override
-    public DebuggerTabs addTab(JComponent component, String name) {
+    public IDebuggerTabs addTab(JComponent component, String name) {
         TabInfo tabInfo = new TabInfo(component).setText(name);
         mTabs.addTab(tabInfo);
         setSelectComponent(tabInfo);
@@ -53,7 +55,7 @@ public class DebuggerTabsIml implements DebuggerTabs {
     }
 
     @Override
-    public DebuggerTabs closeTab(int index) {
+    public IDebuggerTabs closeTab(int index) {
         if (index >= 0 && index < mTabs.getTabCount()) {
             mTabs.removeTab(mTabs.getTabAt(index));
         }
@@ -61,7 +63,7 @@ public class DebuggerTabsIml implements DebuggerTabs {
     }
 
     @Override
-    public DebuggerTabs closeCurrentTab() {
+    public IDebuggerTabs closeCurrentTab() {
         mTabs.removeTab(mTabs.getSelectedInfo());
         return this;
     }
