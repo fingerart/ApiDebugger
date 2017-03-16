@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by fingerart on 17/2/27.
  */
-public interface DebuggerWidget {
+public interface ITabbedDebuggerWidget {
 
     /**
      * 创建一个新的Debugger会话

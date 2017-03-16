@@ -8,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Created by fingerart on 17/2/19.
  */
-public class ApiDebuggerToolWindowFactory implements ToolWindowFactory {
+public class DebuggerToolWindowFactory implements ToolWindowFactory {
     public static final String TOOL_WINDOW_ID = "Api Debugger";
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        ApiDebuggerView apiDebuggerView = ApiDebuggerView.getInstance(project);
+        DebuggerComponent apiDebuggerView = DebuggerComponent.getInstance(project);
         apiDebuggerView.initApiDebugger(toolWindow);
     }
 }

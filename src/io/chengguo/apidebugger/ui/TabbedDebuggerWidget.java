@@ -13,13 +13,15 @@ import java.awt.*;
 import java.util.Set;
 
 /**
+ * 顶层TAB标签面板
+ *
  * Created by fingerart on 17/2/27.
  */
-public class TabbedDebuggerWidget extends JPanel implements DebuggerWidget {
+public class TabbedDebuggerWidget extends JPanel implements ITabbedDebuggerWidget {
     private Project mProject;
     private Disposable mParent;
     private JBPanel<JBPanel> mPanel;
-    private DebuggerTabs mTabs;
+    private IDebuggerTabs mTabs;
     private JComponent mInnerDebuggerWidget;
 
     public TabbedDebuggerWidget(Project project, Disposable disposable) {
@@ -30,8 +32,8 @@ public class TabbedDebuggerWidget extends JPanel implements DebuggerWidget {
         mPanel.add(this, BorderLayout.CENTER);
     }
 
-    private DebuggerTabs setupTabs() {
-        DebuggerTabs tabs = createTabPanel();
+    private IDebuggerTabs setupTabs() {
+        IDebuggerTabs tabs = createTabPanel();
         tabs.addListener(createTabsListener());
         remove(mInnerDebuggerWidget);
         addTab(mInnerDebuggerWidget, tabs);
@@ -56,7 +58,7 @@ public class TabbedDebuggerWidget extends JPanel implements DebuggerWidget {
         add(mInnerDebuggerWidget, BorderLayout.CENTER);
     }
 
-    private DebuggerTabs createTabPanel() {
+    private IDebuggerTabs createTabPanel() {
         return new DebuggerTabsIml(mProject, mParent);
     }
 
@@ -83,12 +85,12 @@ public class TabbedDebuggerWidget extends JPanel implements DebuggerWidget {
         }
     }
 
-    private void addTab(JComponent innerDebuggerWidget, DebuggerTabs tabs) {
+    private void addTab(JComponent innerDebuggerWidget, IDebuggerTabs tabs) {
         String uniqueName = generateUniqueName("Tab", tabs);//TODO 配置化
         tabs.addTab(innerDebuggerWidget, uniqueName);
     }
 
-    private static String generateUniqueName(String suggestedName, DebuggerTabs tabs) {
+    private static String generateUniqueName(String suggestedName, IDebuggerTabs tabs) {
         final Set<String> names = Sets.newHashSet();
         for (int i = 0; i < tabs.getTabCount(); i++) {
             names.add(tabs.getTitleAt(i));
@@ -102,7 +104,7 @@ public class TabbedDebuggerWidget extends JPanel implements DebuggerWidget {
     }
 
     private JComponent createInnerDebuggerWidget() {
-        return new Test().container;
+        return new Test(mProject, mParent).container;
     }
 
     @Override
