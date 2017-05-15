@@ -2,7 +2,7 @@
     <id>me.fingerart.idea.apidebugger</id>
     <name>Api Debugger</name>
     <version>2.0.0</version>
-    <vendor email="fingerart.me@gmail.com" url="http://fingerart.me?f=idea">FingerArt</vendor>
+    <vendor email="fingerart.me@gmail.com" url="https://github.com/fingerart/ApiDebugger">FingerArt</vendor>
 
     <description><![CDATA[
         A plug-in used to debug network interface for IntlliJ IDEA.

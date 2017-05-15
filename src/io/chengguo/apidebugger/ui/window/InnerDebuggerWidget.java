@@ -13,19 +13,20 @@ import io.chengguo.apidebugger.ui.custom.JBDebuggerTab;
 import javax.swing.*;
 
 /**
+ * Debugger inner widget
  * Created by fingerart on 17/2/28.
  */
-public class Test {
+public class InnerDebuggerWidget {
     public JPanel container;
     private JBDebuggerTab jBDebuggerTab;
     private JComboBox comboBox1;
     private JButton sendButton;
     private JBTextField JBTextField1;
-    private JBDebuggerButton helloJBDebuggerButton;
+    private JBDebuggerTab JBDebuggerTab1;
     private Project mProject;
     private Disposable parent;
 
-    public Test(Project mProject, Disposable parent) {
+    public InnerDebuggerWidget(Project mProject, Disposable parent) {
         this.mProject = mProject;
         this.parent = parent;
     }
@@ -53,6 +54,14 @@ public class Test {
         TabInfo info3 = new TabInfo(component3);
         info3.setText("other");
         jBDebuggerTab.addTab(info3);
+
+        JBDebuggerTab1 = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
+
+        TextEditor component4 = new TextEditor();
+        component4.setText("Other content");
+        TabInfo info4 = new TabInfo(component4);
+        info4.setText("other");
+        JBDebuggerTab1.addTab(info4);
     }
 
 }
