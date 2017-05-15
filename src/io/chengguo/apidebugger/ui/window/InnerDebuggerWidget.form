@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="io.chengguo.apidebugger.ui.window.InnerDebuggerWidget">
-  <grid id="27dc6" binding="container" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="container" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="528" height="400"/>
@@ -8,26 +8,15 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="37250" class="io.chengguo.apidebugger.ui.custom.JBDebuggerTab" binding="jBDebuggerTab" custom-create="true">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-      </component>
-      <vspacer id="3a7e7">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
       <grid id="3e9a7" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="59c60" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+          <component id="59c60" class="javax.swing.JComboBox" binding="method">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false">
                 <minimum-size width="80" height="-1"/>
@@ -43,15 +32,15 @@
               </model>
             </properties>
           </component>
-          <component id="a9871" class="javax.swing.JButton" binding="sendButton" default-binding="true">
+          <component id="a9871" class="javax.swing.JButton" binding="send">
             <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Send"/>
             </properties>
           </component>
-          <component id="4f005" class="com.intellij.ui.components.JBTextField" binding="JBTextField1" default-binding="true">
+          <component id="4f005" class="com.intellij.ui.components.JBTextField" binding="uri">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <minimum-size width="150" height="-1"/>
@@ -68,12 +57,23 @@
           </component>
         </children>
       </grid>
-      <component id="1666" class="io.chengguo.apidebugger.ui.custom.JBDebuggerTab" binding="JBDebuggerTab1" custom-create="true" default-binding="true">
+      <component id="790a4" class="io.chengguo.apidebugger.ui.custom.JBDebuggerTab" binding="requestTabs" custom-create="true">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="2d824" class="io.chengguo.apidebugger.ui.custom.JBDebuggerTab" binding="responseTabs" custom-create="true">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
+      <vspacer id="f1ece">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>
