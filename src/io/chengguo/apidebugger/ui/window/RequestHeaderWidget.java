@@ -8,8 +8,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class RequestHeaderWidget {
     private final static String[] DEFAULT_COLUMN_NAMES = {"Key", "Value"};
-    private final static String[][] DEFAULT_EMPTY_DATA = {{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},{"", ""}};
-    public JScrollPane container;
+    private final static String[][] DEFAULT_EMPTY_DATA = {{"", ""}, {"", ""}, {"", ""}, {"", ""}, {"", ""}, {"", ""}, {"", ""}, {"", ""}};
+    public JPanel container;
+    public JScrollPane headersContainer;
     private JTable headers;
 
     private void createUIComponents() {

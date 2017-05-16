@@ -36,13 +36,12 @@ public class InnerDebuggerWidget {
 
     private void createUIComponents() {
         requestTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
+
         TabInfo headerInfo = new TabInfo(new RequestHeaderWidget().container);
         headerInfo.setText("header");
         requestTabs.addTab(headerInfo);
 
-        TextEditor component2 = new TextEditor();
-        component2.setText("body content");
-        TabInfo info2 = new TabInfo(component2);
+        TabInfo info2 = new TabInfo(new RequestBodyWidget().container);
         info2.setText("body");
         requestTabs.addTab(info2);
 
