@@ -23,6 +23,7 @@
               </grid>
             </constraints>
             <properties>
+              <focusable value="true"/>
               <lightWeightPopupEnabled value="true"/>
               <model>
                 <item value="POST"/>
@@ -30,6 +31,7 @@
                 <item value="PUT"/>
                 <item value="DELETE"/>
               </model>
+              <requestFocusEnabled value="false"/>
             </properties>
           </component>
           <component id="a9871" class="javax.swing.JButton" binding="send">
