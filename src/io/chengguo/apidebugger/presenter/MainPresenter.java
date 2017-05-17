@@ -2,7 +2,7 @@ package io.chengguo.apidebugger.presenter;
 
 import io.chengguo.apidebugger.engine.component.StateProjectComponent;
 import io.chengguo.apidebugger.engine.net.BaseRequest;
-import io.chengguo.apidebugger.engine.utils.StreamUtil;
+import io.chengguo.apidebugger.engine.utils.IOUtil;
 import io.chengguo.apidebugger.engine.utils.ViewUtil;
 import io.chengguo.apidebugger.engine.bean.AttachAttribute;
 import io.chengguo.apidebugger.engine.interf.ProgressListener;
@@ -118,7 +118,7 @@ public class MainPresenter implements ProgressListener {
     @Override
     public void onSuccess(HttpResponse response) {
         try {
-            String info = StreamUtil.outputString(response.getEntity().getContent());
+            String info = IOUtil.outputString(response.getEntity().getContent());
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
