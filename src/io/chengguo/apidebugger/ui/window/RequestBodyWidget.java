@@ -7,15 +7,15 @@ import javax.swing.*;
  */
 public class RequestBodyWidget {
     public JPanel container;
-    private JRadioButton mRbformData;
+    private JRadioButton mRbFormData;
     private JRadioButton mRbXWwwFormUrlencoded;
     private JRadioButton mRbRaw;
     private JRadioButton mRbBinary;
     private JPanel bodyContainer;
+    private JTabbedPane tabbedPane1;
 
-    public RequestBodyWidget() {
-//        BodyTypeFormData formData = new BodyTypeFormData();
-//        bodyContainer.add(formData.container);
+    private void createUIComponents() {
+        BodyTypeFormData formData = new BodyTypeFormData();
+        bodyContainer.add(formData.container);
     }
-
 }

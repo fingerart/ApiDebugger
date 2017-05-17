@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * Created by FingerArt on 16/10/7.
  */
-public class StreamUtil {
+public class IOUtil {
 
     /**
      * InputStream convert to String
