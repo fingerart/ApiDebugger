@@ -8,26 +8,28 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="cbe40" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+      <grid id="cbe40" layout-manager="FlowLayout" hgap="0" vgap="5" flow-align="0">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <background color="-6363123"/>
+          <background color="-12828863"/>
         </properties>
         <border type="none"/>
         <children>
           <component id="4fabb" class="javax.swing.JRadioButton" binding="mRbFormData">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                <preferred-size width="93" height="28"/>
-              </grid>
-            </constraints>
+            <constraints/>
             <properties>
+              <contentAreaFilled value="true"/>
+              <focusPainted value="true"/>
+              <focusTraversalPolicyProvider value="false"/>
               <focusable value="true"/>
+              <hideActionText value="false"/>
               <horizontalAlignment value="2"/>
               <horizontalTextPosition value="11"/>
+              <iconTextGap value="0"/>
+              <margin top="1" left="0" bottom="1" right="0"/>
+              <opaque value="true"/>
               <selected value="true"/>
               <text value="form-data"/>
               <verticalAlignment value="0"/>
@@ -35,32 +37,34 @@
             </properties>
           </component>
           <component id="37a" class="javax.swing.JRadioButton" binding="mRbBinary">
-            <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
+            <constraints/>
             <properties>
+              <iconTextGap value="0"/>
+              <inheritsPopupMenu value="false"/>
+              <margin top="1" left="0" bottom="1" right="0"/>
               <text value="binary"/>
             </properties>
           </component>
           <component id="92145" class="javax.swing.JRadioButton" binding="mRbXWwwFormUrlencoded">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
+            <constraints/>
             <properties>
-              <text value="urlencoded"/>
+              <hideActionText value="false"/>
+              <iconTextGap value="0"/>
+              <margin top="1" left="0" bottom="1" right="0"/>
+              <text value="x-www-urlencoded"/>
             </properties>
           </component>
           <component id="e49c9" class="javax.swing.JRadioButton" binding="mRbRaw">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
+            <constraints/>
             <properties>
+              <iconTextGap value="0"/>
+              <margin top="1" left="0" bottom="1" right="0"/>
               <text value="raw"/>
             </properties>
           </component>
         </children>
       </grid>
-      <grid id="23cef" binding="bodyContainer" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="23cef" binding="bodyContainer" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -70,26 +74,24 @@
         </properties>
         <border type="none"/>
         <children>
-          <tabbedpane id="1a086" binding="tabbedPane1" default-binding="true">
+          <component id="4ff54" class="javax.swing.JButton" binding="button1" default-binding="true">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="200" height="200"/>
-              </grid>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <grid id="635ba" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
-                <constraints>
-                  <tabbedpane title="Untitled"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children/>
-              </grid>
-            </children>
-          </tabbedpane>
+            <properties>
+              <text value="Button"/>
+            </properties>
+          </component>
+          <hspacer id="bbe77">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <vspacer id="bc163">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
         </children>
       </grid>
     </children>

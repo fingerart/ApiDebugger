@@ -1,5 +1,7 @@
 package io.chengguo.apidebugger.ui.window;
 
+import com.intellij.uiDesigner.core.GridLayoutManager;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,6 +16,7 @@ public class BodyTypeFormData {
     private JTable table1;
 
     private void createUIComponents() {
+        container = new JPanel(new GridLayoutManager(1, 1));
         DefaultTableModel defaultTableModel = new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_COLUMN_NAMES);
         table1 = new JTable(defaultTableModel);
         table1.getTableHeader().setReorderingAllowed(false);
