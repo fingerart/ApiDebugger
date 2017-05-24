@@ -10,7 +10,6 @@ public class JBDebuggerButton extends JButton {
     public JBDebuggerButton() {
         System.out.println("JBDebuggerButton.JBDebuggerButton");
         setUI(new BasicButtonUI() {
-            
         });
     }
 

@@ -1,4 +1,4 @@
-package io.chengguo.apidebugger.engine.net;
+package io.chengguo.apidebugger.engine.http;
 
 import java.io.File;
 import java.util.HashMap;

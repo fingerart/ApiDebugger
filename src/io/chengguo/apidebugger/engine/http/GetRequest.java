@@ -1,4 +1,4 @@
-package io.chengguo.apidebugger.engine.net;
+package io.chengguo.apidebugger.engine.http;
 
 import io.chengguo.apidebugger.engine.utils.CommonUtil;
 import org.apache.http.client.methods.HttpGet;

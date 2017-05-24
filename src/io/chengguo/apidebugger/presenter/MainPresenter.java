@@ -1,13 +1,13 @@
 package io.chengguo.apidebugger.presenter;
 
 import io.chengguo.apidebugger.engine.component.StateProjectComponent;
-import io.chengguo.apidebugger.engine.net.BaseRequest;
+import io.chengguo.apidebugger.engine.http.BaseRequest;
 import io.chengguo.apidebugger.engine.utils.IOUtil;
 import io.chengguo.apidebugger.engine.utils.ViewUtil;
 import io.chengguo.apidebugger.engine.bean.AttachAttribute;
 import io.chengguo.apidebugger.engine.interf.ProgressListener;
 import io.chengguo.apidebugger.engine.log.Log;
-import io.chengguo.apidebugger.engine.net.ArtHttp;
+import io.chengguo.apidebugger.engine.http.ArtHttp;
 import io.chengguo.apidebugger.engine.utils.CommonUtil;
 import io.chengguo.apidebugger.engine.utils.VerifyUtil;
 import io.chengguo.apidebugger.ui.iview.IMainWindowView;
