@@ -11,7 +11,7 @@ A plug-in used to debug network interface for IntlliJ IDEA.
 
 ## Preview
 
-![preview](./screenshot/proview.gif)
+![preview](screenshot/proview.gif)
 
 ## Changelog
 
