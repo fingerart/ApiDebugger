@@ -1,4 +1,4 @@
-package io.chengguo.apidebugger.engine.net;
+package io.chengguo.apidebugger.engine.http;
 
 import org.apache.http.client.methods.HttpRequestBase;
 
