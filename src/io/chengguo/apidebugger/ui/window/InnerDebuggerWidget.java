@@ -41,7 +41,7 @@ public class InnerDebuggerWidget {
         headerInfo.setText("header");
         requestTabs.addTab(headerInfo);
 
-        TabInfo info2 = new TabInfo(new RequestBodyWidget().container);
+        TabInfo info2 = new TabInfo(new RequestBodyWidget(mProject).container);
         info2.setText("body");
         requestTabs.addTab(info2);
 
