@@ -1,6 +1,8 @@
 package io.chengguo.apidebugger.ui.window;
 
+import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBTabbedPane;
+import com.intellij.ui.components.JBTextField;
 
 import javax.swing.*;
 
@@ -16,7 +18,7 @@ public class RequestBodyWidget {
     private JBTabbedPane bodyContainer;
 
     public RequestBodyWidget() {
-        
+        bodyContainer.addTab("hello", new JBTextField("helloasdfsadf"));
     }
 
     private void createUIComponents() {
