@@ -184,7 +184,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="binary"/>
+                  <text value="选择任何文件……"/>
                 </properties>
               </component>
             </children>

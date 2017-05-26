@@ -5,6 +5,7 @@ import org.apache.http.util.TextUtils;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.util.LinkedHashMap;
 
 /**
@@ -42,5 +43,17 @@ public class ViewUtil {
             result.put(key, value);
         }
         return result;
+    }
+
+    /**
+     * 设置Component的鼠标样式
+     *
+     * @param cursor     鼠标样式
+     * @param components
+     */
+    public static void setCursor(int cursor, Component... components) {
+        for (Component component : components) {
+            component.setCursor(Cursor.getPredefinedCursor(cursor));
+        }
     }
 }

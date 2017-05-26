@@ -23,6 +23,15 @@ public class JBDebuggerTab extends JBEditorTabs {
     }
 
     @Override
+    public Component add(Component comp) {
+        //set tab cursor
+        if (comp instanceof TabLabel) {
+            comp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        }
+        return super.add(comp);
+    }
+
+    @Override
     protected void doPaintInactive(Graphics2D g2d, boolean leftGhostExists, TabLabel label, Rectangle effectiveBounds, boolean rightGhostExists, int row, int column) {
         //Empty
     }
