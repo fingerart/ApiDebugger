@@ -1,13 +1,8 @@
 package io.chengguo.apidebugger.ui.window;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.impl.FocusTrackbackProvider;
 import com.intellij.openapi.wm.ex.IdeFocusTraversalPolicy;
 import com.intellij.ui.EditorTextField;
-import com.intellij.ui.FocusTrackback;
-import com.intellij.ui.components.JBComboBoxLabel;
-import com.intellij.ui.components.JBTextField;
-import com.intellij.ui.components.editors.JBComboBoxTableCellEditorComponent;
 import com.intellij.ui.table.JBTable;
 
 import javax.swing.*;
@@ -18,7 +13,7 @@ import java.awt.event.ActionListener;
 
 import static io.chengguo.apidebugger.engine.utils.Constants.DEFAULT_COLUMN_NAMES;
 import static io.chengguo.apidebugger.engine.utils.Constants.DEFAULT_EMPTY_DATA;
-import static javax.swing.AbstractButton.FOCUS_PAINTED_CHANGED_PROPERTY;
+import static io.chengguo.apidebugger.engine.utils.ViewUtil.setCursor;
 
 /**
  * Created by fingerart on 17/5/17.
@@ -49,9 +44,8 @@ public class RequestBodyWidget {
 
         mEtfRaw.setBorder(null);
         mEtfRaw.setFocusTraversalPolicy(new IdeFocusTraversalPolicy());
-        JBComboBoxTableCellEditorComponent b;
-        JBComboBoxLabel c;
-        JComboBox d;
+
+        setCursor(Cursor.HAND_CURSOR, mRbFormData, mRbXWwwFormUrlencoded, mRbRaw, mRbBinary);
 
         mRbFormData.addActionListener(headerTypeListener);
         mRbXWwwFormUrlencoded.addActionListener(headerTypeListener);
@@ -65,4 +59,5 @@ public class RequestBodyWidget {
             headerTypeCardLayout.show(headerContainer, e.getActionCommand());
         }
     };
+
 }

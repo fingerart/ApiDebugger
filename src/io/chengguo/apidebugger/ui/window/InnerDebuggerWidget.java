@@ -6,10 +6,12 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.IdeFocusManager;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.tabs.TabInfo;
-import groovy.ui.text.TextEditor;
 import io.chengguo.apidebugger.ui.custom.JBDebuggerTab;
 
 import javax.swing.*;
+import java.awt.*;
+
+import static io.chengguo.apidebugger.engine.utils.ViewUtil.setCursor;
 
 /**
  * Debugger inner widget
@@ -20,44 +22,48 @@ public class InnerDebuggerWidget {
     private Disposable parent;
     public JPanel container;
     private JComboBox method;
-    private JButton send;
     private JBTextField uri;
-    private JBDebuggerTab requestTabs;
-    private JBDebuggerTab responseTabs;
+    private JButton send;
+    private JBDebuggerTab reqTabs;
+    private JBDebuggerTab resTabs;
 
     public InnerDebuggerWidget(Project mProject, Disposable parent) {
         this.mProject = mProject;
         this.parent = parent;
-    }
 
-    public JBDebuggerTab getJBDebuggerTab() {
-        return requestTabs;
+        setCursor(Cursor.HAND_CURSOR, method, uri, send);
     }
 
     private void createUIComponents() {
-        requestTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
+        //Request
+        reqTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
 
-        TabInfo headerInfo = new TabInfo(new RequestHeaderWidget().container);
-        headerInfo.setText("header");
-        requestTabs.addTab(headerInfo);
+        TabInfo reqAuthorInfo = new TabInfo(new RequestAuthorizationWidget().container);
+        reqAuthorInfo.setText("Authorization");
+        reqTabs.addTab(reqAuthorInfo);
 
-        TabInfo info2 = new TabInfo(new RequestBodyWidget(mProject).container);
-        info2.setText("body");
-        requestTabs.addTab(info2);
+        TabInfo reqHeaderInfo = new TabInfo(new RequestHeaderWidget().container);
+        reqHeaderInfo.setText("Header");
+        reqTabs.addTab(reqHeaderInfo);
 
-        TextEditor component3 = new TextEditor();
-        component3.setText("Other content");
-        TabInfo info3 = new TabInfo(component3);
-        info3.setText("other");
-        requestTabs.addTab(info3);
+        TabInfo reqBodyInfo = new TabInfo(new RequestBodyWidget(mProject).container);
+        reqBodyInfo.setText("Body");
+        reqTabs.addTab(reqBodyInfo);
 
-        responseTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
+        //Response
+        resTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
 
-        TextEditor component4 = new TextEditor();
-        component4.setText("Other content");
-        TabInfo info4 = new TabInfo(component4);
-        info4.setText("other");
-        responseTabs.addTab(info4);
+        TabInfo resBodyInfo = new TabInfo(new ResponseBodyWidget().container);
+        resBodyInfo.setText("Body");
+        resTabs.addTab(resBodyInfo);
+
+        TabInfo resCookiesInfo = new TabInfo(new ResponseCookieWidget().container);
+        resCookiesInfo.setText("Cookies");
+        resTabs.addTab(resCookiesInfo);
+
+        TabInfo resHeadersInfo = new TabInfo(new ResponseHeaderWidget().container);
+        resHeadersInfo.setText("Headers");
+        resTabs.addTab(resHeadersInfo);
     }
 
 }
