@@ -31,7 +31,7 @@ public class InnerDebuggerWidget {
         this.mProject = mProject;
         this.parent = parent;
 
-        setCursor(Cursor.HAND_CURSOR, method, uri, send);
+        setCursor(Cursor.HAND_CURSOR, method, send);
     }
 
     private void createUIComponents() {

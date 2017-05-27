@@ -2,10 +2,7 @@ package io.chengguo.apidebugger.ui;
 
 import com.google.common.eventbus.Subscribe;
 import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.actionSystem.ActionManager;
-import com.intellij.openapi.actionSystem.ActionPlaces;
-import com.intellij.openapi.actionSystem.ActionToolbar;
-import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.components.AbstractProjectComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
