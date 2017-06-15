@@ -2,17 +2,15 @@ package io.chengguo.apidebugger.ui.window;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.actionSystem.ex.CheckboxAction;
 import com.intellij.openapi.actionSystem.ex.ComboBoxAction;
 import com.intellij.openapi.ui.SimpleToolWindowPanel;
+import io.chengguo.apidebugger.ui.action.CloseTabAction;
+import io.chengguo.apidebugger.ui.custom.JBRadioAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import static io.chengguo.apidebugger.engine.utils.ViewUtil.setCursor;
 
 /**
  * Created by fingerart on 17/5/27.
@@ -20,24 +18,15 @@ import static io.chengguo.apidebugger.engine.utils.ViewUtil.setCursor;
 public class ResponseBodyWidget {
     private CardLayout mPreviewTypeCardLayout;
     public JPanel container;
-    private JRadioButton mRbPretty;
-    private JRadioButton mRbRaw;
-    private JRadioButton mRbPreview;
     private JPanel previewTypeContainer;
-    private JComboBox mCbFormatType;
-    private JButton mBtnWrapLine;
+
     private JTextPane previewTextPane;
     private JPanel mPrettyContainer;
     private SimpleToolWindowPanel simpleToolWindowPanel1;
+    private JTextPane asdfasfTextPane;
 
     public ResponseBodyWidget() {
         mPreviewTypeCardLayout = ((CardLayout) previewTypeContainer.getLayout());
-
-        setCursor(Cursor.HAND_CURSOR, mRbPretty, mRbRaw, mRbPreview, mCbFormatType, mBtnWrapLine);
-
-        mRbPretty.addActionListener(mPreviewType);
-        mRbRaw.addActionListener(mPreviewType);
-        mRbPreview.addActionListener(mPreviewType);
     }
 
     private void createUIComponents() {
@@ -49,7 +38,7 @@ public class ResponseBodyWidget {
                 return new DefaultActionGroup(new AnAction("one", "this is one", AllIcons.Actions.ShowReadAccess) {
                     @Override
                     public void actionPerformed(AnActionEvent anActionEvent) {
-
+                        
                     }
                 }, new AnAction("two", "this is two", AllIcons.Actions.AllRight) {
                     @Override
@@ -59,34 +48,20 @@ public class ResponseBodyWidget {
                 });
             }
         };
-        ActionGroup group = new DefaultActionGroup(new CheckboxAction("Pretty", "show Pretty", AllIcons.Actions.ShowReadAccess) {
-            boolean is;
 
-            @Override
-            public boolean isSelected(AnActionEvent anActionEvent) {
-                return is;
-            }
+        ActionListener mPreviewType = e -> {
+            System.out.println("ResponseBodyWidget.actionPerformed");
+            mPreviewTypeCardLayout.show(previewTypeContainer, e.getActionCommand());
+        };
 
-            @Override
-            public void setSelected(AnActionEvent anActionEvent, boolean state) {
-                try {
-                    Class<?> clazz = Class.forName("com.intellij.openapi.editor.actions.ToggleUseSoftWrapsMenuAction");
-                    System.out.println(clazz);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                is = state;
-            }
-        }, comboBoxAction);
+        ButtonGroup buttonGroup = new ButtonGroup();
+        ActionGroup group = new DefaultActionGroup(new JBRadioAction("Pretty", "Pretty", buttonGroup, mPreviewType, true),
+                new JBRadioAction("Raw", "Raw", buttonGroup, mPreviewType),
+                new JBRadioAction("Preview", "Preview", buttonGroup, mPreviewType),
+                comboBoxAction,
+                new CloseTabAction(null));
         ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.UNKNOWN, group, true);
         simpleToolWindowPanel1.setToolbar(toolbar.getComponent());
         simpleToolWindowPanel1.setContent(new JPanel(new BorderLayout()));
     }
-
-    private final ActionListener mPreviewType = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            mPreviewTypeCardLayout.show(previewTypeContainer, e.getActionCommand());
-        }
-    };
 }
