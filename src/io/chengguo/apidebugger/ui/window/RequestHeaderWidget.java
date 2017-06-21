@@ -19,6 +19,8 @@ public class RequestHeaderWidget {
         DefaultTableModel defaultTableModel = new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_COLUMN_NAMES);
         headers.setModel(defaultTableModel);
         headers.getTableHeader().setReorderingAllowed(false);
+    }
 
+    private void createUIComponents() {
     }
 }

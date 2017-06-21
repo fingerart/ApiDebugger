@@ -2,9 +2,9 @@ package io.chengguo.apidebugger.ui.window;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.actionSystem.ex.ComboBoxAction;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.SimpleToolWindowPanel;
-import io.chengguo.apidebugger.ui.action.CloseTabAction;
+import io.chengguo.apidebugger.ui.custom.JBComboBoxAction;
 import io.chengguo.apidebugger.ui.custom.JBRadioAction;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
  * Created by fingerart on 17/5/27.
  */
 public class ResponseBodyWidget {
+    private Project mProject;
     private CardLayout mPreviewTypeCardLayout;
     public JPanel container;
     private JPanel previewTypeContainer;
@@ -23,45 +24,65 @@ public class ResponseBodyWidget {
     private JTextPane previewTextPane;
     private JPanel mPrettyContainer;
     private SimpleToolWindowPanel simpleToolWindowPanel1;
-    private JTextPane asdfasfTextPane;
 
-    public ResponseBodyWidget() {
+    public ResponseBodyWidget(Project project) {
+        mProject = project;
         mPreviewTypeCardLayout = ((CardLayout) previewTypeContainer.getLayout());
     }
 
     private void createUIComponents() {
         simpleToolWindowPanel1 = new SimpleToolWindowPanel(true, true);
-        ComboBoxAction comboBoxAction = new ComboBoxAction() {
-            @NotNull
-            @Override
-            protected DefaultActionGroup createPopupActionGroup(JComponent jComponent) {
-                return new DefaultActionGroup(new AnAction("one", "this is one", AllIcons.Actions.ShowReadAccess) {
-                    @Override
-                    public void actionPerformed(AnActionEvent anActionEvent) {
-                        
-                    }
-                }, new AnAction("two", "this is two", AllIcons.Actions.AllRight) {
+        JBComboBoxAction comboBoxAction = createFormatTypeComboAction();
+
+        ActionListener previewTypeListener = e -> mPreviewTypeCardLayout.show(previewTypeContainer, e.getActionCommand());
+
+        ButtonGroup buttonGroup = new ButtonGroup();
+        ActionGroup group = new DefaultActionGroup(new JBRadioAction("Pretty", "Pretty", buttonGroup, previewTypeListener, true),
+                new JBRadioAction("Raw", "Raw", buttonGroup, previewTypeListener),
+                new JBRadioAction("Preview", "Preview", buttonGroup, previewTypeListener),
+                comboBoxAction,
+                new AnAction("wrap", "wrap", AllIcons.Actions.ToggleSoftWrap) {
                     @Override
                     public void actionPerformed(AnActionEvent anActionEvent) {
 
                     }
                 });
-            }
-        };
 
-        ActionListener mPreviewType = e -> {
-            System.out.println("ResponseBodyWidget.actionPerformed");
-            mPreviewTypeCardLayout.show(previewTypeContainer, e.getActionCommand());
-        };
-
-        ButtonGroup buttonGroup = new ButtonGroup();
-        ActionGroup group = new DefaultActionGroup(new JBRadioAction("Pretty", "Pretty", buttonGroup, mPreviewType, true),
-                new JBRadioAction("Raw", "Raw", buttonGroup, mPreviewType),
-                new JBRadioAction("Preview", "Preview", buttonGroup, mPreviewType),
-                comboBoxAction,
-                new CloseTabAction(null));
         ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.UNKNOWN, group, true);
         simpleToolWindowPanel1.setToolbar(toolbar.getComponent());
         simpleToolWindowPanel1.setContent(new JPanel(new BorderLayout()));
+    }
+
+    /**
+     * create format combo
+     *
+     * @return
+     */
+    @NotNull
+    private JBComboBoxAction createFormatTypeComboAction() {
+        return new JBComboBoxAction() {
+            private JBComboBoxAction formatCombo = this;
+            private final String[] TYPES = {"HTML", "JSON", "XML", "Text", "Auto"};
+
+            @Override
+            public void update(AnActionEvent e) {
+                e.getPresentation().setText(TYPES[0]);
+            }
+
+            @NotNull
+            @Override
+            protected DefaultActionGroup createPopupActionGroup(JComponent jComponent) {
+                DefaultActionGroup group = new DefaultActionGroup();
+                for (String type : TYPES) {
+                    group.add(new AnAction(type) {
+                        @Override
+                        public void actionPerformed(AnActionEvent anActionEvent) {
+                            formatCombo.getTemplatePresentation().setText(anActionEvent.getPresentation().getText());
+                        }
+                    });
+                }
+                return group;
+            }
+        };
     }
 }
