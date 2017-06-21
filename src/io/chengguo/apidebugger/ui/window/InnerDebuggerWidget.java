@@ -53,7 +53,7 @@ public class InnerDebuggerWidget {
         //Response
         resTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
 
-        TabInfo resBodyInfo = new TabInfo(new ResponseBodyWidget().container);
+        TabInfo resBodyInfo = new TabInfo(new ResponseBodyWidget(mProject).container);
         resBodyInfo.setText("Body");
         resTabs.addTab(resBodyInfo);
 

@@ -21,18 +21,18 @@
               <card name="Pretty"/>
             </constraints>
             <properties>
-              <visible value="true"/>
+              <visible value="false"/>
             </properties>
             <border type="none" title=""/>
             <children>
-              <component id="104f3" class="javax.swing.JTextPane" binding="asdfasfTextPane" default-binding="true">
+              <component id="104f3" class="javax.swing.JTextPane" default-binding="true">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="asdfasf"/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
