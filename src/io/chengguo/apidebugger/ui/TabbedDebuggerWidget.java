@@ -43,12 +43,7 @@ public class TabbedDebuggerWidget extends JPanel implements ITabbedDebuggerWidge
     }
 
     private DebuggerTabsIml.DebuggerTabListener createTabsListener() {
-        return new DebuggerTabsIml.DebuggerTabListener() {
-            @Override
-            public void onLast() {
-                removeTabbedPanel();
-            }
-        };
+        return () -> removeTabbedPanel();
     }
 
     private void removeTabbedPanel() {

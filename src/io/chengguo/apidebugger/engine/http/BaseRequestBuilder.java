@@ -2,6 +2,7 @@ package io.chengguo.apidebugger.engine.http;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by FingerArt on 16/10/7.
@@ -29,7 +30,7 @@ public abstract class BaseRequestBuilder<T> {
         return (T) this;
     }
 
-    public T addHeader(HashMap<String, String> headers) {
+    public T addHeader(Map<String, String> headers) {
         mHeaders.putAll(headers);
         return (T) this;
     }
@@ -50,7 +51,7 @@ public abstract class BaseRequestBuilder<T> {
         return (T) this;
     }
 
-    public synchronized T addParam(HashMap<String, String> params) {
+    public synchronized T addParam(Map<String, String> params) {
         if (mParamStr == null) {
             mParamStr = new LinkedHashMap<>();
         }
