@@ -8,10 +8,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * formData
  * Created by FingerArt on 16/10/7.
  */
 public class FormRequest extends BaseRequest {
-    private LinkedHashMap<String, File> mParamFile;
+    protected LinkedHashMap<String, File> mParamFile;
 
     public FormRequest(FormRequestBuilder builder) {
         super(builder);

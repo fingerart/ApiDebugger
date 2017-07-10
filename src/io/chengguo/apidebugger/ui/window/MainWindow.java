@@ -10,7 +10,7 @@ import io.chengguo.apidebugger.engine.bean.AttachAttribute;
 import io.chengguo.apidebugger.engine.component.StateProjectComponent;
 import io.chengguo.apidebugger.engine.utils.CommonUtil;
 import io.chengguo.apidebugger.engine.utils.ViewUtil;
-import io.chengguo.apidebugger.presenter.MainPresenter;
+import io.chengguo.apidebugger.presenter.OldMainPresenter;
 import io.chengguo.apidebugger.ui.iview.IMainWindowView;
 import org.apache.http.util.TextUtils;
 
@@ -61,7 +61,7 @@ public class MainWindow extends IMainWindowView implements ActionListener {
     private static final String[][] DEFAULT_DATA = {{"code", "1"}, {"changeLog", ""}};
     private static final String[][] DEFAULT_EMPTY_DATA = {{"", ""}};
     private DefaultTableModel mParamsModel;
-    private MainPresenter mPresenter;
+    private OldMainPresenter mPresenter;
 
     private boolean uploading;
     private DefaultTableModel mHeadersModel;

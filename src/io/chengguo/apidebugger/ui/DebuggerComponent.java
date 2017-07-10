@@ -93,6 +93,7 @@ public class DebuggerComponent extends AbstractProjectComponent {
     private ITabbedDebuggerWidget createContent(Content content) {
         ITabbedDebuggerWidget debuggerWidget = new TabbedDebuggerWidget(mProject, content);
         debuggerWidget.createDebuggerSession();
+
         return debuggerWidget;
     }
 

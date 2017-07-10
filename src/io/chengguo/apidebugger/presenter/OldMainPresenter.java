@@ -22,11 +22,11 @@ import java.util.LinkedHashMap;
 /**
  * Created by FingerArt on 16/10/1.
  */
-public class MainPresenter implements ProgressListener {
+public class OldMainPresenter implements ProgressListener {
 
     private IMainWindowView mView;
 
-    public MainPresenter(IMainWindowView view) {
+    public OldMainPresenter(IMainWindowView view) {
         mView = view;
     }
 
@@ -138,7 +138,7 @@ public class MainPresenter implements ProgressListener {
 
     @Override
     public void onFinish() {
-        Log.i("MainPresenter.onFinish");
+        Log.i("OldMainPresenter.onFinish");
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
