@@ -132,7 +132,7 @@ public class OldMainPresenter implements ProgressListener {
     }
 
     @Override
-    public void onError(IOException e) {
+    public void onError(Exception e) {
         Log.e(e.getMessage());
     }
 

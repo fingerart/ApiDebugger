@@ -3,11 +3,10 @@ package io.chengguo.apidebugger.presenter;
 import io.chengguo.apidebugger.engine.http.ArtHttp;
 import io.chengguo.apidebugger.engine.http.FormRequestBuilder;
 import io.chengguo.apidebugger.engine.interf.ArtHttpListener;
-import io.chengguo.apidebugger.ui.iview.HttpInterf;
+import io.chengguo.apidebugger.ui.iview.IHttpView;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.TextUtils;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -15,26 +14,26 @@ import java.util.Map;
  */
 public class DebuggerSession implements ArtHttpListener {
 
-    private HttpInterf mView;
+    private IHttpView mView;
 
-    public DebuggerSession(HttpInterf view) {
+    public DebuggerSession(IHttpView view) {
         mView = view;
     }
 
     /**
      * 执行http请求
      */
-    public void execte() {
+    public void execute() {
         String url = mView.url().trim();
         if (validUrl(url)) {
             System.out.println("url not empty");
             return;
         }
         switch (mView.method()) {
-            case "get":
+            case "GET":
                 get(url);
                 break;
-            case "post":
+            case "POST":
                 post(url);
                 break;
         }
@@ -52,7 +51,10 @@ public class DebuggerSession implements ArtHttpListener {
     private void post(String url) {
         Map<String, String> headers = mView.headers();
 
-        FormRequestBuilder builder = ArtHttp.post().url(url).addHeader(headers);
+        FormRequestBuilder builder =
+                ArtHttp.post()
+                        .url(url)
+                        .addHeader(headers);
 
         String bodyType = mView.bodyType();
         switch (bodyType) {
@@ -62,15 +64,16 @@ public class DebuggerSession implements ArtHttpListener {
                 break;
             case "xWwwUrlencoded":
                 Map<String, String> urlencode = mView.bodyUrlencode();
-                builder.addParam(urlencode).xWwwUrlencoded();
+                builder.addParam(urlencode)
+                        .xWwwUrlencoded()
+                        .build()
+                        .execute(this);
                 break;
             case "raw":
                 break;
             case "binary":
                 break;
         }
-
-        builder.build().execute(this);
     }
 
     private boolean validUrl(String url) {
@@ -79,22 +82,22 @@ public class DebuggerSession implements ArtHttpListener {
 
     @Override
     public void onPre() {
-
+        System.out.println("DebuggerSession.onPre");
     }
 
     @Override
     public void onSuccess(HttpResponse response) {
-
+        System.out.println("response = [" + response + "]");
     }
 
     @Override
-    public void onError(IOException e) {
-
+    public void onError(Exception e) {
+        System.out.println("e = [" + e + "]");
     }
 
     @Override
     public void onFinish() {
-
+        System.out.println("DebuggerSession.onFinish");
     }
 }
 

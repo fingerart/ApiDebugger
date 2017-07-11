@@ -2,7 +2,7 @@ package io.chengguo.apidebugger.ui.iview;
 
 import java.util.Map;
 
-public interface HttpInterf {
+public interface IHttpView {
 
         /**
          * 获取Method
