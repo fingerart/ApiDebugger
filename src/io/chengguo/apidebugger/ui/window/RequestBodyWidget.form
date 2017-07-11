@@ -92,7 +92,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="75f6c" class="com.intellij.ui.table.JBTable" binding="mformData">
+                  <component id="75f6c" class="com.intellij.ui.table.JBTable" binding="mFormData">
                     <constraints/>
                     <properties>
                       <autoResizeMode value="2"/>
@@ -194,7 +194,7 @@
     </children>
   </grid>
   <buttonGroups>
-    <group name="Type-Body">
+    <group name="TypeBody" bound="true">
       <member id="4fabb"/>
       <member id="92145"/>
       <member id="e49c9"/>

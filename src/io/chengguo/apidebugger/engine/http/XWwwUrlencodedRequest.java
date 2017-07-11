@@ -27,6 +27,7 @@ public class XWwwUrlencodedRequest extends FormRequest {
         ArtHttp.addTag(post.toString(), post);
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(parameters, Charset.forName("UTF-8"));
         post.setEntity(entity);
+
         return post;
     }
 

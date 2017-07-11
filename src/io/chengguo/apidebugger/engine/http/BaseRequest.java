@@ -63,7 +63,7 @@ public abstract class BaseRequest<T> implements Runnable {
             mCallback.onPre();
             HttpResponse response = execute();
             mCallback.onSuccess(response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             mCallback.onError(e);
         } finally {
             mCallback.onFinish();

@@ -71,12 +71,29 @@
         </constraints>
         <properties/>
       </component>
-      <component id="2d824" class="io.chengguo.apidebugger.ui.custom.JBDebuggerTab" binding="resTabs" custom-create="true">
+      <grid id="2077a" layout-manager="CardLayout" hgap="0" vgap="0">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
-      </component>
+        <border type="none"/>
+        <children>
+          <component id="42d83" class="com.intellij.ui.components.JBTextField" binding="文字JBTextField" default-binding="true">
+            <constraints>
+              <card name="Card2"/>
+            </constraints>
+            <properties>
+              <text value="文字"/>
+            </properties>
+          </component>
+          <component id="2d824" class="io.chengguo.apidebugger.ui.custom.JBDebuggerTab" binding="resTabs" custom-create="true">
+            <constraints>
+              <card name="Card1"/>
+            </constraints>
+            <properties/>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

@@ -8,7 +8,7 @@ import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.tabs.TabInfo;
 import io.chengguo.apidebugger.presenter.DebuggerSession;
 import io.chengguo.apidebugger.ui.custom.JBDebuggerTab;
-import io.chengguo.apidebugger.ui.iview.HttpInterf;
+import io.chengguo.apidebugger.ui.iview.IHttpView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ import static io.chengguo.apidebugger.engine.utils.ViewUtil.setCursor;
  * Debugger inner widget
  * Created by fingerart on 17/2/28.
  */
-public class InnerDebuggerWidget implements HttpInterf, ActionListener {
+public class InnerDebuggerWidget implements IHttpView, ActionListener {
     private Project mProject;
     private Disposable parent;
     public JPanel container;
@@ -31,7 +31,10 @@ public class InnerDebuggerWidget implements HttpInterf, ActionListener {
     private JButton send;
     private JBDebuggerTab reqTabs;
     private JBDebuggerTab resTabs;
+    private JBTextField 文字JBTextField;
     private DebuggerSession mSession;
+    private RequestBodyWidget requestBodyWidget;
+    private RequestHeaderWidget requestHeaderWidget;
 
     public InnerDebuggerWidget(Project mProject, Disposable parent) {
         this.mProject = mProject;
@@ -51,11 +54,13 @@ public class InnerDebuggerWidget implements HttpInterf, ActionListener {
         reqAuthorInfo.setText("Authorization");
         reqTabs.addTab(reqAuthorInfo);
 
-        TabInfo reqHeaderInfo = new TabInfo(new RequestHeaderWidget().container);
+        requestHeaderWidget = new RequestHeaderWidget();
+        TabInfo reqHeaderInfo = new TabInfo(requestHeaderWidget.container);
         reqHeaderInfo.setText("Header");
         reqTabs.addTab(reqHeaderInfo);
 
-        TabInfo reqBodyInfo = new TabInfo(new RequestBodyWidget(mProject).container);
+        requestBodyWidget = new RequestBodyWidget(mProject);
+        TabInfo reqBodyInfo = new TabInfo(requestBodyWidget.container);
         reqBodyInfo.setText("Body");
         reqTabs.addTab(reqBodyInfo);
 
@@ -77,7 +82,7 @@ public class InnerDebuggerWidget implements HttpInterf, ActionListener {
 
     @Override
     public String method() {
-        return method.getActionCommand();
+        return method.getSelectedItem().toString();
     }
 
     @Override
@@ -87,25 +92,23 @@ public class InnerDebuggerWidget implements HttpInterf, ActionListener {
 
     @Override
     public Map<String, String> headers() {
-
-        return null;
+        return requestHeaderWidget.headers();
     }
 
     @Override
     public String bodyType() {
-
-        return null;
+        return requestBodyWidget.bodyType();
     }
-
 
     @Override
     public Map<String, String> bodyFormData() {
+
         return null;
     }
 
     @Override
     public Map<String, String> bodyUrlencode() {
-        return null;
+        return requestBodyWidget.bodyUrlencode();
     }
 
     @Override
@@ -121,8 +124,8 @@ public class InnerDebuggerWidget implements HttpInterf, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "send":
-                mSession.execte();
+            case "Send":
+                mSession.execute();
                 break;
         }
     }
