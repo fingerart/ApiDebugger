@@ -15,7 +15,7 @@ public abstract class BaseRequestBuilder<T> {
 
     public BaseRequestBuilder() {
         mHeaders = new LinkedHashMap<>();
-        mHeaders.put("User-Agent", "ApiDebugger");
+        mHeaders.put("User-Agent", "ApiDebugger v2.0.1");
     }
 
     public abstract BaseRequest build();

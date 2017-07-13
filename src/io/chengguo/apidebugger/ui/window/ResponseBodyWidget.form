@@ -8,24 +8,25 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="118dc" binding="previewTypeContainer" layout-manager="CardLayout" hgap="0" vgap="-1">
+      <grid id="118dc" binding="previewTypeContainer" layout-manager="CardLayout" hgap="0" vgap="-1" show="25110">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="25110" binding="mPrettyContainer" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="25110" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <card name="Pretty"/>
             </constraints>
             <properties>
+              <minimumSize width="154" height="54"/>
               <visible value="false"/>
             </properties>
-            <border type="none" title=""/>
+            <border type="empty" title=""/>
             <children>
-              <component id="104f3" class="javax.swing.JTextPane" default-binding="true">
+              <component id="fca86" class="javax.swing.JTextPane" default-binding="true">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -43,9 +44,9 @@
               <card name="Raw"/>
             </constraints>
             <properties/>
-            <border type="none"/>
+            <border type="empty"/>
             <children>
-              <component id="8c4f2" class="javax.swing.JTextPane" default-binding="true">
+              <component id="8c4f2" class="javax.swing.JTextPane" binding="rawTextPane">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -63,7 +64,7 @@
               <card name="Preview"/>
             </constraints>
             <properties/>
-            <border type="none"/>
+            <border type="empty"/>
             <children>
               <component id="ea70b" class="javax.swing.JTextPane" binding="previewTextPane" default-binding="true">
                 <constraints>

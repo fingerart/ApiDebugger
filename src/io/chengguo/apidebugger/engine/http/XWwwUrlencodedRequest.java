@@ -1,14 +1,17 @@
 package io.chengguo.apidebugger.engine.http;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.TextUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fingerart on 17/7/11.
@@ -19,16 +22,10 @@ public class XWwwUrlencodedRequest extends FormRequest {
         super(builder);
     }
 
+    @NotNull
     @Override
-    protected HttpRequestBase getRelRequest() {
-        List<? extends NameValuePair> parameters = buildParams();
-
-        HttpPost post = new HttpPost(mUrl);
-        ArtHttp.addTag(post.toString(), post);
-        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(parameters, Charset.forName("UTF-8"));
-        post.setEntity(entity);
-
-        return post;
+    protected HttpEntity getEntity() {
+        return new UrlEncodedFormEntity(buildParams(), Charset.forName("UTF-8"));
     }
 
     private List<? extends NameValuePair> buildParams() {

@@ -3,10 +3,15 @@ package io.chengguo.apidebugger.presenter;
 import io.chengguo.apidebugger.engine.http.ArtHttp;
 import io.chengguo.apidebugger.engine.http.FormRequestBuilder;
 import io.chengguo.apidebugger.engine.interf.ArtHttpListener;
+import io.chengguo.apidebugger.engine.log.Log;
+import io.chengguo.apidebugger.engine.utils.IOUtil;
 import io.chengguo.apidebugger.ui.iview.IHttpView;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.TextUtils;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -70,8 +75,19 @@ public class DebuggerSession implements ArtHttpListener {
                         .execute(this);
                 break;
             case "raw":
+                String raw = mView.bodyRaw();
+                builder.raw()
+                        .addRaw(raw)
+                        .build()
+                        .execute(this);
                 break;
             case "binary":
+                String filePath = mView.bodyBinary();
+                File file = new File(filePath);
+                builder.binary()
+                        .addFile(file)
+                        .build()
+                        .execute(this);
                 break;
         }
     }
@@ -87,7 +103,13 @@ public class DebuggerSession implements ArtHttpListener {
 
     @Override
     public void onSuccess(HttpResponse response) {
-        System.out.println("response = [" + response + "]");
+        try {
+            String text = IOUtil.outputString(response.getEntity().getContent());
+            Log.d(text);
+            SwingUtilities.invokeLater(() -> mView.showRaw(text));
+        } catch (IOException e) {
+            Log.e(e);
+        }
     }
 
     @Override

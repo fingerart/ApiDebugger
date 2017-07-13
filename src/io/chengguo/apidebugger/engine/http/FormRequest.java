@@ -1,7 +1,9 @@
 package io.chengguo.apidebugger.engine.http;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.LinkedHashMap;
@@ -23,6 +25,12 @@ public class FormRequest extends BaseRequest {
     protected HttpRequestBase getRelRequest() {
         HttpPost post = new HttpPost(mUrl);
         ArtHttp.addTag(post.toString(), post);
+        post.setEntity(getEntity());
+        return post;
+    }
+
+    @NotNull
+    protected HttpEntity getEntity() {
         ProgressMultipartEntity entity = new ProgressMultipartEntity(mCallback);
         entity.addPart(mParams);
         if (mParamFile != null) {
@@ -30,7 +38,6 @@ public class FormRequest extends BaseRequest {
                 entity.addPart(entry.getKey(), entry.getValue());
             }
         }
-        post.setEntity(entity);
-        return post;
+        return entity;
     }
 }
