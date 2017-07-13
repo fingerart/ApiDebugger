@@ -35,6 +35,14 @@ public class FormRequestBuilder extends BaseRequestBuilder<FormRequestBuilder> {
         return new XWwwUrlencodedRequestBuilder(this);
     }
 
+    public synchronized RawRequestBuilder raw() {
+        return new RawRequestBuilder(this);
+    }
+
+    public synchronized BinaryRequestBuilder binary() {
+        return new BinaryRequestBuilder(this);
+    }
+
     @Override
     public FormRequest build() {
         return new FormRequest(this);

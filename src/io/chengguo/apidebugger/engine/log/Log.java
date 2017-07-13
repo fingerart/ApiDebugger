@@ -16,4 +16,8 @@ public class Log implements ILog {
     public static void e(String message) {
         System.out.println(message);
     }
+
+    public static void e(Throwable throwable) {
+        throwable.printStackTrace();
+    }
 }

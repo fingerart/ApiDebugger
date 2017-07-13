@@ -31,9 +31,10 @@ public interface IHttpView {
 
         Map<String, String> bodyUrlencode();
 
-        Map<String, String> bodyRaw();
+        String bodyRaw();
 
         String bodyBinary();
 
 
-    }
+    void showRaw(String text);
+}

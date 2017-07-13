@@ -22,8 +22,8 @@ public class ResponseBodyWidget {
     private JPanel previewTypeContainer;
 
     private JTextPane previewTextPane;
-    private JPanel mPrettyContainer;
     private SimpleToolWindowPanel simpleToolWindowPanel1;
+    private JTextPane rawTextPane;
 
     public ResponseBodyWidget(Project project) {
         mProject = project;
@@ -84,5 +84,9 @@ public class ResponseBodyWidget {
                 return group;
             }
         };
+    }
+
+    public void showRaw(String text) {
+        rawTextPane.setText(text);
     }
 }

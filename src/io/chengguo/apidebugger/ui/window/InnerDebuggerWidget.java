@@ -31,10 +31,14 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
     private JButton send;
     private JBDebuggerTab reqTabs;
     private JBDebuggerTab resTabs;
-    private JBTextField 文字JBTextField;
+    private JPanel resContainer;
+    private JPanel tipsContainer;
+    private JPanel resContentContainer;
     private DebuggerSession mSession;
     private RequestBodyWidget requestBodyWidget;
     private RequestHeaderWidget requestHeaderWidget;
+    private CardLayout resContainerCardLayout;
+    private ResponseBodyWidget responseBodyWidget;
 
     public InnerDebuggerWidget(Project mProject, Disposable parent) {
         this.mProject = mProject;
@@ -42,6 +46,7 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
 
         mSession = new DebuggerSession(this);
 
+        resContainerCardLayout = ((CardLayout) resContainer.getLayout());
         setCursor(Cursor.HAND_CURSOR, method, send);
         send.addActionListener(this);
     }
@@ -64,10 +69,14 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
         reqBodyInfo.setText("Body");
         reqTabs.addTab(reqBodyInfo);
 
+        //Response Container
+//        resContainerCardLayout.show(resContainer, "Content");
+
         //Response
         resTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
 
-        TabInfo resBodyInfo = new TabInfo(new ResponseBodyWidget(mProject).container);
+        responseBodyWidget = new ResponseBodyWidget(mProject);
+        TabInfo resBodyInfo = new TabInfo(responseBodyWidget.container);
         resBodyInfo.setText("Body");
         resTabs.addTab(resBodyInfo);
 
@@ -112,13 +121,18 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
     }
 
     @Override
-    public Map<String, String> bodyRaw() {
-        return null;
+    public String bodyRaw() {
+        return requestBodyWidget.bodyRaw();
     }
 
     @Override
     public String bodyBinary() {
-        return null;
+        return requestBodyWidget.bodyBinary();
+    }
+
+    @Override
+    public void showRaw(String text) {
+        responseBodyWidget.showRaw(text);
     }
 
     @Override
