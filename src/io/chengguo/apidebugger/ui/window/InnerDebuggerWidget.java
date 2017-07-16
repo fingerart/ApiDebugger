@@ -4,6 +4,7 @@ import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.IdeFocusManager;
+import com.intellij.ui.JBSplitter;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.tabs.TabInfo;
 import io.chengguo.apidebugger.presenter.DebuggerSession;
@@ -29,15 +30,12 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
     private JComboBox method;
     private JBTextField uri;
     private JButton send;
+    private JBSplitter jb;
     private JBDebuggerTab reqTabs;
     private JBDebuggerTab resTabs;
-    private JPanel resContainer;
-    private JPanel tipsContainer;
-    private JPanel resContentContainer;
     private DebuggerSession mSession;
     private RequestBodyWidget requestBodyWidget;
     private RequestHeaderWidget requestHeaderWidget;
-    private CardLayout resContainerCardLayout;
     private ResponseBodyWidget responseBodyWidget;
 
     public InnerDebuggerWidget(Project mProject, Disposable parent) {
@@ -46,12 +44,9 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
 
         mSession = new DebuggerSession(this);
 
-        resContainerCardLayout = ((CardLayout) resContainer.getLayout());
         setCursor(Cursor.HAND_CURSOR, method, send);
         send.addActionListener(this);
-    }
 
-    private void createUIComponents() {
         //Request
         reqTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
 
@@ -69,9 +64,6 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
         reqBodyInfo.setText("Body");
         reqTabs.addTab(reqBodyInfo);
 
-        //Response Container
-//        resContainerCardLayout.show(resContainer, "Content");
-
         //Response
         resTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
 
@@ -87,6 +79,9 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
         TabInfo resHeadersInfo = new TabInfo(new ResponseHeaderWidget().container);
         resHeadersInfo.setText("Headers");
         resTabs.addTab(resHeadersInfo);
+
+        jb.setFirstComponent(reqTabs);
+        jb.setSecondComponent(resTabs);
     }
 
     @Override
@@ -131,8 +126,18 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
     }
 
     @Override
+    public void showPretty(String text) {
+        responseBodyWidget.showPretty(text);
+    }
+
+    @Override
     public void showRaw(String text) {
         responseBodyWidget.showRaw(text);
+    }
+
+    @Override
+    public void showPreview(String text) {
+        responseBodyWidget.showPreview(text);
     }
 
     @Override

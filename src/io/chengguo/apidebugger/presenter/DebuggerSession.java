@@ -8,6 +8,8 @@ import io.chengguo.apidebugger.engine.utils.IOUtil;
 import io.chengguo.apidebugger.ui.iview.IHttpView;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.TextUtils;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import javax.swing.*;
 import java.io.File;
@@ -63,25 +65,25 @@ public class DebuggerSession implements ArtHttpListener {
 
         String bodyType = mView.bodyType();
         switch (bodyType) {
-            case "formData"://todo 情况复杂！！
+            case "FormData"://todo 情况复杂！！
                 Map<String, String> formData = mView.bodyFormData();
                 builder.addParam(formData);
                 break;
-            case "xWwwUrlencoded":
+            case "XWwwFormUrlencoded":
                 Map<String, String> urlencode = mView.bodyUrlencode();
                 builder.addParam(urlencode)
                         .xWwwUrlencoded()
                         .build()
                         .execute(this);
                 break;
-            case "raw":
+            case "Raw":
                 String raw = mView.bodyRaw();
                 builder.raw()
                         .addRaw(raw)
                         .build()
                         .execute(this);
                 break;
-            case "binary":
+            case "Binary":
                 String filePath = mView.bodyBinary();
                 File file = new File(filePath);
                 builder.binary()
@@ -89,6 +91,8 @@ public class DebuggerSession implements ArtHttpListener {
                         .build()
                         .execute(this);
                 break;
+            default:
+                Log.e("error type");
         }
     }
 
@@ -105,8 +109,16 @@ public class DebuggerSession implements ArtHttpListener {
     public void onSuccess(HttpResponse response) {
         try {
             String text = IOUtil.outputString(response.getEntity().getContent());
-            Log.d(text);
-            SwingUtilities.invokeLater(() -> mView.showRaw(text));
+            JSONObject jsonObject = new JSONObject(text);
+            String json = jsonObject.toString(2);
+            Log.d(json);
+            SwingUtilities.invokeLater(() -> {
+                mView.showPretty(json);
+                mView.showRaw(text);
+                mView.showPreview(json);
+            });
+        } catch (JSONException e) {
+            Log.e(e);
         } catch (IOException e) {
             Log.e(e);
         }

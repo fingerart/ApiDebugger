@@ -5,5 +5,5 @@ package io.chengguo.apidebugger.engine.utils;
  */
 public interface Constants {
     String[] DEFAULT_COLUMN_NAMES = {"Key", "Value"};
-    String[][] DEFAULT_EMPTY_DATA = {{"", ""}};
+    String[][] DEFAULT_EMPTY_DATA = {{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},{"", ""},};
 }
