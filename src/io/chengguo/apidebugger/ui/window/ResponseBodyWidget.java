@@ -24,6 +24,7 @@ public class ResponseBodyWidget {
     private JTextPane previewTextPane;
     private SimpleToolWindowPanel simpleToolWindowPanel1;
     private JTextPane rawTextPane;
+    private JTextPane prettyTextPane;
 
     public ResponseBodyWidget(Project project) {
         mProject = project;
@@ -86,7 +87,15 @@ public class ResponseBodyWidget {
         };
     }
 
+    public void showPretty(String text) {
+        prettyTextPane.setText(text);
+    }
+
     public void showRaw(String text) {
         rawTextPane.setText(text);
+    }
+
+    public void showPreview(String text) {
+        previewTextPane.setText(text);
     }
 }

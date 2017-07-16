@@ -23,9 +23,6 @@ public class RequestHeaderWidget {
         headers.getTableHeader().setReorderingAllowed(false);
     }
 
-    private void createUIComponents() {
-    }
-
     public Map<String, String> headers() {
         return ViewUtil.getTableContent(headers.getModel());
     }
