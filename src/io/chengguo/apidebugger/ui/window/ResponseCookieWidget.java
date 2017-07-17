@@ -13,13 +13,10 @@ public class ResponseCookieWidget {
     private JBList cookiesJBList;
 
     public ResponseCookieWidget() {
-        cookiesJBList.getEmptyText().setText("暂无Cookie");
-        Vector listData = new Vector();
-        listData.add("item1");
-        listData.add("item2");
-        listData.add("item3");
-        listData.add("item4");
-        listData.add("item5");
-        cookiesJBList.setListData(listData);
+        cookiesJBList.setEmptyText("Nothing cookie to show");
+    }
+
+    public void showCookies(Vector<String> headers) {
+        cookiesJBList.setListData(headers);
     }
 }

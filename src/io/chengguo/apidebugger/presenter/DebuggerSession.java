@@ -5,16 +5,18 @@ import io.chengguo.apidebugger.engine.http.FormRequestBuilder;
 import io.chengguo.apidebugger.engine.interf.ArtHttpListener;
 import io.chengguo.apidebugger.engine.log.Log;
 import io.chengguo.apidebugger.engine.utils.IOUtil;
+import io.chengguo.apidebugger.engine.utils.StringUtils;
 import io.chengguo.apidebugger.ui.iview.IHttpView;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.TextUtils;
 import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Created by fingerart on 17/7/11.
@@ -108,9 +110,25 @@ public class DebuggerSession implements ArtHttpListener {
     @Override
     public void onSuccess(HttpResponse response) {
         try {
+            Vector<String> cookies = new Vector<>();
+            Vector<String> headers = new Vector<>();
+            Header[] allHeaders = response.getAllHeaders();
+            for (Header header : allHeaders) {
+                if ("Set-Cookie".equals(header.getName())) {
+                    for (String cg : header.getValue().trim().split(";")) {
+                        String[] cookie = cg.trim().split("=");
+                        cookies.add(cookie[0] + " → " + cookie[1]);
+                    }
+                } else {
+                    headers.add(header.getName() + " → " + header.getValue());
+                }
+            }
+
+            mView.setCookies(cookies);
+            mView.setHeaders(headers);
+
             String text = IOUtil.outputString(response.getEntity().getContent());
-            JSONObject jsonObject = new JSONObject(text);
-            String json = jsonObject.toString(2);
+            String json = StringUtils.formatJson(text);
             Log.d(json);
             SwingUtilities.invokeLater(() -> {
                 mView.showPretty(json);
