@@ -1,6 +1,7 @@
 package io.chengguo.apidebugger.ui.iview;
 
 import java.util.Map;
+import java.util.Vector;
 
 public interface IHttpView {
 
@@ -35,10 +36,13 @@ public interface IHttpView {
 
     String bodyBinary();
 
-
     void showRaw(String text);
 
     void showPreview(String text);
 
     void showPretty(String text);
+
+    void setCookies(Vector<String> cookies);
+
+    void setHeaders(Vector<String> headers);
 }

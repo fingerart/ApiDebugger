@@ -69,6 +69,10 @@ public class RequestBodyWidget {
                 new JBRadioAction("binary", "Binary", typeBody, previewTypeListener)
         );
 
+        DefaultButtonModel buttonModel = new DefaultButtonModel();
+        buttonModel.setActionCommand("FormData");
+        typeBody.setSelected(buttonModel, true);
+
         ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.UNKNOWN, group, true);
         simpleToolWindowPanel1.setToolbar(toolbar.getComponent());
         simpleToolWindowPanel1.setContent(new JPanel(new BorderLayout()));

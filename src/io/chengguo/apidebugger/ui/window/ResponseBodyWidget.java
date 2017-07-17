@@ -35,8 +35,6 @@ public class ResponseBodyWidget {
         simpleToolWindowPanel1 = new SimpleToolWindowPanel(true, true);
         JBComboBoxAction comboBoxAction = createFormatTypeComboAction();
 
-        ActionListener previewTypeListener = e -> mPreviewTypeCardLayout.show(previewTypeContainer, e.getActionCommand());
-
         ButtonGroup buttonGroup = new ButtonGroup();
         ActionGroup group = new DefaultActionGroup(new JBRadioAction("Pretty", "Pretty", buttonGroup, previewTypeListener, true),
                 new JBRadioAction("Raw", "Raw", buttonGroup, previewTypeListener),
@@ -53,6 +51,8 @@ public class ResponseBodyWidget {
         simpleToolWindowPanel1.setToolbar(toolbar.getComponent());
         simpleToolWindowPanel1.setContent(new JPanel(new BorderLayout()));
     }
+
+    private ActionListener previewTypeListener = e -> mPreviewTypeCardLayout.show(previewTypeContainer, e.getActionCommand());
 
     /**
      * create format combo

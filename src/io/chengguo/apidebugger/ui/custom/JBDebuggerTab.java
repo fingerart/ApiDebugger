@@ -14,7 +14,7 @@ import java.awt.*;
 
 /**
  * 自定义Tab组件
- * 
+ * <p>
  * Created by fingerart on 17/2/28.
  */
 public class JBDebuggerTab extends JBEditorTabs {

@@ -15,7 +15,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.Map;
+import java.util.Vector;
 
 import static io.chengguo.apidebugger.engine.utils.ViewUtil.setCursor;
 
@@ -37,6 +39,8 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
     private RequestBodyWidget requestBodyWidget;
     private RequestHeaderWidget requestHeaderWidget;
     private ResponseBodyWidget responseBodyWidget;
+    private ResponseCookieWidget responseCookieWidget;
+    private ResponseHeaderWidget responseHeaderWidget;
 
     public InnerDebuggerWidget(Project mProject, Disposable parent) {
         this.mProject = mProject;
@@ -45,6 +49,8 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
         mSession = new DebuggerSession(this);
 
         setCursor(Cursor.HAND_CURSOR, method, send);
+        method.addItemListener(e ->
+                reqTabs.getTabAt(2).setEnabled(e.getStateChange() == ItemEvent.SELECTED && "POST".equals(e.getItem().toString())));
         send.addActionListener(this);
 
         //Request
@@ -62,6 +68,7 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
         requestBodyWidget = new RequestBodyWidget(mProject);
         TabInfo reqBodyInfo = new TabInfo(requestBodyWidget.container);
         reqBodyInfo.setText("Body");
+        reqBodyInfo.setEnabled(false);
         reqTabs.addTab(reqBodyInfo);
 
         //Response
@@ -72,11 +79,13 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
         resBodyInfo.setText("Body");
         resTabs.addTab(resBodyInfo);
 
-        TabInfo resCookiesInfo = new TabInfo(new ResponseCookieWidget().container);
+        responseCookieWidget = new ResponseCookieWidget();
+        TabInfo resCookiesInfo = new TabInfo(responseCookieWidget.container);
         resCookiesInfo.setText("Cookies");
         resTabs.addTab(resCookiesInfo);
 
-        TabInfo resHeadersInfo = new TabInfo(new ResponseHeaderWidget().container);
+        responseHeaderWidget = new ResponseHeaderWidget();
+        TabInfo resHeadersInfo = new TabInfo(responseHeaderWidget.container);
         resHeadersInfo.setText("Headers");
         resTabs.addTab(resHeadersInfo);
 
@@ -128,6 +137,16 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
     @Override
     public void showPretty(String text) {
         responseBodyWidget.showPretty(text);
+    }
+
+    @Override
+    public void setCookies(Vector<String> headers) {
+        responseCookieWidget.showCookies(headers);
+    }
+
+    @Override
+    public void setHeaders(Vector<String> headers) {
+        responseHeaderWidget.showHeaders(headers);
     }
 
     @Override

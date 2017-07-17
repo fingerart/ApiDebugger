@@ -23,15 +23,13 @@ public class StringUtils {
         json = json.trim();
         if (json.startsWith("{")) {
             JSONObject jsonObject = new JSONObject(json);
-            String message = jsonObject.toString(JSON_INDENT);
-            return message;
+            return jsonObject.toString(JSON_INDENT);
         }
         if (json.startsWith("[")) {
             JSONArray jsonArray = new JSONArray(json);
-            String message = jsonArray.toString(JSON_INDENT);
-            return message;
+            return jsonArray.toString(JSON_INDENT);
         }
-        return "";
+        return json;
     }
 
     public static String formatXml(@NotNull String xml) throws TransformerException {

@@ -29,8 +29,8 @@
               <focusable value="false"/>
               <lightWeightPopupEnabled value="true"/>
               <model>
-                <item value="POST"/>
                 <item value="GET"/>
+                <item value="POST"/>
                 <item value="PUT"/>
                 <item value="DELETE"/>
               </model>
