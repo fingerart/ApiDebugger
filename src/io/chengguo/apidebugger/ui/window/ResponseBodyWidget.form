@@ -30,9 +30,7 @@
             <children>
               <component id="fca86" class="javax.swing.JTextPane" binding="prettyTextPane">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value=""/>
@@ -50,9 +48,7 @@
             <children>
               <component id="8c4f2" class="javax.swing.JTextPane" binding="rawTextPane">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value=""/>
@@ -68,14 +64,15 @@
             <properties/>
             <border type="empty"/>
             <children>
-              <component id="ea70b" class="javax.swing.JTextPane" binding="previewTextPane" default-binding="true">
+              <component id="db89b" class="com.intellij.ui.EditorTextField" binding="previewTextPane">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value=""/>
+                  <autoscrolls value="true"/>
+                  <focusCycleRoot value="true"/>
+                  <focusTraversalPolicyProvider value="true"/>
+                  <requestFocusEnabled value="true"/>
                 </properties>
               </component>
             </children>
