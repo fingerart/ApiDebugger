@@ -1,9 +1,11 @@
 package io.chengguo.apidebugger.ui.window;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.json.JsonFileType;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.SimpleToolWindowPanel;
+import com.intellij.ui.EditorTextField;
 import io.chengguo.apidebugger.ui.custom.JBComboBoxAction;
 import io.chengguo.apidebugger.ui.custom.JBRadioAction;
 import org.jetbrains.annotations.NotNull;
@@ -21,14 +23,15 @@ public class ResponseBodyWidget {
     public JPanel container;
     private JPanel previewTypeContainer;
 
-    private JTextPane previewTextPane;
     private SimpleToolWindowPanel simpleToolWindowPanel1;
+    private EditorTextField previewTextPane;
     private JTextPane rawTextPane;
     private JTextPane prettyTextPane;
 
     public ResponseBodyWidget(Project project) {
         mProject = project;
         mPreviewTypeCardLayout = ((CardLayout) previewTypeContainer.getLayout());
+        previewTextPane.setOneLineMode(false);
     }
 
     private void createUIComponents() {
@@ -96,6 +99,7 @@ public class ResponseBodyWidget {
     }
 
     public void showPreview(String text) {
+        previewTextPane.setFileType(JsonFileType.INSTANCE);
         previewTextPane.setText(text);
     }
 }

@@ -35,7 +35,9 @@ public class StringUtils {
     public static String formatXml(@NotNull String xml) throws TransformerException {
         Source xmlInput = new StreamSource(new StringReader(xml));
         StreamResult xmlOutput = new StreamResult(new StringWriter());
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        transformerFactory.setAttribute("indent-number", 4);
+        Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         transformer.transform(xmlInput, xmlOutput);

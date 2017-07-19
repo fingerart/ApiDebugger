@@ -13,6 +13,7 @@ import org.apache.http.util.TextUtils;
 import org.codehaus.jettison.json.JSONException;
 
 import javax.swing.*;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -128,18 +129,32 @@ public class DebuggerSession implements ArtHttpListener {
             mView.setHeaders(headers);
 
             String text = IOUtil.outputString(response.getEntity().getContent());
-            String json = StringUtils.formatJson(text);
-            Log.d(json);
+            String textFormat = formatContent(text, response.getHeaders("Content-Type"));
+            Log.d(textFormat);
             SwingUtilities.invokeLater(() -> {
-                mView.showPretty(json);
+                mView.showPretty(textFormat);
                 mView.showRaw(text);
-                mView.showPreview(json);
+                mView.showPreview(textFormat);
             });
         } catch (JSONException e) {
             Log.e(e);
         } catch (IOException e) {
             Log.e(e);
+        } catch (TransformerException e) {
+            Log.e(e);
         }
+    }
+
+    private String formatContent(String text, Header[] contentTypes) throws JSONException, TransformerException {
+        Header contentType = contentTypes[0];
+        if ("text/html".equalsIgnoreCase(contentType.getValue())) {
+            return StringUtils.formatXml(text);
+        } else if ("application/xml".equalsIgnoreCase(contentType.getValue())) {
+            return StringUtils.formatXml(text);
+        } else if ("application/json".equalsIgnoreCase(contentType.getValue())) {
+            return StringUtils.formatJson(text);
+        }
+        return text;
     }
 
     @Override
