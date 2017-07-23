@@ -46,6 +46,12 @@ public class DebuggerSession implements ArtHttpListener {
             case "POST":
                 post(url);
                 break;
+            case "PUT":
+                put(url);
+                break;
+            case "PATCH":
+                patch(url);
+                break;
         }
     }
 
@@ -97,6 +103,14 @@ public class DebuggerSession implements ArtHttpListener {
             default:
                 Log.e("error type");
         }
+    }
+
+    private void put(String url) {
+
+    }
+
+    private void patch(String url) {
+
     }
 
     private boolean validUrl(String url) {

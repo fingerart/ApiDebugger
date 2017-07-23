@@ -26,6 +26,8 @@ public abstract class BaseRequest<T> implements Runnable {
         mParams = builder.mParamStr;
         mHeaders = builder.mHeaders;
         mCookies = builder.mCookies;
+
+
     }
 
     protected abstract HttpRequestBase getRelRequest();
