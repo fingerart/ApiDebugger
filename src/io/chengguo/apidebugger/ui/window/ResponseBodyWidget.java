@@ -24,13 +24,15 @@ public class ResponseBodyWidget {
     private JPanel previewTypeContainer;
 
     private SimpleToolWindowPanel simpleToolWindowPanel1;
+    private EditorTextField prettyTextPane;
+    private EditorTextField rawTextPane;
     private EditorTextField previewTextPane;
-    private JTextPane rawTextPane;
-    private JTextPane prettyTextPane;
 
     public ResponseBodyWidget(Project project) {
         mProject = project;
         mPreviewTypeCardLayout = ((CardLayout) previewTypeContainer.getLayout());
+        prettyTextPane.setOneLineMode(false);
+        rawTextPane.setOneLineMode(false);
         previewTextPane.setOneLineMode(false);
     }
 

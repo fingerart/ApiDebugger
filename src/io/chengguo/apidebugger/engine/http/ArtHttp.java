@@ -22,7 +22,7 @@ public class ArtHttp {
     }
 
     /**
-     * get请求
+     * get 请求
      *
      * @return
      */
@@ -31,7 +31,25 @@ public class ArtHttp {
     }
 
     /**
-     * delete请求
+     * put 请求
+     *
+     * @return
+     */
+    public static PutRequestBuilder put() {
+        return new PutRequestBuilder();
+    }
+
+    /**
+     * patch 请求
+     *
+     * @return
+     */
+    public static PatchRequestBuilder patch() {
+        return new PatchRequestBuilder();
+    }
+
+    /**
+     * delete 请求
      */
     public static void delete() {
 
