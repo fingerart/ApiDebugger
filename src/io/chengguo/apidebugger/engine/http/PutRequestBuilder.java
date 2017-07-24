@@ -3,10 +3,10 @@ package io.chengguo.apidebugger.engine.http;
 /**
  * Created by fingerart on 17/7/23.
  */
-public class PutRequestBuilder extends FormRequestBuilder {
+public class PutRequestBuilder extends PostRequestBuilder {
 
     @Override
-    public FormRequest build() {
+    public PostRequest build() {
         return new PutRequest(this);
     }
 }

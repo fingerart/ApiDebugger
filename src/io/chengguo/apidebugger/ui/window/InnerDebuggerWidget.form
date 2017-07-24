@@ -32,7 +32,11 @@
                 <item value="GET"/>
                 <item value="POST"/>
                 <item value="PUT"/>
+                <item value="PATCH"/>
                 <item value="DELETE"/>
+                <item value="HEAD"/>
+                <item value="OPTIONS"/>
+                <item value="TRACE"/>
               </model>
               <requestFocusEnabled value="false"/>
             </properties>

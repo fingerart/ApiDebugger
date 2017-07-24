@@ -24,13 +24,13 @@
             </constraints>
             <properties>
               <minimumSize width="154" height="54"/>
-              <visible value="true"/>
+              <visible value="false"/>
             </properties>
             <border type="empty" title=""/>
             <children>
               <component id="6a382" class="com.intellij.ui.EditorTextField" binding="prettyTextPane">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
               </component>
@@ -46,7 +46,7 @@
             <children>
               <component id="4f6b1" class="com.intellij.ui.EditorTextField" binding="rawTextPane">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
               </component>
@@ -62,7 +62,7 @@
             <children>
               <component id="db89b" class="com.intellij.ui.EditorTextField" binding="previewTextPane">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <autoscrolls value="true"/>

@@ -49,8 +49,9 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
         mSession = new DebuggerSession(this);
 
         setCursor(Cursor.HAND_CURSOR, method, send);
-        method.addItemListener(e ->
-                reqTabs.getTabAt(2).setEnabled(e.getStateChange() == ItemEvent.SELECTED && "POST".equals(e.getItem().toString())));
+        method.addItemListener(e -> {
+            reqTabs.getTabAt(2).setEnabled(e.getStateChange() == ItemEvent.SELECTED && ("POST".equals(e.getItem().toString()) || "PUT".equals(e.getItem().toString()) || "PATCH".equals(e.getItem().toString()) ));
+        });
         send.addActionListener(this);
 
         //Request
@@ -115,8 +116,7 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
 
     @Override
     public Map<String, String> bodyFormData() {
-
-        return null;
+        return requestBodyWidget.bodyFormData();
     }
 
     @Override

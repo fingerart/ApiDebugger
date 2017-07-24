@@ -20,14 +20,14 @@ public abstract class BaseRequest<T> implements Runnable {
     protected LinkedHashMap<String, String> mCookies;
     private static DefaultHttpClient httpClient = new DefaultHttpClient();
     protected ArtHttpListener mCallback;
+    protected BaseRequestBuilder builder;
 
     public BaseRequest(BaseRequestBuilder builder) {
+        this.builder = builder;
         mUrl = builder.mUrl;
         mParams = builder.mParamStr;
         mHeaders = builder.mHeaders;
         mCookies = builder.mCookies;
-
-
     }
 
     protected abstract HttpRequestBase getRelRequest();
@@ -38,6 +38,7 @@ public abstract class BaseRequest<T> implements Runnable {
 
     private HttpRequestBase mergeRequest() {
         HttpRequestBase relRequest = getRelRequest();
+        ArtHttp.addTag(relRequest.toString(), relRequest);
         if (mHeaders != null && !mHeaders.isEmpty()) {
             for (Map.Entry<String, String> entry : mHeaders.entrySet()) {
                 relRequest.addHeader(entry.getKey(), entry.getValue());
