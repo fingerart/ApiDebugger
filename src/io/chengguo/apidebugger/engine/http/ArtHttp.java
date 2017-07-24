@@ -17,8 +17,8 @@ public class ArtHttp {
      *
      * @return
      */
-    public static FormRequestBuilder post() {
-        return new FormRequestBuilder();
+    public static PostRequestBuilder post() {
+        return new PostRequestBuilder();
     }
 
     /**
@@ -51,8 +51,35 @@ public class ArtHttp {
     /**
      * delete 请求
      */
-    public static void delete() {
+    public static DeleteRequestBuilder delete() {
+        return new DeleteRequestBuilder();
+    }
 
+    /**
+     * head 请求
+     *
+     * @return
+     */
+    public static HeadRequestBuilder head() {
+        return new HeadRequestBuilder();
+    }
+
+    /**
+     * options 请求
+     *
+     * @return
+     */
+    public static OptionsRequestBuilder options() {
+        return new OptionsRequestBuilder();
+    }
+
+    /**
+     * trace 请求
+     *
+     * @return
+     */
+    public static TraceRequestBuilder trace() {
+        return new TraceRequestBuilder();
     }
 
     public static void cancelAll() {

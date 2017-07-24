@@ -62,16 +62,17 @@ public class RequestBodyWidget {
         simpleToolWindowPanel1 = new SimpleToolWindowPanel(true, true);
 
         typeBody = new ButtonGroup();
+
+//        DefaultButtonModel buttonModel = new DefaultButtonModel();
+//        buttonModel.setActionCommand("FormData");
+//        typeBody.setSelected(buttonModel, true);
+
         ActionGroup group = new DefaultActionGroup(
                 new JBRadioAction("form-data", "FormData", typeBody, previewTypeListener, true),
                 new JBRadioAction("x-www-urlencoded", "XWwwFormUrlencoded", typeBody, previewTypeListener),
                 new JBRadioAction("raw", "Raw", typeBody, previewTypeListener),
                 new JBRadioAction("binary", "Binary", typeBody, previewTypeListener)
         );
-
-//        DefaultButtonModel buttonModel = new DefaultButtonModel();
-//        buttonModel.setActionCommand("FormData");
-//        typeBody.setSelected(buttonModel, true);
 
         ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.UNKNOWN, group, true);
         simpleToolWindowPanel1.setToolbar(toolbar.getComponent());
@@ -96,6 +97,10 @@ public class RequestBodyWidget {
 
     public String bodyType() {
         return typeBody.getSelection().getActionCommand();
+    }
+
+    public Map<String, String> bodyFormData() {
+        return ViewUtil.getTableContent(mFormData.getModel());
     }
 
     public Map<String, String> bodyUrlencode() {
