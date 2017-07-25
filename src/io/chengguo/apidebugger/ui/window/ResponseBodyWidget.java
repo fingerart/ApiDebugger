@@ -27,6 +27,7 @@ public class ResponseBodyWidget {
     private EditorTextField prettyTextPane;
     private EditorTextField rawTextPane;
     private EditorTextField previewTextPane;
+    private ButtonGroup buttonGroup;
 
     public ResponseBodyWidget(Project project) {
         mProject = project;
@@ -40,8 +41,9 @@ public class ResponseBodyWidget {
         simpleToolWindowPanel1 = new SimpleToolWindowPanel(true, true);
         JBComboBoxAction comboBoxAction = createFormatTypeComboAction();
 
-        ButtonGroup buttonGroup = new ButtonGroup();
-        ActionGroup group = new DefaultActionGroup(new JBRadioAction("Pretty", "Pretty", buttonGroup, previewTypeListener, true),
+        buttonGroup = new ButtonGroup();
+        ActionGroup group = new DefaultActionGroup(
+                new JBRadioAction("Pretty", "Pretty", buttonGroup, previewTypeListener, true),
                 new JBRadioAction("Raw", "Raw", buttonGroup, previewTypeListener),
                 new JBRadioAction("Preview", "Preview", buttonGroup, previewTypeListener),
                 comboBoxAction,
