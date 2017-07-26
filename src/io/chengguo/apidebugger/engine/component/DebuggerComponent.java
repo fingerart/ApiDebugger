@@ -1,4 +1,4 @@
-package io.chengguo.apidebugger.ui;
+package io.chengguo.apidebugger.engine.component;
 
 import com.google.common.eventbus.Subscribe;
 import com.intellij.ide.util.PropertiesComponent;
@@ -17,6 +17,10 @@ import com.intellij.ui.content.ContentFactory;
 import io.chengguo.apidebugger.engine.eventbus.DebuggerEventBus;
 import io.chengguo.apidebugger.engine.eventbus.event.NoActionSessionsEvent;
 import io.chengguo.apidebugger.engine.log.Log;
+import io.chengguo.apidebugger.ui.DebuggerToolWindowFactory;
+import io.chengguo.apidebugger.ui.DebuggerToolWindowPanel;
+import io.chengguo.apidebugger.ui.ITabbedDebuggerWidget;
+import io.chengguo.apidebugger.ui.TabbedDebuggerWidget;
 import io.chengguo.apidebugger.ui.action.AddTabAction;
 import io.chengguo.apidebugger.ui.action.CloseTabAction;
 import org.jetbrains.annotations.NotNull;

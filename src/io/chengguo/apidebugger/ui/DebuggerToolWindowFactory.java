@@ -3,6 +3,7 @@ package io.chengguo.apidebugger.ui;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
+import io.chengguo.apidebugger.engine.component.DebuggerComponent;
 import org.jetbrains.annotations.NotNull;
 
 /**
