@@ -18,6 +18,7 @@ public class ViewUtil {
      *
      * @param table
      */
+    @Deprecated
     public static void delSelectedRows(JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         if (model == null) return;

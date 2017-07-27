@@ -1,4 +1,4 @@
-package io.chengguo.apidebugger.engine.resources;
+package io.chengguo.apidebugger.resources;
 
 import com.intellij.openapi.util.IconLoader;
 

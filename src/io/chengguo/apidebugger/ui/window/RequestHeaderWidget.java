@@ -11,7 +11,7 @@ import static io.chengguo.apidebugger.engine.utils.Constants.DEFAULT_COLUMN_NAME
 import static io.chengguo.apidebugger.engine.utils.Constants.DEFAULT_EMPTY_DATA;
 
 /**
- * Created by fingerart on 17/5/25.
+ * Created by FingerArt on 17/5/25.
  */
 public class RequestHeaderWidget {
     public JPanel container;
