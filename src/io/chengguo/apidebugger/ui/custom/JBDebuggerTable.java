@@ -1,41 +1,111 @@
 package io.chengguo.apidebugger.ui.custom;
 
 import com.intellij.ui.BooleanTableCellRenderer;
-import com.intellij.ui.EditorTextFieldCellRenderer;
 import com.intellij.ui.TableUtil;
 import com.intellij.ui.table.TableView;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
+import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import java.awt.*;
 import java.util.List;
 
 /**
  * Created by FingerArt on 2017/07/27.
  */
-public class JBDebuggerTable extends TableView {
-    public JBDebuggerTable() {
-        super(new ListTableModel(createColumnInfos(), createItems()));
+public class JBDebuggerTable extends TableView<JBDebuggerTable.ItemInfo> {
 
+    public JBDebuggerTable(List<ItemInfo> list) {
+        super(new ListTableModel<>(createColumnInfos(), list));
+        setAutoResizeMode(AUTO_RESIZE_LAST_COLUMN);
         getColumnModel().getColumn(0).setResizable(false);
         TableUtil.setupCheckboxColumn(getColumnModel().getColumn(0));
     }
 
     private static ColumnInfo[] createColumnInfos() {
-        TableCellRenderer booleanCellRenderer = createBooleanCellRenderer();
-//        EditorTextFieldCellRenderer
+        ColumnInfo[] columnInfos = {
+                new ColumnInfo<ItemInfo, Boolean>(" ") {
+                    @Override
+                    public Class getColumnClass() {
+                        return Boolean.class;
+                    }
 
-        return new ColumnInfo[0];
+                    @Override
+                    public Boolean valueOf(ItemInfo o) {
+                        return o.checked;
+                    }
+
+                    @Override
+                    public boolean isCellEditable(ItemInfo itemInfo) {
+                        return true;
+                    }
+
+                    @Override
+                    public void setValue(ItemInfo itemInfo, final Boolean value) {
+                        itemInfo.checked = value;
+                    }
+
+                    @Override
+                    public TableCellRenderer getRenderer(ItemInfo injection) {
+                        return new BooleanTableCellRenderer();
+                    }
+                },
+                new ColumnInfo<ItemInfo, String>("Name") {
+                    @Nullable
+                    @Override
+                    public String valueOf(ItemInfo itemInfo) {
+                        return itemInfo.key;
+                    }
+
+                    @Override
+                    public boolean isCellEditable(ItemInfo itemInfo) {
+                        return true;
+                    }
+
+                    @Override
+                    public void setValue(ItemInfo itemInfo, String value) {
+                        itemInfo.key  = value;
+                    }
+
+                    @Nullable
+                    @Override
+                    public TableCellRenderer getRenderer(ItemInfo itemInfo) {
+                        return new DefaultTableCellRenderer();
+                    }
+                },
+                new ColumnInfo<ItemInfo, String>("Value") {
+                    @Nullable
+                    @Override
+                    public String valueOf(ItemInfo itemInfo) {
+                        return itemInfo.value;
+                    }
+
+                    @Override
+                    public boolean isCellEditable(ItemInfo itemInfo) {
+                        return true;
+                    }
+
+                    @Override
+                    public void setValue(ItemInfo itemInfo, String value) {
+                        itemInfo.value  = value;
+                    }
+
+                    @Nullable
+                    @Override
+                    public TableCellRenderer getRenderer(ItemInfo itemInfo) {
+                        return new DefaultTableCellRenderer();
+                    }
+                }
+        };
+        return columnInfos;
     }
 
-    private static List createItems() {
-        return ContainerUtil.newSmartList(new ItemInfo(false, "", ""));
-    }
+    public static class ItemInfo {
+        public ItemInfo() {
+            this(false, "", "");
+        }
 
-    static class ItemInfo {
         public ItemInfo(boolean checked, String key, String value) {
             this.checked = checked;
             this.key = key;
@@ -45,28 +115,5 @@ public class JBDebuggerTable extends TableView {
         boolean checked;
         String key;
         String value;
-    }
-
-    private static BooleanTableCellRenderer createBooleanCellRenderer() {
-        return new BooleanTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(final JTable table,
-                                                           final Object value,
-                                                           final boolean isSelected,
-                                                           final boolean hasFocus,
-                                                           final int row,
-                                                           final int column) {
-                return setLabelColors(super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column), table, isSelected, row);
-            }
-        };
-    }
-
-    private static Component setLabelColors(final Component label, final JTable table, final boolean isSelected, final int row) {
-        if (label instanceof JComponent) {
-            ((JComponent) label).setOpaque(true);
-        }
-        label.setForeground(isSelected ? table.getSelectionForeground() : table.getForeground());
-        label.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
-        return label;
     }
 }
