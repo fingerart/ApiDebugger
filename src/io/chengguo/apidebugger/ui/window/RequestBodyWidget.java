@@ -8,19 +8,16 @@ import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.SimpleToolWindowPanel;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.table.JBTable;
-import io.chengguo.apidebugger.engine.utils.ViewUtil;
+import io.chengguo.apidebugger.ui.custom.JBDebuggerTable;
 import io.chengguo.apidebugger.ui.custom.JBRadioAction;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
-import static io.chengguo.apidebugger.engine.utils.Constants.DEFAULT_COLUMN_NAMES;
-import static io.chengguo.apidebugger.engine.utils.Constants.DEFAULT_EMPTY_DATA;
 import static io.chengguo.apidebugger.engine.utils.ViewUtil.setCursor;
 
 /**
@@ -46,12 +43,6 @@ public class RequestBodyWidget {
         this.project = project;
         headerTypeCardLayout = (CardLayout) headerContainer.getLayout();
 
-        mFormData.setModel(new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_COLUMN_NAMES));
-        mFormData.getTableHeader().setReorderingAllowed(false);
-
-        mUrlencoded.setModel(new DefaultTableModel(DEFAULT_EMPTY_DATA, DEFAULT_COLUMN_NAMES));
-        mUrlencoded.getTableHeader().setReorderingAllowed(false);
-
         setCursor(Cursor.HAND_CURSOR, selectFilePanel);
 
         selectFilePanel.addMouseListener(selectFileListener);
@@ -61,8 +52,10 @@ public class RequestBodyWidget {
     private void createUIComponents() {
         simpleToolWindowPanel1 = new SimpleToolWindowPanel(true, true);
 
-        typeBody = new ButtonGroup();
+        mFormData = new JBDebuggerTable();
+        mUrlencoded = new JBDebuggerTable();
 
+        typeBody = new ButtonGroup();
 //        DefaultButtonModel buttonModel = new DefaultButtonModel();
 //        buttonModel.setActionCommand("FormData");
 //        typeBody.setSelected(buttonModel, true);
@@ -100,11 +93,11 @@ public class RequestBodyWidget {
     }
 
     public Map<String, String> bodyFormData() {
-        return ViewUtil.getTableContent(mFormData.getModel());
+        return ((JBDebuggerTable) mFormData).getKeyValue();
     }
 
     public Map<String, String> bodyUrlencode() {
-        return ViewUtil.getTableContent(mUrlencoded.getModel());
+        return ((JBDebuggerTable) mUrlencoded).getKeyValue();
     }
 
     public String bodyRaw() {

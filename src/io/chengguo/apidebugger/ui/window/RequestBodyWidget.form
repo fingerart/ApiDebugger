@@ -42,7 +42,7 @@
               <card name="FormData"/>
             </constraints>
             <properties>
-              <visible value="true"/>
+              <visible value="false"/>
             </properties>
             <border type="none"/>
             <children>
@@ -55,7 +55,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="75f6c" class="com.intellij.ui.table.JBTable" binding="mFormData">
+                  <component id="75f6c" class="com.intellij.ui.table.JBTable" binding="mFormData" custom-create="true">
                     <constraints/>
                     <properties>
                       <autoResizeMode value="2"/>
@@ -79,7 +79,7 @@
               <card name="XWwwFormUrlencoded"/>
             </constraints>
             <properties>
-              <visible value="false"/>
+              <visible value="true"/>
             </properties>
             <border type="none"/>
             <children>
@@ -92,7 +92,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="d031a" class="com.intellij.ui.table.JBTable" binding="mUrlencoded">
+                  <component id="d031a" class="com.intellij.ui.table.JBTable" binding="mUrlencoded" custom-create="true">
                     <constraints/>
                     <properties>
                       <autoResizeMode value="2"/>

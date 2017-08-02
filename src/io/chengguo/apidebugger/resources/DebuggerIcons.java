@@ -1,4 +1,4 @@
-package io.chengguo.apidebugger.engine.resources;
+package io.chengguo.apidebugger.resources;
 
 import com.intellij.openapi.util.IconLoader;
 
@@ -9,8 +9,8 @@ import javax.swing.*;
  */
 public interface DebuggerIcons {
     static Icon load(String path) {
-        return IconLoader.getIcon(path);
+        return IconLoader.getIcon(path, DebuggerIcons.class);
     }
 
-    Icon LOGO = load("/image/favicon.png");
+    Icon LOGO = load("/icons/favicon.png");
 }

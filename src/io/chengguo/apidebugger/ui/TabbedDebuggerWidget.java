@@ -86,7 +86,7 @@ public class TabbedDebuggerWidget extends JPanel implements ITabbedDebuggerWidge
     }
 
     private static String generateUniqueName(String suggestedName, IDebuggerTabs tabs) {
-        final Set<String> names = Sets.newHashSet();
+        Set<String> names = Sets.newHashSet();
         for (int i = 0; i < tabs.getTabCount(); i++) {
             names.add(tabs.getTitleAt(i));
         }
