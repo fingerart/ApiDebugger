@@ -10,7 +10,12 @@ import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,6 +34,50 @@ public class JBDebuggerTable extends TableView<JBDebuggerTable.ItemInfo> {
         getColumnModel().getColumn(0).setResizable(false);
         TableUtil.setupCheckboxColumn(getColumnModel().getColumn(0));
         getTableHeader().setReorderingAllowed(false);//禁止拖动表头
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                handleMouse(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                handleMouse(e);
+            }
+
+            private void handleMouse(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    JPopupMenu menu = createPopup();
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+        });
+    }
+
+    private JPopupMenu createPopup() {
+        JPopupMenu popupMenu = new JPopupMenu();
+
+//        TerminalAction.addToMenu(popupMenu, this);
+
+        JMenuItem rename = new JMenuItem("Delete");
+
+        rename.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("actionEvent = [" + actionEvent + "]");
+                if (getRowCount() > 1) {
+                    getListTableModel().removeRow(getSelectedRow());
+                }
+            }
+        });
+
+        popupMenu.add(rename);
+
+        return popupMenu;
     }
 
     public Map<String, String> getKeyValue() {
