@@ -8,28 +8,16 @@
     <properties/>
     <border type="none"/>
     <children>
-      <scrollpane id="310b8" class="com.intellij.ui.components.JBScrollPane">
+      <scrollpane id="3e011">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <horizontalScrollBarPolicy value="31"/>
-        </properties>
+        <properties/>
         <border type="none"/>
         <children>
-          <component id="f126e" class="com.intellij.ui.table.JBTable" binding="headers">
+          <component id="bb5ba" class="com.intellij.ui.table.JBTable" binding="headers" custom-create="true">
             <constraints/>
-            <properties>
-              <autoResizeMode value="2"/>
-              <fillsViewportHeight value="true"/>
-              <preferredScrollableViewportSize width="450" height="100"/>
-              <rowHeight value="25"/>
-            </properties>
-            <clientProperties>
-              <JTable.autoStartsEdit class="java.lang.Boolean" value="false"/>
-              <Table.isFileList class="java.lang.Boolean" value="false"/>
-              <terminateEditOnFocusLost class="java.lang.Boolean" value="false"/>
-            </clientProperties>
+            <properties/>
           </component>
         </children>
       </scrollpane>

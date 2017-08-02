@@ -31,13 +31,12 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <toolWindow id="Api Debugger" icon="/image/favicon.png" anchor="right"
+        <toolWindow id="Api Debugger" icon="/icons/favicon.png" anchor="right"
                     factoryClass="io.chengguo.apidebugger.ui.DebuggerToolWindowFactory"/>
     </extensions>
 
     <project-components>
         <component>
-            <!--<implementation-class>io.chengguo.apidebugger.engine.component.StateProjectComponent</implementation-class>-->
             <implementation-class>io.chengguo.apidebugger.engine.component.DebuggerComponent</implementation-class>
         </component>
     </project-components>
