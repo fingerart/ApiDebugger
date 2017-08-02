@@ -1,12 +1,9 @@
 package io.chengguo.apidebugger.ui.window;
 
 import com.intellij.ui.table.JBTable;
-import com.intellij.util.containers.ContainerUtil;
-import io.chengguo.apidebugger.engine.utils.ViewUtil;
 import io.chengguo.apidebugger.ui.custom.JBDebuggerTable;
 
 import javax.swing.*;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,11 +17,10 @@ public class RequestHeaderWidget {
     }
 
     private void createUIComponents() {
-        List<JBDebuggerTable.ItemInfo> list = ContainerUtil.list(new JBDebuggerTable.ItemInfo());
-        headers = new JBDebuggerTable(list);
+        headers = new JBDebuggerTable();
     }
 
     public Map<String, String> headers() {
-        return ViewUtil.getTableContent(headers.getModel());
+        return ((JBDebuggerTable) headers).getKeyValue();
     }
 }
