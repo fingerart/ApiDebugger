@@ -1,7 +1,6 @@
 package io.chengguo.apidebugger.ui.custom;
 
 import com.intellij.icons.AllIcons;
-import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
@@ -11,21 +10,15 @@ import com.intellij.ui.TableUtil;
 import com.intellij.ui.table.TableView;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.ui.ColumnInfo;
-import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.ListTableModel;
-import com.intellij.util.ui.UIUtil;
-import io.chengguo.apidebugger.ui.action.CloseTabAction;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,12 +76,6 @@ public class JBDebuggerTable extends TableView<JBDebuggerTable.ItemInfo> {
 
         popupMenu.add(deleteLine);
         return popupMenu;
-    }
-
-    @Override
-    public void paint(@NotNull Graphics g) {
-        super.paint(g);
-        UIUtil.fixOSXEditorBackground(this);
     }
 
     public Map<String, String> getKeyValue() {

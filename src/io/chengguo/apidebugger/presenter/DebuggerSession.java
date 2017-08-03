@@ -205,7 +205,7 @@ public class DebuggerSession implements ArtHttpListener {
         }
         Header contentType = contentTypes[0];
         if (contentType.getValue().contains("text/html")) {
-            return StringUtils.formatXml(text);
+            return StringUtils.formatHtml(text);
         } else if (contentType.getValue().contains("application/xml")) {
             return StringUtils.formatXml(text);
         } else if (contentType.getValue().contains("application/json")) {
