@@ -1,17 +1,26 @@
 package io.chengguo.apidebugger.ui.custom;
 
+import com.intellij.icons.AllIcons;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.refactoring.ui.StringTableCellEditor;
 import com.intellij.ui.BooleanTableCellEditor;
 import com.intellij.ui.TableUtil;
 import com.intellij.ui.table.TableView;
+import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.ui.ColumnInfo;
+import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.ListTableModel;
+import com.intellij.util.ui.UIUtil;
+import io.chengguo.apidebugger.ui.action.CloseTabAction;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -27,18 +36,15 @@ import java.util.Map;
 public class JBDebuggerTable extends TableView<JBDebuggerTable.ItemInfo> {
 
     public JBDebuggerTable() {
-        List<ItemInfo> list = new ArrayList<>();
-        list.add(new ItemInfo());
-        setModelAndUpdateColumns(new ListTableModel<>(createColumnInfos(this), list));
+        setModelAndUpdateColumns(new ListTableModel<>(createColumnInfos(this), ContainerUtil.newSmartList(new ItemInfo())));
         setAutoResizeMode(AUTO_RESIZE_LAST_COLUMN);
         getColumnModel().getColumn(0).setResizable(false);
         TableUtil.setupCheckboxColumn(getColumnModel().getColumn(0));
         getTableHeader().setReorderingAllowed(false);//禁止拖动表头
+        setRowSelectionAllowed(false);
+        setRowMargin(1);
+        setRowHeight(20);
         addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
-
             @Override
             public void mousePressed(MouseEvent e) {
                 handleMouse(e);
@@ -63,9 +69,9 @@ public class JBDebuggerTable extends TableView<JBDebuggerTable.ItemInfo> {
 
 //        TerminalAction.addToMenu(popupMenu, this);
 
-        JMenuItem rename = new JMenuItem("Delete");
+        JMenuItem deleteLine = new JMenuItem("Delete", AllIcons.Actions.Delete);
 
-        rename.addActionListener(new ActionListener() {
+        deleteLine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("actionEvent = [" + actionEvent + "]");
@@ -75,9 +81,14 @@ public class JBDebuggerTable extends TableView<JBDebuggerTable.ItemInfo> {
             }
         });
 
-        popupMenu.add(rename);
-
+        popupMenu.add(deleteLine);
         return popupMenu;
+    }
+
+    @Override
+    public void paint(@NotNull Graphics g) {
+        super.paint(g);
+        UIUtil.fixOSXEditorBackground(this);
     }
 
     public Map<String, String> getKeyValue() {
@@ -137,15 +148,12 @@ public class JBDebuggerTable extends TableView<JBDebuggerTable.ItemInfo> {
                     @Override
                     public TableCellEditor getEditor(ItemInfo itemInfo) {
                         StringTableCellEditor editor = new StringTableCellEditor(null);
-                        editor.addDocumentListener(new DocumentListener() {
-                            @Override
-                            public void beforeDocumentChange(DocumentEvent documentEvent) {
-                            }
-
+                        editor.addDocumentListener(new DocumentAdapter() {
                             @Override
                             public void documentChanged(DocumentEvent documentEvent) {
                                 if (table.getRowCount() == table.getEditingRow() + 1) {
                                     itemInfo.enabled = true;
+                                    itemInfo.checked = true;
                                     table.getListTableModel().addRow(new ItemInfo());
                                 }
                             }
@@ -183,6 +191,7 @@ public class JBDebuggerTable extends TableView<JBDebuggerTable.ItemInfo> {
                             public void documentChanged(DocumentEvent documentEvent) {
                                 if (table.getRowCount() == table.getEditingRow() + 1) {
                                     itemInfo.enabled = true;
+                                    itemInfo.checked = true;
                                     table.getListTableModel().addRow(new ItemInfo());
                                 }
                             }
@@ -196,7 +205,7 @@ public class JBDebuggerTable extends TableView<JBDebuggerTable.ItemInfo> {
 
     public static class ItemInfo {
         public ItemInfo() {
-            this(false, true, "", "");
+            this(false, false, "", "");
         }
 
         public ItemInfo(boolean enabled, boolean checked, String key, String value) {

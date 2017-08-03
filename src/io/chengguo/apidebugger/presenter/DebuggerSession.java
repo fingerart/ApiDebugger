@@ -46,7 +46,6 @@ public class DebuggerSession implements ArtHttpListener {
             case "GET":
                 get(url, headers);
                 break;
-
             case "POST":
                 post(url, headers, mView.bodyType());
                 break;
@@ -56,7 +55,6 @@ public class DebuggerSession implements ArtHttpListener {
             case "PATCH":
                 patch(url, headers, mView.bodyType());
                 break;
-
             case "DELETE":
                 delete(url, headers);
                 break;
@@ -184,10 +182,11 @@ public class DebuggerSession implements ArtHttpListener {
             mView.setHeaders(headers);
 
             String text = IOUtil.outputString(response.getEntity().getContent());
-            String textFormat = formatContent(text, response.getHeaders("Content-Type"));
+            Header[] contentTypes = response.getHeaders("Content-Type");
+            String textFormat = formatContent(text, contentTypes);
             Log.d(textFormat);
             SwingUtilities.invokeLater(() -> {
-                mView.showPretty(textFormat);
+                mView.showPretty(textFormat, contentTypes);
                 mView.showRaw(text);
                 mView.showPreview(textFormat);
             });
@@ -201,12 +200,15 @@ public class DebuggerSession implements ArtHttpListener {
     }
 
     private String formatContent(String text, Header[] contentTypes) throws JSONException, TransformerException {
+        if (contentTypes == null || contentTypes.length == 0) {
+            return text;
+        }
         Header contentType = contentTypes[0];
-        if ("text/html".equalsIgnoreCase(contentType.getValue())) {
+        if (contentType.getValue().contains("text/html")) {
             return StringUtils.formatXml(text);
-        } else if ("application/xml".equalsIgnoreCase(contentType.getValue())) {
+        } else if (contentType.getValue().contains("application/xml")) {
             return StringUtils.formatXml(text);
-        } else if ("application/json".equalsIgnoreCase(contentType.getValue())) {
+        } else if (contentType.getValue().contains("application/json")) {
             return StringUtils.formatJson(text);
         }
         return text;

@@ -10,6 +10,7 @@ import com.intellij.ui.tabs.TabInfo;
 import io.chengguo.apidebugger.presenter.DebuggerSession;
 import io.chengguo.apidebugger.ui.custom.JBDebuggerTab;
 import io.chengguo.apidebugger.ui.iview.IHttpView;
+import org.apache.http.Header;
 
 import javax.swing.*;
 import java.awt.*;
@@ -135,8 +136,8 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
     }
 
     @Override
-    public void showPretty(String text) {
-        responseBodyWidget.showPretty(text);
+    public void showPretty(String text, Header[] contentTypes) {
+        responseBodyWidget.showPretty(text, contentTypes);
     }
 
     @Override
