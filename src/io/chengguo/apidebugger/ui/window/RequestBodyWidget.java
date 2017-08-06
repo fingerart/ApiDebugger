@@ -8,6 +8,7 @@ import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.SimpleToolWindowPanel;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.table.JBTable;
+import io.chengguo.apidebugger.ui.custom.JBDebuggerFormTable;
 import io.chengguo.apidebugger.ui.custom.JBDebuggerTable;
 import io.chengguo.apidebugger.ui.custom.JBRadioAction;
 
@@ -52,7 +53,7 @@ public class RequestBodyWidget {
     private void createUIComponents() {
         simpleToolWindowPanel1 = new SimpleToolWindowPanel(true, true);
 
-        mFormData = new JBDebuggerTable();
+        mFormData = new JBDebuggerFormTable();
         mUrlencoded = new JBDebuggerTable();
 
         typeBody = new ButtonGroup();

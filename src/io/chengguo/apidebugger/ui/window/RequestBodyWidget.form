@@ -42,7 +42,7 @@
               <card name="FormData"/>
             </constraints>
             <properties>
-              <visible value="false"/>
+              <visible value="true"/>
             </properties>
             <border type="none"/>
             <children>
@@ -58,8 +58,9 @@
                   <component id="a182e" class="com.intellij.ui.table.JBTable" binding="mFormData" custom-create="true">
                     <constraints/>
                     <properties>
+                      <focusable value="true"/>
                       <preferredScrollableViewportSize width="450" height="100"/>
-                      <rowHeight value="20"/>
+                      <rowHeight value="25"/>
                       <rowMargin value="1"/>
                       <rowSelectionAllowed value="false"/>
                     </properties>
@@ -74,7 +75,7 @@
               <card name="XWwwFormUrlencoded"/>
             </constraints>
             <properties>
-              <visible value="true"/>
+              <visible value="false"/>
             </properties>
             <border type="none"/>
             <children>
