@@ -17,61 +17,32 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="25110" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="25110" binding="prettyContainer" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
               <card name="Pretty"/>
             </constraints>
             <properties>
               <minimumSize width="154" height="54"/>
-              <visible value="true"/>
+              <visible value="false"/>
             </properties>
             <border type="empty" title=""/>
-            <children>
-              <component id="6a382" class="com.intellij.ui.EditorTextField" binding="prettyTextPane">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-              </component>
-            </children>
+            <children/>
           </grid>
-          <grid id="a056c" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="a056c" binding="rawContainer" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
               <card name="Raw"/>
             </constraints>
             <properties/>
             <border type="empty"/>
-            <children>
-              <component id="4f6b1" class="com.intellij.ui.EditorTextField" binding="rawTextPane">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-              </component>
-            </children>
+            <children/>
           </grid>
-          <grid id="77958" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="77958" binding="previewContainer" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
               <card name="Preview"/>
             </constraints>
             <properties/>
             <border type="empty"/>
-            <children>
-              <component id="db89b" class="com.intellij.ui.EditorTextField" binding="previewTextPane">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <autoscrolls value="true"/>
-                  <focusCycleRoot value="true"/>
-                  <focusTraversalPolicyProvider value="true"/>
-                  <requestFocusEnabled value="true"/>
-                </properties>
-              </component>
-            </children>
+            <children/>
           </grid>
         </children>
       </grid>
