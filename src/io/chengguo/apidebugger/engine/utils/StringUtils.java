@@ -4,10 +4,9 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.jetbrains.annotations.NotNull;
+import org.w3c.tidy.Tidy;
 
-import javax.xml.transform.*;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
+import javax.xml.transform.TransformerException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -33,15 +32,35 @@ public class StringUtils {
     }
 
     public static String formatXml(@NotNull String xml) throws TransformerException {
-        Source xmlInput = new StreamSource(new StringReader(xml));
-        StreamResult xmlOutput = new StreamResult(new StringWriter());
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        transformerFactory.setAttribute("indent-number", 4);
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        transformer.transform(xmlInput, xmlOutput);
-        return xmlOutput.getWriter().toString().replaceFirst(">", ">\n");
+        StringReader stringReader = new StringReader(xml);
+        Tidy tidy = new Tidy();
+        tidy.setXmlOut(true);
+        tidy.setInputEncoding("UTF-8");
+        tidy.setOutputEncoding("UTF-8");
+        tidy.setTidyMark(false);
+        tidy.setForceOutput(true);
+        tidy.setSmartIndent(true);
+        tidy.setShowWarnings(false);
+        tidy.setQuiet(true);
+        StringWriter stringWriter = new StringWriter();
+        tidy.parse(stringReader, stringWriter);
+        return stringWriter.toString();
+    }
+
+    public static String formatHtml(String html) {
+        StringReader stringReader = new StringReader(html);
+        Tidy tidy = new Tidy();
+        tidy.setXHTML(true);
+        tidy.setInputEncoding("UTF-8");
+        tidy.setOutputEncoding("UTF-8");
+        tidy.setTidyMark(false);
+        tidy.setSmartIndent(true);
+        tidy.setForceOutput(true);
+        tidy.setShowWarnings(false);
+        tidy.setQuiet(true);
+        StringWriter stringWriter = new StringWriter();
+        tidy.parse(stringReader, stringWriter);
+        return stringWriter.toString();
     }
 
     public static String getStackTraceString(Throwable tr) {

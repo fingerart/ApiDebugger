@@ -10,6 +10,7 @@ import com.intellij.ui.tabs.TabInfo;
 import io.chengguo.apidebugger.presenter.DebuggerSession;
 import io.chengguo.apidebugger.ui.custom.JBDebuggerTab;
 import io.chengguo.apidebugger.ui.iview.IHttpView;
+import org.apache.http.Header;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,16 +51,22 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
 
         setCursor(Cursor.HAND_CURSOR, method, send);
         method.addItemListener(e -> {
-            reqTabs.getTabAt(2).setEnabled(e.getStateChange() == ItemEvent.SELECTED && ("POST".equals(e.getItem().toString()) || "PUT".equals(e.getItem().toString()) || "PATCH".equals(e.getItem().toString()) ));
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                boolean enabled = ("POST".equals(e.getItem().toString()) || "PUT".equals(e.getItem().toString()) || "PATCH".equals(e.getItem().toString()));
+                TabInfo tabInfo = reqTabs.getTabAt(1);
+                if (tabInfo.isEnabled() != enabled) {
+                    tabInfo.setEnabled(enabled);
+                }
+            }
         });
         send.addActionListener(this);
 
         //Request
         reqTabs = new JBDebuggerTab(mProject, ActionManager.getInstance(), IdeFocusManager.getInstance(mProject), parent);
 
-        TabInfo reqAuthorInfo = new TabInfo(new RequestAuthorizationWidget().container);
-        reqAuthorInfo.setText("Authorization");
-        reqTabs.addTab(reqAuthorInfo);
+//        TabInfo reqAuthorInfo = new TabInfo(new RequestAuthorizationWidget().container);
+//        reqAuthorInfo.setText("Authorization");
+//        reqTabs.addTab(reqAuthorInfo);
 
         requestHeaderWidget = new RequestHeaderWidget();
         TabInfo reqHeaderInfo = new TabInfo(requestHeaderWidget.container);
@@ -135,8 +142,8 @@ public class InnerDebuggerWidget implements IHttpView, ActionListener {
     }
 
     @Override
-    public void showPretty(String text) {
-        responseBodyWidget.showPretty(text);
+    public void showPretty(String text, Header[] contentTypes) {
+        responseBodyWidget.showPretty(text, contentTypes);
     }
 
     @Override
