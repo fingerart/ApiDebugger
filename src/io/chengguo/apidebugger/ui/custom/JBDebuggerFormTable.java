@@ -1,8 +1,8 @@
 package io.chengguo.apidebugger.ui.custom;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.editor.event.DocumentAdapter;
 import com.intellij.openapi.editor.event.DocumentEvent;
-import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.refactoring.ui.StringTableCellEditor;
 import com.intellij.ui.BooleanTableCellEditor;
 import com.intellij.ui.TableUtil;
@@ -10,11 +10,11 @@ import com.intellij.ui.table.TableView;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -133,26 +133,10 @@ public class JBDebuggerFormTable extends TableView<JBDebuggerFormTable.ItemInfo>
 
                     @Nullable
                     @Override
-                    public TableCellRenderer getRenderer(ItemInfo itemInfo) {
-                        return new FormDataTableCellEditor(null);
-                    }
-
-                    @Nullable
-                    @Override
                     public TableCellEditor getEditor(ItemInfo itemInfo) {
-//                        StringTableCellEditor editor = new StringTableCellEditor(null);
-//                        editor.addDocumentListener(new DocumentAdapter() {
-//                            @Override
-//                            public void documentChanged(DocumentEvent documentEvent) {
-//                                if (table.getRowCount() == table.getEditingRow() + 1) {
-//                                    itemInfo.enabled = true;
-//                                    itemInfo.checked = true;
-//                                    table.getListTableModel().addRow(new ItemInfo());
-//                                }
-//                            }
-//                        });
-
-                        return new FormDataTableCellEditor(null);
+                        FormDataTableCellEditor tableCellEditor = new FormDataTableCellEditor(null, itemInfo);
+                        tableCellEditor.setDocumentListener(createDocumentListener(itemInfo, table));
+                        return tableCellEditor;
                     }
                 },
                 new ColumnInfo<ItemInfo, String>("Value") {
@@ -176,25 +160,26 @@ public class JBDebuggerFormTable extends TableView<JBDebuggerFormTable.ItemInfo>
                     @Override
                     public TableCellEditor getEditor(ItemInfo itemInfo) {
                         StringTableCellEditor editor = new StringTableCellEditor(null);
-                        editor.addDocumentListener(new DocumentListener() {
-                            @Override
-                            public void beforeDocumentChange(DocumentEvent documentEvent) {
-                            }
-
-                            @Override
-                            public void documentChanged(DocumentEvent documentEvent) {
-                                if (table.getRowCount() == table.getEditingRow() + 1) {
-                                    itemInfo.enabled = true;
-                                    itemInfo.checked = true;
-                                    table.getListTableModel().addRow(new ItemInfo());
-                                }
-                            }
-                        });
+                        editor.addDocumentListener(createDocumentListener(itemInfo, table));
                         return editor;
                     }
                 }
         };
         return columnInfos;
+    }
+
+    @NotNull
+    private static DocumentAdapter createDocumentListener(final ItemInfo itemInfo, final JBDebuggerFormTable table) {
+        return new DocumentAdapter() {
+            @Override
+            public void documentChanged(DocumentEvent documentEvent) {
+                if (table.getRowCount() == table.getEditingRow() + 1) {
+                    itemInfo.enabled = true;
+                    itemInfo.checked = true;
+                    table.getListTableModel().addRow(new ItemInfo());
+                }
+            }
+        };
     }
 
     public static class ItemInfo {
@@ -211,6 +196,7 @@ public class JBDebuggerFormTable extends TableView<JBDebuggerFormTable.ItemInfo>
 
         boolean enabled;
         boolean checked;
+        String type;
         String key;
         String value;
     }

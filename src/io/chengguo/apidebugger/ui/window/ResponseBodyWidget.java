@@ -1,11 +1,11 @@
 package io.chengguo.apidebugger.ui.window;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.ide.fileTemplates.FileTemplateManager;
 import com.intellij.ide.highlighter.HtmlFileHighlighter;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.ide.highlighter.XmlFileHighlighter;
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.ide.highlighter.custom.CustomFileHighlighter;
 import com.intellij.json.JsonFileType;
 import com.intellij.json.highlighting.JsonSyntaxHighlighterFactory;
 import com.intellij.lang.Language;
@@ -74,19 +74,26 @@ public class ResponseBodyWidget {
     private void createUIComponents() {
         simpleToolWindowPanel1 = new SimpleToolWindowPanel(true, true);
 
-        JBComboBoxAction comboBoxAction = createFormatTypeComboAction();
+//        JBComboBoxAction comboBoxAction = createFormatTypeComboAction();
         buttonGroup = new ButtonGroup();
         ActionGroup group = new DefaultActionGroup(
                 new JBRadioAction("Pretty", "Pretty", buttonGroup, previewTypeListener, true),
                 new JBRadioAction("Raw", "Raw", buttonGroup, previewTypeListener),
-                new JBRadioAction("Preview", "Preview", buttonGroup, previewTypeListener)/*,
-                comboBoxAction,
-                new AnAction("wrap", "wrap", AllIcons.Actions.ToggleSoftWrap) {
+//                new JBRadioAction("Preview", "Preview", buttonGroup, previewTypeListener),
+//                comboBoxAction,
+                new AnAction("Use Soft Wraps", "Toggle using soft wraps in current editor", AllIcons.Actions.ToggleSoftWrap) {
                     @Override
                     public void actionPerformed(AnActionEvent anActionEvent) {
-
+                        String actionCommand = buttonGroup.getSelection().getActionCommand();
+                        if ("Pretty".equalsIgnoreCase(actionCommand)) {
+                            EditorSettings settings = prettyEditor.getSettings();
+                            settings.setUseSoftWraps(!settings.isUseSoftWraps());
+                        } else if ("Raw".equalsIgnoreCase(actionCommand)) {
+                            EditorSettings settings = rawEditor.getSettings();
+                            settings.setUseSoftWraps(!settings.isUseSoftWraps());
+                        }
                     }
-                }*/);
+                });
 
         ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.UNKNOWN, group, true);
         simpleToolWindowPanel1.setToolbar(toolbar.getComponent());
@@ -178,12 +185,6 @@ public class ResponseBodyWidget {
         return file;
     }
 
-    public void showPretty(String text, Header[] contentType) {
-        WriteCommandAction.runWriteCommandAction(mProject, () -> prettyEditor.getDocument().setText(text));
-        LanguageFileType fileType = getFileType(contentType);
-        ((EditorEx) prettyEditor).setHighlighter(createHighlighter(fileType));
-    }
-
     private SyntaxHighlighter getFileHighlighter(FileType fileType) {
         if (fileType == HtmlFileType.INSTANCE) {
             return new HtmlFileHighlighter();
@@ -207,6 +208,12 @@ public class ResponseBodyWidget {
             }
         }
         return PlainTextFileType.INSTANCE;
+    }
+
+    public void showPretty(String text, Header[] contentType) {
+        WriteCommandAction.runWriteCommandAction(mProject, () -> prettyEditor.getDocument().setText(text));
+        LanguageFileType fileType = getFileType(contentType);
+        ((EditorEx) prettyEditor).setHighlighter(createHighlighter(fileType));
     }
 
     public void showRaw(String text) {
