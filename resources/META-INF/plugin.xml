@@ -1,16 +1,24 @@
 <idea-plugin version="2">
     <id>me.fingerart.idea.apidebugger</id>
     <name>Api Debugger</name>
-    <version>1.0.0</version>
-    <vendor email="fingerart.me@gmail.com" url="http://fingerart.me">FingerArt</vendor>
+    <version>2.0.0</version>
+    <vendor email="george@chengguo.io" url="https://github.com/fingerart/ApiDebugger">FingerArt</vendor>
 
     <description><![CDATA[
-        Api Debugger
+        A plug-in used to debug network interface for IntlliJ IDEA.
     ]]></description>
 
     <change-notes><![CDATA[
-        v1.0.0 Add:
-        <br>- Api Debugger<br>
+        v2.0.0 Upgrade:<br/>
+        - 支持delete、put请求方法; <br/>
+        - 优化消息提示; <br/>
+        - 加密; <br/>
+        - 多语言（暂支持 中文、英文）; <br/>
+        - 友好的响应数据显示(json/xml/html). <br/> <br/>
+
+        v1.0.0 Add:<br/>
+        - Support GET、POST method;<br/>
+        - Support param、cookie、header、file addition. <br/>
     ]]>
     </change-notes>
 
@@ -23,14 +31,13 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <toolWindow id="Api Debugger" icon="/image/favicon.png" anchor="right"
-                    factoryClass="me.fingerart.idea.ui.window.MainWindow"/>
+        <toolWindow id="Api Debugger" icon="/icons/favicon.png" anchor="right"
+                    factoryClass="io.chengguo.apidebugger.ui.DebuggerToolWindowFactory"/>
     </extensions>
 
     <project-components>
         <component>
-            <implementation-class>me.fingerart.idea.engine.component.StateProjectComponent</implementation-class>
+            <implementation-class>io.chengguo.apidebugger.engine.component.DebuggerComponent</implementation-class>
         </component>
     </project-components>
-
 </idea-plugin>
