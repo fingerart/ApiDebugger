@@ -1,5 +1,8 @@
 package io.chengguo.apidebugger.presenter;
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import io.chengguo.apidebugger.engine.http.ArtHttp;
 import io.chengguo.apidebugger.engine.http.PostRequestBuilder;
 import io.chengguo.apidebugger.engine.interf.ArtHttpListener;
@@ -37,7 +40,12 @@ public class DebuggerSession implements ArtHttpListener {
         String url = mView.url().trim();
         if (validUrl(url)) {
             System.out.println("url not empty");
+            Notifications.Bus.notify(new Notification("1", "Warning", "url not empty", NotificationType.WARNING));
             return;
+        }
+
+        if (!url.startsWith("http")) {
+            url = "http://" + url;
         }
 
         Map<String, String> headers = mView.headers();
@@ -190,11 +198,7 @@ public class DebuggerSession implements ArtHttpListener {
                 mView.showRaw(text);
                 mView.showPreview(textFormat);
             });
-        } catch (JSONException e) {
-            Log.e(e);
-        } catch (IOException e) {
-            Log.e(e);
-        } catch (TransformerException e) {
+        } catch (JSONException | IOException | TransformerException e) {
             Log.e(e);
         }
     }
@@ -216,7 +220,7 @@ public class DebuggerSession implements ArtHttpListener {
 
     @Override
     public void onError(Exception e) {
-        System.out.println("e = [" + e + "]");
+        Notifications.Bus.notify(new Notification("2", "Error", e.getMessage(), NotificationType.WARNING));
     }
 
     @Override
