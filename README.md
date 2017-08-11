@@ -11,7 +11,7 @@ A plug-in used to debug network interface for IntlliJ IDEA.
 
 ## Preview
 
-![preview](screenshot/proview.gif)
+![ApiDebugger](https://github.com/FingerArt/ApiDebugger/blob/master/screenshot/v2.0.0.gif?raw=true)
 
 ## Changelog
 
@@ -25,6 +25,9 @@ I welcome and encourage all pull requests. It usually will take me within 24-48 
 2. If its a feature, bugfix, or anything please only change code to what you specify.
 3. Please keep PR titles easy to read and descriptive of changes, this will make them easier to merge :)
 4. Pull requests must be made against develop branch. Any other branch (unless specified by the maintainers) will get rejected.
+
+## Contact:
+george@chengguo.io
 
 ## Uninstalling
 
