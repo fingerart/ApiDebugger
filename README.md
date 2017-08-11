@@ -1,6 +1,10 @@
 # ApiDebugger
 
-A plug-in used to debug network interface for IntlliJ IDEA.
+A IntelliJ plugin to help you easily complete the API debugging. You can find it on JetBrains' plugin page.
+
+## Preview
+
+![ApiDebugger](https://github.com/FingerArt/ApiDebugger/blob/master/screenshot/v2.0.0.gif?raw=true)
 
 ## Installation
 
@@ -9,13 +13,17 @@ A plug-in used to debug network interface for IntlliJ IDEA.
 3. Click the green Install Plugin button.
 4. Click Close and OK, then Re-launch your IDE.
 
-## Preview
-
-![ApiDebugger](https://github.com/FingerArt/ApiDebugger/blob/master/screenshot/v2.0.0.gif?raw=true)
-
 ## Changelog
 
 Changes exist in the [releases tab](https://github.com/fingerart/ApiDebugger/releases).
+
+## How to Contribute
+
+To contribute, please fork and create a pull request.
+
+### Bug Fixes
+
+If you find a bug, it would be awesome if you created an issue about it. Please include a clear description of the problem so that we can fix it!
 
 ## Pull Requests
 
