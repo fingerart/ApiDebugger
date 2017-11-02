@@ -9,7 +9,7 @@ import io.chengguo.apidebugger.ui.ITabbedDebuggerWidget;
  * Created by fingerart on 17/2/20.
  */
 public class CloseTabAction extends AnAction {
-    private final ITabbedDebuggerWidget mDebuggerWidget;
+    private ITabbedDebuggerWidget mDebuggerWidget;
 
     public CloseTabAction(ITabbedDebuggerWidget debuggerWidget) {
         super("Close Tab", "Close ApiDebugger Session", AllIcons.Actions.Delete);

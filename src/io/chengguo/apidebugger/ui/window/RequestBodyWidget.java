@@ -89,7 +89,8 @@ public class RequestBodyWidget {
     };
 
     public String bodyType() {
-        return typeBody.getSelection().getActionCommand();
+        ButtonModel selection = typeBody.getSelection();
+        return selection != null ? selection.getActionCommand() : "";
     }
 
     public Map<String, String> bodyFormData() {
