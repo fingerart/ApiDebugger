@@ -1,14 +1,17 @@
 package io.chengguo.apidebugger.engine.utils;
 
+import com.intellij.execution.process.ProcessIOExecutorService;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.concurrent.Future;
 
 /**
  * Created by FingerArt on 16/10/8.
@@ -184,5 +187,20 @@ public class CommonUtil {
         for (int i = 0; i < indent; i++) {
             sb.append('\t');
         }
+    }
+
+    public static String fixProtocol(String url) {
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            return "http://" + url;
+        }
+        return url;
+    }
+
+    public static void runInUI(Runnable runnable) {
+        SwingUtilities.invokeLater(runnable);
+    }
+
+    public static Future<?> async(Runnable runnable) {
+        return ProcessIOExecutorService.INSTANCE.submit(runnable);
     }
 }

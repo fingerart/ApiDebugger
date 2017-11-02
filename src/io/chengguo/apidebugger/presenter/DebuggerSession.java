@@ -14,6 +14,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.TextUtils;
 import org.codehaus.jettison.json.JSONException;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.xml.transform.TransformerException;
@@ -21,6 +22,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Vector;
+
+import static io.chengguo.apidebugger.engine.utils.CommonUtil.runInUI;
 
 /**
  * Created by fingerart on 17/7/11.
@@ -42,10 +45,6 @@ public class DebuggerSession implements ArtHttpListener {
             System.out.println("url not empty");
             Notifications.Bus.notify(new Notification("1", "Warning", "url not empty", NotificationType.WARNING));
             return;
-        }
-
-        if (!url.startsWith("http")) {
-            url = "http://" + url;
         }
 
         Map<String, String> headers = mView.headers();
@@ -138,25 +137,22 @@ public class DebuggerSession implements ArtHttpListener {
      */
     private void convertContentType(PostRequestBuilder builder, String bodyType) {
         switch (bodyType) {
-            case "FormData"://todo 情况复杂！！
-                Map<String, String> formData = mView.bodyFormData();
-                builder.addParam(formData).formData();
-                break;
             case "XWwwFormUrlencoded":
                 Map<String, String> urlencoded = mView.bodyUrlencode();
                 builder.addParam(urlencoded).xWwwUrlencoded();
-                break;
-            case "Raw":
-                String raw = mView.bodyRaw();
-                builder.raw(raw);
                 break;
             case "Binary":
                 String filePath = mView.bodyBinary();
                 File file = new File(filePath);
                 builder.binary(file);
                 break;
-            default:
-                Log.e("error type");
+            case "Raw":
+                String raw = mView.bodyRaw();
+                builder.raw(raw);
+                break;
+            default://FormData todo 情况复杂！！
+                Map<String, String> formData = mView.bodyFormData();
+                builder.addParam(formData).formData();
         }
     }
 
@@ -166,7 +162,7 @@ public class DebuggerSession implements ArtHttpListener {
 
     @Override
     public void onPre() {
-        System.out.println("DebuggerSession.onPre");
+        Log.d("DebuggerSession.onPre");
     }
 
     @Override
@@ -193,7 +189,7 @@ public class DebuggerSession implements ArtHttpListener {
             Header[] contentTypes = response.getHeaders("Content-Type");
             String textFormat = formatContent(text, contentTypes);
             Log.d(textFormat);
-            SwingUtilities.invokeLater(() -> {
+            runInUI(() -> {
                 mView.showPretty(textFormat, contentTypes);
                 mView.showRaw(text);
                 mView.showPreview(textFormat);
@@ -225,7 +221,7 @@ public class DebuggerSession implements ArtHttpListener {
 
     @Override
     public void onFinish() {
-        System.out.println("DebuggerSession.onFinish");
+        Log.d("DebuggerSession.onFinish");
     }
 }
 
