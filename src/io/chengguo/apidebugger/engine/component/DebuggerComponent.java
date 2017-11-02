@@ -23,6 +23,7 @@ import io.chengguo.apidebugger.ui.ITabbedDebuggerWidget;
 import io.chengguo.apidebugger.ui.TabbedDebuggerWidget;
 import io.chengguo.apidebugger.ui.action.AddTabAction;
 import io.chengguo.apidebugger.ui.action.CloseTabAction;
+import io.chengguo.apidebugger.ui.action.SettingsTabAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -56,6 +57,7 @@ public class DebuggerComponent extends AbstractProjectComponent {
         return new ToolWindowManagerListener() {
             @Override
             public void toolWindowRegistered(@NotNull String s) {
+                Log.d("DebuggerComponent.toolWindowRegistered");
             }
 
             @Override
@@ -88,7 +90,11 @@ public class DebuggerComponent extends AbstractProjectComponent {
 
     private ActionToolbar createToolBar(ITabbedDebuggerWidget debuggerWidget) {
         DefaultActionGroup group = new DefaultActionGroup();
-        group.addAll(new AddTabAction(debuggerWidget), new CloseTabAction(debuggerWidget));
+        group.addAll(
+                new AddTabAction(debuggerWidget),
+                new CloseTabAction(debuggerWidget)
+//                new SettingsTabAction()
+        );
         ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.UNKNOWN, group, false);
         toolbar.setOrientation(SwingConstants.VERTICAL);
         return toolbar;
