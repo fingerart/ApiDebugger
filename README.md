@@ -12,6 +12,7 @@ A IntelliJ plugin to help you easily complete the API debugging. You can find it
 2. Search for `Api Debugger`.
 3. Click the green Install Plugin button.
 4. Click Close and OK, then Re-launch your IDE.
+5. If `View->Tool Buttons` is open, can see `Api Debugger` plug-in at window right.
 
 ## Changelog
 
