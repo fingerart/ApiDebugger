@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>me.fingerart.idea.apidebugger</id>
     <name>Api Debugger</name>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
     <vendor email="george@chengguo.io" url="http://fingerart.me">FingerArt</vendor>
 
     <description><![CDATA[
@@ -11,11 +11,16 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>v2.1.0 Major update:</b>
+        <ul>
+            <li>Revise interface</li>
+            <li>Support data persistent</li>
+        </ul>
         <b>v2.0.1 Upgrade:</b>
         <ul>
             <li>Support HTTPS;</li>
             <li>Fix POST error;</li>
-            </ul>
+        </ul>
         <b>v2.0.0 Upgrade:</b>
         <ul>
             <li>Add DELETE、PUT、PATCH、OPTIONS、HEAD、TRANCE method; </li>
@@ -31,15 +36,9 @@
     ]]>
     </change-notes>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="141.0"/>
-
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
         <toolWindow id="Api Debugger" icon="/icons/favicon.png" anchor="right"
                     factoryClass="io.chengguo.apidebugger.ui.DebuggerToolWindowFactory"/>
     </extensions>
