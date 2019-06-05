@@ -31,7 +31,7 @@ import javax.swing.*;
 /**
  * Created by fingerart on 17/2/19.
  */
-@State(name = "ApiDebugger", storages = {@Storage(StoragePathMacros.PROJECT_FILE)})
+@State(name = "ApiDebugger", storages = {@Storage(StoragePathMacros.WORKSPACE_FILE)})
 public class DebuggerComponent extends AbstractProjectComponent {
 
     private Project mProject;
