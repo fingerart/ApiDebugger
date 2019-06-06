@@ -39,13 +39,18 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Api Debugger" icon="/icons/favicon.png" anchor="right"
-                    factoryClass="io.chengguo.apidebugger.ui.DebuggerToolWindowFactory"/>
+        <!--<toolWindow id="Api Debugger" icon="/icons/favicon.png" anchor="right"-->
+        <!--factoryClass="io.chengguo.api.debugger.ui.DebuggerToolWindowFactory"/>-->
+        <fileTypeFactory implementation="io.chengguo.api.debugger.api.spi.ApiFileTypeFactory"/>
+        <fileType.fileViewProviderFactory
+                filetype="io.chengguo.api.debugger.api.ApiFileType"
+                implementationClass="io.chengguo.api.debugger.api.spi.ApiFileViewProviderFactory"/>
+        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileEditorProvider"/>
     </extensions>
 
     <project-components>
-        <component>
-            <implementation-class>io.chengguo.apidebugger.engine.component.DebuggerComponent</implementation-class>
-        </component>
+        <!--<component>-->
+        <!--<implementation-class>io.chengguo.api.debugger.engine.component.DebuggerComponent</implementation-class>-->
+        <!--</component>-->
     </project-components>
 </idea-plugin>
