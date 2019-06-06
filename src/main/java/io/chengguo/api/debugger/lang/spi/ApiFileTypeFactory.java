@@ -1,8 +1,8 @@
-package io.chengguo.api.debugger.api.spi;
+package io.chengguo.api.debugger.lang.spi;
 
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
-import io.chengguo.api.debugger.api.ApiFileType;
+import io.chengguo.api.debugger.lang.ApiFileType;
 import org.jetbrains.annotations.NotNull;
 
 public class ApiFileTypeFactory extends FileTypeFactory {

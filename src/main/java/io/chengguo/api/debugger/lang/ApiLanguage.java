@@ -1,4 +1,4 @@
-package io.chengguo.api.debugger.api;
+package io.chengguo.api.debugger.lang;
 
 import com.intellij.lang.Language;
 
