@@ -41,16 +41,21 @@
     <extensions defaultExtensionNs="com.intellij">
         <!--<toolWindow id="Api Debugger" icon="/icons/favicon.png" anchor="right"-->
         <!--factoryClass="io.chengguo.api.debugger.ui.DebuggerToolWindowFactory"/>-->
-        <fileTypeFactory implementation="io.chengguo.api.debugger.api.spi.ApiFileTypeFactory"/>
-        <fileType.fileViewProviderFactory
-                filetype="io.chengguo.api.debugger.api.ApiFileType"
-                implementationClass="io.chengguo.api.debugger.api.spi.ApiFileViewProviderFactory"/>
-        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileEditorProvider"/>
+        <fileTypeFactory implementation="io.chengguo.api.debugger.lang.spi.ApiFileTypeFactory"/>
+        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileViewEditorProvider"/>
     </extensions>
+
+    <actions>
+        <action id="API.Debugger.NewFile" class="io.chengguo.api.debugger.ui.actions.NewApiDebuggerFileAction"
+                text="Api Debugger" description="Create new Api Debugger file">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+        </action>
+    </actions>
 
     <project-components>
         <!--<component>-->
         <!--<implementation-class>io.chengguo.api.debugger.engine.component.DebuggerComponent</implementation-class>-->
         <!--</component>-->
     </project-components>
+
 </idea-plugin>
