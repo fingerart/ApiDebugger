@@ -1,0 +1,21 @@
+# sdfsfs
+
+
+##
+asdfsaf
+##
+
+
+$userId = 10
+
+
+GET ${host}/user/${userId}/intro
+Accept: */*
+Cache-Control: no-cache
+Authorization: Basic b3Jhbmc6YWJjZGVmZw==
+
+
+
+```
+validate(response.statusCode == 200)
+```

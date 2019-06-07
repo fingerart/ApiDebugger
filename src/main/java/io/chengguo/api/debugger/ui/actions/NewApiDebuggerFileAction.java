@@ -8,8 +8,9 @@ import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.ApiDebuggerIcons;
 import io.chengguo.api.debugger.lang.ApiFileType;
 
-import javax.swing.*;
-
+/**
+ * Create .api file action
+ */
 public class NewApiDebuggerFileAction extends CreateFileFromTemplateAction {
     private static final String NAME;
     private static final String TITLE;
@@ -23,10 +24,6 @@ public class NewApiDebuggerFileAction extends CreateFileFromTemplateAction {
 
     public NewApiDebuggerFileAction() {
         super(TITLE, DESCRIPTION, ApiDebuggerIcons.API_FILE_TYPE);
-    }
-
-    public NewApiDebuggerFileAction(String text, String description, Icon icon) {
-        super(text, description, icon);
     }
 
     @Override
