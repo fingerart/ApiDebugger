@@ -1,4 +1,4 @@
-package io.chengguo.api.debugger.lang.spi;
+package io.chengguo.api.debugger.lang.psi;
 
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;

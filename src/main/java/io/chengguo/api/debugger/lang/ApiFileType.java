@@ -20,11 +20,6 @@ public class ApiFileType extends LanguageFileType {
         INSTANCE = new ApiFileType(ApiLanguage.INSTANCE);
     }
 
-    /**
-     * Creates a language file type for the specified language.
-     *
-     * @param language The language used in the files of the type.
-     */
     protected ApiFileType(@NotNull Language language) {
         super(language);
     }
