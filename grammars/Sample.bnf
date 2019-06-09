@@ -1,0 +1,20 @@
+{
+  parserClass="io.chengguo.api.debugger.lang.parser.SimpleParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Simple"
+  psiImplClassSuffix="Impl"
+  psiPackage="io.chengguo.api.debugger.lang.psi"
+  psiImplPackage="io.chengguo.api.debugger.lang.psi.impl"
+
+  elementTypeHolderClass="io.chengguo.api.debugger.lang.psi.SimpleTypes"
+  elementTypeClass="io.chengguo.api.debugger.lang.psi.SimpleElementType"
+  tokenTypeClass="io.chengguo.api.debugger.lang.psi.SimpleTokenType"
+}
+
+simpleFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY

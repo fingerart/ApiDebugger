@@ -24,7 +24,6 @@ public class ApiStructureViewFactory implements PsiStructureViewFactory {
         };
     }
 
-
     private static void $$$reportNull$$$0(int n) {
         throw new IllegalArgumentException(String.format("Argument for @NotNull parameter '%s' of %s.%s must not be null", "psiFile", "io/chengguo/api/debugger/lang/structure/ApiStructureViewFactory", "getStructureViewBuilder"));
     }

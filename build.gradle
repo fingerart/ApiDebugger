@@ -13,6 +13,12 @@ repositories {
     }
 }
 
+sourceSets {
+    main {
+        java.srcDirs 'src/java', 'gen'
+    }
+}
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile fileTree(include: ['*.jar'], dir: 'libs')

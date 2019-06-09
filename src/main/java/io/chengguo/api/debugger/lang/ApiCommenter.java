@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
  * TODO 暂时无效
  * Api file commenter
  */
-public class ApiDebuggerCommenter implements Commenter, SelfManagingCommenter<CommenterDataHolder> {
+public class ApiCommenter implements Commenter, SelfManagingCommenter<CommenterDataHolder> {
 
     private final String LINE_COMMENT_PREFIX = "//";
     private final String BLOCK_COMMENT_PREFIX = "/*";
