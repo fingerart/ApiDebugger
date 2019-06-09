@@ -41,11 +41,13 @@
     <extensions defaultExtensionNs="com.intellij">
         <!--<toolWindow id="Api Debugger" icon="/icons/favicon.png" anchor="right"-->
         <!--factoryClass="io.chengguo.api.debugger.ui.DebuggerToolWindowFactory"/>-->
+        <!--Api-->
         <fileTypeFactory implementation="io.chengguo.api.debugger.lang.psi.ApiFileTypeFactory"/>
+        <lang.parserDefinition language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiParserDefinition"/>
         <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileViewEditorProvider"/>
-        <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiDebuggerCommenter"/>
-        <lang.psiStructureViewFactory language="Api"
-                                      implementationClass="io.chengguo.api.debugger.lang.structure.ApiStructureViewFactory"/>
+        <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiCommenter"/>
+        <!--        <lang.psiStructureViewFactory language="Api"-->
+        <!--                                      implementationClass="io.chengguo.api.debugger.lang.structure.ApiStructureViewFactory"/>-->
     </extensions>
 
     <actions>
