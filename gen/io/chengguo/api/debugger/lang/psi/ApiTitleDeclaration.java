@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiTitleDeclaration extends PsiElement {
 
-  @NotNull
+  @Nullable
   PsiElement getIdentifier();
 
 }

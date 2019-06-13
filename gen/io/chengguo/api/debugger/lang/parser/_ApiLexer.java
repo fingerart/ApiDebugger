@@ -55,9 +55,10 @@ public class _ApiLexer implements FlexLexer {
 
   /* The ZZ_CMAP_A table has 640 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\2\4\1\22\0\1\2\14\0\1\5\1\0\1\3\12\4\7\0\1\15\1\5\1\16\1\20\1\7\1"+
-    "\5\1\6\1\17\3\5\1\21\2\5\1\12\1\11\2\5\1\13\1\10\1\14\5\5\4\0\1\5\1\0\32\5"+
-    "\12\0\1\1\32\0\1\2\337\0\1\2\177\0\13\2\35\0\2\1\5\0\1\2\57\0\1\2\40\0");
+    "\11\0\1\3\1\2\2\1\1\2\22\0\1\3\1\0\1\10\1\12\6\0\1\5\2\0\1\7\1\0\1\4\12\6"+
+    "\7\0\1\22\1\7\1\23\1\25\1\14\1\7\1\13\1\24\3\7\1\26\2\7\1\17\1\16\2\7\1\20"+
+    "\1\15\1\21\5\7\1\0\1\11\2\0\1\7\1\0\32\7\12\0\1\1\32\0\1\3\337\0\1\3\177\0"+
+    "\13\3\35\0\2\1\5\0\1\3\57\0\1\3\40\0");
 
   /** 
    * Translates DFA states to action switch labels.
@@ -65,12 +66,13 @@ public class _ApiLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2\1\1\1\3\3\1\1\2\1\4"+
-    "\5\1\1\5\1\1\1\6\2\1\1\7\2\1\1\10"+
-    "\1\1\1\11";
+    "\1\0\1\1\1\2\1\1\1\3\1\1\1\4\3\1"+
+    "\1\2\1\5\1\6\2\7\2\0\5\1\1\0\1\10"+
+    "\1\11\1\1\1\12\2\1\1\6\1\13\2\1\1\14"+
+    "\1\1\1\15";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[26];
+    int [] result = new int[36];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -95,13 +97,14 @@ public class _ApiLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\22\0\44\0\66\0\110\0\132\0\154\0\176"+
-    "\0\220\0\242\0\264\0\306\0\330\0\352\0\374\0\22"+
-    "\0\u010e\0\22\0\u0120\0\u0132\0\22\0\u0144\0\u0156\0\22"+
-    "\0\u0168\0\22";
+    "\0\0\0\27\0\56\0\105\0\134\0\163\0\212\0\241"+
+    "\0\270\0\317\0\346\0\375\0\u0114\0\u012b\0\134\0\u0142"+
+    "\0\u0159\0\u0170\0\u0187\0\u019e\0\u01b5\0\u01cc\0\u01e3\0\134"+
+    "\0\27\0\u01fa\0\27\0\u0211\0\u0228\0\134\0\27\0\u023f"+
+    "\0\u0256\0\27\0\u026d\0\27";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[26];
+    int [] result = new int[36];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -124,20 +127,29 @@ public class _ApiLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\2\3\1\4\1\5\1\2\1\6\2\2\1\7"+
-    "\6\2\1\10\1\2\4\0\16\2\1\0\2\11\1\0"+
-    "\16\2\3\0\1\12\16\2\26\0\3\2\1\13\12\2"+
-    "\4\0\6\2\1\14\1\2\1\15\1\16\4\2\4\0"+
-    "\3\2\1\17\12\2\1\0\2\11\17\0\1\12\1\0"+
-    "\20\12\4\0\4\2\1\20\11\2\4\0\7\2\1\21"+
-    "\6\2\4\0\4\2\1\22\11\2\4\0\4\2\1\23"+
-    "\11\2\4\0\15\2\1\24\4\0\4\2\1\25\11\2"+
-    "\4\0\12\2\1\26\3\2\4\0\3\2\1\27\12\2"+
-    "\4\0\13\2\1\30\2\2\4\0\4\2\1\31\11\2"+
-    "\4\0\3\2\1\32\12\2";
+    "\1\2\3\3\1\4\1\2\1\5\1\2\1\6\1\2"+
+    "\1\7\1\10\2\2\1\11\6\2\1\12\1\2\6\0"+
+    "\2\2\3\0\14\2\1\0\3\13\2\0\2\2\3\0"+
+    "\14\2\4\0\1\14\1\15\2\2\3\0\14\2\27\0"+
+    "\2\16\1\0\3\16\2\6\1\17\1\20\1\16\14\6"+
+    "\6\0\2\2\2\0\1\21\14\2\6\0\2\2\3\0"+
+    "\1\2\1\22\12\2\6\0\2\2\3\0\4\2\1\23"+
+    "\1\2\1\24\1\25\4\2\6\0\2\2\3\0\1\2"+
+    "\1\26\12\2\1\0\3\13\23\0\1\14\2\0\24\14"+
+    "\5\15\1\27\21\15\2\16\1\0\5\16\1\17\1\20"+
+    "\17\16\1\0\24\16\12\0\1\30\22\0\2\2\3\0"+
+    "\2\2\1\31\11\2\6\0\2\2\3\0\5\2\1\32"+
+    "\6\2\6\0\2\2\3\0\2\2\1\33\11\2\6\0"+
+    "\2\2\3\0\2\2\1\34\11\2\6\0\2\2\3\0"+
+    "\13\2\1\35\4\15\1\36\1\27\21\15\6\0\2\2"+
+    "\3\0\2\2\1\37\11\2\6\0\2\2\3\0\10\2"+
+    "\1\40\3\2\6\0\2\2\3\0\1\2\1\41\12\2"+
+    "\6\0\2\2\3\0\11\2\1\42\2\2\6\0\2\2"+
+    "\3\0\2\2\1\43\11\2\6\0\2\2\3\0\1\2"+
+    "\1\44\12\2";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[378];
+    int [] result = new int[644];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -175,10 +187,11 @@ public class _ApiLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\3\1\1\11\25\1";
+    "\1\0\3\1\1\11\11\1\1\11\2\0\5\1\1\0"+
+    "\1\11\5\1\1\11\6\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[26];
+    int [] result = new int[36];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -487,47 +500,67 @@ public class _ApiLexer implements FlexLexer {
             { return IDENTIFIER;
             } 
             // fall through
-          case 10: break;
+          case 14: break;
           case 2: 
             { return WHITE_SPACE;
             } 
             // fall through
-          case 11: break;
+          case 15: break;
           case 3: 
             { return BAD_CHARACTER;
             } 
             // fall through
-          case 12: break;
-          case 4: 
-            { return COMMENT;
-            } 
-            // fall through
-          case 13: break;
-          case 5: 
-            { return GET;
-            } 
-            // fall through
-          case 14: break;
-          case 6: 
-            { return PUT;
-            } 
-            // fall through
-          case 15: break;
-          case 7: 
-            { return POST;
-            } 
-            // fall through
           case 16: break;
-          case 8: 
-            { return PATCH;
+          case 4: 
+            { return FALG_TITLE;
             } 
             // fall through
           case 17: break;
-          case 9: 
-            { return DELETE;
+          case 5: 
+            { return LINE_COMMENT;
             } 
             // fall through
           case 18: break;
+          case 6: 
+            { return BLOCK_COMMENT;
+            } 
+            // fall through
+          case 19: break;
+          case 7: 
+            { return STRING;
+            } 
+            // fall through
+          case 20: break;
+          case 8: 
+            { return FALG_DESCRIPTION;
+            } 
+            // fall through
+          case 21: break;
+          case 9: 
+            { return GET;
+            } 
+            // fall through
+          case 22: break;
+          case 10: 
+            { return PUT;
+            } 
+            // fall through
+          case 23: break;
+          case 11: 
+            { return POST;
+            } 
+            // fall through
+          case 24: break;
+          case 12: 
+            { return PATCH;
+            } 
+            // fall through
+          case 25: break;
+          case 13: 
+            { return DELETE;
+            } 
+            // fall through
+          case 26: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

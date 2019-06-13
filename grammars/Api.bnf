@@ -13,24 +13,25 @@
     tokenTypeClass="io.chengguo.api.debugger.lang.psi.ApiTokenType"
 
     tokens = [
+        WHITE_SPACE='regexp:\s+'
+        BR='regexp:(\r\n|\n|\r)'
         FALG_TITLE='#'
-        FALG_DESCRIPTION='###'
+        FALG_DESCRIPTION='##'
         LINE_COMMENT='regexp://.*'
         BLOCK_COMMENT='regexp:/\*([^*]|\*+[^*/])*(\*+/)?'
         IDENTIFIER = 'regexp:[^0-9][a-zA-Z0-9\-_]*'
         STRING="regexp:\"([^\\\"\r\n]|\\[^\r\n])*\"?"
     ]
-
 }
 
-api ::= TitleDeclaration? DescriptionDeclaration? RequestLine Header*
+api ::= TitleDeclaration? DescriptionDeclaration?
 
-literal ::= string_literal | number_literal | boolean_literal | null_literal {
-  methods=[
-    isQuotedString
-  ]
-  mixin="com.intellij.json.psi.impl.JsonLiteralMixin"
-}
+//literal ::= string_literal | number_literal | boolean_literal | null_literal {
+//  methods=[
+//    isQuotedString
+//  ]
+//  mixin="com.intellij.json.psi.impl.JsonLiteralMixin"
+//}
 
 Methods ::=
     GET
@@ -39,9 +40,19 @@ Methods ::=
   | PATCH
   | DELETE
 
-TitleDeclaration ::= FALG_TITLE IDENTIFIER
+TitleDeclaration ::= FALG_TITLE STRING BR {
+    pin=1
+//    recoverWhile = not_description_or_request
+}
 
-DescriptionDeclaration ::= FALG_DESCRIPTION literal
+DescriptionDeclaration ::= FALG_DESCRIPTION STRING BR {
+    pin=1
+}
 
-RequestLine ::= Methods IDENTIFIER
-Header ::= IDENTIFIER ':' IDENTIFIER
+RequestLine ::= Methods IDENTIFIER {
+    pin=1
+}
+//Header ::= IDENTIFIER ':' IDENTIFIER
+
+// Recoveries
+private not_description_or_request ::= !(DescriptionDeclaration|RequestLine)

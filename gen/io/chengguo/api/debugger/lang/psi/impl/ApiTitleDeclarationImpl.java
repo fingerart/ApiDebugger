@@ -27,9 +27,9 @@ public class ApiTitleDeclarationImpl extends ASTWrapperPsiElement implements Api
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return findChildByType(IDENTIFIER);
   }
 
 }
