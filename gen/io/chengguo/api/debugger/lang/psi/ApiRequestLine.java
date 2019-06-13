@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiRequestLine extends PsiElement {
 
-  @NotNull
-  ApiMethods getMethods();
-
-  @NotNull
+  @Nullable
   PsiElement getIdentifier();
 
 }

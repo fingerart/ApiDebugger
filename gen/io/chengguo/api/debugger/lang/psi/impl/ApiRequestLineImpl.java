@@ -27,15 +27,9 @@ public class ApiRequestLineImpl extends ASTWrapperPsiElement implements ApiReque
   }
 
   @Override
-  @NotNull
-  public ApiMethods getMethods() {
-    return findNotNullChildByClass(ApiMethods.class);
-  }
-
-  @Override
-  @NotNull
+  @Nullable
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return findChildByType(IDENTIFIER);
   }
 
 }

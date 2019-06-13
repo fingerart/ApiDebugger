@@ -11,10 +11,6 @@ public class ApiVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitHeader(@NotNull ApiHeader o) {
-    visitPsiElement(o);
-  }
-
   public void visitMethods(@NotNull ApiMethods o) {
     visitPsiElement(o);
   }

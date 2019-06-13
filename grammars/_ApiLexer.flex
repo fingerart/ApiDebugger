@@ -25,21 +25,27 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-COMMENT="//".*
+LINE_COMMENT="//".*
+BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
 IDENTIFIER=[^0-9][a-zA-Z0-9\-_]*
+STRING=\"([^\\\"\r\n]|\\[^\r\n])*\"?
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}      { return WHITE_SPACE; }
+  {WHITE_SPACE}        { return WHITE_SPACE; }
 
-  "GET"              { return GET; }
-  "POST"             { return POST; }
-  "PUT"              { return PUT; }
-  "PATCH"            { return PATCH; }
-  "DELETE"           { return DELETE; }
+  "#"                  { return FALG_TITLE; }
+  "###"                { return FALG_DESCRIPTION; }
+  "GET"                { return GET; }
+  "POST"               { return POST; }
+  "PUT"                { return PUT; }
+  "PATCH"              { return PATCH; }
+  "DELETE"             { return DELETE; }
 
-  {COMMENT}          { return COMMENT; }
-  {IDENTIFIER}       { return IDENTIFIER; }
+  {LINE_COMMENT}       { return LINE_COMMENT; }
+  {BLOCK_COMMENT}      { return BLOCK_COMMENT; }
+  {IDENTIFIER}         { return IDENTIFIER; }
+  {STRING}             { return STRING; }
 
 }
 
