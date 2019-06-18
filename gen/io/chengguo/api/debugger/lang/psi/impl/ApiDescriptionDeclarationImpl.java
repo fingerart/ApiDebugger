@@ -28,8 +28,8 @@ public class ApiDescriptionDeclarationImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
+  public PsiElement getString() {
+    return findChildByType(STRING);
   }
 
 }

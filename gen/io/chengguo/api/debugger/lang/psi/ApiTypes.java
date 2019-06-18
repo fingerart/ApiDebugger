@@ -15,7 +15,7 @@ public interface ApiTypes {
 
   IElementType BLOCK_COMMENT = new ApiTokenType("BLOCK_COMMENT");
   IElementType DELETE = new ApiTokenType("DELETE");
-  IElementType FALG_DESCRIPTION = new ApiTokenType("###");
+  IElementType FALG_DESCRIPTION = new ApiTokenType("##");
   IElementType FALG_TITLE = new ApiTokenType("#");
   IElementType GET = new ApiTokenType("GET");
   IElementType IDENTIFIER = new ApiTokenType("IDENTIFIER");
