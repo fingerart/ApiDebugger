@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ApiDescriptionDeclaration extends PsiElement {
 
   @Nullable
-  PsiElement getIdentifier();
+  PsiElement getString();
 
 }
