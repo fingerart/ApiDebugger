@@ -15,7 +15,7 @@ repositories {
 
 sourceSets {
     main {
-        java.srcDirs 'src/java', 'gen'
+        java.srcDirs 'src/java', 'gen', 'grammars'
     }
 }
 

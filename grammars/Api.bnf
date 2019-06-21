@@ -11,46 +11,16 @@
     elementTypeHolderClass="io.chengguo.api.debugger.lang.psi.ApiTypes"
     elementTypeClass="io.chengguo.api.debugger.lang.psi.ApiElementType"
     tokenTypeClass="io.chengguo.api.debugger.lang.psi.ApiTokenType"
-
-    tokens = [
-        WHITE_SPACE='regexp:\s+'
-        BR='regexp:[\r\n]'
-        FALG_TITLE='#'
-        FALG_DESCRIPTION='##'
-        LINE_COMMENT='regexp://.*'
-        BLOCK_COMMENT='regexp:/\*([^*]|\*+[^*/])*(\*+/)?'
-        IDENTIFIER = 'regexp:[^0-9][a-zA-Z0-9\-_]*'
-        STRING="regexp:\"([^\\\"]|\\[^\r\n])*\"?"
-    ]
 }
 
-api ::= TitleDeclaration DescriptionDeclaration RequestLine Header *
+api ::= Title Description? RequestLine Header*
 
-Methods ::=
-    GET
-  | POST
-  | PUT
-  | PATCH
-  | DELETE
+Header ::= KEY HEADER_SEPARATOR VALUE
 
-TitleDeclaration ::= FALG_TITLE STRING {
-    pin=1
-    recoverWhile = not_description_or_request
-}
+Description ::= FLAG_DESCRIPTION SINGLE_LINE_STRING
 
-DescriptionDeclaration ::= FALG_DESCRIPTION STRING {
-    pin=1
-    recoverWhile = not_request
-}
+Title ::= FLAG_TITLE SINGLE_LINE_STRING
 
-RequestLine ::= Methods IDENTIFIER
-
-Header ::= IDENTIFIER ':' IDENTIFIER {
-    pin=1
-    recoverWhile = not_
-}
+RequestLine ::= METHOD URI
 
 // Recoveries
-private not_description_or_request ::= !( FALG_DESCRIPTION | Methods )
-private not_request ::= !( Methods )
-private not_ ::= !( IDENTIFIER | ':' )
