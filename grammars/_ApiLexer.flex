@@ -25,32 +25,30 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-WHITE_SPACE=[ \t\n\x0B\f\r]+
-BR=[\r\n]
-LINE_COMMENT="//".*
-BLOCK_COMMENT="/"\*([^*]|\*+[^*/])*(\*+"/")?
-IDENTIFIER=[^0-9][a-zA-Z0-9\-_]*
-STRING=\"([^\\\"]|\\[^\r\n])*\"?
+LineTerminator=\r|\n|\r\n
+SINGLE_LINE_STRING=[^\n\r]*
+FLAG_TITLE="#"
+FALG_DESCRIPTION="##"
+METHOD=(POST|GET)
+
+TITLE={FLAG_TITLE}\ {SINGLE_LINE_STRING}
+DESCRIPTION={FALG_DESCRIPTION}\ {SINGLE_LINE_STRING}
+REQUEST_LINE=\ {SINGLE_LINE_STRING}
+
+%state $title
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}        { return WHITE_SPACE; }
+  {WHITE_SPACE}           { return WHITE_SPACE; }
 
-  "#"                  { return FALG_TITLE; }
-  "##"                 { return FALG_DESCRIPTION; }
-  "GET"                { return GET; }
-  "POST"               { return POST; }
-  "PUT"                { return PUT; }
-  "PATCH"              { return PATCH; }
-  "DELETE"             { return DELETE; }
-
-  {WHITE_SPACE}        { return WHITE_SPACE; }
-  {BR}                 { return BR; }
-  {LINE_COMMENT}       { return LINE_COMMENT; }
-  {BLOCK_COMMENT}      { return BLOCK_COMMENT; }
-  {IDENTIFIER}         { return IDENTIFIER; }
-  {STRING}             { return STRING; }
-
+  "KEY"                   { return KEY; }
+  "HEADER_SEPARATOR"      { return HEADER_SEPARATOR; }
+  "VALUE"                 { return VALUE; }
+  "FLAG_DESCRIPTION"      { return FLAG_DESCRIPTION; }
+  "SINGLE_LINE_STRING"    { return SINGLE_LINE_STRING; }
+  "FLAG_TITLE"            { return FLAG_TITLE; }
+  "METHOD"                { return METHOD; }
+  "URI"                   { return URI; }
 }
 
 [^] { return BAD_CHARACTER; }
