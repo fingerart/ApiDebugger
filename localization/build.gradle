@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'io.chengguo'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+processResources {
+    include '**/ApiDebuggerBundle.en.properties'
+    rename {
+        "ApiDebuggerBundle.properties"
+    }
+}
+
+task buildResources(type: Copy) {
+    jar.archiveName = "resource_en.jar"
+    jar.includes = ["**/*.properties"]
+    from jar
+    into "${rootDir}/libs"
+}
+
