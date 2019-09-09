@@ -1,5 +1,6 @@
 {
     parserClass="io.chengguo.api.debugger.lang.parser.ApiParser"
+    parserUtilClass="io.chengguo.api.debugger.lang.parser.ApiParserUtil"
 
     extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -11,16 +12,30 @@
     elementTypeHolderClass="io.chengguo.api.debugger.lang.psi.ApiTypes"
     elementTypeClass="io.chengguo.api.debugger.lang.psi.ApiElementType"
     tokenTypeClass="io.chengguo.api.debugger.lang.psi.ApiTokenType"
+
+    tokens = [
+        FLAG_TITLE='##'
+        LINE_COMMENT='regexp://.*'
+
+        raw_string="regexp:[a-zA-Z0-9]*"
+    ]
 }
 
-api ::= Title Description? RequestLine Header*
+File ::= Api ?
 
-Header ::= KEY HEADER_SEPARATOR VALUE
+Api ::= Info
 
-Description ::= FLAG_DESCRIPTION SINGLE_LINE_STRING
+//private semi ::= '<NL>' | <<eof>>
 
-Title ::= FLAG_TITLE SINGLE_LINE_STRING
+//Header ::= KEY HEADER_SEPARATOR VALUE
 
-RequestLine ::= METHOD URI
+Info ::= Title
+
+Title ::= '##' raw_string {pin=2 recoverWhile=title_recover}
+private title_recover ::= !( '##' raw_string )
+
+//Description ::= '==' raw_string
+
+//RequestLine ::= METHOD URI
 
 // Recoveries

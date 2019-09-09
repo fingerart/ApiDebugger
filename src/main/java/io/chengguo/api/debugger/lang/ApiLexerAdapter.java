@@ -1,7 +1,6 @@
 package io.chengguo.api.debugger.lang;
 
 import com.intellij.lexer.FlexAdapter;
-import io.chengguo.api.debugger.lang.parser._ApiLexer;
 
 import java.io.Reader;
 

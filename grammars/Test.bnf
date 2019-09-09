@@ -25,7 +25,7 @@
 root ::= root_item *
 private root_item ::= !<<eof>> property ';' {pin=1 recoverWhile=property_recover}
 
-property ::= id '=' expr  {pin=2}
+property ::= id '=' expr {pin=1}
 private property_recover ::= !(';' | id '=')
 
 expr ::= factor plus_expr *
