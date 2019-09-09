@@ -1,0 +1,26 @@
+{
+    parserClass="io.chengguo.api.debugger.lang.parser.ApiParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Api"
+    psiImplClassSuffix="Impl"
+    psiPackage="io.chengguo.api.debugger.lang.psi"
+    psiImplPackage="io.chengguo.api.debugger.lang.psi.impl"
+
+    elementTypeHolderClass="io.chengguo.api.debugger.lang.psi.ApiTypes"
+    elementTypeClass="io.chengguo.api.debugger.lang.psi.ApiElementType"
+    tokenTypeClass="io.chengguo.api.debugger.lang.psi.ApiTokenType"
+}
+
+api ::= Title Description? RequestLine Header*
+
+Header ::= KEY HEADER_SEPARATOR VALUE
+
+Description ::= FLAG_DESCRIPTION SINGLE_LINE_STRING
+
+Title ::= FLAG_TITLE SINGLE_LINE_STRING
+
+RequestLine ::= METHOD URI
+
+// Recoveries

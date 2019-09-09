@@ -1,0 +1,14 @@
+# 用户登陆
+
+##
+用户登陆系统
+##
+
+POST {host}/user/login
+Content-Type: application/json
+
+{
+    "username": "api_debugger",
+    "password": "hell0w0rd"
+}
+
