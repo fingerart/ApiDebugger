@@ -1,4 +1,4 @@
-package io.chengguo.api.debugger.lang;
+package io.chengguo.api.debugger.lang.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
