@@ -32,76 +32,68 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   static boolean parse_root_(IElementType t, PsiBuilder b, int l) {
-    return File(b, l + 1);
+    return Root(b, l + 1);
   }
 
   /* ********************************************************** */
-  // Info
-  public static boolean Api(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Api")) return false;
-    if (!nextTokenIs(b, FLAG_TITLE)) return false;
+  // '##' TITLE_RAW_STRING
+  public static boolean ApiBlock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ApiBlock")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = Info(b, l + 1);
-    exit_section_(b, m, API, r);
+    Marker m = enter_section_(b, l, _NONE_, API_BLOCK, "<api block>");
+    r = consumeTokens(b, 2, FLAG_TITLE, TITLE_RAW_STRING);
+    exit_section_(b, l, m, r, false, recover_title_parser_);
     return r;
   }
 
   /* ********************************************************** */
-  // Api ?
-  static boolean File(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "File")) return false;
-    Api(b, l + 1);
+  // (ApiBlock|LINE_COMMENT)*
+  static boolean Root(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Root")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!Root_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "Root", c)) break;
+    }
     return true;
   }
 
-  /* ********************************************************** */
-  // Title
-  public static boolean Info(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Info")) return false;
-    if (!nextTokenIs(b, FLAG_TITLE)) return false;
+  // ApiBlock|LINE_COMMENT
+  private static boolean Root_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Root_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = Title(b, l + 1);
-    exit_section_(b, m, INFO, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // '##' raw_string
-  public static boolean Title(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "Title")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TITLE, "<title>");
-    r = consumeTokens(b, 2, FLAG_TITLE, RAW_STRING);
-    exit_section_(b, l, m, r, false, title_recover_parser_);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !( '##' raw_string )
-  static boolean title_recover(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "title_recover")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !title_recover_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // '##' raw_string
-  private static boolean title_recover_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "title_recover_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, FLAG_TITLE, RAW_STRING);
+    r = ApiBlock(b, l + 1);
+    if (!r) r = consumeToken(b, LINE_COMMENT);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  static final Parser title_recover_parser_ = new Parser() {
+  /* ********************************************************** */
+  // !('##'|LINE_COMMENT)
+  static boolean recover_title(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_title")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !recover_title_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // '##'|LINE_COMMENT
+  private static boolean recover_title_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "recover_title_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, FLAG_TITLE);
+    if (!r) r = consumeToken(b, LINE_COMMENT);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  static final Parser recover_title_parser_ = new Parser() {
     public boolean parse(PsiBuilder b, int l) {
-      return title_recover(b, l + 1);
+      return recover_title(b, l + 1);
     }
   };
 }

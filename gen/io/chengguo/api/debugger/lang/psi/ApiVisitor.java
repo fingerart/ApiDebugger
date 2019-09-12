@@ -7,15 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public class ApiVisitor extends PsiElementVisitor {
 
-  public void visitApi(@NotNull ApiApi o) {
-    visitPsiElement(o);
-  }
-
-  public void visitInfo(@NotNull ApiInfo o) {
-    visitPsiElement(o);
-  }
-
-  public void visitTitle(@NotNull ApiTitle o) {
+  public void visitApiBlock(@NotNull ApiApiBlock o) {
     visitPsiElement(o);
   }
 

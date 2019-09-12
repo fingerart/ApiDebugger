@@ -45,7 +45,7 @@ patchPluginXml {
 import org.jetbrains.grammarkit.tasks.*
 task generateApiLexer(type: GenerateLexer) {
     // source flex file
-    source = "grammars/_ApiLexer.flex"
+    source = "grammars/ApiLexer.flex"
 
     // target directory for lexer
     targetDir = "gen/io/chengguo/api/debugger/lang/lexer/"

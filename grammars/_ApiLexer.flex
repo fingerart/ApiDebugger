@@ -1,4 +1,4 @@
-package io.chengguo.api.debugger.lang.lexer;
+package ;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
@@ -25,17 +25,15 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-LINE_COMMENT="//".*
-RAW_STRING=[a-zA-Z0-9]*
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}       { return WHITE_SPACE; }
+  {WHITE_SPACE}      { return WHITE_SPACE; }
 
-  "##"                { return FLAG_TITLE; }
+  "##"               { return FLAG_TITLE; }
+  "LINE_COMMENT"     { return LINE_COMMENT; }
+  "RAW_STRING"       { return RAW_STRING; }
 
-  {LINE_COMMENT}      { return LINE_COMMENT; }
-  {RAW_STRING}        { return RAW_STRING; }
 
 }
 
