@@ -11,25 +11,19 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiInfoImpl extends ASTWrapperPsiElement implements ApiInfo {
+public class ApiApiBlockImpl extends ASTWrapperPsiElement implements ApiApiBlock {
 
-  public ApiInfoImpl(@NotNull ASTNode node) {
+  public ApiApiBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
-    visitor.visitInfo(this);
+    visitor.visitApiBlock(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public ApiTitle getTitle() {
-    return findNotNullChildByClass(ApiTitle.class);
   }
 
 }

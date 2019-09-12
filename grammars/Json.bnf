@@ -36,7 +36,7 @@
 //        STRING='regexp:"([^\\"\r\n]|\\([\\"/bfnrt]|u[a-fA-F0-9]{4}))*"?'
 
         NUMBER='regexp:-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d*)?'
-        TRUE='true'
+        TRUE='truea'
         FALSE='false'
         NULL='null'
         // Actually not defined in RFC 4627, but may be used for JSON5 and helps with

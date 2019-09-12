@@ -13,29 +13,16 @@
     elementTypeClass="io.chengguo.api.debugger.lang.psi.ApiElementType"
     tokenTypeClass="io.chengguo.api.debugger.lang.psi.ApiTokenType"
 
-    tokens = [
-        FLAG_TITLE='##'
-        LINE_COMMENT='regexp://.*'
-
-        raw_string="regexp:[a-zA-Z0-9]*"
+    tokens=[
+        FLAG_TITLE       =   '##'
     ]
 }
 
-File ::= Api ?
+Root ::= (ApiBlock|LINE_COMMENT)*
 
-Api ::= Info
+ApiBlock ::= '##' TITLE_RAW_STRING {
+    pin=2
+    recoverWhile=recover_title
+}
 
-//private semi ::= '<NL>' | <<eof>>
-
-//Header ::= KEY HEADER_SEPARATOR VALUE
-
-Info ::= Title
-
-Title ::= '##' raw_string {pin=2 recoverWhile=title_recover}
-private title_recover ::= !( '##' raw_string )
-
-//Description ::= '==' raw_string
-
-//RequestLine ::= METHOD URI
-
-// Recoveries
+private recover_title ::= !('##'|LINE_COMMENT)
