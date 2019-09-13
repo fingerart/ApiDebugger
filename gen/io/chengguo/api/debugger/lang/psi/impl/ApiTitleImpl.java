@@ -11,14 +11,14 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiApiBlockImpl extends ASTWrapperPsiElement implements ApiApiBlock {
+public class ApiTitleImpl extends ASTWrapperPsiElement implements ApiTitle {
 
-  public ApiApiBlockImpl(@NotNull ASTNode node) {
+  public ApiTitleImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
-    visitor.visitApiBlock(this);
+    visitor.visitTitle(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {

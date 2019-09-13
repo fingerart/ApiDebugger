@@ -21,10 +21,10 @@ import io.chengguo.api.debugger.lang.psi.ApiTypes;
 %type IElementType
 %unicode
 
-CRLF=\R
-WHITE_SPACE=[\ \n\t\f]
-FIRST_VALUE_CHARACTER=[^# \n\f\\] | "\\"{CRLF} | "\\".
-VALUE_CHARACTER=[^\n\f\\] | "\\"{CRLF} | "\\".
+NL=\R
+WS=[\ \t\f]
+FIRST_VALUE_CHARACTER=[^# \n\f\\]
+VALUE_CHARACTER=[^\n\f\\]
 LINE_COMMENT="//" [^\r\n]*
 //KEY_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
 
@@ -32,12 +32,16 @@ LINE_COMMENT="//" [^\r\n]*
 
 %%
 <YYINITIAL> {
-  "##"                                                       { return ApiTypes.FLAG_TITLE; }
-  {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*                  { return ApiTypes.TITLE_RAW_STRING; }
-  {LINE_COMMENT}                                             { return ApiTypes.LINE_COMMENT; }
+    ({NL}|{WS})+                               { return TokenType.WHITE_SPACE; }
+    {LINE_COMMENT}                                      { return ApiTypes.LINE_COMMENT; }
+    "##"                                                { yybegin(WAITING_VALUE); return ApiTypes.FLAG_TITLE; }
+    {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*           { return ApiTypes.TITLE_RAW_STRING; }
 
-  <WAITING_VALUE> {CRLF}({CRLF}|{WHITE_SPACE})+               { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
-  <WAITING_VALUE> {WHITE_SPACE}+                              { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
-
-  ({CRLF}|{WHITE_SPACE})+                                     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 }
+
+<WAITING_VALUE> {
+    {WS}+                                      { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+//    {NL}({NL}|{WHITE_SPACE})+                           { return TokenType.WHITE_SPACE; }
+}
+
+    [^]                                                 { return TokenType.BAD_CHARACTER; }

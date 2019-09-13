@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public class ApiVisitor extends PsiElementVisitor {
 
-  public void visitApiBlock(@NotNull ApiApiBlock o) {
+  public void visitTitle(@NotNull ApiTitle o) {
     visitPsiElement(o);
   }
 

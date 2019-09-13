@@ -8,8 +8,9 @@ import io.chengguo.api.debugger.lang.psi.impl.*;
 
 public interface ApiTypes {
 
-  IElementType API_BLOCK = new ApiElementType("API_BLOCK");
+  IElementType TITLE = new ApiElementType("TITLE");
 
+  IElementType FLAG_DES = new ApiTokenType("+++");
   IElementType FLAG_TITLE = new ApiTokenType("##");
   IElementType LINE_COMMENT = new ApiTokenType("LINE_COMMENT");
   IElementType TITLE_RAW_STRING = new ApiTokenType("TITLE_RAW_STRING");
@@ -17,8 +18,8 @@ public interface ApiTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == API_BLOCK) {
-        return new ApiApiBlockImpl(node);
+      if (type == TITLE) {
+        return new ApiTitleImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

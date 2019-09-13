@@ -64,11 +64,10 @@ public class _ApiLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\2\1\1\2\1\1\1\0\1\2\1\0\1\1"+
-    "\1\0\1\2\1\3\1\4\2\1\2\5";
+    "\2\0\1\1\2\2\2\3\1\1\1\4\1\5\2\6";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[18];
+    int [] result = new int[12];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -94,11 +93,10 @@ public class _ApiLexer implements FlexLexer {
 
   private static final String ZZ_ROWMAP_PACKED_0 =
     "\0\0\0\12\0\24\0\36\0\50\0\62\0\74\0\106"+
-    "\0\120\0\132\0\50\0\144\0\50\0\156\0\170\0\202"+
-    "\0\214\0\226";
+    "\0\120\0\74\0\132\0\144";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[18];
+    int [] result = new int[12];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -121,21 +119,17 @@ public class _ApiLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\3\1\4\1\5\1\4\1\6\1\5\1\7\1\10"+
-    "\1\11\1\12\1\0\1\13\1\5\1\13\1\14\1\5"+
-    "\1\0\1\14\2\0\2\3\1\0\2\3\1\0\2\3"+
-    "\1\11\2\3\1\4\1\15\2\4\1\15\1\3\1\4"+
-    "\1\11\1\3\1\0\5\15\1\0\1\15\2\0\1\3"+
-    "\1\4\1\10\1\4\1\6\1\10\1\3\1\6\1\11"+
-    "\1\3\6\0\1\16\4\0\1\15\1\10\1\15\2\10"+
-    "\1\0\1\10\2\0\3\3\1\17\10\3\1\0\2\3"+
-    "\1\0\2\3\1\11\1\20\2\0\1\14\1\0\2\14"+
-    "\1\0\1\14\14\0\5\3\1\0\2\3\1\11\1\3"+
-    "\2\20\1\0\1\3\1\20\1\21\2\20\1\22\1\20"+
-    "\2\21\2\0\6\21\2\20\1\3\1\17\6\20";
+    "\1\3\1\4\1\5\2\4\1\5\1\6\1\5\1\7"+
+    "\1\10\4\7\2\11\1\7\1\11\2\7\2\3\1\0"+
+    "\2\3\1\0\2\3\1\0\2\3\1\4\1\5\2\4"+
+    "\1\5\1\3\1\4\1\0\1\3\1\0\5\5\1\0"+
+    "\1\5\10\0\1\12\15\0\2\3\1\0\2\3\1\0"+
+    "\2\3\1\0\1\13\4\0\2\11\1\0\1\11\2\0"+
+    "\2\13\1\0\1\3\1\13\1\14\2\13\1\14\1\13"+
+    "\2\14\2\0\6\14";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[160];
+    int [] result = new int[110];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -173,11 +167,10 @@ public class _ApiLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\4\1\1\0\1\1\1\0\1\1\1\0\2\1"+
-    "\1\11\4\1";
+    "\2\0\4\1\1\11\2\1\1\11\2\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[18];
+    int [] result = new int[12];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -486,27 +479,32 @@ public class _ApiLexer implements FlexLexer {
             { return ApiTypes.TITLE_RAW_STRING;
             } 
             // fall through
-          case 6: break;
-          case 2: 
-            { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE;
-            } 
-            // fall through
           case 7: break;
-          case 3: 
-            { yybegin(YYINITIAL); return TokenType.WHITE_SPACE;
+          case 2: 
+            { return TokenType.WHITE_SPACE;
             } 
             // fall through
           case 8: break;
-          case 4: 
-            { return ApiTypes.FLAG_TITLE;
+          case 3: 
+            { return TokenType.BAD_CHARACTER;
             } 
             // fall through
           case 9: break;
-          case 5: 
-            { return ApiTypes.LINE_COMMENT;
+          case 4: 
+            { yybegin(YYINITIAL); return TokenType.WHITE_SPACE;
             } 
             // fall through
           case 10: break;
+          case 5: 
+            { yybegin(WAITING_VALUE); return ApiTypes.FLAG_TITLE;
+            } 
+            // fall through
+          case 11: break;
+          case 6: 
+            { return ApiTypes.LINE_COMMENT;
+            } 
+            // fall through
+          case 12: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
