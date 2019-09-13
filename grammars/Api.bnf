@@ -15,14 +15,16 @@
 
     tokens=[
         FLAG_TITLE       =   '##'
+        FLAG_DES         =   '+++'
     ]
 }
 
 Root ::= (ApiBlock|LINE_COMMENT)*
 
-ApiBlock ::= '##' TITLE_RAW_STRING {
-    pin=2
-    recoverWhile=recover_title
-}
+private ApiBlock ::= Info
 
-private recover_title ::= !('##'|LINE_COMMENT)
+private Info ::= Title
+
+Title ::= '##' TITLE_RAW_STRING
+
+//private Description ::=  FLAG_DES TITLE_RAW_STRING FLAG_DES

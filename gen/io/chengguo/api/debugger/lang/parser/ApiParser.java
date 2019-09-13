@@ -36,14 +36,15 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '##' TITLE_RAW_STRING
-  public static boolean ApiBlock(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ApiBlock")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, API_BLOCK, "<api block>");
-    r = consumeTokens(b, 2, FLAG_TITLE, TITLE_RAW_STRING);
-    exit_section_(b, l, m, r, false, recover_title_parser_);
-    return r;
+  // Info
+  static boolean ApiBlock(PsiBuilder b, int l) {
+    return Info(b, l + 1);
+  }
+
+  /* ********************************************************** */
+  // Title
+  static boolean Info(PsiBuilder b, int l) {
+    return Title(b, l + 1);
   }
 
   /* ********************************************************** */
@@ -62,38 +63,21 @@ public class ApiParser implements PsiParser, LightPsiParser {
   private static boolean Root_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Root_0")) return false;
     boolean r;
-    Marker m = enter_section_(b);
     r = ApiBlock(b, l + 1);
     if (!r) r = consumeToken(b, LINE_COMMENT);
-    exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // !('##'|LINE_COMMENT)
-  static boolean recover_title(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "recover_title")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !recover_title_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // '##'|LINE_COMMENT
-  private static boolean recover_title_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "recover_title_0")) return false;
+  // '##' TITLE_RAW_STRING
+  public static boolean Title(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Title")) return false;
+    if (!nextTokenIs(b, FLAG_TITLE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, FLAG_TITLE);
-    if (!r) r = consumeToken(b, LINE_COMMENT);
-    exit_section_(b, m, null, r);
+    r = consumeTokens(b, 0, FLAG_TITLE, TITLE_RAW_STRING);
+    exit_section_(b, m, TITLE, r);
     return r;
   }
 
-  static final Parser recover_title_parser_ = new Parser() {
-    public boolean parse(PsiBuilder b, int l) {
-      return recover_title(b, l + 1);
-    }
-  };
 }
