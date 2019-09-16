@@ -16,15 +16,23 @@
     tokens=[
         FLAG_TITLE       =   '##'
         FLAG_DES         =   '+++'
+        GET         =   'GET'
+        POST         =   'POST'
     ]
 }
 
 Root ::= (ApiBlock|LINE_COMMENT)*
 
-private ApiBlock ::= Info
+private ApiBlock ::= Title Api
 
-private Info ::= Title
+//private Info ::= Title
 
-Title ::= '##' TITLE_RAW_STRING
+Title ::= '##' RAW_STRING
 
 //private Description ::=  FLAG_DES TITLE_RAW_STRING FLAG_DES
+
+private Api ::= Method RAW_STRING
+
+private Method ::=
+'GET'  |
+'POST'

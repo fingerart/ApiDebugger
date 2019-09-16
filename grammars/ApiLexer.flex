@@ -33,10 +33,13 @@ LINE_COMMENT="//" [^\r\n]*
 %%
 <YYINITIAL> {
     ({NL}|{WS})+                               { return TokenType.WHITE_SPACE; }
-    {LINE_COMMENT}                                      { return ApiTypes.LINE_COMMENT; }
-    "##"                                                { yybegin(WAITING_VALUE); return ApiTypes.FLAG_TITLE; }
-    {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*           { return ApiTypes.TITLE_RAW_STRING; }
 
+    "##"                                                {  return ApiTypes.FLAG_TITLE; }
+    "GET"                                                {  return ApiTypes.GET; }
+    "POST"                                                {  return ApiTypes.POST; }
+
+    {LINE_COMMENT}                                      { return ApiTypes.LINE_COMMENT; }
+    {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*           { return ApiTypes.RAW_STRING; }
 }
 
 <WAITING_VALUE> {
