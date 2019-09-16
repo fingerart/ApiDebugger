@@ -12,8 +12,10 @@ public interface ApiTypes {
 
   IElementType FLAG_DES = new ApiTokenType("+++");
   IElementType FLAG_TITLE = new ApiTokenType("##");
+  IElementType GET = new ApiTokenType("GET");
   IElementType LINE_COMMENT = new ApiTokenType("LINE_COMMENT");
-  IElementType TITLE_RAW_STRING = new ApiTokenType("TITLE_RAW_STRING");
+  IElementType POST = new ApiTokenType("POST");
+  IElementType RAW_STRING = new ApiTokenType("RAW_STRING");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {

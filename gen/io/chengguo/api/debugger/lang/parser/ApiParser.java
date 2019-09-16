@@ -36,15 +36,43 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // Info
-  static boolean ApiBlock(PsiBuilder b, int l) {
-    return Info(b, l + 1);
+  // Method RAW_STRING
+  static boolean Api(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Api")) return false;
+    if (!nextTokenIs(b, "", GET, POST)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Method(b, l + 1);
+    r = r && consumeToken(b, RAW_STRING);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
-  // Title
-  static boolean Info(PsiBuilder b, int l) {
-    return Title(b, l + 1);
+  // Title Api
+  static boolean ApiBlock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ApiBlock")) return false;
+    if (!nextTokenIs(b, FLAG_TITLE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Title(b, l + 1);
+    r = r && Api(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'GET'  |
+  // 'POST'
+  static boolean Method(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Method")) return false;
+    if (!nextTokenIs(b, "", GET, POST)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, GET);
+    if (!r) r = consumeToken(b, POST);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -69,13 +97,13 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '##' TITLE_RAW_STRING
+  // '##' RAW_STRING
   public static boolean Title(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Title")) return false;
     if (!nextTokenIs(b, FLAG_TITLE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, FLAG_TITLE, TITLE_RAW_STRING);
+    r = consumeTokens(b, 0, FLAG_TITLE, RAW_STRING);
     exit_section_(b, m, TITLE, r);
     return r;
   }
