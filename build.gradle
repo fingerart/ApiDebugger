@@ -1,7 +1,6 @@
 plugins {
     id 'org.jetbrains.intellij' version '0.4.8'
     id 'org.jetbrains.kotlin.jvm' version '1.3.10'
-    id "org.jetbrains.grammarkit" version "2019.2.1"
 }
 
 group 'io.chengguo'
@@ -14,65 +13,33 @@ repositories {
     }
 }
 
-apply plugin: 'org.jetbrains.grammarkit'
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'antlr'
 
-sourceSets {
-    main {
-        java.srcDirs 'src/java', 'gen', 'grammars'
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'org.antlr:antlr4-intellij-adaptor:0.1'
+    antlr("org.antlr:antlr4:4.8-1") { // use ANTLR version 4
+        exclude group:'com.ibm.icu', module:'icu4j'
     }
 }
 
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-}
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
 intellij {
     version '2019.2.2'
 }
+
 patchPluginXml {
     changeNotes """
       Add change notes here.<br>
       <em>most HTML tags may be used</em>"""
 }
 
-import org.jetbrains.grammarkit.tasks.*
-task generateApiLexer(type: GenerateLexer) {
-    // source flex file
-    source = "grammars/ApiLexer.flex"
-
-    // target directory for lexer
-    targetDir = "gen/io/chengguo/api/debugger/lang/lexer/"
-
-    // target classname, target file will be targetDir/targetClass.java
-    targetClass = "ApiLexer"
-
-    // optional, path to the task-specific skeleton file. Default: none
-//    skeleton = '/some/specific/skeleton'
-
-    // if set, plugin will remove a lexer output file before generating new one. Default: false
-    purgeOldFiles = true
-}
-
-task generateApiParser(type: GenerateParser) {
-    // source bnf file
-    source = "grammars/Api.bnf"
-
-    // optional, task-specific root for the generated files. Default: none
-    targetRoot = 'gen'
-
-    // path to a parser file, relative to the targetRoot
-    pathToParser = '/io/chengguo/api/debugger/lang/parser/ApiParser.java'
-
-    // path to a directory with generated psi files, relative to the targetRoot
-    pathToPsiRoot = '/io/chengguo/api/debugger/lang/psi'
-
-    // if set, plugin will remove a parser output file and psi output directory before generating new ones. Default: false
-    purgeOldFiles = true
+generateGrammarSource {
+    arguments += [
+            "-package", "io.chengguo.api.debugger.lang.parser",
+            "-lib", "src/main/antlr/io/chengguo/api/debugger/lang/parser",
+            "-Xexact-output-dir"
+    ]
 }
