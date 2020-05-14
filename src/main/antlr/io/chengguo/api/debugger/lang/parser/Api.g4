@@ -1,23 +1,25 @@
-grammar Api;
+parser grammar Api;
+
+options { tokenVocab=ApiLexer; }
 
 api
     : info http
     ;
 
 info
-    : TITLE DESCRIPTION?
+    : StringLiteral
     ;
 
 http
-    : method uri
+    : method SP uri
     ;
 
 variable
-    : '$' '{' ID '}'
+    : LineStrExprStart string RCURL
     ;
 
-method:
-	'GET'
+method
+    : 'GET'
 	| 'HEAD'
 	| 'POST'
 	| 'PUT'
@@ -25,37 +27,36 @@ method:
 	| 'CONNECT'
 	| 'OPTIONS'
 	| 'TRACE'
-	| string
 	;
 
 uri
-    : scheme '://' host (':' port)? path? query? LF?
+    : (scheme '://')? (host (':' port)?)? path? query?
     ;
 
 scheme
-    : 'http'
-    | 'https'
-    | string
+    : string
+    | variable
     ;
 
 host
-    : '/'? (hostnumber | hostname)
+    : '/'? (hostnumber | hostname | variable)
     ;
 
 hostnumber
-    : DIGITS'.'DIGITS'.'DIGITS'.'DIGITS
+    : Digits'.'Digits'.'Digits'.'Digits
     ;
 
 hostname
-    : string ('.' string)*
+    : (string | variable) ('.' (string | variable))*
     ;
 
 port
-    : DIGITS
+    : Digits
+    | variable
     ;
 
 path
-    : ('/' string)*
+    : ('/' (string | variable))*
     ;
 
 query
@@ -67,44 +68,10 @@ search
     ;
 
 searchparameter
-    : string ('=' (string|DIGITS|HEX))?
+    : string ('=' (string | Digits | HexUri))?
     ;
 
 string
-    : STRING
+    : Identifier
+    | variable
     ;
-
-GET : 'GET' ;
-HEAD : 'HEAD' ;
-POST : 'POST' ;
-PUT : 'PUT' ;
-DELETE : 'DELETE' ;
-CONNECT : 'CONNECT' ;
-OPTIONS : 'OPTIONS' ;
-TRACE : 'TRACE' ;
-HTTP : 'http' ;
-HTTPS : 'https' ;
-DESCRIPTION : 'DESCRIPTION' ;
-LBRACE : '{' ;
-RBRACE : '}' ;
-DOT : '.' ;
-DOLLAR : '$' ;
-
-TITLE : '#' ~[#\r\n]+ '\r'? '\n' ;
-
-DIGITS : [0-9]+ ;
-ID : [$a-zA-Z_] [$a-zA-Z0-9_]* ;
-STRING : ([a-zA-Z~0-9] | HEX) ([a-zA-Z0-9.-] | HEX)* ;
-HEX : ('%' [0-9a-fA-F] [0-9a-fA-F])+ ;
-
-LINE_COMMENT : '//' .*? ('\n'|EOF)	-> channel(HIDDEN) ;
-COMMENT      : '/*' .*? '*/'    	-> channel(HIDDEN) ;
-
-LF
-    : [\r\n]+
-    ;
-
-WS : [ \t\n\r]+ -> channel(HIDDEN) ;
-//WS
-//    : [ \t\r\n]+ -> skip
-//    ;

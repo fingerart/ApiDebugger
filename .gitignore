@@ -1,3 +1,7 @@
+
+# ANTLR4
+*.tokens
+
 /.gradle
 /.idea
 build/
