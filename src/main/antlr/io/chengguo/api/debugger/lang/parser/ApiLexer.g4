@@ -13,8 +13,8 @@ TRACE:              'TRACE';
 
 // Separators
 
-LCURL:             '{';
-RCURL:             '}';
+LCURL:              '{';
+RCURL:              '}';
 DOLLAR:             '$';
 Slash:              '/';
 DOT:                '.';
@@ -27,23 +27,32 @@ QUESTION:           '?';
 BITAND:             '&';
 PROTCOL:            '://';
 WELL:               '#';
-//SP:                 ' ';
+AT:                 '@';
 
-HexUri:            ('%' HexDigit HexDigit)+;
+HexUri:             ('%' HexDigit HexDigit)+;
 Digits:             Digit+;
-StringLiteral:     '"' (~["\\\r\n] | EscapeSequence)* '"';
 
-LF:                 [\r\n]+;
+OWS:                SP | HTAB;
+HTAB:               '\t';
+SP:                 ' ';
+NL:                 '\u000A' | '\u000D' '\u000A';// \r\n
 
-WS : [ \t\r\n\u000C]+ -> channel(HIDDEN);
+WS :                [\r\n\u000C]+ -> channel(HIDDEN);
 COMMENT:            '/*' .*? '*/'    -> channel(HIDDEN);
 LINE_COMMENT:       '//' ~[\r\n]*    -> channel(HIDDEN);
 
 Identifier:         Letter LetterOrDigit*;
 
 LineStrExprStart
-    : '${' -> pushMode(StringExpression)
+    : '${'
     ;
+
+InfoStart
+    : '###'
+    ;
+
+StringLiteral:      '"' StringContent* '"';
+StringContent:      ~["\\\r\n] | EscapeSequence;
 
 fragment Digit
     : [0-9]
@@ -70,6 +79,12 @@ fragment Letter
     | [\uD800-\uDBFF] [\uDC00-\uDFFF] // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
     ;
 
-mode StringExpression;
+mode InfoMode ;
 
-StrExpr_RCURL: RCURL -> popMode, type(RCURL) ;
+INFO_CLOSE
+    : '###' -> popMode
+    ;
+
+TITLE_CONTENT
+    : (~'#' | StringContent)+
+    ;

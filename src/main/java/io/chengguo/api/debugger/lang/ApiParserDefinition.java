@@ -12,7 +12,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import io.chengguo.api.debugger.lang.parser.ApiLexer;
-import io.chengguo.api.debugger.lang.parser.ApiParser;
+import io.chengguo.api.debugger.lang.parser.Api;
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor;
 import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory;
 import org.antlr.intellij.adaptor.lexer.RuleIElementType;
@@ -60,14 +60,14 @@ public class ApiParserDefinition implements ParserDefinition {
 
     @NotNull
     public PsiParser createParser(final Project project) {
-        ApiParser apiParser = new ApiParser(null);
+        Api apiParser = new Api(null);
         return new ANTLRParserAdaptor(ApiLanguage.INSTANCE, apiParser) {
             @Override
             protected ParseTree parse(Parser parser, IElementType root) {
                 if (root instanceof IFileElementType) {
-                    return ((ApiParser) parser).api();
+                    return ((Api) parser).api();
                 }
-                return ((ApiParser) parser).variable();
+                return ((Api) parser).variable();
             }
         };
     }
@@ -96,12 +96,12 @@ public class ApiParserDefinition implements ParserDefinition {
         }
         RuleIElementType ruleElType = (RuleIElementType) elType;
         switch (ruleElType.getRuleIndex()) {
-            case ApiParser.RULE_api:
-            case ApiParser.RULE_info:
-            case ApiParser.RULE_http:
-            case ApiParser.RULE_method:
-            case ApiParser.RULE_uri:
-            case ApiParser.RULE_variable:
+            case Api.RULE_api:
+            case Api.RULE_info:
+            case Api.RULE_http:
+            case Api.RULE_method:
+            case Api.RULE_uri:
+            case Api.RULE_variable:
             default:
                 return new ANTLRPsiNode(node);
         }

@@ -16,7 +16,6 @@ repositories {
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'antlr'
 
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
