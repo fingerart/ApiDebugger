@@ -1,19 +1,15 @@
-# sdfsfs
-
-
-##
-asdfsaf
-##
-
-$userId = 10
-
+###
+title: 用户名密码登录
+description: 通过用户的用户名/手机号+密码的形式登录系统
+###
 
 GET ${host}/user/${userId}/intro
 Accept: */*
 Cache-Control: no-cache
 Authorization: Basic b3Jhbmc6YWJjZGVmZw==
 
+<?{
+    validate(response.statusCode == 200)
+}
 
-```
-validate(response.statusCode == 200)
-```
+--------

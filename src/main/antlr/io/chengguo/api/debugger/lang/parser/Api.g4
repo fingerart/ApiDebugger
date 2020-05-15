@@ -3,19 +3,15 @@ parser grammar Api;
 options { tokenVocab=ApiLexer; }
 
 api
-    : info http
+    : (NL* info? NL* http)*
     ;
 
 info
-    : StringLiteral
+    : InfoStart (Identifier | (NL* Identifier))* NL* InfoStart
     ;
 
 http
-    : method SP uri
-    ;
-
-variable
-    : LineStrExprStart string RCURL
+    : method OWS* uri NL (headerField NL)* body
     ;
 
 method
@@ -30,11 +26,11 @@ method
 	;
 
 uri
-    : (scheme '://')? (host (':' port)?)? path? query?
+    : (scheme '://')? (login? host (':' port)?)? path? query?
     ;
 
 scheme
-    : string
+    : Identifier
     | variable
     ;
 
@@ -47,7 +43,7 @@ hostnumber
     ;
 
 hostname
-    : (string | variable) ('.' (string | variable))*
+    : (Identifier | variable) ('.' (Identifier | variable))*
     ;
 
 port
@@ -56,8 +52,20 @@ port
     ;
 
 path
-    : ('/' (string | variable))*
+    : ('/' (Identifier | variable))*
     ;
+
+user
+   : Identifier
+   ;
+
+login
+   : user (':' password)? '@'
+   ;
+
+password
+   : Identifier
+   ;
 
 query
     : '?' search
@@ -68,10 +76,17 @@ search
     ;
 
 searchparameter
-    : string ('=' (string | Digits | HexUri))?
+    : Identifier ('=' (Identifier | Digits | HexUri))?
     ;
 
-string
+headerField
+    : Identifier ':' OWS* Identifier
+    ;
+
+body
     : Identifier
-    | variable
+    ;
+
+variable
+    : LineStrExprStart Identifier? RCURL
     ;
