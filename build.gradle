@@ -37,7 +37,7 @@ patchPluginXml {
 
 generateGrammarSource {
     arguments += [
-            "-package", "io.chengguo.api.debugger.lang.parser",
+            "-package", "io.chengguo.api.debugger.lang",
             "-lib", "src/main/antlr",
             "-Xexact-output-dir"
     ]
