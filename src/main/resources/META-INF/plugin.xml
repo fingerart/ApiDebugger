@@ -44,10 +44,11 @@
         <!--Api-->
         <fileTypeFactory implementation="io.chengguo.api.debugger.lang.psi.ApiFileTypeFactory"/>
         <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileViewEditorProvider"/>
+        <!--        <lang.ast.factory language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiASTFactory"/>-->
         <lang.syntaxHighlighterFactory language="Api"
                                        implementationClass="io.chengguo.api.debugger.lang.highlight.ApiSyntaxHighlighterFactory"/>
         <lang.parserDefinition language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiParserDefinition"/>
-        <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiCommenter"/>
+        <!--        <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiCommenter"/>-->
         <!--        <lang.psiStructureViewFactory language="Api"-->
         <!--                                      implementationClass="io.chengguo.api.debugger.lang.structure.ApiStructureViewFactory"/>-->
     </extensions>
