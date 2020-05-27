@@ -1,4 +1,4 @@
-// Generated from Api.g4 by ANTLR 4.8
+// Generated from io/chengguo/api/debugger/lang/Api.g4 by ANTLR 4.8
 package io.chengguo.api.debugger.lang;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -10,33 +10,36 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ApiParser extends Parser {
+public class Api extends Parser {
 	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, Keyword=5, WS=6, COMMENT=7, LINE_COMMENT=8;
+		FlagTitle=1, FlagDes=2, Sub=3, Colon=4, FlagDes2=5, Method=6, NL=7, WS=8, 
+		COMMENT=9, LINE_COMMENT=10, LineText=11, Text=12;
 	public static final int
-		RULE_api = 0, RULE_info = 1, RULE_title = 2, RULE_description = 3, RULE_attribute = 4, 
-		RULE_key = 5, RULE_value = 6;
+		RULE_file = 0, RULE_api = 1, RULE_info = 2, RULE_title = 3, RULE_description = 4, 
+		RULE_attribute = 5, RULE_key = 6, RULE_value = 7, RULE_request = 8, RULE_requestLine = 9;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"api", "info", "title", "description", "attribute", "key", "value"
+			"file", "api", "info", "title", "description", "attribute", "key", "value", 
+			"request", "requestLine"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'---'", "'\"\"\"'", "'-'", "':'"
+			null, "'---'", null, "'-'", "':'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, "Keyword", "WS", "COMMENT", "LINE_COMMENT"
+			null, "FlagTitle", "FlagDes", "Sub", "Colon", "FlagDes2", "Method", "NL", 
+			"WS", "COMMENT", "LINE_COMMENT", "LineText", "Text"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -85,17 +88,72 @@ public class ApiParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public ApiParser(TokenStream input) {
+	public Api(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
-	public static class ApiContext extends ParserRuleContext {
-		public List<InfoContext> info() {
-			return getRuleContexts(InfoContext.class);
+	public static class FileContext extends ParserRuleContext {
+		public List<ApiContext> api() {
+			return getRuleContexts(ApiContext.class);
 		}
-		public InfoContext info(int i) {
-			return getRuleContext(InfoContext.class,i);
+		public ApiContext api(int i) {
+			return getRuleContext(ApiContext.class,i);
+		}
+		public FileContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_file; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ApiListener ) ((ApiListener)listener).enterFile(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ApiListener ) ((ApiListener)listener).exitFile(this);
+		}
+	}
+
+	public final FileContext file() throws RecognitionException {
+		FileContext _localctx = new FileContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_file);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(23);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==FlagTitle) {
+				{
+				{
+				setState(20);
+				api();
+				}
+				}
+				setState(25);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ApiContext extends ParserRuleContext {
+		public InfoContext info() {
+			return getRuleContext(InfoContext.class,0);
+		}
+		public RequestContext request() {
+			return getRuleContext(RequestContext.class,0);
 		}
 		public ApiContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -113,25 +171,14 @@ public class ApiParser extends Parser {
 
 	public final ApiContext api() throws RecognitionException {
 		ApiContext _localctx = new ApiContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_api);
-		int _la;
+		enterRule(_localctx, 2, RULE_api);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(17);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while (_la==T__0) {
-				{
-				{
-				setState(14);
-				info();
-				}
-				}
-				setState(19);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			}
+			setState(26);
+			info();
+			setState(27);
+			request();
 			}
 		}
 		catch (RecognitionException re) {
@@ -174,34 +221,34 @@ public class ApiParser extends Parser {
 
 	public final InfoContext info() throws RecognitionException {
 		InfoContext _localctx = new InfoContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_info);
+		enterRule(_localctx, 4, RULE_info);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(20);
+			setState(29);
 			title();
-			setState(22);
+			setState(31);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==T__1) {
+			if (_la==FlagDes) {
 				{
-				setState(21);
+				setState(30);
 				description();
 				}
 			}
 
-			setState(27);
+			setState(36);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__2) {
+			while (_la==Sub) {
 				{
 				{
-				setState(24);
+				setState(33);
 				attribute();
 				}
 				}
-				setState(29);
+				setState(38);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -219,7 +266,9 @@ public class ApiParser extends Parser {
 	}
 
 	public static class TitleContext extends ParserRuleContext {
-		public TerminalNode Keyword() { return getToken(ApiParser.Keyword, 0); }
+		public TerminalNode FlagTitle() { return getToken(Api.FlagTitle, 0); }
+		public TerminalNode LineText() { return getToken(Api.LineText, 0); }
+		public TerminalNode NL() { return getToken(Api.NL, 0); }
 		public TitleContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -236,14 +285,25 @@ public class ApiParser extends Parser {
 
 	public final TitleContext title() throws RecognitionException {
 		TitleContext _localctx = new TitleContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_title);
+		enterRule(_localctx, 6, RULE_title);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(30);
-			match(T__0);
-			setState(31);
-			match(Keyword);
+			setState(39);
+			match(FlagTitle);
+			setState(40);
+			match(LineText);
+			setState(42);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==NL) {
+				{
+				setState(41);
+				match(NL);
+				}
+			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -258,7 +318,10 @@ public class ApiParser extends Parser {
 	}
 
 	public static class DescriptionContext extends ParserRuleContext {
-		public TerminalNode Keyword() { return getToken(ApiParser.Keyword, 0); }
+		public TerminalNode FlagDes() { return getToken(Api.FlagDes, 0); }
+		public TerminalNode Text() { return getToken(Api.Text, 0); }
+		public TerminalNode FlagDes2() { return getToken(Api.FlagDes2, 0); }
+		public TerminalNode NL() { return getToken(Api.NL, 0); }
 		public DescriptionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -275,25 +338,27 @@ public class ApiParser extends Parser {
 
 	public final DescriptionContext description() throws RecognitionException {
 		DescriptionContext _localctx = new DescriptionContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_description);
+		enterRule(_localctx, 8, RULE_description);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(33);
-			match(T__1);
-			setState(35);
+			setState(44);
+			match(FlagDes);
+			setState(45);
+			match(Text);
+			setState(46);
+			match(FlagDes2);
+			setState(48);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==Keyword) {
+			if (_la==NL) {
 				{
-				setState(34);
-				match(Keyword);
+				setState(47);
+				match(NL);
 				}
 			}
 
-			setState(37);
-			match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -308,9 +373,11 @@ public class ApiParser extends Parser {
 	}
 
 	public static class AttributeContext extends ParserRuleContext {
+		public TerminalNode Sub() { return getToken(Api.Sub, 0); }
 		public KeyContext key() {
 			return getRuleContext(KeyContext.class,0);
 		}
+		public TerminalNode Colon() { return getToken(Api.Colon, 0); }
 		public ValueContext value() {
 			return getRuleContext(ValueContext.class,0);
 		}
@@ -330,17 +397,17 @@ public class ApiParser extends Parser {
 
 	public final AttributeContext attribute() throws RecognitionException {
 		AttributeContext _localctx = new AttributeContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_attribute);
+		enterRule(_localctx, 10, RULE_attribute);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(39);
-			match(T__2);
-			setState(40);
+			setState(50);
+			match(Sub);
+			setState(51);
 			key();
-			setState(41);
-			match(T__3);
-			setState(42);
+			setState(52);
+			match(Colon);
+			setState(53);
 			value();
 			}
 		}
@@ -356,7 +423,7 @@ public class ApiParser extends Parser {
 	}
 
 	public static class KeyContext extends ParserRuleContext {
-		public TerminalNode Keyword() { return getToken(ApiParser.Keyword, 0); }
+		public TerminalNode Method() { return getToken(Api.Method, 0); }
 		public KeyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -373,12 +440,12 @@ public class ApiParser extends Parser {
 
 	public final KeyContext key() throws RecognitionException {
 		KeyContext _localctx = new KeyContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_key);
+		enterRule(_localctx, 12, RULE_key);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(44);
-			match(Keyword);
+			setState(55);
+			match(Method);
 			}
 		}
 		catch (RecognitionException re) {
@@ -393,7 +460,7 @@ public class ApiParser extends Parser {
 	}
 
 	public static class ValueContext extends ParserRuleContext {
-		public TerminalNode Keyword() { return getToken(ApiParser.Keyword, 0); }
+		public TerminalNode Method() { return getToken(Api.Method, 0); }
 		public ValueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -410,12 +477,88 @@ public class ApiParser extends Parser {
 
 	public final ValueContext value() throws RecognitionException {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_value);
+		enterRule(_localctx, 14, RULE_value);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(46);
-			match(Keyword);
+			setState(57);
+			match(Method);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class RequestContext extends ParserRuleContext {
+		public RequestLineContext requestLine() {
+			return getRuleContext(RequestLineContext.class,0);
+		}
+		public RequestContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_request; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ApiListener ) ((ApiListener)listener).enterRequest(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ApiListener ) ((ApiListener)listener).exitRequest(this);
+		}
+	}
+
+	public final RequestContext request() throws RecognitionException {
+		RequestContext _localctx = new RequestContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_request);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(59);
+			requestLine();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class RequestLineContext extends ParserRuleContext {
+		public TerminalNode Method() { return getToken(Api.Method, 0); }
+		public RequestLineContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_requestLine; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ApiListener ) ((ApiListener)listener).enterRequestLine(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ApiListener ) ((ApiListener)listener).exitRequestLine(this);
+		}
+	}
+
+	public final RequestLineContext requestLine() throws RecognitionException {
+		RequestLineContext _localctx = new RequestLineContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_requestLine);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(61);
+			match(Method);
 			}
 		}
 		catch (RecognitionException re) {
@@ -430,19 +573,22 @@ public class ApiParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\n\63\4\2\t\2\4\3"+
-		"\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\7\2\22\n\2\f\2\16\2\25"+
-		"\13\2\3\3\3\3\5\3\31\n\3\3\3\7\3\34\n\3\f\3\16\3\37\13\3\3\4\3\4\3\4\3"+
-		"\5\3\5\5\5&\n\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\b\3\b\3\b\2\2\t"+
-		"\2\4\6\b\n\f\16\2\2\2/\2\23\3\2\2\2\4\26\3\2\2\2\6 \3\2\2\2\b#\3\2\2\2"+
-		"\n)\3\2\2\2\f.\3\2\2\2\16\60\3\2\2\2\20\22\5\4\3\2\21\20\3\2\2\2\22\25"+
-		"\3\2\2\2\23\21\3\2\2\2\23\24\3\2\2\2\24\3\3\2\2\2\25\23\3\2\2\2\26\30"+
-		"\5\6\4\2\27\31\5\b\5\2\30\27\3\2\2\2\30\31\3\2\2\2\31\35\3\2\2\2\32\34"+
-		"\5\n\6\2\33\32\3\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2\35\36\3\2\2\2\36\5"+
-		"\3\2\2\2\37\35\3\2\2\2 !\7\3\2\2!\"\7\7\2\2\"\7\3\2\2\2#%\7\4\2\2$&\7"+
-		"\7\2\2%$\3\2\2\2%&\3\2\2\2&\'\3\2\2\2\'(\7\4\2\2(\t\3\2\2\2)*\7\5\2\2"+
-		"*+\5\f\7\2+,\7\6\2\2,-\5\16\b\2-\13\3\2\2\2./\7\7\2\2/\r\3\2\2\2\60\61"+
-		"\7\7\2\2\61\17\3\2\2\2\6\23\30\35%";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\16B\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\3"+
+		"\2\7\2\30\n\2\f\2\16\2\33\13\2\3\3\3\3\3\3\3\4\3\4\5\4\"\n\4\3\4\7\4%"+
+		"\n\4\f\4\16\4(\13\4\3\5\3\5\3\5\5\5-\n\5\3\6\3\6\3\6\3\6\5\6\63\n\6\3"+
+		"\7\3\7\3\7\3\7\3\7\3\b\3\b\3\t\3\t\3\n\3\n\3\13\3\13\3\13\2\2\f\2\4\6"+
+		"\b\n\f\16\20\22\24\2\2\2<\2\31\3\2\2\2\4\34\3\2\2\2\6\37\3\2\2\2\b)\3"+
+		"\2\2\2\n.\3\2\2\2\f\64\3\2\2\2\169\3\2\2\2\20;\3\2\2\2\22=\3\2\2\2\24"+
+		"?\3\2\2\2\26\30\5\4\3\2\27\26\3\2\2\2\30\33\3\2\2\2\31\27\3\2\2\2\31\32"+
+		"\3\2\2\2\32\3\3\2\2\2\33\31\3\2\2\2\34\35\5\6\4\2\35\36\5\22\n\2\36\5"+
+		"\3\2\2\2\37!\5\b\5\2 \"\5\n\6\2! \3\2\2\2!\"\3\2\2\2\"&\3\2\2\2#%\5\f"+
+		"\7\2$#\3\2\2\2%(\3\2\2\2&$\3\2\2\2&\'\3\2\2\2\'\7\3\2\2\2(&\3\2\2\2)*"+
+		"\7\3\2\2*,\7\r\2\2+-\7\t\2\2,+\3\2\2\2,-\3\2\2\2-\t\3\2\2\2./\7\4\2\2"+
+		"/\60\7\16\2\2\60\62\7\7\2\2\61\63\7\t\2\2\62\61\3\2\2\2\62\63\3\2\2\2"+
+		"\63\13\3\2\2\2\64\65\7\5\2\2\65\66\5\16\b\2\66\67\7\6\2\2\678\5\20\t\2"+
+		"8\r\3\2\2\29:\7\b\2\2:\17\3\2\2\2;<\7\b\2\2<\21\3\2\2\2=>\5\24\13\2>\23"+
+		"\3\2\2\2?@\7\b\2\2@\25\3\2\2\2\7\31!&,\62";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

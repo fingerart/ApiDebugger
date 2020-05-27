@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.chengguo'
-version '3.0.0-SNAPSHOT'
+version pluginVersion
 
 repositories {
     mavenCentral()
@@ -33,15 +33,15 @@ intellij {
 }
 
 patchPluginXml {
-    changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+    changeNotes file(apidebuggerChangesFile).text
+    pluginDescription file(apidebuggerDescription).text
 }
 
 generateGrammarSource {
     arguments += [
             "-package", "io.chengguo.api.debugger.lang",
             "-long-messages",
+            "-Xexact-output-dir",
     ]
-    outputDirectory = file("gen/io/chengguo/api/debugger/lang")
+    outputDirectory = file("gen")
 }
