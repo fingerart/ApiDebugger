@@ -1,40 +1,8 @@
 <idea-plugin>
     <id>me.fingerart.idea.apidebugger</id>
     <name>Api Debugger</name>
-    <version>2.1.0</version>
     <vendor email="george@chengguo.io" url="http://fingerart.me">FingerArt</vendor>
-
-    <description><![CDATA[
-        <p>A plugin to help you easily complete the API debugging.</p><br/>
-
-        <p>Like this plugin? <b>Give it a star</b> at <a href="https://github.com/fingerart/ApiDebugger">GitHub</a> and spread the word!</p>
-    ]]></description>
-
-    <change-notes><![CDATA[
-        <b>v2.1.0 Major update:</b>
-        <ul>
-            <li>Revise interface</li>
-            <li>Support data persistent</li>
-        </ul>
-        <b>v2.0.1 Upgrade:</b>
-        <ul>
-            <li>Support HTTPS;</li>
-            <li>Fix POST error;</li>
-        </ul>
-        <b>v2.0.0 Upgrade:</b>
-        <ul>
-            <li>Add DELETE、PUT、PATCH、OPTIONS、HEAD、TRANCE method; </li>
-            <li>Add tab page;</li>
-            <li>Optimize message hint;</li>
-            <li>Add format friendly data display(json/xml/html).</li>
-        </ul>
-        <b>v1.0.0 Add:</b>
-        <ul>
-            <li>Support GET、POST method;</li>
-            <li>Support param、cookie、header、file addition.</li>
-        </ul>
-    ]]>
-    </change-notes>
+    <category>Network</category>
 
     <depends>com.intellij.modules.lang</depends>
 
