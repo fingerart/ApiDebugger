@@ -4,13 +4,10 @@ plugins {
 }
 
 group 'io.chengguo'
-version '1.0-SNAPSHOT'
+version '3.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-    flatDir {
-        dirs 'libs'
-    }
 }
 
 apply plugin: 'org.jetbrains.intellij'
@@ -21,7 +18,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'org.antlr:antlr4-intellij-adaptor:0.1'
     antlr("org.antlr:antlr4:4.8-1") { // use ANTLR version 4
-        exclude group:'com.ibm.icu', module:'icu4j'
+        exclude group: 'com.ibm.icu', module: 'icu4j'
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs 'gen'
     }
 }
 
@@ -38,7 +41,7 @@ patchPluginXml {
 generateGrammarSource {
     arguments += [
             "-package", "io.chengguo.api.debugger.lang",
-            "-lib", "src/main/antlr",
-            "-Xexact-output-dir"
+            "-long-messages",
     ]
+    outputDirectory = file("gen/io/chengguo/api/debugger/lang")
 }
