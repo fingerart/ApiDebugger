@@ -24,12 +24,13 @@ dependencies {
 
 sourceSets {
     main {
-        java.srcDirs 'gen'
+        java.srcDirs 'gen', 'src/main/antlr'
     }
 }
 
 intellij {
     version '2019.2.2'
+    plugins 'PsiViewer:192-SNAPSHOT'
 }
 
 patchPluginXml {
@@ -42,6 +43,8 @@ generateGrammarSource {
             "-package", "io.chengguo.api.debugger.lang",
             "-long-messages",
             "-Xexact-output-dir",
+            "-no-listener",
+            "-no-visitor",
     ]
-    outputDirectory = file("gen")
+    outputDirectory = file("gen/io/chengguo/api/debugger/lang")
 }

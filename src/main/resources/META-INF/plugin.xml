@@ -13,6 +13,7 @@
         <fileTypeFactory implementation="io.chengguo.api.debugger.lang.psi.ApiFileTypeFactory"/>
         <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileViewEditorProvider"/>
         <!--        <lang.ast.factory language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiASTFactory"/>-->
+        <colorSettingsPage implementation="io.chengguo.api.debugger.lang.highlight.ApiColorSettingsPage"/>
         <lang.syntaxHighlighterFactory language="Api"
                                        implementationClass="io.chengguo.api.debugger.lang.highlight.ApiSyntaxHighlighterFactory"/>
         <lang.parserDefinition language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiParserDefinition"/>

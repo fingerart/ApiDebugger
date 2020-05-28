@@ -1,6 +1,7 @@
 package io.chengguo.api.debugger.lang.highlight
 
 import com.intellij.lexer.Lexer
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
@@ -24,7 +25,11 @@ class ApiSyntaxHighlighter : SyntaxHighlighterBase() {
         }
 
         private val emptyKeys = arrayOf<TextAttributesKey>()
-        val ID = TextAttributesKey.createTextAttributesKey("API_ID", DefaultLanguageHighlighterColors.STRING)
+        val ID = TextAttributesKey.createTextAttributesKey("API_ID", DefaultLanguageHighlighterColors.IDENTIFIER)
+        val STRING = TextAttributesKey.createTextAttributesKey("API_STRING", DefaultLanguageHighlighterColors.STRING)
+        val TAG = TextAttributesKey.createTextAttributesKey("API_TAG", DefaultLanguageHighlighterColors.MARKUP_TAG)
+        val SEMICOLON =
+            TextAttributesKey.createTextAttributesKey("API_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON)
         val LINE_COMMENT = TextAttributesKey.createTextAttributesKey(
             "API_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT
         )
@@ -42,10 +47,15 @@ class ApiSyntaxHighlighter : SyntaxHighlighterBase() {
         if (tokenType !is TokenIElementType) {
             return emptyKeys
         }
+        val logger = Logger.getInstance(ApiSyntaxHighlighter::class.java)
+        logger.debug(tokenType.toString())
         val attrKey = when (tokenType.antlrTokenType) {
-            ApiLexer.Keyword -> ID
+            ApiLexer.Method -> ID
+            ApiLexer.FlagDesOpen -> TAG
+            ApiLexer.TitleContent, ApiLexer.Description -> STRING
             ApiLexer.LINE_COMMENT -> LINE_COMMENT
             ApiLexer.COMMENT -> BLOCK_COMMENT
+            ApiLexer.Colon, ApiLexer.FlagTitle, ApiLexer.Sub -> SEMICOLON
             else -> return emptyKeys
         }
         return arrayOf(attrKey)

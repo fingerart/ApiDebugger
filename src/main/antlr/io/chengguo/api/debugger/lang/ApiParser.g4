@@ -1,4 +1,4 @@
-parser grammar Api;
+parser grammar ApiParser;
 
 options { tokenVocab=ApiLexer; }
 
@@ -15,15 +15,15 @@ info
     ;
 
 title
-    : '---' LineText? NL*
+    : '---' TitleContent? NL*
     ;
 
 description
-    : FlagDesOpen Text? FlagDesClose NL*
+    : Description NL*
     ;
 
 attribute
-    : '-' key ':' value
+    : '-' key ':' value NL*
     ;
 
 key

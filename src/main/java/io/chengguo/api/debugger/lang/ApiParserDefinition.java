@@ -36,10 +36,10 @@ public class ApiParserDefinition implements ParserDefinition {
 
     public static final TokenSet WHITESPACE = PSIElementTypeFactory.createTokenSet(ApiLanguage.INSTANCE, ApiLexer.WS);
 
-    public static final TokenSet STRING =
-            PSIElementTypeFactory.createTokenSet(
-                    ApiLanguage.INSTANCE,
-                    ApiLexer.Keyword);
+//    public static final TokenSet STRING =
+//            PSIElementTypeFactory.createTokenSet(
+//                    ApiLanguage.INSTANCE,
+//                    ApiLexer.);
 
     @NotNull
     @Override
