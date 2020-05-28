@@ -1,32 +1,36 @@
 lexer grammar ApiLexer;
 
 FlagTitle:      '---' -> pushMode(ModeTitle);
-FlagDesOpen:    '"""' -> pushMode(ModeDescription);
-FlagDesClose:   '"""';
+FlagDesOpen:    '"""';
 Sub:            '-';
 Colon:          ':';
 
 Method
     : POST
     | GET
+    | LETTER+
+    ;
+
+Description
+    : FlagDesOpen (~[\\\b\f\t"] | EscapeSequence)* FlagDesOpen
     ;
 
 NL:                 '\r'? '\n';
-WS:                 [ \t\r\n] -> channel(HIDDEN);
+WS:                 [ \t\r\n]        -> channel(HIDDEN);
 COMMENT:            '/*' .*? '*/'    -> channel(HIDDEN);
 LINE_COMMENT:       '//' ~[\r\n]*    -> channel(HIDDEN);
 
 mode ModeTitle;
 
 ModeTitleClose: [\r\n]+ -> popMode, type(NL);
-LineText:   ~[\r\n]+;
+TitleContent:   ~[\r\n]+;
 
-mode ModeDescription;
-
-ModeDescriptionClose: '"""' -> popMode, type(FlagDesClose);
-Text
-    : (~[\\\b\f\t"] | EscapeSequence)+
-    ;
+//mode ModeDescription;
+//
+//ModeDescriptionClose: '"""' -> popMode, type(FlagDesOpen);
+//DescriptionContent
+//    : (~[\\\b\f\t"] | EscapeSequence)+
+//    ;
 
 fragment Identifier
     : LETTER (LETTER  | DIGIT)*

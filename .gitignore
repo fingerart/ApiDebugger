@@ -3,7 +3,8 @@
 *.tokens
 
 /.gradle
-/.idea
+/.idea/*
+!.idea/misc.xml
 build/
 out/
 .DS_Store
