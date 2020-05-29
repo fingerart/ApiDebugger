@@ -7,8 +7,6 @@ import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
 import io.chengguo.api.debugger.lang.ApiLanguage
-import io.chengguo.api.debugger.lang.ApiLexer
-import io.chengguo.api.debugger.lang.ApiParser
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
 import org.antlr.intellij.adaptor.lexer.TokenIElementType

@@ -1,0 +1,122 @@
+{
+  classHeader="license.txt"
+  generate=[java="8" names="long" visitor-value="R"]
+
+  parserClass="io.chengguo.api.debugger.lang.parser.ApiParser"
+  parserUtilClass="io.chengguo.api.debugger.lang.parser.ApiParserUtil"
+
+  implements="io.chengguo.api.debugger.lang.psi.BnfComposite"
+  extends="io.chengguo.api.debugger.lang.psi.impl.BnfCompositeImpl"
+
+  psiClassPrefix="Bnf"
+  psiImplClassSuffix="Impl"
+  psiPackage="io.chengguo.api.debugger.lang.psi"
+  psiImplPackage="io.chengguo.api.debugger.lang.psi.impl"
+  psiImplUtilClass="io.chengguo.api.debugger.lang.psi.impl.ApiPsiImplUtil"
+
+  elementTypeHolderClass="io.chengguo.api.debugger.lang.psi.BnfTypes"
+  elementTypePrefix="BNF_"
+  elementTypeClass="io.chengguo.api.debugger.lang.psi.BnfCompositeElementType"
+  tokenTypeClass="io.chengguo.api.debugger.lang.psi.BnfTokenType"
+
+  tokens = [
+    OP_EQ="="
+    OP_IS="::="
+    OP_OR="|"
+    OP_OPT="?"
+    OP_ONEMORE="+"
+    OP_ZEROMORE="*"
+    OP_AND="&"
+    OP_NOT="!"
+    SEMICOLON=";"
+    LEFT_BRACE="{"
+    RIGHT_BRACE="}"
+    LEFT_BRACKET="["
+    RIGHT_BRACKET="]"
+    LEFT_PAREN="("
+    RIGHT_PAREN=")"
+    EXTERNAL_START="<<"
+    EXTERNAL_END=">>"
+
+    space='regexp:\s+'
+    id="regexp:\w+"
+    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
+    number="regexp:\d+"
+    line_comment="regexp://.*"
+    block_comment="regexp:/\*(.|\n)*\*/"
+  ]
+
+  implements("rule|attr")="io.chengguo.api.debugger.lang.psi.BnfNamedElement"
+  extends("rule|attr")="io.chengguo.api.debugger.lang.psi.impl.BnfNamedImpl"
+  mixin("reference_or_token")="io.chengguo.api.debugger.lang.psi.impl.BnfRefOrTokenImpl"
+  mixin("string_literal_expression")="io.chengguo.api.debugger.lang.psi.impl.BnfStringImpl"
+  extends("paren_.*expression")=parenthesized
+}
+
+external grammar ::= parseGrammar grammar_element
+//grammar ::= grammar_element * // live preview root
+
+private grammar_element ::= !<<eof>> (attrs | rule) {
+  pin=1 recoverWhile=grammar_element_recover
+}
+private grammar_element_recover::=!('{'|rule_start)
+
+rule ::= rule_start expression attrs? ';'? {pin=2}
+private rule_start ::= modifier* id '::='
+modifier ::= 'private' | 'external' | 'meta'
+  | 'inner' | 'left' | 'upper' | 'fake'
+
+attrs ::= '{' attr * '}' {pin=1}
+attr ::= attr_start attr_value ';'? {
+  pin=1 recoverWhile=attr_recover
+}
+private attr_start ::= id (attr_pattern '=' | '=') {
+  pin(".*")="attr_pattern"
+}
+private attr_start_simple ::= id attr_pattern? '='
+private attr_recover ::= !('}' | attr_start)
+private attr_value ::= attr_value_inner !'='
+private attr_value_inner ::= reference_or_token
+  | literal_expression
+  | value_list
+attr_pattern ::= '(' string_literal_expression ')' {
+  pin=1 methods=[literalExpression="string_literal_expression"]
+}
+
+value_list ::= '[' list_entry * ']' {pin=1 extends=expression}
+list_entry ::= (id list_entry_tail? | string_literal_expression) ';'? {
+  recoverWhile=list_entry_recover
+  methods=[getReferences literalExpression="string_literal_expression"]
+}
+private list_entry_tail ::= '=' string_literal_expression {pin=1}
+private list_entry_recover ::= !(']' | '}' | id | string)
+
+expression ::= sequence choice?
+sequence ::= option * {
+  extends=expression recoverWhile=sequence_recover
+}
+private sequence_recover ::=
+  !(';'|'|'|'('|')'|'['|']'|'{'|'}') grammar_element_recover
+private option ::= predicate | paren_opt_expression | simple quantified?
+
+left choice ::= ( '|' sequence ) + {pin(".*")=1 extends=expression}
+left quantified ::= quantifier {extends=expression }
+quantifier ::= '?' | '+' | '*'
+
+predicate ::= predicate_sign simple {extends=expression}
+predicate_sign ::= '&' | '!'
+
+fake parenthesized ::= '(' expression ')' {extends=expression}
+private simple ::= !(modifier* id '::=' ) reference_or_token
+  | literal_expression
+  | external_expression
+  | paren_expression
+external_expression ::= '<<' reference_or_token option * '>>' {
+  pin=2 extends=expression methods=[refElement='/expression[0]' getArguments]
+}
+reference_or_token ::= id  {extends=expression methods=[resolveRule]}
+literal_expression ::= string_literal_expression | number {extends=expression }
+string_literal_expression ::= string {extends=literal_expression}
+paren_expression ::= '(' expression ')' | '{' alt_choice_element '}' {pin(".*")=2}
+paren_opt_expression ::= '[' expression ']' {pin=2}
+private alt_choice_element ::= !attr_start_simple expression
