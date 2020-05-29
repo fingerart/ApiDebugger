@@ -1,32 +1,28 @@
 plugins {
     id 'org.jetbrains.intellij' version '0.4.8'
     id 'org.jetbrains.kotlin.jvm' version '1.3.10'
+    id "org.jetbrains.grammarkit" version "2020.2"
 }
-
-group 'io.chengguo'
-version pluginVersion
 
 repositories {
     mavenCentral()
 }
 
-apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'antlr'
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation 'org.antlr:antlr4-intellij-adaptor:0.1'
-    antlr("org.antlr:antlr4:4.8-1") { // use ANTLR version 4
-        exclude group: 'com.ibm.icu', module: 'icu4j'
-    }
 }
 
 sourceSets {
     main {
-        java.srcDirs 'gen', 'src/main/antlr'
+        java.srcDirs 'gen'
     }
 }
+
+apply plugin: 'org.jetbrains.intellij'
+
+group 'io.chengguo'
+version pluginVersion
 
 intellij {
     version '2019.2.2'
@@ -38,13 +34,23 @@ patchPluginXml {
     pluginDescription file(apidebuggerDescription).text
 }
 
-generateGrammarSource {
-    arguments += [
-            "-package", "io.chengguo.api.debugger.lang",
-            "-long-messages",
-            "-Xexact-output-dir",
-            "-no-listener",
-            "-no-visitor",
-    ]
-    outputDirectory = file("gen/io/chengguo/api/debugger/lang")
+apply plugin: 'org.jetbrains.grammarkit'
+
+import org.jetbrains.grammarkit.tasks.*
+
+task generateApiLexer(type: GenerateLexer) {
+    source = "grammar/Api.flex"
+    targetDir = "gen/io/chengguo/api/debugger/lang/parser/"
+    targetClass = "ApiLexer"
+    // optional, path to the task-specific skeleton file. Default: none
+//    skeleton = '/some/specific/skeleton'
+    purgeOldFiles = true
+}
+
+task generateApiParser(type: GenerateParser) {
+    source = "grammar/Api.bnf"
+    targetRoot = 'gen'
+    pathToParser = '/io/chengguo/api/debugger/lang/parser/PerlParserGenerated.java'
+    pathToPsiRoot = '/io/chengguo/api/debugger/lang/psi'
+    purgeOldFiles = true
 }
