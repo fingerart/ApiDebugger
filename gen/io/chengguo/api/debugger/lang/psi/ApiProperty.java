@@ -13,3 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package io.chengguo.api.debugger.lang.psi;
+
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
+
+public interface ApiProperty extends ApiElement {
+
+  //WARNING: getKey(...) is skipped
+  //matching getKey(ApiProperty, ...)
+  //methods are not found in ApiPsiImplUtil
+
+  //WARNING: getValue(...) is skipped
+  //matching getValue(ApiProperty, ...)
+  //methods are not found in ApiPsiImplUtil
+
+}

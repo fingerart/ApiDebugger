@@ -16,7 +16,8 @@
         <colorSettingsPage implementation="io.chengguo.api.debugger.lang.highlight.ApiColorSettingsPage"/>
         <lang.syntaxHighlighterFactory language="Api"
                                        implementationClass="io.chengguo.api.debugger.lang.highlight.ApiSyntaxHighlighterFactory"/>
-        <lang.parserDefinition language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiParserDefinition"/>
+        <lang.parserDefinition language="Api"
+                               implementationClass="io.chengguo.api.debugger.lang.parser.ApiParserDefinition"/>
         <!--        <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiCommenter"/>-->
         <!--        <lang.psiStructureViewFactory language="Api"-->
         <!--                                      implementationClass="io.chengguo.api.debugger.lang.structure.ApiStructureViewFactory"/>-->
