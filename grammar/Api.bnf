@@ -24,6 +24,5 @@ apiFile ::= api_*
 
 private api_ ::= (property|COMMENT|CRLF)
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY {
-    methods=[getKey getValue]
-}
+property ::= (KEY? SEPARATOR VALUE?) | KEY
+

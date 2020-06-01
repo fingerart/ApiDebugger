@@ -1,7 +1,4 @@
 
-# ANTLR4
-*.tokens
-
 /.gradle
 /.idea/*
 !.idea/misc.xml

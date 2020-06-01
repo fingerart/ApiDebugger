@@ -52,12 +52,12 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // item_*
+  // api_*
   static boolean apiFile(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "apiFile")) return false;
     while (true) {
       int pos = current_position_(builder);
-      if (!item_(builder, level + 1)) break;
+      if (!api_(builder, level + 1)) break;
       if (!empty_element_parsed_guard_(builder, "apiFile", pos)) break;
     }
     return true;
@@ -65,8 +65,8 @@ public class ApiParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // property|COMMENT|CRLF
-  static boolean item_(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "item_")) return false;
+  static boolean api_(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "api_")) return false;
     boolean result;
     result = property(builder, level + 1);
     if (!result) result = consumeToken(builder, Api_COMMENT);
