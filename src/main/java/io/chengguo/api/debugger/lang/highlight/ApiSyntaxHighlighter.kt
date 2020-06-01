@@ -1,61 +1,50 @@
 package io.chengguo.api.debugger.lang.highlight
 
+import com.google.common.collect.ImmutableMultimap
+import com.google.common.collect.ImmutableSet
 import com.intellij.lexer.Lexer
-import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
+import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
+import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
-import io.chengguo.api.debugger.lang.ApiLanguage
-import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
-import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
-import org.antlr.intellij.adaptor.lexer.TokenIElementType
+import io.chengguo.api.debugger.lang.lexer.ApiLexerAdapter
+import io.chengguo.api.debugger.lang.lexer.ApiTokenTypes
 
 class ApiSyntaxHighlighter : SyntaxHighlighterBase() {
 
     companion object {
-        init {
-            PSIElementTypeFactory.defineLanguageIElementTypes(
-                ApiLanguage.INSTANCE,
-                ApiParser.tokenNames,
-                ApiParser.ruleNames
-            )
-        }
-
-        private val emptyKeys = arrayOf<TextAttributesKey>()
-        val ID = TextAttributesKey.createTextAttributesKey("API_ID", DefaultLanguageHighlighterColors.IDENTIFIER)
-        val STRING = TextAttributesKey.createTextAttributesKey("API_STRING", DefaultLanguageHighlighterColors.STRING)
-        val TAG = TextAttributesKey.createTextAttributesKey("API_TAG", DefaultLanguageHighlighterColors.MARKUP_TAG)
-        val SEMICOLON =
-            TextAttributesKey.createTextAttributesKey("API_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON)
+        private val emptyKeys = ImmutableSet.of<TextAttributesKey>()
+        val SEPARATOR =
+            TextAttributesKey.createTextAttributesKey("SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN)
+        val KEY = TextAttributesKey.createTextAttributesKey("ID", DefaultLanguageHighlighterColors.KEYWORD)
+        val VALUE = TextAttributesKey.createTextAttributesKey("STRING", DefaultLanguageHighlighterColors.STRING)
+        val BAD_CHARACTER = TextAttributesKey.createTextAttributesKey("STRING", HighlighterColors.BAD_CHARACTER)
         val LINE_COMMENT = TextAttributesKey.createTextAttributesKey(
-            "API_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT
+            "LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT
         )
         val BLOCK_COMMENT = TextAttributesKey.createTextAttributesKey(
-            "API_BLOCK_COMMENT",
+            "BLOCK_COMMENT",
             DefaultLanguageHighlighterColors.BLOCK_COMMENT
         )
+        private val attributesToTokenMap: ImmutableMultimap<TextAttributesKey, IElementType> =
+            ImmutableMultimap.builder<TextAttributesKey, IElementType>()
+                .putAll(KEY, *ApiTokenTypes.KEYWORD.types)
+                .putAll(VALUE, *ApiTokenTypes.VALUE.types)
+                .putAll(SEPARATOR, *ApiTokenTypes.SEPARATOR.types)
+                .putAll(BAD_CHARACTER, TokenType.BAD_CHARACTER)
+                .putAll(LINE_COMMENT, *ApiTokenTypes.COMMENTS.types)
+                .build()
+
+        private val tokenToAttributesMap = attributesToTokenMap.inverse().asMap()
     }
 
     override fun getHighlightingLexer(): Lexer {
-        return ANTLRLexerAdaptor(ApiLanguage.INSTANCE, ApiLexer(null))
+        return ApiLexerAdapter()
     }
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
-        if (tokenType !is TokenIElementType) {
-            return emptyKeys
-        }
-        val logger = Logger.getInstance(ApiSyntaxHighlighter::class.java)
-        logger.debug(tokenType.toString())
-        val attrKey = when (tokenType.antlrTokenType) {
-            ApiLexer.Method -> ID
-            ApiLexer.FlagDesOpen -> TAG
-            ApiLexer.TitleContent, ApiLexer.Description -> STRING
-            ApiLexer.LINE_COMMENT -> LINE_COMMENT
-            ApiLexer.COMMENT -> BLOCK_COMMENT
-            ApiLexer.Colon, ApiLexer.FlagTitle, ApiLexer.Sub -> SEMICOLON
-            else -> return emptyKeys
-        }
-        return arrayOf(attrKey)
+        return tokenToAttributesMap.getOrDefault(tokenType, emptyKeys).toTypedArray()
     }
 }

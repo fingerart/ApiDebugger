@@ -20,7 +20,7 @@ public class ApiFileType extends LanguageFileType {
         INSTANCE = new ApiFileType(ApiLanguage.INSTANCE);
     }
 
-    protected ApiFileType(@NotNull Language language) {
+    public ApiFileType(@NotNull Language language) {
         super(language);
     }
 

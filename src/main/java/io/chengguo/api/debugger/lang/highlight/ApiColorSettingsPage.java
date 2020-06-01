@@ -16,10 +16,10 @@ import java.util.Map;
 public class ApiColorSettingsPage implements ColorSettingsPage {
 
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Identifier", ApiSyntaxHighlighter.Companion.getID()),
-            new AttributesDescriptor("String", ApiSyntaxHighlighter.Companion.getSTRING()),
-            new AttributesDescriptor("Tag", ApiSyntaxHighlighter.Companion.getTAG()),
-            new AttributesDescriptor("Semicolon", ApiSyntaxHighlighter.Companion.getSEMICOLON()),
+            new AttributesDescriptor("Key", ApiSyntaxHighlighter.Companion.getKEY()),
+            new AttributesDescriptor("Value", ApiSyntaxHighlighter.Companion.getVALUE()),
+            new AttributesDescriptor("Separator", ApiSyntaxHighlighter.Companion.getSEPARATOR()),
+            new AttributesDescriptor("Bad Character", ApiSyntaxHighlighter.Companion.getBAD_CHARACTER()),
             new AttributesDescriptor("Line comment", ApiSyntaxHighlighter.Companion.getLINE_COMMENT()),
             new AttributesDescriptor("Block comment", ApiSyntaxHighlighter.Companion.getBLOCK_COMMENT()),
     };
@@ -39,22 +39,18 @@ public class ApiColorSettingsPage implements ColorSettingsPage {
     @NotNull
     @Override
     public String getDemoText() {
-        return "--- 用户名\n" +
-                "\n" +
-                "\"\"\"\n" +
-                "    这里是接口描述\n" +
-                "\"\"\"\n" +
-                "\n" +
-                "- get: get\n" +
-                "- get: get\n" +
-                "\n" +
-                "post\n" +
-                "\n" +
-                "// 我是单行注释\n" +
-                "\n" +
-                "/**\n" +
-                " * 我是多行注释\n" +
-                " */";
+        return "# You are reading the \".properties\" entry.\n" +
+                "! The exclamation mark can also mark text as comments.\n" +
+                "website = https://en.wikipedia.org/\n" +
+                "language = English\n" +
+                "# The backslash below tells the application to continue reading\n" +
+                "# the value onto the next line.\n" +
+                "message = Welcome to \\\n" +
+                "          Wikipedia!\n" +
+                "# Add spaces to the key\n" +
+                "key\\ with\\ spaces = This is the value that could be looked up with the key \"key with spaces\".\n" +
+                "# Unicode\n" +
+                "tab : \\u0009";
     }
 
     @Nullable
