@@ -13,30 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.chengguo.api.debugger.lang.psi.impl;
+package io.chengguo.api.debugger.lang.psi;
 
 import java.util.List;
 import org.jetbrains.annotations.*;
-import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
-import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiPropertyImpl extends ApiElementImpl implements ApiProperty {
-
-  public ApiPropertyImpl(ASTNode node) {
-    super(node);
-  }
-
-  public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitProperty(this);
-  }
-
-  public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
-    else super.accept(visitor);
-  }
+public interface ApiPathAbsolute extends ApiElement {
 
 }

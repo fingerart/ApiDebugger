@@ -13,20 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.chengguo.api.debugger.lang.psi;
+package io.chengguo.api.debugger.lang.psi.impl;
 
 import java.util.List;
 import org.jetbrains.annotations.*;
+import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.util.PsiTreeUtil;
+import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
+import io.chengguo.api.debugger.lang.psi.*;
 
-public interface ApiProperty extends ApiElement {
+public class ApiRequestLineImpl extends ApiElementImpl implements ApiRequestLine {
 
-  //WARNING: getKey(...) is skipped
-  //matching getKey(ApiProperty, ...)
-  //methods are not found in ApiPsiImplUtil
+  public ApiRequestLineImpl(ASTNode node) {
+    super(node);
+  }
 
-  //WARNING: getValue(...) is skipped
-  //matching getValue(ApiProperty, ...)
-  //methods are not found in ApiPsiImplUtil
+  public <R> R accept(@NotNull ApiVisitor<R> visitor) {
+    return visitor.visitRequestLine(this);
+  }
+
+  public void accept(@NotNull PsiElementVisitor visitor) {
+    if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
+    else super.accept(visitor);
+  }
 
 }

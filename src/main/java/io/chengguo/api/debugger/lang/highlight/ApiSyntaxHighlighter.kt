@@ -19,11 +19,10 @@ class ApiSyntaxHighlighter : SyntaxHighlighterBase() {
         val SEPARATOR =
             TextAttributesKey.createTextAttributesKey("SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN)
         val KEY = TextAttributesKey.createTextAttributesKey("ID", DefaultLanguageHighlighterColors.KEYWORD)
-        val VALUE = TextAttributesKey.createTextAttributesKey("STRING", DefaultLanguageHighlighterColors.STRING)
+        val STRING = TextAttributesKey.createTextAttributesKey("STRING", DefaultLanguageHighlighterColors.STRING)
         val BAD_CHARACTER = TextAttributesKey.createTextAttributesKey("STRING", HighlighterColors.BAD_CHARACTER)
-        val LINE_COMMENT = TextAttributesKey.createTextAttributesKey(
-            "LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT
-        )
+        val LINE_COMMENT =
+            TextAttributesKey.createTextAttributesKey("LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
         val BLOCK_COMMENT = TextAttributesKey.createTextAttributesKey(
             "BLOCK_COMMENT",
             DefaultLanguageHighlighterColors.BLOCK_COMMENT
@@ -31,10 +30,11 @@ class ApiSyntaxHighlighter : SyntaxHighlighterBase() {
         private val attributesToTokenMap: ImmutableMultimap<TextAttributesKey, IElementType> =
             ImmutableMultimap.builder<TextAttributesKey, IElementType>()
                 .putAll(KEY, *ApiTokenTypes.KEYWORD.types)
-                .putAll(VALUE, *ApiTokenTypes.VALUE.types)
+                .putAll(STRING, *ApiTokenTypes.STRING.types)
                 .putAll(SEPARATOR, *ApiTokenTypes.SEPARATOR.types)
-                .putAll(BAD_CHARACTER, TokenType.BAD_CHARACTER)
                 .putAll(LINE_COMMENT, *ApiTokenTypes.COMMENTS.types)
+                .putAll(BLOCK_COMMENT, *ApiTokenTypes.BLOCK_COMMENT.types)
+                .putAll(BAD_CHARACTER, TokenType.BAD_CHARACTER)
                 .build()
 
         private val tokenToAttributesMap = attributesToTokenMap.inverse().asMap()
@@ -44,7 +44,7 @@ class ApiSyntaxHighlighter : SyntaxHighlighterBase() {
         return ApiLexerAdapter()
     }
 
-    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
+    override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> {
         return tokenToAttributesMap.getOrDefault(tokenType, emptyKeys).toTypedArray()
     }
 }
