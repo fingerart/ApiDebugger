@@ -38,6 +38,8 @@ public interface ApiTypes {
   IElementType Api_HEADER_FIELD_NAME = new ApiTokenType("HEADER_FIELD_NAME");
   IElementType Api_HEADER_FIELD_VALUE = new ApiTokenType("HEADER_FIELD_VALUE");
   IElementType Api_HOST_VALUE = new ApiTokenType("HOST_VALUE");
+  IElementType Api_HTTP = new ApiTokenType("http");
+  IElementType Api_HTTPS = new ApiTokenType("https");
   IElementType Api_LINE_COMMENT = new ApiTokenType("LINE_COMMENT");
   IElementType Api_METHOD = new ApiTokenType("METHOD");
   IElementType Api_MULTILINE_COMMENT = new ApiTokenType("MULTILINE_COMMENT");

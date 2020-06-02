@@ -2,14 +2,14 @@
 // asdasfsaf
 
 start
-GET
+GET https://dsdasd:
 sfs:sfsf
-sdfs:asdfas
+sdfs : asdfas
 
 ---
 
 start
-POST
+POST http://haha:
 asdfsaf:asdfas
 ad:as
 

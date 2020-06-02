@@ -188,50 +188,44 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // METHOD
+  // METHOD request_target
   public static boolean request_line(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_line")) return false;
     if (!nextTokenIs(builder, Api_METHOD)) return false;
     boolean result;
     Marker marker = enter_section_(builder);
     result = consumeToken(builder, Api_METHOD);
+    result = result && request_target(builder, level + 1);
     exit_section_(builder, marker, Api_REQUEST_LINE, result);
     return result;
   }
 
   /* ********************************************************** */
-  // scheme '://' host ':' port path_absolute
+  // scheme '://' host ':'
   public static boolean request_target(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_target")) return false;
+    if (!nextTokenIs(builder, "<request target>", Api_HTTP, Api_HTTPS)) return false;
     boolean result;
     Marker marker = enter_section_(builder, level, _NONE_, Api_REQUEST_TARGET, "<request target>");
     result = scheme(builder, level + 1);
     result = result && consumeToken(builder, Api_SCHEME_SEPARATOR);
     result = result && host(builder, level + 1);
     result = result && consumeToken(builder, Api_COLON);
-    result = result && port(builder, level + 1);
-    result = result && path_absolute(builder, level + 1);
     exit_section_(builder, level, marker, result, false, null);
     return result;
   }
 
   /* ********************************************************** */
-  // 'http' 's'?
+  // 'http' | 'https'
   public static boolean scheme(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "scheme")) return false;
+    if (!nextTokenIs(builder, "<scheme>", Api_HTTP, Api_HTTPS)) return false;
     boolean result;
     Marker marker = enter_section_(builder, level, _NONE_, Api_SCHEME, "<scheme>");
-    result = consumeToken(builder, "http");
-    result = result && scheme_1(builder, level + 1);
+    result = consumeToken(builder, Api_HTTP);
+    if (!result) result = consumeToken(builder, Api_HTTPS);
     exit_section_(builder, level, marker, result, false, null);
     return result;
-  }
-
-  // 's'?
-  private static boolean scheme_1(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "scheme_1")) return false;
-    consumeToken(builder, "s");
-    return true;
   }
 
 }

@@ -25,12 +25,6 @@ public interface ApiRequestTarget extends ApiElement {
   ApiHost getHost();
 
   @NotNull
-  ApiPathAbsolute getPathAbsolute();
-
-  @NotNull
-  ApiPort getPort();
-
-  @NotNull
   ApiScheme getScheme();
 
 }

@@ -21,4 +21,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiRequestLine extends ApiElement {
 
+  @NotNull
+  ApiRequestTarget getRequestTarget();
+
 }
