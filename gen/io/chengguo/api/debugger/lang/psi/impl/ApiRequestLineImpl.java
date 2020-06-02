@@ -39,4 +39,10 @@ public class ApiRequestLineImpl extends ApiElementImpl implements ApiRequestLine
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public ApiRequestTarget getRequestTarget() {
+    return findNotNullChildByClass(ApiRequestTarget.class);
+  }
+
 }

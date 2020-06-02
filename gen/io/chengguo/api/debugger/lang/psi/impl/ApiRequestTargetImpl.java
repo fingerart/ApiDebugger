@@ -47,18 +47,6 @@ public class ApiRequestTargetImpl extends ApiElementImpl implements ApiRequestTa
 
   @Override
   @NotNull
-  public ApiPathAbsolute getPathAbsolute() {
-    return findNotNullChildByClass(ApiPathAbsolute.class);
-  }
-
-  @Override
-  @NotNull
-  public ApiPort getPort() {
-    return findNotNullChildByClass(ApiPort.class);
-  }
-
-  @Override
-  @NotNull
   public ApiScheme getScheme() {
     return findNotNullChildByClass(ApiScheme.class);
   }

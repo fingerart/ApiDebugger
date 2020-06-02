@@ -29,6 +29,7 @@ FIRST_VALUE_CHARACTER=[^ \r\n\f\\] | "\\"{NL} | "\\".
 VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
 
 %state WAITING_REQUEST
+%state WAITING_REQUEST_HOST
 %state WAITING_HEADER
 %state WAITING_HEADER_VALUE
 
@@ -42,14 +43,21 @@ VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
 }
 
 <WAITING_REQUEST> {
-    ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
-    ("GET" | "POST")                            { yybegin(WAITING_HEADER); return Api_METHOD; }
-    "://"                                       { return Api_SCHEME_SEPARATOR;}
+    {WS}+                                       { return TokenType.WHITE_SPACE; }
+    {NL} ("GET" | "POST")                       { return Api_METHOD; }
+    "://"                                       { yybegin(WAITING_REQUEST_HOST);return Api_SCHEME_SEPARATOR; }
+    "https"                                     { return Api_HTTPS; }
+    "http"                                      { return Api_HTTP; }
+    ":"                                         { return Api_COLON; }
+    {NL}                                        { yybegin(WAITING_HEADER);return TokenType.WHITE_SPACE;}
+}
 
+<WAITING_REQUEST_HOST> {
+    [^\r\n:/?#]+                                   { yybegin(WAITING_REQUEST);return Api_HOST_VALUE; }
 }
 
 <WAITING_HEADER> {
-    {WS}                                        {return TokenType.WHITE_SPACE; }
+    {WS}+                                       {return TokenType.WHITE_SPACE; }
     {NL}                                        {return TokenType.WHITE_SPACE; }
     {KEY_CHARACTER}+                            { return Api_HEADER_FIELD_NAME; }
     ":"                                         { yybegin(WAITING_HEADER_VALUE); return Api_COLON; }
