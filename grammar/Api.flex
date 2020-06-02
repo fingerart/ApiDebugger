@@ -1,24 +1,10 @@
-/*
- * Copyright 2010-present ApiDebugger
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package io.chengguo.api.debugger.lang.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
+
 import com.intellij.psi.TokenType;
-import io.chengguo.api.debugger.lang.psi.ApiTypes;
+import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 
 %%
 
@@ -30,30 +16,50 @@ import io.chengguo.api.debugger.lang.psi.ApiTypes;
 %eof{  return;
 %eof}
 
-CRLF=\R
-WHITE_SPACE=[\ \n\t\f]
-FIRST_VALUE_CHARACTER=[^ \r\n\f\\] | "\\"{CRLF} | "\\".
-VALUE_CHARACTER=[^\n\f\\] | "\\"{CRLF} | "\\".
-END_OF_LINE_COMMENT=("#"|"!")[^\r\n]*
-SEPARATOR=[:=]
-KEY_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
+NL=\R
+WS=[\ \t\f]
+LETTER = [a-zA-Z]
+DIGIT =  [0-9]
+END_OF_LINE_COMMENT=("//")[^\r\n]*
+MULTILINE_COMMENT = "/*" ( ([^"*"]|[\r\n])* ("*"+ [^"*""/"] )? )* ("*" | "*"+"/")?
+METHOD = "OPTIONS" | "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "TRACE" | "CONNECT"
+KEY_CHARACTER=[^:\ \n\t\f\\] | "\\ "
 
-%state WAITING_VALUE
+FIRST_VALUE_CHARACTER=[^ \r\n\f\\] | "\\"{NL} | "\\".
+VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
+
+%state WAITING_REQUEST
+%state WAITING_HEADER
+%state WAITING_HEADER_VALUE
 
 %%
+<YYINITIAL> {
+    ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
+    {END_OF_LINE_COMMENT}                       { return Api_LINE_COMMENT; }
+    {MULTILINE_COMMENT}                         { return Api_MULTILINE_COMMENT; }
+    "---"                                       { return Api_SEPARATOR; }
+    {LETTER}+                                   { yybegin(WAITING_REQUEST); return Api_TITLE; }
+}
 
-<YYINITIAL> {END_OF_LINE_COMMENT}                           { yybegin(YYINITIAL); return ApiTypes.Api_COMMENT; }
+<WAITING_REQUEST> {
+    ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
+    ("GET" | "POST")                            { yybegin(WAITING_HEADER); return Api_METHOD; }
+    "://"                                       { return Api_SCHEME_SEPARATOR;}
 
-<YYINITIAL> {KEY_CHARACTER}+                                { yybegin(YYINITIAL); return ApiTypes.Api_KEY; }
+}
 
-<YYINITIAL> {SEPARATOR}                                     { yybegin(WAITING_VALUE); return ApiTypes.Api_SEPARATOR; }
+<WAITING_HEADER> {
+    {WS}                                        {return TokenType.WHITE_SPACE; }
+    {NL}                                        {return TokenType.WHITE_SPACE; }
+    {KEY_CHARACTER}+                            { return Api_HEADER_FIELD_NAME; }
+    ":"                                         { yybegin(WAITING_HEADER_VALUE); return Api_COLON; }
+    {NL} {NL}                                   { yybegin(YYINITIAL);return TokenType.WHITE_SPACE; }
+}
 
-<WAITING_VALUE> {CRLF}({CRLF}|{WHITE_SPACE})+               { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+<WAITING_HEADER_VALUE> {
+    ({WS} | {NL})+                              {return TokenType.WHITE_SPACE; }
+    {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*   { yybegin(WAITING_HEADER); return Api_HEADER_FIELD_VALUE; }
+}
 
-<WAITING_VALUE> {WHITE_SPACE}+                              { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
-
-<WAITING_VALUE> {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*   { yybegin(YYINITIAL); return ApiTypes.Api_VALUE; }
-
-({CRLF}|{WHITE_SPACE})+                                     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
-
-[^]                                                         { return TokenType.BAD_CHARACTER; }
+({NL}|{WS})+                                    { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+[^]                                             { return TokenType.BAD_CHARACTER; }

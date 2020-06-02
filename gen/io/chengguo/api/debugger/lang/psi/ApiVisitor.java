@@ -20,7 +20,43 @@ import com.intellij.psi.PsiElementVisitor;
 
 public class ApiVisitor<R> extends PsiElementVisitor {
 
-  public R visitProperty(@NotNull ApiProperty o) {
+  public R visitDescription(@NotNull ApiDescription o) {
+    return visitElement(o);
+  }
+
+  public R visitHeaderField(@NotNull ApiHeaderField o) {
+    return visitElement(o);
+  }
+
+  public R visitHost(@NotNull ApiHost o) {
+    return visitElement(o);
+  }
+
+  public R visitItem(@NotNull ApiItem o) {
+    return visitElement(o);
+  }
+
+  public R visitPathAbsolute(@NotNull ApiPathAbsolute o) {
+    return visitElement(o);
+  }
+
+  public R visitPort(@NotNull ApiPort o) {
+    return visitElement(o);
+  }
+
+  public R visitRequest(@NotNull ApiRequest o) {
+    return visitElement(o);
+  }
+
+  public R visitRequestLine(@NotNull ApiRequestLine o) {
+    return visitElement(o);
+  }
+
+  public R visitRequestTarget(@NotNull ApiRequestTarget o) {
+    return visitElement(o);
+  }
+
+  public R visitScheme(@NotNull ApiScheme o) {
     return visitElement(o);
   }
 

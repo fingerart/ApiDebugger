@@ -17,7 +17,7 @@ public class ApiColorSettingsPage implements ColorSettingsPage {
 
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
             new AttributesDescriptor("Key", ApiSyntaxHighlighter.Companion.getKEY()),
-            new AttributesDescriptor("Value", ApiSyntaxHighlighter.Companion.getVALUE()),
+            new AttributesDescriptor("Value", ApiSyntaxHighlighter.Companion.getSTRING()),
             new AttributesDescriptor("Separator", ApiSyntaxHighlighter.Companion.getSEPARATOR()),
             new AttributesDescriptor("Bad Character", ApiSyntaxHighlighter.Companion.getBAD_CHARACTER()),
             new AttributesDescriptor("Line comment", ApiSyntaxHighlighter.Companion.getLINE_COMMENT()),

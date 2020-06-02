@@ -18,31 +18,10 @@
   elementTypePrefix="Api_"
   elementTypeClass="io.chengguo.api.debugger.lang.psi.ApiElementType"
   tokenTypeClass="io.chengguo.api.debugger.lang.psi.ApiTokenType"
-
-  tokens=[
-    COLON       = ":"
-    SCHEME_SEPARATOR    = "://"
-  ]
 }
 
 apiFile ::= api_*
 
-private api_ ::= (item|LINE_COMMENT|MULTILINE_COMMENT|CRLF)
+private api_ ::= (property|COMMENT|CRLF)
 
-item ::= description request
-
-description ::= TITLE
-
-request ::= request_line header_field SEPARATOR //(KEY? SEPARATOR VALUE?) | KEY
-
-request_line ::= METHOD request_target
-
-header_field ::= (HEADER_FIELD_NAME ':' HEADER_FIELD_VALUE)*
-
-request_target ::= scheme '://' /*host ':' port path_absolute*/
-scheme ::= 'http' 's'?
-host ::= HOST_VALUE
-port ::= PORT_SEGMENT
-path_absolute ::= ('/' SEGMENT)*
-
-//varable ::= '{{' IDENTIFIER '}}'
+property ::= (KEY? SEPARATOR VALUE?) | KEY{methods=[getKey getValue]}
