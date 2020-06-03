@@ -21,4 +21,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiPathAbsolute extends ApiElement {
 
+  @Nullable
+  ApiQuery getQuery();
+
 }

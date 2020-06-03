@@ -20,10 +20,14 @@
   tokenTypeClass="io.chengguo.api.debugger.lang.psi.ApiTokenType"
 
   tokens=[
-    COLON       = ":"
-    SCHEME_SEPARATOR    = "://"
-    HTTP       = "http"
-    HTTPS       = "https"
+    COLON                   = ":"
+    SLASH                   = "/"
+    SCHEME_SEPARATOR        = "://"
+    HTTP                    = "http"
+    HTTPS                   = "https"
+    QUESTION_MARK           = "?"
+    EQUALS                  = "="
+    AMPERSAND               = "&"
   ]
 }
 
@@ -35,16 +39,26 @@ item ::= description request
 
 description ::= TITLE
 
-request ::= request_line header_field SEPARATOR //(KEY? SEPARATOR VALUE?) | KEY
+request ::= request_line header_field message_body SEPARATOR
 
 request_line ::= METHOD request_target
 
-header_field ::= (HEADER_FIELD_NAME ':' HEADER_FIELD_VALUE)*
-
-request_target ::= scheme '://' host ':'  /*port path_absolute*/
+request_target ::= scheme '://' host ':' port path_absolute
 scheme ::= 'http' | 'https'
 host ::= HOST_VALUE
 port ::= PORT_SEGMENT
-path_absolute ::= ('/' SEGMENT)*
 
+path_absolute ::= path_segment* path_query?
+private path_segment ::= '/' SEGMENT? {pin=1}
+private path_query ::= '?' query
+
+query ::= query_parameter ('&' query_parameter)*
+query_parameter ::= query_parameter_key ('=' query_parameter_value)?
+query_parameter_key ::= QUERY_NAME
+query_parameter_value ::= QUERY_VALUE
 //varable ::= '{{' IDENTIFIER '}}'
+
+header_field ::= (HEADER_FIELD_NAME (':' HEADER_FIELD_VALUE?)?)*
+
+private message_body ::= request_message_group /* | multipart_message*/
+request_message_group ::= MESSAGE_TEXT

@@ -44,11 +44,31 @@ public class ApiVisitor<R> extends PsiElementVisitor {
     return visitElement(o);
   }
 
+  public R visitQuery(@NotNull ApiQuery o) {
+    return visitElement(o);
+  }
+
+  public R visitQueryParameter(@NotNull ApiQueryParameter o) {
+    return visitElement(o);
+  }
+
+  public R visitQueryParameterKey(@NotNull ApiQueryParameterKey o) {
+    return visitElement(o);
+  }
+
+  public R visitQueryParameterValue(@NotNull ApiQueryParameterValue o) {
+    return visitElement(o);
+  }
+
   public R visitRequest(@NotNull ApiRequest o) {
     return visitElement(o);
   }
 
   public R visitRequestLine(@NotNull ApiRequestLine o) {
+    return visitElement(o);
+  }
+
+  public R visitRequestMessageGroup(@NotNull ApiRequestMessageGroup o) {
     return visitElement(o);
   }
 

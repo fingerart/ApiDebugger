@@ -16,6 +16,20 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 %eof{  return;
 %eof}
 
+%{
+    private int mPrevState = YYINITIAL;
+    public void switchState(final int nextState) {
+        this.mPrevState = this.yystate();
+        this.yybegin(nextState);
+    }
+    public void switchPrevState() {
+        switchState(mPrevState);
+    }
+    public void reset() {
+        switchState(YYINITIAL);
+    }
+%}
+
 NL=\R
 WS=[\ \t\f]
 LETTER = [a-zA-Z]
@@ -28,10 +42,16 @@ KEY_CHARACTER=[^:\ \n\t\f\\] | "\\ "
 FIRST_VALUE_CHARACTER=[^ \r\n\f\\] | "\\"{NL} | "\\".
 VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
 
-%state WAITING_REQUEST
-%state WAITING_REQUEST_HOST
-%state WAITING_HEADER
-%state WAITING_HEADER_VALUE
+%state IN_HTTP_REQUEST
+%state IN_HTTP_PATH
+%state IN_HTTP_REQUEST_HOST
+%state IN_HTTP_REQUEST_PORT
+%state IN_HTTP_PATH_SEGMENT
+%state IN_HTTP_QUERY
+%state IN_HTTP_QUERY_VALUE
+%state IN_HEADER
+%state IN_HEADER_VALUE
+%state IN_MESSAGE_BODY
 
 %%
 <YYINITIAL> {
@@ -39,35 +59,68 @@ VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
     {END_OF_LINE_COMMENT}                       { return Api_LINE_COMMENT; }
     {MULTILINE_COMMENT}                         { return Api_MULTILINE_COMMENT; }
     "---"                                       { return Api_SEPARATOR; }
-    {LETTER}+                                   { yybegin(WAITING_REQUEST); return Api_TITLE; }
+    {LETTER}+                                   { switchState(IN_HTTP_REQUEST); return Api_TITLE; }
 }
 
-<WAITING_REQUEST> {
+<IN_HTTP_REQUEST> {
+    ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
+    {METHOD}                                    { switchState(IN_HTTP_PATH); return Api_METHOD; }
+}
+
+<IN_HTTP_PATH> {
     {WS}+                                       { return TokenType.WHITE_SPACE; }
-    {NL} ("GET" | "POST")                       { return Api_METHOD; }
-    "://"                                       { yybegin(WAITING_REQUEST_HOST);return Api_SCHEME_SEPARATOR; }
     "https"                                     { return Api_HTTPS; }
     "http"                                      { return Api_HTTP; }
-    ":"                                         { return Api_COLON; }
-    {NL}                                        { yybegin(WAITING_HEADER);return TokenType.WHITE_SPACE;}
+    "://"                                       { switchState(IN_HTTP_REQUEST_HOST); return Api_SCHEME_SEPARATOR; }
+    ":"                                         { switchState(IN_HTTP_REQUEST_PORT); return Api_COLON; }
+    "/"                                         { yypushback(1); switchState(IN_HTTP_PATH_SEGMENT); }
+    "?"                                         { switchState(IN_HTTP_QUERY); return Api_QUESTION_MARK; }
+    {NL}                                        { switchState(IN_HEADER); return TokenType.WHITE_SPACE; }
 }
 
-<WAITING_REQUEST_HOST> {
-    [^\r\n:/?#]+                                   { yybegin(WAITING_REQUEST);return Api_HOST_VALUE; }
+<IN_HTTP_REQUEST_HOST> {
+    [^\r\n:/?#]+                                { switchPrevState();return Api_HOST_VALUE; }
 }
 
-<WAITING_HEADER> {
-    {WS}+                                       {return TokenType.WHITE_SPACE; }
-    {NL}                                        {return TokenType.WHITE_SPACE; }
-    {KEY_CHARACTER}+                            { return Api_HEADER_FIELD_NAME; }
-    ":"                                         { yybegin(WAITING_HEADER_VALUE); return Api_COLON; }
-    {NL} {NL}                                   { yybegin(YYINITIAL);return TokenType.WHITE_SPACE; }
+<IN_HTTP_REQUEST_PORT> {
+    {DIGIT}+                                    { switchPrevState();return Api_PORT_SEGMENT; }
 }
 
-<WAITING_HEADER_VALUE> {
-    ({WS} | {NL})+                              {return TokenType.WHITE_SPACE; }
-    {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*   { yybegin(WAITING_HEADER); return Api_HEADER_FIELD_VALUE; }
+<IN_HTTP_PATH_SEGMENT> {
+    "/"                                         { return Api_SLASH; }
+    [^\r\n/?#]+                                 { switchPrevState(); return Api_SEGMENT; }
+    {NL}                                        { switchState(IN_HEADER);return TokenType.WHITE_SPACE; }
 }
 
-({NL}|{WS})+                                    { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+<IN_HTTP_QUERY> {
+    [^\r\n=]+                                   { return Api_QUERY_NAME; }
+    "="                                         { switchState(IN_HTTP_QUERY_VALUE); return Api_EQUALS; }
+    {NL}                                        { switchState(IN_HEADER);return TokenType.WHITE_SPACE; }
+}
+
+<IN_HTTP_QUERY_VALUE> {
+    [^\r\n&]+                                   { return Api_QUERY_VALUE; }
+    "&"                                         { switchPrevState(); return Api_AMPERSAND;}
+    {NL}                                        { switchState(IN_HEADER);return TokenType.WHITE_SPACE; }
+}
+
+<IN_HEADER> {
+    {WS}+                                       { return TokenType.WHITE_SPACE; }
+    [^\ \n\t\f:]+                               { return Api_HEADER_FIELD_NAME; }
+    ":"                                         { switchState(IN_HEADER_VALUE); return Api_COLON; }
+    {NL} {NL}                                   { switchState(IN_MESSAGE_BODY); return TokenType.WHITE_SPACE; }
+}
+
+<IN_HEADER_VALUE> {
+    {WS}+                                       { return TokenType.WHITE_SPACE; }
+    {NL}                                        { switchPrevState(); return TokenType.WHITE_SPACE; }
+    [^\r\n]+                                    { switchPrevState(); return Api_HEADER_FIELD_VALUE; }
+    {NL} {NL}                                   { switchState(IN_MESSAGE_BODY);return TokenType.WHITE_SPACE; }
+}
+
+<IN_MESSAGE_BODY> {
+    [^\r\n]+                                     { switchState(YYINITIAL); return Api_MESSAGE_TEXT; }
+}
+
+({NL}|{WS})+                                    { switchState(YYINITIAL); return TokenType.WHITE_SPACE; }
 [^]                                             { return TokenType.BAD_CHARACTER; }

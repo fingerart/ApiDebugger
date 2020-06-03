@@ -24,37 +24,19 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiRequestImpl extends ApiElementImpl implements ApiRequest {
+public class ApiRequestMessageGroupImpl extends ApiElementImpl implements ApiRequestMessageGroup {
 
-  public ApiRequestImpl(ASTNode node) {
+  public ApiRequestMessageGroupImpl(ASTNode node) {
     super(node);
   }
 
   public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitRequest(this);
+    return visitor.visitRequestMessageGroup(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public ApiHeaderField getHeaderField() {
-    return findNotNullChildByClass(ApiHeaderField.class);
-  }
-
-  @Override
-  @NotNull
-  public ApiRequestLine getRequestLine() {
-    return findNotNullChildByClass(ApiRequestLine.class);
-  }
-
-  @Override
-  @NotNull
-  public ApiRequestMessageGroup getRequestMessageGroup() {
-    return findNotNullChildByClass(ApiRequestMessageGroup.class);
   }
 
 }
