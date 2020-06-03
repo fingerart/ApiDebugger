@@ -19,18 +19,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiRequestTarget extends ApiElement {
+public interface ApiQuery extends ApiElement {
 
   @NotNull
-  ApiHost getHost();
-
-  @NotNull
-  ApiPathAbsolute getPathAbsolute();
-
-  @NotNull
-  ApiPort getPort();
-
-  @NotNull
-  ApiScheme getScheme();
+  List<ApiQueryParameter> getQueryParameterList();
 
 }

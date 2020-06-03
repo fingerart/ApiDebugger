@@ -28,25 +28,37 @@ public interface ApiTypes {
   IElementType Api_ITEM = new ApiElementType("Api_ITEM");
   IElementType Api_PATH_ABSOLUTE = new ApiElementType("Api_PATH_ABSOLUTE");
   IElementType Api_PORT = new ApiElementType("Api_PORT");
+  IElementType Api_QUERY = new ApiElementType("Api_QUERY");
+  IElementType Api_QUERY_PARAMETER = new ApiElementType("Api_QUERY_PARAMETER");
+  IElementType Api_QUERY_PARAMETER_KEY = new ApiElementType("Api_QUERY_PARAMETER_KEY");
+  IElementType Api_QUERY_PARAMETER_VALUE = new ApiElementType("Api_QUERY_PARAMETER_VALUE");
   IElementType Api_REQUEST = new ApiElementType("Api_REQUEST");
   IElementType Api_REQUEST_LINE = new ApiElementType("Api_REQUEST_LINE");
+  IElementType Api_REQUEST_MESSAGE_GROUP = new ApiElementType("Api_REQUEST_MESSAGE_GROUP");
   IElementType Api_REQUEST_TARGET = new ApiElementType("Api_REQUEST_TARGET");
   IElementType Api_SCHEME = new ApiElementType("Api_SCHEME");
 
+  IElementType Api_AMPERSAND = new ApiTokenType("&");
   IElementType Api_COLON = new ApiTokenType(":");
   IElementType Api_CRLF = new ApiTokenType("CRLF");
+  IElementType Api_EQUALS = new ApiTokenType("=");
   IElementType Api_HEADER_FIELD_NAME = new ApiTokenType("HEADER_FIELD_NAME");
   IElementType Api_HEADER_FIELD_VALUE = new ApiTokenType("HEADER_FIELD_VALUE");
   IElementType Api_HOST_VALUE = new ApiTokenType("HOST_VALUE");
   IElementType Api_HTTP = new ApiTokenType("http");
   IElementType Api_HTTPS = new ApiTokenType("https");
   IElementType Api_LINE_COMMENT = new ApiTokenType("LINE_COMMENT");
+  IElementType Api_MESSAGE_TEXT = new ApiTokenType("MESSAGE_TEXT");
   IElementType Api_METHOD = new ApiTokenType("METHOD");
   IElementType Api_MULTILINE_COMMENT = new ApiTokenType("MULTILINE_COMMENT");
   IElementType Api_PORT_SEGMENT = new ApiTokenType("PORT_SEGMENT");
+  IElementType Api_QUERY_NAME = new ApiTokenType("QUERY_NAME");
+  IElementType Api_QUERY_VALUE = new ApiTokenType("QUERY_VALUE");
+  IElementType Api_QUESTION_MARK = new ApiTokenType("?");
   IElementType Api_SCHEME_SEPARATOR = new ApiTokenType("://");
   IElementType Api_SEGMENT = new ApiTokenType("SEGMENT");
   IElementType Api_SEPARATOR = new ApiTokenType("SEPARATOR");
+  IElementType Api_SLASH = new ApiTokenType("/");
   IElementType Api_TITLE = new ApiTokenType("TITLE");
 
   class Factory {
@@ -70,11 +82,26 @@ public interface ApiTypes {
       else if (type == Api_PORT) {
         return new ApiPortImpl(node);
       }
+      else if (type == Api_QUERY) {
+        return new ApiQueryImpl(node);
+      }
+      else if (type == Api_QUERY_PARAMETER) {
+        return new ApiQueryParameterImpl(node);
+      }
+      else if (type == Api_QUERY_PARAMETER_KEY) {
+        return new ApiQueryParameterKeyImpl(node);
+      }
+      else if (type == Api_QUERY_PARAMETER_VALUE) {
+        return new ApiQueryParameterValueImpl(node);
+      }
       else if (type == Api_REQUEST) {
         return new ApiRequestImpl(node);
       }
       else if (type == Api_REQUEST_LINE) {
         return new ApiRequestLineImpl(node);
+      }
+      else if (type == Api_REQUEST_MESSAGE_GROUP) {
+        return new ApiRequestMessageGroupImpl(node);
       }
       else if (type == Api_REQUEST_TARGET) {
         return new ApiRequestTargetImpl(node);

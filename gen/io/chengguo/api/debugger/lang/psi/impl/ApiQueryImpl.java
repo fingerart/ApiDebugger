@@ -24,14 +24,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiRequestImpl extends ApiElementImpl implements ApiRequest {
+public class ApiQueryImpl extends ApiElementImpl implements ApiQuery {
 
-  public ApiRequestImpl(ASTNode node) {
+  public ApiQueryImpl(ASTNode node) {
     super(node);
   }
 
   public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitRequest(this);
+    return visitor.visitQuery(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -41,20 +41,8 @@ public class ApiRequestImpl extends ApiElementImpl implements ApiRequest {
 
   @Override
   @NotNull
-  public ApiHeaderField getHeaderField() {
-    return findNotNullChildByClass(ApiHeaderField.class);
-  }
-
-  @Override
-  @NotNull
-  public ApiRequestLine getRequestLine() {
-    return findNotNullChildByClass(ApiRequestLine.class);
-  }
-
-  @Override
-  @NotNull
-  public ApiRequestMessageGroup getRequestMessageGroup() {
-    return findNotNullChildByClass(ApiRequestMessageGroup.class);
+  public List<ApiQueryParameter> getQueryParameterList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ApiQueryParameter.class);
   }
 
 }

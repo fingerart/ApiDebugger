@@ -39,4 +39,10 @@ public class ApiPathAbsoluteImpl extends ApiElementImpl implements ApiPathAbsolu
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public ApiQuery getQuery() {
+    return findChildByClass(ApiQuery.class);
+  }
+
 }
