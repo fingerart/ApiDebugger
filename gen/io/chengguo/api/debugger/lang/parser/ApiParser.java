@@ -64,11 +64,12 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // api_block | LINE_COMMENT | MULTILINE_COMMENT
+  // api_block | variable | LINE_COMMENT | MULTILINE_COMMENT
   static boolean api_(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "api_")) return false;
     boolean result;
     result = api_block(builder, level + 1);
+    if (!result) result = variable(builder, level + 1);
     if (!result) result = consumeToken(builder, Api_LINE_COMMENT);
     if (!result) result = consumeToken(builder, Api_MULTILINE_COMMENT);
     return result;
@@ -100,51 +101,39 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (HEADER_FIELD_NAME (':' HEADER_FIELD_VALUE?)?)*
+  // HEADER_FIELD_NAME (':' HEADER_FIELD_VALUE?)?
   public static boolean header_field(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "header_field")) return false;
-    Marker marker = enter_section_(builder, level, _NONE_, Api_HEADER_FIELD, "<header field>");
-    while (true) {
-      int pos = current_position_(builder);
-      if (!header_field_0(builder, level + 1)) break;
-      if (!empty_element_parsed_guard_(builder, "header_field", pos)) break;
-    }
-    exit_section_(builder, level, marker, true, false, null);
-    return true;
-  }
-
-  // HEADER_FIELD_NAME (':' HEADER_FIELD_VALUE?)?
-  private static boolean header_field_0(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "header_field_0")) return false;
+    if (!nextTokenIs(builder, Api_HEADER_FIELD_NAME)) return false;
     boolean result;
     Marker marker = enter_section_(builder);
     result = consumeToken(builder, Api_HEADER_FIELD_NAME);
-    result = result && header_field_0_1(builder, level + 1);
-    exit_section_(builder, marker, null, result);
+    result = result && header_field_1(builder, level + 1);
+    exit_section_(builder, marker, Api_HEADER_FIELD, result);
     return result;
   }
 
   // (':' HEADER_FIELD_VALUE?)?
-  private static boolean header_field_0_1(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "header_field_0_1")) return false;
-    header_field_0_1_0(builder, level + 1);
+  private static boolean header_field_1(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "header_field_1")) return false;
+    header_field_1_0(builder, level + 1);
     return true;
   }
 
   // ':' HEADER_FIELD_VALUE?
-  private static boolean header_field_0_1_0(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "header_field_0_1_0")) return false;
+  private static boolean header_field_1_0(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "header_field_1_0")) return false;
     boolean result;
     Marker marker = enter_section_(builder);
     result = consumeToken(builder, Api_COLON);
-    result = result && header_field_0_1_0_1(builder, level + 1);
+    result = result && header_field_1_0_1(builder, level + 1);
     exit_section_(builder, marker, null, result);
     return result;
   }
 
   // HEADER_FIELD_VALUE?
-  private static boolean header_field_0_1_0_1(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "header_field_0_1_0_1")) return false;
+  private static boolean header_field_1_0_1(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "header_field_1_0_1")) return false;
     consumeToken(builder, Api_HEADER_FIELD_VALUE);
     return true;
   }
@@ -334,18 +323,29 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // request_line header_field message_body SEPARATOR
+  // request_line header_field* message_body SEPARATOR
   public static boolean request(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request")) return false;
     if (!nextTokenIs(builder, Api_METHOD)) return false;
     boolean result;
     Marker marker = enter_section_(builder);
     result = request_line(builder, level + 1);
-    result = result && header_field(builder, level + 1);
+    result = result && request_1(builder, level + 1);
     result = result && message_body(builder, level + 1);
     result = result && consumeToken(builder, Api_SEPARATOR);
     exit_section_(builder, marker, Api_REQUEST, result);
     return result;
+  }
+
+  // header_field*
+  private static boolean request_1(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "request_1")) return false;
+    while (true) {
+      int pos = current_position_(builder);
+      if (!header_field(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "request_1", pos)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -401,6 +401,32 @@ public class ApiParser implements PsiParser, LightPsiParser {
     result = consumeToken(builder, Api_HTTP);
     if (!result) result = consumeToken(builder, Api_HTTPS);
     exit_section_(builder, level, marker, result, false, null);
+    return result;
+  }
+
+  /* ********************************************************** */
+  // '{{' variable_name '}}'
+  public static boolean variable(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "variable")) return false;
+    if (!nextTokenIs(builder, Api_LBRACES)) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = consumeToken(builder, Api_LBRACES);
+    result = result && variable_name(builder, level + 1);
+    result = result && consumeToken(builder, Api_RBRACES);
+    exit_section_(builder, marker, Api_VARIABLE, result);
+    return result;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean variable_name(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "variable_name")) return false;
+    if (!nextTokenIs(builder, Api_IDENTIFIER)) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = consumeToken(builder, Api_IDENTIFIER);
+    exit_section_(builder, marker, Api_VARIABLE_NAME, result);
     return result;
   }
 

@@ -80,6 +80,14 @@ public class ApiVisitor<R> extends PsiElementVisitor {
     return visitElement(o);
   }
 
+  public R visitVariable(@NotNull ApiVariable o) {
+    return visitElement(o);
+  }
+
+  public R visitVariableName(@NotNull ApiVariableName o) {
+    return visitElement(o);
+  }
+
   public R visitElement(@NotNull ApiElement o) {
     super.visitElement(o);
     return null;

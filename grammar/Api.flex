@@ -76,14 +76,21 @@ VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
 %state IN_HEADER
 %state IN_HEADER_VALUE
 %state IN_MESSAGE_BODY
+%state IN_VARIABLE
 
 %%
 <YYINITIAL> {
     ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
     {END_OF_LINE_COMMENT}                       { return Api_LINE_COMMENT; }
     {MULTILINE_COMMENT}                         { return Api_MULTILINE_COMMENT; }
-    "---"                                       { return Api_SEPARATOR; }
+    "--" "-" [^\r\n]*                                       { return Api_SEPARATOR; }
     {LETTER}+                                   { switchState(IN_HTTP_REQUEST); return Api_TITLE; }
+    "{{"                                        { switchState(IN_VARIABLE); return Api_LBRACES; }
+}
+
+<IN_VARIABLE> {
+    ({LETTER} | '_') ({LETTER} | {DIGIT} | '_')* { return Api_IDENTIFIER; }
+    "}}"                                        { switchPrevState(); return Api_RBRACES;}
 }
 
 <IN_HTTP_REQUEST> {

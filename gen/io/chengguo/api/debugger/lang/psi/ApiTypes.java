@@ -37,6 +37,8 @@ public interface ApiTypes {
   IElementType Api_REQUEST_MESSAGE_GROUP = new ApiElementType("Api_REQUEST_MESSAGE_GROUP");
   IElementType Api_REQUEST_TARGET = new ApiElementType("Api_REQUEST_TARGET");
   IElementType Api_SCHEME = new ApiElementType("Api_SCHEME");
+  IElementType Api_VARIABLE = new ApiElementType("Api_VARIABLE");
+  IElementType Api_VARIABLE_NAME = new ApiElementType("Api_VARIABLE_NAME");
 
   IElementType Api_AMPERSAND = new ApiTokenType("&");
   IElementType Api_COLON = new ApiTokenType(":");
@@ -46,6 +48,8 @@ public interface ApiTypes {
   IElementType Api_HOST_VALUE = new ApiTokenType("HOST_VALUE");
   IElementType Api_HTTP = new ApiTokenType("http");
   IElementType Api_HTTPS = new ApiTokenType("https");
+  IElementType Api_IDENTIFIER = new ApiTokenType("IDENTIFIER");
+  IElementType Api_LBRACES = new ApiTokenType("{{");
   IElementType Api_LINE_COMMENT = new ApiTokenType("LINE_COMMENT");
   IElementType Api_MESSAGE_TEXT = new ApiTokenType("MESSAGE_TEXT");
   IElementType Api_METHOD = new ApiTokenType("METHOD");
@@ -54,6 +58,7 @@ public interface ApiTypes {
   IElementType Api_QUERY_NAME = new ApiTokenType("QUERY_NAME");
   IElementType Api_QUERY_VALUE = new ApiTokenType("QUERY_VALUE");
   IElementType Api_QUESTION_MARK = new ApiTokenType("?");
+  IElementType Api_RBRACES = new ApiTokenType("}}");
   IElementType Api_SCHEME_SEPARATOR = new ApiTokenType("://");
   IElementType Api_SEGMENT = new ApiTokenType("SEGMENT");
   IElementType Api_SEPARATOR = new ApiTokenType("SEPARATOR");
@@ -107,6 +112,12 @@ public interface ApiTypes {
       }
       else if (type == Api_SCHEME) {
         return new ApiSchemeImpl(node);
+      }
+      else if (type == Api_VARIABLE) {
+        return new ApiVariableImpl(node);
+      }
+      else if (type == Api_VARIABLE_NAME) {
+        return new ApiVariableNameImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

@@ -8,7 +8,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
-import io.chengguo.api.debugger.lang.psi.ApiDebugger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,7 +25,6 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
         if (element instanceof ApiPsiFile) {
             ApiDebugger type = PsiTreeUtil.findChildOfType(element, ApiDebugger.class);
             if (type != null) {
-
                 return ContainerUtil.newArrayList();
             }
         }

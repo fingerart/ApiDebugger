@@ -19,15 +19,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiRequest extends ApiElement {
-
-  @NotNull
-  List<ApiHeaderField> getHeaderFieldList();
-
-  @NotNull
-  ApiRequestLine getRequestLine();
-
-  @NotNull
-  ApiRequestMessageGroup getRequestMessageGroup();
+public interface ApiVariableName extends ApiElement {
 
 }

@@ -1,4 +1,4 @@
-package io.chengguo.api.debugger.lang.psi;
+package io.chengguo.api.debugger.lang.structure;
 
 public interface ApiDebugger extends ApiDebuggerContentDescriptor {
 

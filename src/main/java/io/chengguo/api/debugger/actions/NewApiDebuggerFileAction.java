@@ -1,4 +1,4 @@
-package io.chengguo.api.debugger.ui.actions;
+package io.chengguo.api.debugger.actions;
 
 import com.intellij.ide.actions.CreateFileFromTemplateAction;
 import com.intellij.ide.actions.CreateFileFromTemplateDialog;
