@@ -39,7 +39,9 @@ private api_ ::= ( api_block | variable | LINE_COMMENT | MULTILINE_COMMENT)
 
 api_block ::= description request
 
-description ::= TITLE
+description ::= description_title description_content
+description_title ::= '-' 'title' ':' LINE_TEXT
+description_content ::= '-' 'description' ':' LINE_TEXT
 
 request ::= request_line header_field* message_body SEPARATOR
 
