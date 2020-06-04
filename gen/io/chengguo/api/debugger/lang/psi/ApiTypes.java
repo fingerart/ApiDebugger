@@ -22,10 +22,10 @@ import io.chengguo.api.debugger.lang.psi.impl.*;
 
 public interface ApiTypes {
 
+  IElementType Api_API_BLOCK = new ApiElementType("Api_API_BLOCK");
   IElementType Api_DESCRIPTION = new ApiElementType("Api_DESCRIPTION");
   IElementType Api_HEADER_FIELD = new ApiElementType("Api_HEADER_FIELD");
   IElementType Api_HOST = new ApiElementType("Api_HOST");
-  IElementType Api_ITEM = new ApiElementType("Api_ITEM");
   IElementType Api_PATH_ABSOLUTE = new ApiElementType("Api_PATH_ABSOLUTE");
   IElementType Api_PORT = new ApiElementType("Api_PORT");
   IElementType Api_QUERY = new ApiElementType("Api_QUERY");
@@ -40,7 +40,6 @@ public interface ApiTypes {
 
   IElementType Api_AMPERSAND = new ApiTokenType("&");
   IElementType Api_COLON = new ApiTokenType(":");
-  IElementType Api_CRLF = new ApiTokenType("CRLF");
   IElementType Api_EQUALS = new ApiTokenType("=");
   IElementType Api_HEADER_FIELD_NAME = new ApiTokenType("HEADER_FIELD_NAME");
   IElementType Api_HEADER_FIELD_VALUE = new ApiTokenType("HEADER_FIELD_VALUE");
@@ -64,7 +63,10 @@ public interface ApiTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == Api_DESCRIPTION) {
+      if (type == Api_API_BLOCK) {
+        return new ApiApiBlockImpl(node);
+      }
+      else if (type == Api_DESCRIPTION) {
         return new ApiDescriptionImpl(node);
       }
       else if (type == Api_HEADER_FIELD) {
@@ -72,9 +74,6 @@ public interface ApiTypes {
       }
       else if (type == Api_HOST) {
         return new ApiHostImpl(node);
-      }
-      else if (type == Api_ITEM) {
-        return new ApiItemImpl(node);
       }
       else if (type == Api_PATH_ABSOLUTE) {
         return new ApiPathAbsoluteImpl(node);

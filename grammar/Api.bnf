@@ -33,9 +33,9 @@
 
 apiFile ::= api_*
 
-private api_ ::= (item|LINE_COMMENT|MULTILINE_COMMENT|CRLF)
+private api_ ::= ( api_block | LINE_COMMENT | MULTILINE_COMMENT)
 
-item ::= description request
+api_block ::= description request
 
 description ::= TITLE
 
@@ -43,7 +43,7 @@ request ::= request_line header_field message_body SEPARATOR
 
 request_line ::= METHOD request_target
 
-request_target ::= scheme '://' host ':' port path_absolute
+request_target ::= scheme '://' host ':' port path_absolute{pin=1}
 scheme ::= 'http' | 'https'
 host ::= HOST_VALUE
 port ::= PORT_SEGMENT

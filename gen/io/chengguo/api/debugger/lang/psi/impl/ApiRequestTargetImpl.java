@@ -40,21 +40,21 @@ public class ApiRequestTargetImpl extends ApiElementImpl implements ApiRequestTa
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ApiHost getHost() {
-    return findNotNullChildByClass(ApiHost.class);
+    return findChildByClass(ApiHost.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ApiPathAbsolute getPathAbsolute() {
-    return findNotNullChildByClass(ApiPathAbsolute.class);
+    return findChildByClass(ApiPathAbsolute.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ApiPort getPort() {
-    return findNotNullChildByClass(ApiPort.class);
+    return findChildByClass(ApiPort.class);
   }
 
   @Override

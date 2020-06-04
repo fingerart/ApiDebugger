@@ -64,14 +64,26 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // item|LINE_COMMENT|MULTILINE_COMMENT|CRLF
+  // api_block | LINE_COMMENT | MULTILINE_COMMENT
   static boolean api_(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "api_")) return false;
     boolean result;
-    result = item(builder, level + 1);
+    result = api_block(builder, level + 1);
     if (!result) result = consumeToken(builder, Api_LINE_COMMENT);
     if (!result) result = consumeToken(builder, Api_MULTILINE_COMMENT);
-    if (!result) result = consumeToken(builder, Api_CRLF);
+    return result;
+  }
+
+  /* ********************************************************** */
+  // description request
+  public static boolean api_block(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "api_block")) return false;
+    if (!nextTokenIs(builder, Api_TITLE)) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = description(builder, level + 1);
+    result = result && request(builder, level + 1);
+    exit_section_(builder, marker, Api_API_BLOCK, result);
     return result;
   }
 
@@ -146,19 +158,6 @@ public class ApiParser implements PsiParser, LightPsiParser {
     Marker marker = enter_section_(builder);
     result = consumeToken(builder, Api_HOST_VALUE);
     exit_section_(builder, marker, Api_HOST, result);
-    return result;
-  }
-
-  /* ********************************************************** */
-  // description request
-  public static boolean item(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "item")) return false;
-    if (!nextTokenIs(builder, Api_TITLE)) return false;
-    boolean result;
-    Marker marker = enter_section_(builder);
-    result = description(builder, level + 1);
-    result = result && request(builder, level + 1);
-    exit_section_(builder, marker, Api_ITEM, result);
     return result;
   }
 
@@ -379,16 +378,17 @@ public class ApiParser implements PsiParser, LightPsiParser {
   public static boolean request_target(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_target")) return false;
     if (!nextTokenIs(builder, "<request target>", Api_HTTP, Api_HTTPS)) return false;
-    boolean result;
+    boolean result, pinned;
     Marker marker = enter_section_(builder, level, _NONE_, Api_REQUEST_TARGET, "<request target>");
     result = scheme(builder, level + 1);
-    result = result && consumeToken(builder, Api_SCHEME_SEPARATOR);
-    result = result && host(builder, level + 1);
-    result = result && consumeToken(builder, Api_COLON);
-    result = result && port(builder, level + 1);
-    result = result && path_absolute(builder, level + 1);
-    exit_section_(builder, level, marker, result, false, null);
-    return result;
+    pinned = result; // pin = 1
+    result = result && report_error_(builder, consumeToken(builder, Api_SCHEME_SEPARATOR));
+    result = pinned && report_error_(builder, host(builder, level + 1)) && result;
+    result = pinned && report_error_(builder, consumeToken(builder, Api_COLON)) && result;
+    result = pinned && report_error_(builder, port(builder, level + 1)) && result;
+    result = pinned && path_absolute(builder, level + 1) && result;
+    exit_section_(builder, level, marker, result, pinned, null);
+    return result || pinned;
   }
 
   /* ********************************************************** */

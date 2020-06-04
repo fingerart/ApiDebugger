@@ -21,13 +21,13 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiRequestTarget extends ApiElement {
 
-  @NotNull
+  @Nullable
   ApiHost getHost();
 
-  @NotNull
+  @Nullable
   ApiPathAbsolute getPathAbsolute();
 
-  @NotNull
+  @Nullable
   ApiPort getPort();
 
   @NotNull

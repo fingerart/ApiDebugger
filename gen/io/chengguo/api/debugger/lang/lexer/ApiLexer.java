@@ -76,16 +76,16 @@ class ApiLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\13\0\1\1\1\2\1\3\11\1\2\4\1\2\1\5"+
-    "\1\6\1\1\1\7\2\10\1\11\1\12\2\13\2\14"+
-    "\1\15\2\16\1\17\2\20\1\21\2\22\1\11\1\22"+
-    "\1\2\1\23\1\24\3\25\2\2\2\26\1\27\1\30"+
-    "\12\0\1\22\1\31\1\22\2\31\1\24\2\32\1\30"+
-    "\1\33\1\0\1\34\4\0\1\35\1\0\1\30\5\0"+
-    "\1\36\2\0\1\37\1\0";
+    "\13\0\1\1\1\2\1\3\11\1\1\4\2\2\1\5"+
+    "\1\6\1\1\1\7\2\10\1\11\1\12\3\13\1\14"+
+    "\3\15\1\16\3\17\1\20\1\21\4\2\1\22\1\23"+
+    "\3\24\2\2\1\25\1\2\1\26\1\27\12\0\1\21"+
+    "\1\30\1\23\1\31\1\23\1\27\1\32\1\0\1\33"+
+    "\4\0\1\34\1\0\1\27\5\0\1\35\2\0\1\36"+
+    "\1\0";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[100];
+    int [] result = new int[98];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -114,18 +114,18 @@ class ApiLexer implements FlexLexer {
     "\0\u0118\0\u013b\0\u015e\0\u0181\0\u01a4\0\u01c7\0\u01ea\0\u020d"+
     "\0\u0230\0\u0253\0\u0276\0\u0299\0\u02bc\0\u02df\0\u0302\0\u0325"+
     "\0\u0348\0\u036b\0\u0181\0\u038e\0\u03b1\0\u0181\0\u03d4\0\u03f7"+
-    "\0\u0325\0\u041a\0\u043d\0\u0460\0\u0325\0\u0483\0\u0181\0\u04a6"+
-    "\0\u04c9\0\u0181\0\u04ec\0\u050f\0\u0181\0\u0532\0\u0555\0\u0578"+
-    "\0\u059b\0\u05be\0\u0181\0\u05e1\0\u0604\0\u0627\0\u064a\0\u066d"+
-    "\0\u0690\0\u06b3\0\u015e\0\u06d6\0\u06f9\0\u071c\0\u073f\0\u0762"+
-    "\0\u0785\0\u07a8\0\u07cb\0\u07ee\0\u0811\0\u0834\0\u0857\0\u087a"+
-    "\0\u0325\0\u089d\0\u08c0\0\u0578\0\u08e3\0\u0325\0\u0906\0\u0929"+
-    "\0\u0181\0\u094c\0\u0181\0\u096f\0\u0992\0\u09b5\0\u09d8\0\u0181"+
-    "\0\u09fb\0\u0181\0\u0929\0\u0a1e\0\u0a41\0\u0a64\0\u0a87\0\u0aaa"+
-    "\0\u0acd\0\u0af0\0\u0181\0\u0b13";
+    "\0\u041a\0\u043d\0\u0460\0\u0483\0\u04a6\0\u0181\0\u04c9\0\u04ec"+
+    "\0\u050f\0\u0181\0\u0532\0\u0555\0\u0578\0\u0181\0\u059b\0\u05be"+
+    "\0\u05e1\0\u0604\0\u0627\0\u0181\0\u064a\0\u066d\0\u0690\0\u06b3"+
+    "\0\u06d6\0\u06f9\0\u071c\0\u015e\0\u073f\0\u0762\0\u0785\0\u07a8"+
+    "\0\u07cb\0\u07ee\0\u0811\0\u0834\0\u0857\0\u087a\0\u089d\0\u08c0"+
+    "\0\u05be\0\u05e1\0\u066d\0\u0690\0\u08e3\0\u0906\0\u0181\0\u0929"+
+    "\0\u0181\0\u094c\0\u096f\0\u0992\0\u09b5\0\u0181\0\u09d8\0\u0181"+
+    "\0\u0906\0\u09fb\0\u0a1e\0\u0a41\0\u0a64\0\u0a87\0\u0aaa\0\u0acd"+
+    "\0\u0181\0\u0af0";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[100];
+    int [] result = new int[98];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -151,52 +151,51 @@ class ApiLexer implements FlexLexer {
     "\1\14\5\15\1\16\1\14\1\17\1\14\17\16\1\14"+
     "\1\20\4\16\5\14\5\15\4\14\1\21\1\22\1\23"+
     "\3\14\1\24\1\14\1\25\1\14\1\26\3\14\1\27"+
-    "\13\14\2\30\1\31\2\32\2\14\1\33\20\14\1\34"+
+    "\13\14\3\30\1\31\1\32\2\14\1\33\20\14\1\34"+
     "\1\14\1\35\3\14\1\36\3\14\1\37\1\40\2\41"+
     "\2\40\2\37\1\14\20\37\1\14\5\37\2\14\2\37"+
-    "\1\14\5\41\1\14\1\42\33\14\1\43\1\44\1\45"+
-    "\1\46\2\44\2\43\1\47\26\43\2\14\2\43\1\50"+
-    "\1\51\1\45\1\46\2\51\33\50\1\52\1\50\1\53"+
-    "\1\54\1\45\1\46\2\54\34\53\1\55\1\56\1\57"+
-    "\1\60\1\61\1\32\1\62\23\56\1\63\11\56\1\64"+
-    "\1\65\1\66\1\67\1\70\1\71\35\64\1\72\1\73"+
-    "\2\41\2\73\35\72\44\0\5\15\43\0\1\16\3\0"+
-    "\17\16\2\0\4\16\14\0\1\74\1\75\63\0\1\76"+
-    "\23\0\1\77\41\0\1\100\12\0\1\101\44\0\1\102"+
-    "\34\0\1\101\42\0\1\103\42\0\1\104\33\0\1\105"+
-    "\31\0\5\41\36\0\1\41\1\30\3\41\36\0\3\41"+
-    "\2\32\45\0\1\106\66\0\1\107\6\0\2\37\2\0"+
-    "\4\37\1\0\20\37\1\0\5\37\2\0\3\37\1\40"+
-    "\2\41\2\40\2\37\1\0\20\37\1\0\5\37\2\0"+
-    "\2\37\7\0\1\42\33\0\2\43\2\0\4\43\1\0"+
-    "\26\43\2\0\3\43\1\44\2\41\2\44\2\43\1\0"+
-    "\26\43\2\0\2\43\1\0\1\41\1\45\3\41\35\0"+
-    "\2\50\2\0\35\50\1\0\2\50\1\51\2\41\2\51"+
-    "\33\50\1\0\1\50\2\53\2\0\36\53\1\0\1\53"+
-    "\1\54\2\41\2\54\34\53\1\0\2\56\1\0\1\56"+
-    "\2\0\23\56\1\0\12\56\1\110\1\111\1\112\1\41"+
-    "\1\111\23\56\1\0\11\56\1\0\2\111\1\113\1\41"+
-    "\1\111\35\0\1\56\1\110\1\114\1\112\1\41\1\111"+
-    "\23\56\1\0\11\56\1\0\2\111\1\113\2\32\35\0"+
-    "\2\64\2\0\40\64\1\115\1\116\1\117\2\115\35\64"+
-    "\1\0\2\116\1\117\1\41\1\116\36\0\1\116\1\66"+
-    "\1\117\1\41\1\116\35\0\1\64\1\115\2\41\2\70"+
-    "\36\64\1\115\1\116\1\117\2\70\35\64\2\72\2\0"+
-    "\37\72\2\74\2\0\37\74\11\75\1\120\31\75\32\0"+
-    "\1\121\24\0\1\122\45\0\1\101\37\0\1\123\51\0"+
-    "\1\124\42\0\1\125\45\0\1\126\32\0\1\127\34\0"+
-    "\1\130\66\0\1\131\6\0\1\56\1\110\1\41\1\110"+
-    "\2\41\23\56\1\0\12\56\1\110\1\111\1\110\2\41"+
-    "\23\56\1\0\11\56\1\0\1\41\1\111\3\41\35\0"+
-    "\1\64\1\115\2\41\2\115\35\64\1\0\1\41\1\116"+
-    "\3\41\35\0\10\75\1\132\1\133\31\75\15\0\1\134"+
-    "\55\0\1\135\36\0\1\123\37\0\1\136\37\0\1\137"+
-    "\61\0\1\140\17\0\1\141\51\0\1\123\35\0\1\135"+
-    "\47\0\1\142\57\0\1\143\22\0\1\144\54\0\1\101"+
-    "\31\0\1\123\23\0";
+    "\1\14\5\41\1\14\1\42\33\14\1\43\1\44\2\30"+
+    "\1\45\1\44\2\43\1\46\26\43\2\14\2\43\1\47"+
+    "\1\50\2\30\1\51\1\50\33\47\1\52\1\47\1\53"+
+    "\1\54\2\30\1\55\1\54\34\53\1\56\1\57\1\60"+
+    "\1\61\1\62\1\31\1\63\23\57\1\64\11\57\1\65"+
+    "\1\66\1\67\1\70\1\71\1\72\35\65\1\73\1\74"+
+    "\4\15\35\73\44\0\5\15\43\0\1\16\3\0\17\16"+
+    "\2\0\4\16\14\0\1\75\1\76\63\0\1\77\23\0"+
+    "\1\100\41\0\1\101\12\0\1\102\44\0\1\103\34\0"+
+    "\1\102\42\0\1\104\42\0\1\105\33\0\1\106\31\0"+
+    "\3\30\1\41\1\30\36\0\3\41\2\31\36\0\3\30"+
+    "\1\31\1\32\45\0\1\107\66\0\1\110\6\0\2\37"+
+    "\2\0\4\37\1\0\20\37\1\0\5\37\2\0\3\37"+
+    "\1\40\2\41\2\40\2\37\1\0\20\37\1\0\5\37"+
+    "\2\0\2\37\1\0\5\41\44\0\1\42\33\0\2\43"+
+    "\2\0\4\43\1\0\26\43\2\0\3\43\1\44\2\30"+
+    "\1\45\1\44\2\43\1\0\26\43\2\0\3\43\1\45"+
+    "\2\41\2\45\2\43\1\0\26\43\2\0\2\43\2\47"+
+    "\2\0\35\47\1\0\2\47\1\50\2\30\1\51\1\50"+
+    "\33\47\1\0\2\47\1\51\2\41\2\51\33\47\1\0"+
+    "\1\47\2\53\2\0\36\53\1\0\1\53\1\54\2\30"+
+    "\1\55\1\54\34\53\1\0\1\53\1\55\2\41\2\55"+
+    "\34\53\1\0\2\57\1\0\1\57\2\0\23\57\1\0"+
+    "\12\57\1\111\1\112\1\111\1\41\1\112\23\57\1\0"+
+    "\11\57\1\0\3\112\1\41\1\112\35\0\1\57\1\111"+
+    "\1\61\1\111\1\41\1\112\23\57\1\0\11\57\1\0"+
+    "\3\112\1\31\1\63\35\0\2\65\2\0\40\65\1\113"+
+    "\2\114\1\115\1\113\35\65\1\0\3\114\1\41\1\114"+
+    "\36\0\1\114\1\67\1\114\1\41\1\114\35\0\1\65"+
+    "\1\115\2\41\2\71\36\65\1\113\2\114\1\71\1\72"+
+    "\35\65\2\73\4\0\35\73\2\75\2\0\37\75\11\76"+
+    "\1\116\31\76\32\0\1\117\24\0\1\120\45\0\1\102"+
+    "\37\0\1\121\51\0\1\122\42\0\1\123\45\0\1\124"+
+    "\32\0\1\125\34\0\1\126\66\0\1\127\6\0\1\65"+
+    "\1\115\2\41\2\115\35\65\10\76\1\130\1\131\31\76"+
+    "\15\0\1\132\55\0\1\133\36\0\1\121\37\0\1\134"+
+    "\37\0\1\135\61\0\1\136\17\0\1\137\51\0\1\121"+
+    "\35\0\1\133\47\0\1\140\57\0\1\141\22\0\1\142"+
+    "\54\0\1\102\31\0\1\121\23\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[2870];
+    int [] result = new int[2835];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -234,13 +233,13 @@ class ApiLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\13\0\1\11\16\1\1\11\2\1\1\11\10\1\1\11"+
-    "\2\1\1\11\2\1\1\11\5\1\1\11\12\1\12\0"+
-    "\11\1\1\11\1\0\1\11\4\0\1\11\1\0\1\11"+
+    "\13\0\1\11\16\1\1\11\2\1\1\11\7\1\1\11"+
+    "\3\1\1\11\3\1\1\11\5\1\1\11\12\1\12\0"+
+    "\6\1\1\11\1\0\1\11\4\0\1\11\1\0\1\11"+
     "\5\0\1\1\2\0\1\11\1\0";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[100];
+    int [] result = new int[98];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -301,15 +300,39 @@ class ApiLexer implements FlexLexer {
 
   /* user code: */
     private int mPrevState = YYINITIAL;
+
+    /**
+     * 切换状态，会记录切换前的状态
+     * @param nextState
+     */
     public void switchState(final int nextState) {
         this.mPrevState = this.yystate();
         this.yybegin(nextState);
     }
+
+    /**
+     * 切换至上一个状态
+     */
     public void switchPrevState() {
         switchState(mPrevState);
     }
+
+    /**
+     * 重制状态到 {@code ApiLexer#YYINITIAL}
+     */
     public void reset() {
         switchState(YYINITIAL);
+    }
+
+    /**
+     * 当路径匹配完成，切换至下一个状态
+     */
+    private void onPathFinish() {
+        if(yylength()==1){
+            yypushback(yylength()); switchState(IN_HEADER);
+        }else {
+            switchState(IN_MESSAGE_BODY);
+        }
     }
 
 
@@ -589,157 +612,152 @@ class ApiLexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             } 
             // fall through
-          case 32: break;
+          case 31: break;
           case 2: 
             { return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 33: break;
+          case 32: break;
           case 3: 
             { switchState(IN_HTTP_REQUEST); return Api_TITLE;
             } 
             // fall through
-          case 34: break;
+          case 33: break;
           case 4: 
-            { switchState(IN_HEADER); return TokenType.WHITE_SPACE;
+            { onPathFinish(); return TokenType.WHITE_SPACE;
+            } 
+            // fall through
+          case 34: break;
+          case 5: 
+            { yypushback(yylength()); switchState(IN_HTTP_PATH_SEGMENT);
             } 
             // fall through
           case 35: break;
-          case 5: 
-            { yypushback(1); switchState(IN_HTTP_PATH_SEGMENT);
-            } 
-            // fall through
-          case 36: break;
           case 6: 
             { switchState(IN_HTTP_REQUEST_PORT); return Api_COLON;
             } 
             // fall through
-          case 37: break;
+          case 36: break;
           case 7: 
             { switchState(IN_HTTP_QUERY); return Api_QUESTION_MARK;
             } 
             // fall through
-          case 38: break;
+          case 37: break;
           case 8: 
             { switchPrevState();return Api_HOST_VALUE;
             } 
             // fall through
-          case 39: break;
+          case 38: break;
           case 9: 
             { switchState(YYINITIAL); return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 40: break;
+          case 39: break;
           case 10: 
             { switchPrevState();return Api_PORT_SEGMENT;
             } 
             // fall through
-          case 41: break;
+          case 40: break;
           case 11: 
             { switchPrevState(); return Api_SEGMENT;
             } 
             // fall through
-          case 42: break;
+          case 41: break;
           case 12: 
-            { switchState(IN_HEADER);return TokenType.WHITE_SPACE;
-            } 
-            // fall through
-          case 43: break;
-          case 13: 
             { return Api_SLASH;
             } 
             // fall through
-          case 44: break;
-          case 14: 
+          case 42: break;
+          case 13: 
             { return Api_QUERY_NAME;
             } 
             // fall through
-          case 45: break;
-          case 15: 
+          case 43: break;
+          case 14: 
             { switchState(IN_HTTP_QUERY_VALUE); return Api_EQUALS;
             } 
             // fall through
-          case 46: break;
-          case 16: 
+          case 44: break;
+          case 15: 
             { return Api_QUERY_VALUE;
             } 
             // fall through
-          case 47: break;
-          case 17: 
+          case 45: break;
+          case 16: 
             { switchPrevState(); return Api_AMPERSAND;
             } 
             // fall through
-          case 48: break;
-          case 18: 
+          case 46: break;
+          case 17: 
             { return Api_HEADER_FIELD_NAME;
             } 
             // fall through
-          case 49: break;
-          case 19: 
+          case 47: break;
+          case 18: 
             { switchState(IN_HEADER_VALUE); return Api_COLON;
             } 
             // fall through
-          case 50: break;
-          case 20: 
+          case 48: break;
+          case 19: 
             { switchPrevState(); return Api_HEADER_FIELD_VALUE;
             } 
             // fall through
-          case 51: break;
-          case 21: 
+          case 49: break;
+          case 20: 
             { switchPrevState(); return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 52: break;
-          case 22: 
+          case 50: break;
+          case 21: 
             { switchState(YYINITIAL); return Api_MESSAGE_TEXT;
             } 
             // fall through
-          case 53: break;
-          case 23: 
+          case 51: break;
+          case 22: 
             { return Api_LINE_COMMENT;
             } 
             // fall through
-          case 54: break;
-          case 24: 
+          case 52: break;
+          case 23: 
             { return Api_MULTILINE_COMMENT;
             } 
             // fall through
-          case 55: break;
-          case 25: 
+          case 53: break;
+          case 24: 
             { switchState(IN_MESSAGE_BODY); return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 56: break;
-          case 26: 
+          case 54: break;
+          case 25: 
             { switchState(IN_MESSAGE_BODY);return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 57: break;
-          case 27: 
+          case 55: break;
+          case 26: 
             { return Api_SEPARATOR;
             } 
             // fall through
-          case 58: break;
-          case 28: 
+          case 56: break;
+          case 27: 
             { switchState(IN_HTTP_PATH); return Api_METHOD;
             } 
             // fall through
-          case 59: break;
-          case 29: 
+          case 57: break;
+          case 28: 
             { switchState(IN_HTTP_REQUEST_HOST); return Api_SCHEME_SEPARATOR;
             } 
             // fall through
-          case 60: break;
-          case 30: 
+          case 58: break;
+          case 29: 
             { return Api_HTTP;
             } 
             // fall through
-          case 61: break;
-          case 31: 
+          case 59: break;
+          case 30: 
             { return Api_HTTPS;
             } 
             // fall through
-          case 62: break;
+          case 60: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
