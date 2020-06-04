@@ -20,7 +20,6 @@ public class ApiLineMarkerProvider extends RunLineMarkerContributor {
     @Override
     public Info getInfo(@NotNull PsiElement element) {
         boolean isApiRunElement = isApiRunElement(element);
-        System.out.println("ApiLineMarkerProvider.getInfo: " + isApiRunElement);
         if (isApiRunElement) {
             ArrayList<AnAction> actions = new ArrayList<>();
             actions.add(new RunApiRequestAction());
