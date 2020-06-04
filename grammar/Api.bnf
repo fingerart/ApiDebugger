@@ -28,18 +28,20 @@
     QUESTION_MARK           = "?"
     EQUALS                  = "="
     AMPERSAND               = "&"
+    LBRACES                 = "{{"
+    RBRACES                 = "}}"
   ]
 }
 
 apiFile ::= api_*
 
-private api_ ::= ( api_block | LINE_COMMENT | MULTILINE_COMMENT)
+private api_ ::= ( api_block | variable | LINE_COMMENT | MULTILINE_COMMENT)
 
 api_block ::= description request
 
 description ::= TITLE
 
-request ::= request_line header_field message_body SEPARATOR
+request ::= request_line header_field* message_body SEPARATOR
 
 request_line ::= METHOD request_target
 
@@ -56,9 +58,14 @@ query ::= query_parameter ('&' query_parameter)*
 query_parameter ::= query_parameter_key ('=' query_parameter_value)?
 query_parameter_key ::= QUERY_NAME
 query_parameter_value ::= QUERY_VALUE
-//varable ::= '{{' IDENTIFIER '}}'
 
-header_field ::= (HEADER_FIELD_NAME (':' HEADER_FIELD_VALUE?)?)*
+header_field ::= HEADER_FIELD_NAME (':' HEADER_FIELD_VALUE?)? {
+    methods = [getName getValue]
+}
 
 private message_body ::= request_message_group /* | multipart_message*/
 request_message_group ::= MESSAGE_TEXT
+
+variable ::= '{{' variable_name '}}'
+
+variable_name ::= IDENTIFIER

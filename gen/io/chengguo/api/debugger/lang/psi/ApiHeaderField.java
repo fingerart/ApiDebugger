@@ -21,4 +21,12 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiHeaderField extends ApiElement {
 
+  //WARNING: getName(...) is skipped
+  //matching getName(ApiHeaderField, ...)
+  //methods are not found in ApiPsiImplUtil
+
+  //WARNING: getValue(...) is skipped
+  //matching getValue(ApiHeaderField, ...)
+  //methods are not found in ApiPsiImplUtil
+
 }

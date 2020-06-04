@@ -16,12 +16,16 @@ import java.util.Map;
 public class ApiColorSettingsPage implements ColorSettingsPage {
 
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Key", ApiSyntaxHighlighter.Companion.getKEY()),
-            new AttributesDescriptor("Value", ApiSyntaxHighlighter.Companion.getSTRING()),
-            new AttributesDescriptor("Separator", ApiSyntaxHighlighter.Companion.getSEPARATOR()),
-            new AttributesDescriptor("Bad Character", ApiSyntaxHighlighter.Companion.getBAD_CHARACTER()),
-            new AttributesDescriptor("Line comment", ApiSyntaxHighlighter.Companion.getLINE_COMMENT()),
-            new AttributesDescriptor("Block comment", ApiSyntaxHighlighter.Companion.getBLOCK_COMMENT()),
+            new AttributesDescriptor("Method Type", ApiSyntaxHighlighter.Companion.getMETHOD_TYPE()),
+            new AttributesDescriptor("Header Field Name", ApiSyntaxHighlighter.Companion.getHEADER_FIELD_NAME()),
+            new AttributesDescriptor("Header Field Value", ApiSyntaxHighlighter.Companion.getHEADER_FIELD_VALUE()),
+            new AttributesDescriptor("Query Parameter Key", ApiSyntaxHighlighter.Companion.getQUERY_PARAMETER_KEY()),
+            new AttributesDescriptor("Query Parameter Value", ApiSyntaxHighlighter.Companion.getQUERY_PARAMETER_VALUE()),
+            new AttributesDescriptor("Request Body", ApiSyntaxHighlighter.Companion.getREQUEST_BODY()),
+            new AttributesDescriptor("Variable Name", ApiSyntaxHighlighter.Companion.getVARIABLE_NAME()),
+            new AttributesDescriptor("Api Block Separator", ApiSyntaxHighlighter.Companion.getAPI_BLOCK_SEPARATOR()),
+            new AttributesDescriptor("Line Comment", ApiSyntaxHighlighter.Companion.getLINE_COMMENT()),
+            new AttributesDescriptor("Block Comment", ApiSyntaxHighlighter.Companion.getBLOCK_COMMENT()),
     };
 
     @Nullable
@@ -39,18 +43,24 @@ public class ApiColorSettingsPage implements ColorSettingsPage {
     @NotNull
     @Override
     public String getDemoText() {
-        return "# You are reading the \".properties\" entry.\n" +
-                "! The exclamation mark can also mark text as comments.\n" +
-                "website = https://en.wikipedia.org/\n" +
-                "language = English\n" +
-                "# The backslash below tells the application to continue reading\n" +
-                "# the value onto the next line.\n" +
-                "message = Welcome to \\\n" +
-                "          Wikipedia!\n" +
-                "# Add spaces to the key\n" +
-                "key\\ with\\ spaces = This is the value that could be looked up with the key \"key with spaces\".\n" +
-                "# Unicode\n" +
-                "tab : \\u0009";
+        return "\n" +
+                "Post\n" +
+                "\n" +
+                "OPTIONS https://echo.tenon.dev:8080/post?nickname=tenon&age=18&dsfsf=asdfasf\n" +
+                "Content-Type: application/json\n" +
+                "Accept: application/json\n" +
+                "\n" +
+                "{}\n" +
+                "\n" +
+                "---\n" +
+                "\n" +
+                "{{username}}\n" +
+                "\n" +
+                "// This line comment\n" +
+                "\n" +
+                "/**\n" +
+                " * This block comment\n" +
+                " */\n";
     }
 
     @Nullable

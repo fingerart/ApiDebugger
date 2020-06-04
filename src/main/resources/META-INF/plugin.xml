@@ -7,33 +7,35 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!--<toolWindow id="Api Debugger" icon="/icons/favicon.png" anchor="right"-->
-        <!--factoryClass="io.chengguo.api.debugger.ui.DebuggerToolWindowFactory"/>-->
-        <!--Api-->
         <fileTypeFactory implementation="io.chengguo.api.debugger.lang.psi.ApiFileTypeFactory"/>
         <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileViewEditorProvider"/>
-        <!--        <lang.ast.factory language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiASTFactory"/>-->
-        <colorSettingsPage implementation="io.chengguo.api.debugger.lang.highlight.ApiColorSettingsPage"/>
+        <lang.ast.factory language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiASTFactory"/>
         <lang.syntaxHighlighterFactory language="Api"
                                        implementationClass="io.chengguo.api.debugger.lang.highlight.ApiSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="io.chengguo.api.debugger.lang.highlight.ApiColorSettingsPage"/>
+        <additionalTextAttributes scheme="Default" file="colorSchemes/ApiDebuggerDefault.xml"/>
         <lang.parserDefinition language="Api"
                                implementationClass="io.chengguo.api.debugger.lang.parser.ApiParserDefinition"/>
-        <!--        <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiCommenter"/>-->
-        <!--        <lang.psiStructureViewFactory language="Api"-->
-        <!--                                      implementationClass="io.chengguo.api.debugger.lang.structure.ApiStructureViewFactory"/>-->
+        <lang.foldingBuilder language="Api"
+                             implementationClass="io.chengguo.api.debugger.lang.folding.ApiFoldingBuilder"/>
+        <lang.psiStructureViewFactory language="Api"
+                                      implementationClass="io.chengguo.api.debugger.lang.structure.ApiStructureViewFactory"/>
+        <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiCommenter"/>
+        <runLineMarkerContributor language="Api"
+                                  implementationClass="io.chengguo.api.debugger.lang.run.ApiLineMarkerProvider"/>
     </extensions>
 
     <actions>
-        <action id="API.Debugger.NewFile" class="io.chengguo.api.debugger.ui.actions.NewApiDebuggerFileAction"
+        <action id="Api.Debugger.NewFile" class="io.chengguo.api.debugger.actions.NewApiDebuggerFileAction"
                 text="Api Debugger" description="Create new Api Debugger file">
             <add-to-group group-id="NewGroup" anchor="last"/>
         </action>
     </actions>
 
     <project-components>
-        <!--<component>-->
-        <!--<implementation-class>io.chengguo.api.debugger.engine.component.DebuggerComponent</implementation-class>-->
-        <!--</component>-->
+        <!--<component>
+        <implementation-class>io.chengguo.api.debugger.engine.component.DebuggerComponent</implementation-class>
+        </component>-->
     </project-components>
 
 </idea-plugin>
