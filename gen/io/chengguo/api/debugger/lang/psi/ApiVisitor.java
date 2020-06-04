@@ -20,6 +20,10 @@ import com.intellij.psi.PsiElementVisitor;
 
 public class ApiVisitor<R> extends PsiElementVisitor {
 
+  public R visitApiBlock(@NotNull ApiApiBlock o) {
+    return visitElement(o);
+  }
+
   public R visitDescription(@NotNull ApiDescription o) {
     return visitElement(o);
   }
@@ -29,10 +33,6 @@ public class ApiVisitor<R> extends PsiElementVisitor {
   }
 
   public R visitHost(@NotNull ApiHost o) {
-    return visitElement(o);
-  }
-
-  public R visitItem(@NotNull ApiItem o) {
     return visitElement(o);
   }
 

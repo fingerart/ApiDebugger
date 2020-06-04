@@ -24,14 +24,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiItemImpl extends ApiElementImpl implements ApiItem {
+public class ApiApiBlockImpl extends ApiElementImpl implements ApiApiBlock {
 
-  public ApiItemImpl(ASTNode node) {
+  public ApiApiBlockImpl(ASTNode node) {
     super(node);
   }
 
   public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitItem(this);
+    return visitor.visitApiBlock(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
