@@ -12,14 +12,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiSchemeImpl extends ApiElementImpl implements ApiScheme {
+public class ApiDescriptionTitleImpl extends ApiElementImpl implements ApiDescriptionTitle {
 
-  public ApiSchemeImpl(ASTNode node) {
+  public ApiDescriptionTitleImpl(ASTNode node) {
     super(node);
   }
 
   public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitScheme(this);
+    return visitor.visitDescriptionTitle(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
