@@ -30,44 +30,45 @@
     AMPERSAND               = "&"
     LBRACES                 = "{{"
     RBRACES                 = "}}"
+    HYPHEN                  = "-"
   ]
 }
 
 apiFile ::= api_*
 
-private api_ ::= ( api_block | variable | LINE_COMMENT | MULTILINE_COMMENT)
+private api_ ::= api_block (SEPARATOR api_block?)*
 
-api_block ::= description request
+api_block ::= (description request) | LINE_COMMENT | MULTILINE_COMMENT
 
-description ::= description_title description_content
-description_title ::= '-' 'title' ':' LINE_TEXT
-description_content ::= '-' 'description' ':' LINE_TEXT
+description ::= description_title description_content?
+description_title ::= '-' DESCRIPTION_KEY ':' LINE_TEXT {pin=1}
+description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT {pin=1}
 
-request ::= request_line header_field* message_body SEPARATOR
+request ::= request_line header_field* message_body
 
 request_line ::= METHOD request_target
 
-request_target ::= scheme '://' host ':' port path_absolute{pin=1}
+request_target ::= scheme '://' host (':' port?)? path_absolute
 scheme ::= 'http' | 'https'
-host ::= HOST_VALUE
-port ::= PORT_SEGMENT
+host ::= (variable | HOST_VALUE)+
+port ::= (variable | PORT_SEGMENT)+
 
 path_absolute ::= path_segment* path_query?
-private path_segment ::= '/' SEGMENT? {pin=1}
+private path_segment ::= '/' SEGMENT?
 private path_query ::= '?' query
 
 query ::= query_parameter ('&' query_parameter)*
 query_parameter ::= query_parameter_key ('=' query_parameter_value)?
-query_parameter_key ::= QUERY_NAME
-query_parameter_value ::= QUERY_VALUE
+query_parameter_key ::= (variable | QUERY_NAME)+
+query_parameter_value ::= (variable | QUERY_VALUE)+
 
-header_field ::= HEADER_FIELD_NAME (':' HEADER_FIELD_VALUE?)? {
-    methods = [getName getValue]
-}
+header_field ::= header_field_key (':' header_field_val?)?
+header_field_key ::= (variable | HEADER_FIELD_NAME)+
+header_field_val ::= (variable | HEADER_FIELD_VALUE)+
 
 private message_body ::= request_message_group /* | multipart_message*/
 request_message_group ::= MESSAGE_TEXT
 
-variable ::= '{{' variable_name '}}'
+variable ::= '{{' variable_name? '}}'
 
 variable_name ::= IDENTIFIER

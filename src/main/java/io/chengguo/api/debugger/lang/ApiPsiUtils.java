@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ApiPsiUtils {
 
-    public static boolean isOfTypes(@NotNull final PsiElement element, @NotNull final TokenSet types) {
-        final ASTNode node = element.getNode();
+    public static boolean isOfTypes(@NotNull PsiElement element, @NotNull final TokenSet types) {
+        ASTNode node = element.getNode();
         return node != null && types.contains(node.getElementType());
     }
 }

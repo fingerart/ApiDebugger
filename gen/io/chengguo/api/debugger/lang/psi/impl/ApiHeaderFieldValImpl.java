@@ -12,19 +12,25 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiSchemeImpl extends ApiElementImpl implements ApiScheme {
+public class ApiHeaderFieldValImpl extends ApiElementImpl implements ApiHeaderFieldVal {
 
-  public ApiSchemeImpl(ASTNode node) {
+  public ApiHeaderFieldValImpl(ASTNode node) {
     super(node);
   }
 
   public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitScheme(this);
+    return visitor.visitHeaderFieldVal(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<ApiVariable> getVariableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ApiVariable.class);
   }
 
 }

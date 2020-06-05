@@ -12,18 +12,21 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 import static io.chengguo.api.debugger.lang.ApiPsiUtils.isOfTypes;
 
 public class ApiLineMarkerProvider extends RunLineMarkerContributor {
+    private static final Function<PsiElement, String> TOOLTIP = psiElement -> ApiDebuggerBundle.message("api.debugger.editor.action.run.current");
+
     @Nullable
     @Override
     public Info getInfo(@NotNull PsiElement element) {
-        boolean isApiRunElement = isApiRunElement(element);
-        if (isApiRunElement) {
+        if (isApiRunElement(element)) {
             ArrayList<AnAction> actions = new ArrayList<>();
-            actions.add(new RunApiRequestAction());
-            return new Info(AllIcons.RunConfigurations.TestState.Run, actions.toArray(AnAction.EMPTY_ARRAY), psiElement -> ApiDebuggerBundle.message("api.debugger.editor.action.run.current"));
+            actions.add(new RunApiRequestAction.WithEnvDefault());
+            actions.add(new RunApiRequestAction.WithEnvTest());
+            return new Info(AllIcons.RunConfigurations.TestState.Run, actions.toArray(AnAction.EMPTY_ARRAY), TOOLTIP);
         }
         return null;
     }
