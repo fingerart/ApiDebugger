@@ -61,10 +61,6 @@ LBRACES = "{{"
 RBRACES = "}}"
 ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
 
-KEY_CHARACTER=[^:\ \n\t\f\\] | "\\ "
-FIRST_VALUE_CHARACTER=[^ \r\n\f\\] | "\\"{NL} | "\\".
-VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
-
 %state IN_HTTP_REQUEST
 %state IN_HTTP_PATH
 %state IN_HTTP_REQUEST_HOST
@@ -98,11 +94,13 @@ VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
 }
 
 <IN_DESCRIPTION_KEY> {
-    [^\r\n:]+                                   { popState(); return Api_DESCRIPTION_KEY; }
+    {WS}+                                       { return TokenType.WHITE_SPACE; }
+    [^ \r\n:] ([^\r\n:]* [^ \r\n:])?            { popState(); return Api_DESCRIPTION_KEY; } // 排除两边的空格
 }
 
 <IN_DESCRIPTION_VALUE> {
-    [^\r\n]+                                    { return Api_LINE_TEXT; }
+    {WS}+                                       { return TokenType.WHITE_SPACE; }
+    [^ \r\n] [^\r\n]*                           { return Api_LINE_TEXT; }
     {NL}                                        { popState(); return TokenType.WHITE_SPACE;}
 }
 
@@ -160,10 +158,10 @@ VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
 }
 
 <IN_HEADER> {
-    {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
     {WS}+                                       { return TokenType.WHITE_SPACE; }
+    {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
     {NL}                                        { return TokenType.WHITE_SPACE; }
-    [^\ \n\t\f:"{{"]+                           { return Api_HEADER_FIELD_NAME; }
+    [^ \n\t\f:"{{"] ([^\n\t\f:"{{"] [^ \n\t\f:"{{"])?   { return Api_HEADER_FIELD_NAME; } // 排除起始和末尾位置的空格
     ":"                                         { pushState(IN_HEADER_VALUE); return Api_COLON; }
     {NL} {NL}+                                  { pushState(IN_MESSAGE_BODY); return TokenType.WHITE_SPACE; }
 }
@@ -171,7 +169,7 @@ VALUE_CHARACTER=[^\n\f\\] | "\\"{NL} | "\\".
 <IN_HEADER_VALUE> {
     {WS}+                                       { return TokenType.WHITE_SPACE; }
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
-    [^\r\n"{{"]+                                { return Api_HEADER_FIELD_VALUE; }
+    [^ \r\n"{{"] [^\r\n"{{"]*                   { return Api_HEADER_FIELD_VALUE; } // 排除起始位置的空格
     {NL}                                        { popState(); return TokenType.WHITE_SPACE; }
     {NL} {NL}+                                  { pushState(IN_MESSAGE_BODY);return TokenType.WHITE_SPACE; }
 }

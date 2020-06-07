@@ -14,6 +14,8 @@
                                        implementationClass="io.chengguo.api.debugger.lang.highlight.ApiSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="io.chengguo.api.debugger.lang.highlight.ApiColorSettingsPage"/>
         <additionalTextAttributes scheme="Default" file="colorSchemes/ApiDebuggerDefault.xml"/>
+        <lang.formatter language="Api"
+                        implementationClass="io.chengguo.api.debugger.lang.formatter.ApiFormattingModelBuilder"/>
         <lang.parserDefinition language="Api"
                                implementationClass="io.chengguo.api.debugger.lang.parser.ApiParserDefinition"/>
         <lang.foldingBuilder language="Api"
