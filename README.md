@@ -41,4 +41,3 @@ george@chengguo.io
 ## Uninstalling
 
 Inside your IDE, select Preferences -> Plugins, then find the `Api Debugger` plugin. Click Uninstall.
-

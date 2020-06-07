@@ -6,12 +6,10 @@ import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.EditorColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
-import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
 import io.chengguo.api.debugger.lang.lexer.ApiLexerAdapter
 import io.chengguo.api.debugger.lang.lexer.ApiTokenTypes
-import java.awt.Color
 
 class ApiSyntaxHighlighter : SyntaxHighlighterBase() {
 
