@@ -31,6 +31,15 @@
     LBRACES                 = "{{"
     RBRACES                 = "}}"
     HYPHEN                  = "-"
+
+    OPTIONS                 = "OPTIONS"
+    GET                     = "GET"
+    HEAD                    = "HEAD"
+    POST                    = "POST"
+    PUT                     = "PUT"
+    DELETE                  = "DELETE"
+    TRACE                   = "TRACE"
+    CONNECT                 = "CONNECT"
   ]
 }
 
@@ -46,9 +55,11 @@ description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT {pin=1}
 
 request ::= request_line header_field* message_body
 
-request_line ::= METHOD request_target
+request_line ::= method request_target
 
-request_target ::= scheme '://' host (':' port?)? path_absolute
+method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
+
+request_target ::= (scheme '://')? host (':' port?)? path_absolute
 scheme ::= 'http' | 'https'
 host ::= (variable | HOST_VALUE)+
 port ::= (variable | PORT_SEGMENT)+

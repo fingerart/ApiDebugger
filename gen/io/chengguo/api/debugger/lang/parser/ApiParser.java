@@ -285,6 +285,24 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
+  public static boolean method(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "method")) return false;
+    boolean result;
+    Marker marker = enter_section_(builder, level, _NONE_, Api_METHOD, "<method>");
+    result = consumeToken(builder, Api_OPTIONS);
+    if (!result) result = consumeToken(builder, Api_GET);
+    if (!result) result = consumeToken(builder, Api_HEAD);
+    if (!result) result = consumeToken(builder, Api_POST);
+    if (!result) result = consumeToken(builder, Api_PUT);
+    if (!result) result = consumeToken(builder, Api_DELETE);
+    if (!result) result = consumeToken(builder, Api_TRACE);
+    if (!result) result = consumeToken(builder, Api_CONNECT);
+    exit_section_(builder, level, marker, result, false, null);
+    return result;
+  }
+
+  /* ********************************************************** */
   // path_segment* path_query?
   public static boolean path_absolute(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "path_absolute")) return false;
@@ -495,13 +513,12 @@ public class ApiParser implements PsiParser, LightPsiParser {
   // request_line header_field* message_body
   public static boolean request(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request")) return false;
-    if (!nextTokenIs(builder, Api_METHOD)) return false;
     boolean result;
-    Marker marker = enter_section_(builder);
+    Marker marker = enter_section_(builder, level, _NONE_, Api_REQUEST, "<request>");
     result = request_line(builder, level + 1);
     result = result && request_1(builder, level + 1);
     result = result && message_body(builder, level + 1);
-    exit_section_(builder, marker, Api_REQUEST, result);
+    exit_section_(builder, level, marker, result, false, null);
     return result;
   }
 
@@ -517,15 +534,14 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // METHOD request_target
+  // method request_target
   public static boolean request_line(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_line")) return false;
-    if (!nextTokenIs(builder, Api_METHOD)) return false;
     boolean result;
-    Marker marker = enter_section_(builder);
-    result = consumeToken(builder, Api_METHOD);
+    Marker marker = enter_section_(builder, level, _NONE_, Api_REQUEST_LINE, "<request line>");
+    result = method(builder, level + 1);
     result = result && request_target(builder, level + 1);
-    exit_section_(builder, marker, Api_REQUEST_LINE, result);
+    exit_section_(builder, level, marker, result, false, null);
     return result;
   }
 
@@ -542,42 +558,58 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // scheme '://' host (':' port?)? path_absolute
+  // (scheme '://')? host (':' port?)? path_absolute
   public static boolean request_target(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_target")) return false;
-    if (!nextTokenIs(builder, "<request target>", Api_HTTP, Api_HTTPS)) return false;
     boolean result;
     Marker marker = enter_section_(builder, level, _NONE_, Api_REQUEST_TARGET, "<request target>");
-    result = scheme(builder, level + 1);
-    result = result && consumeToken(builder, Api_SCHEME_SEPARATOR);
+    result = request_target_0(builder, level + 1);
     result = result && host(builder, level + 1);
-    result = result && request_target_3(builder, level + 1);
+    result = result && request_target_2(builder, level + 1);
     result = result && path_absolute(builder, level + 1);
     exit_section_(builder, level, marker, result, false, null);
     return result;
   }
 
+  // (scheme '://')?
+  private static boolean request_target_0(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "request_target_0")) return false;
+    request_target_0_0(builder, level + 1);
+    return true;
+  }
+
+  // scheme '://'
+  private static boolean request_target_0_0(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "request_target_0_0")) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = scheme(builder, level + 1);
+    result = result && consumeToken(builder, Api_SCHEME_SEPARATOR);
+    exit_section_(builder, marker, null, result);
+    return result;
+  }
+
   // (':' port?)?
-  private static boolean request_target_3(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "request_target_3")) return false;
-    request_target_3_0(builder, level + 1);
+  private static boolean request_target_2(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "request_target_2")) return false;
+    request_target_2_0(builder, level + 1);
     return true;
   }
 
   // ':' port?
-  private static boolean request_target_3_0(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "request_target_3_0")) return false;
+  private static boolean request_target_2_0(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "request_target_2_0")) return false;
     boolean result;
     Marker marker = enter_section_(builder);
     result = consumeToken(builder, Api_COLON);
-    result = result && request_target_3_0_1(builder, level + 1);
+    result = result && request_target_2_0_1(builder, level + 1);
     exit_section_(builder, marker, null, result);
     return result;
   }
 
   // port?
-  private static boolean request_target_3_0_1(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "request_target_3_0_1")) return false;
+  private static boolean request_target_2_0_1(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "request_target_2_0_1")) return false;
     port(builder, level + 1);
     return true;
   }

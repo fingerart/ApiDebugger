@@ -40,6 +40,10 @@ public class ApiVisitor<R> extends PsiElementVisitor {
     return visitElement(o);
   }
 
+  public R visitMethod(@NotNull ApiMethod o) {
+    return visitElement(o);
+  }
+
   public R visitPathAbsolute(@NotNull ApiPathAbsolute o) {
     return visitElement(o);
   }

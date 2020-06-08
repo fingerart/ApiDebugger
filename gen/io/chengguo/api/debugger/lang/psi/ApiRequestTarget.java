@@ -18,7 +18,7 @@ public interface ApiRequestTarget extends ApiElement {
   @Nullable
   ApiPort getPort();
 
-  @NotNull
+  @Nullable
   ApiScheme getScheme();
 
 }
