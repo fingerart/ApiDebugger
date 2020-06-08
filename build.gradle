@@ -38,15 +38,15 @@ apply plugin: 'org.jetbrains.grammarkit'
 import org.jetbrains.grammarkit.tasks.*
 
 task generateApiLexer(type: GenerateLexer) {
-    source = "grammar/Api.flex"
+    source = "grammars/Api.flex"
     targetDir = "gen/io/chengguo/api/debugger/lang/lexer/"
     targetClass = "ApiLexer"
-    skeleton = 'grammar/flex.skeleton'
+    skeleton = 'grammars/flex.skeleton'
     purgeOldFiles = true
 }
 
 task generateApiParser(type: GenerateParser) {
-    source = "grammar/Api.bnf"
+    source = "grammars/Api.bnf"
     targetRoot = 'gen'
     pathToParser = '/io/chengguo/api/debugger/lang/parser/ApiParser.java'
     pathToPsiRoot = '/io/chengguo/api/debugger/lang/psi'
