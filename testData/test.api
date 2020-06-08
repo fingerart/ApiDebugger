@@ -15,8 +15,8 @@ Accept: application/xml
  * This block comment
  */
 
--       title   :   👍
--       descrdsdsd: hello
+-title: 👍
+-descrdsdsd: hello
 
 OPTIONS http://{{sub_domain}}.tenon.集团:{{default}}80/segment1/segment2/?{{key1}} raw =value
 Content-{{type}}: {{content_type}}

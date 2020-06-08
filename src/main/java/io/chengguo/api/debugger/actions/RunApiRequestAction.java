@@ -3,7 +3,6 @@ package io.chengguo.api.debugger.actions;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
-import io.chengguo.api.debugger.ApiDebuggerIcons;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
