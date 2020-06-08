@@ -46,9 +46,9 @@ public class ApiRequestTargetImpl extends ApiElementImpl implements ApiRequestTa
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ApiScheme getScheme() {
-    return findNotNullChildByClass(ApiScheme.class);
+    return findChildByClass(ApiScheme.class);
   }
 
 }

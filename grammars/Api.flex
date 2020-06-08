@@ -56,7 +56,15 @@ LETTER = [a-zA-Z]
 DIGIT =  [0-9]
 END_OF_LINE_COMMENT=("//")[^\r\n]*
 MULTILINE_COMMENT = "/*" ( ([^"*"]|[\r\n])* ("*"+ [^"*""/"] )? )* ("*" | "*"+"/")?
-METHOD = "OPTIONS" | "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "TRACE" | "CONNECT"
+OPTIONS = "OPTIONS"
+GET = "GET"
+HEAD = "HEAD"
+POST = "POST"
+PUT = "PUT"
+DELETE = "DELETE"
+TRACE = "TRACE"
+CONNECT = "CONNECT"
+METHOD = {OPTIONS} | {GET} | {HEAD} | {POST} | {PUT} | {DELETE} | {TRACE} | {CONNECT}
 LBRACES = "{{"
 RBRACES = "}}"
 ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
@@ -110,15 +118,22 @@ ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
 }
 
 <IN_HTTP_REQUEST> {
-    ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
-    {METHOD}                                    { pushState(IN_HTTP_PATH); return Api_METHOD; }
+    {OPTIONS}                                   { return Api_OPTIONS; }
+    {GET}                                       { return Api_GET; }
+    {HEAD}                                      { return Api_HEAD; }
+    {POST}                                      { return Api_POST; }
+    {PUT}                                       { return Api_PUT; }
+    {DELETE}                                    { return Api_DELETE; }
+    {TRACE}                                     { return Api_TRACE; }
+    {CONNECT}                                   { return Api_CONNECT; }
+    {WS}+                                       { pushState(IN_HTTP_PATH); return TokenType.WHITE_SPACE; }
 }
 
 <IN_HTTP_PATH> {
-    {WS}+                                       { return TokenType.WHITE_SPACE; }
     "https"                                     { return Api_HTTPS; }
     "http"                                      { return Api_HTTP; }
-    "://"                                       { pushState(IN_HTTP_REQUEST_HOST); return Api_SCHEME_SEPARATOR; }
+    "://"                                       { return Api_SCHEME_SEPARATOR; }
+    [^\r\n:/?#]+                                { yypushback(yylength()); pushState(IN_HTTP_REQUEST_HOST); }
     ":"                                         { pushState(IN_HTTP_REQUEST_PORT); return Api_COLON; }
     "/"                                         { pushState(IN_HTTP_PATH_SEGMENT); return Api_SLASH; }
     "?"                                         { pushState(IN_HTTP_QUERY); return Api_QUESTION_MARK; }
@@ -128,8 +143,7 @@ ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
 <IN_HTTP_REQUEST_HOST> {
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
     [^\r\n:/?#"{{"]+                            { return Api_HOST_VALUE; }
-    [:/?#]                                      { yypushback(yylength()); popState(); }
-    {NL}+                                       { onPathFinish(); }
+    [:/?#] | {NL}+                              { yypushback(yylength()); popState(); }
 }
 
 <IN_HTTP_REQUEST_PORT> {
@@ -147,14 +161,14 @@ ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
     [^\r\n="{{"]+                               { return Api_QUERY_NAME; }// Key
     "="                                         { pushState(IN_HTTP_QUERY_VALUE); return Api_EQUALS; }
-    {NL}+                                       { onPathFinish(); }
+    {NL}+                                       { yypushback(yylength()); popState(); }
 }
 
 <IN_HTTP_QUERY_VALUE> {
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
     [^\r\n&"{{"]+                                   { return Api_QUERY_VALUE; }
     "&"                                         { popState(); return Api_AMPERSAND;}
-    {NL}+                                       { onPathFinish(); }
+    {NL}+                                       { yypushback(yylength()); popState(); }
 }
 
 <IN_HEADER> {

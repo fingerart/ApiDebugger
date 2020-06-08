@@ -12,31 +12,19 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiRequestLineImpl extends ApiElementImpl implements ApiRequestLine {
+public class ApiMethodImpl extends ApiElementImpl implements ApiMethod {
 
-  public ApiRequestLineImpl(ASTNode node) {
+  public ApiMethodImpl(ASTNode node) {
     super(node);
   }
 
   public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitRequestLine(this);
+    return visitor.visitMethod(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public ApiMethod getMethod() {
-    return findNotNullChildByClass(ApiMethod.class);
-  }
-
-  @Override
-  @NotNull
-  public ApiRequestTarget getRequestTarget() {
-    return findNotNullChildByClass(ApiRequestTarget.class);
   }
 
 }

@@ -7,12 +7,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiRequestLine extends ApiElement {
-
-  @NotNull
-  ApiMethod getMethod();
-
-  @NotNull
-  ApiRequestTarget getRequestTarget();
+public interface ApiMethod extends ApiElement {
 
 }
