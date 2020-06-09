@@ -25,7 +25,7 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
         if (element instanceof ApiPsiFile) {
             ApiDebugger type = PsiTreeUtil.findChildOfType(element, ApiDebugger.class);
             if (type != null) {
-                return ContainerUtil.newArrayList();
+                return ContainerUtil.emptyList();
             }
         }
         return ContainerUtil.emptyList();

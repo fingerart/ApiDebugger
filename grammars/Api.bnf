@@ -55,7 +55,7 @@ description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT {pin=1}
 
 request ::= request_line header_field* message_body
 
-request_line ::= method request_target
+request_line ::= method request_target {pin=1}
 
 method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
 
