@@ -25,6 +25,8 @@
         <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiCommenter"/>
         <runLineMarkerContributor language="Api"
                                   implementationClass="io.chengguo.api.debugger.lang.run.ApiLineMarkerProvider"/>
+        <completion.contributor language="Api"
+                                implementationClass="io.chengguo.api.debugger.lang.completion.ApiCompletionContributor"/>
     </extensions>
 
     <actions>

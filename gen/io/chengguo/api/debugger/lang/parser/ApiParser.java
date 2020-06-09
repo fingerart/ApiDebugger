@@ -537,12 +537,13 @@ public class ApiParser implements PsiParser, LightPsiParser {
   // method request_target
   public static boolean request_line(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_line")) return false;
-    boolean result;
+    boolean result, pinned;
     Marker marker = enter_section_(builder, level, _NONE_, Api_REQUEST_LINE, "<request line>");
     result = method(builder, level + 1);
+    pinned = result; // pin = 1
     result = result && request_target(builder, level + 1);
-    exit_section_(builder, level, marker, result, false, null);
-    return result;
+    exit_section_(builder, level, marker, result, pinned, null);
+    return result || pinned;
   }
 
   /* ********************************************************** */

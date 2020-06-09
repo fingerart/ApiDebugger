@@ -32,6 +32,15 @@ public class ApiLineMarkerProvider extends RunLineMarkerContributor {
     }
 
     private boolean isApiRunElement(PsiElement element) {
-        return isOfTypes(element, TokenSet.create(ApiTypes.Api_METHOD));
+        return isOfTypes(element, TokenSet.create(
+                ApiTypes.Api_GET,
+                ApiTypes.Api_POST,
+                ApiTypes.Api_GET,
+                ApiTypes.Api_HEAD,
+                ApiTypes.Api_OPTIONS,
+                ApiTypes.Api_PUT,
+                ApiTypes.Api_DELETE,
+                ApiTypes.Api_TRACE
+        ));
     }
 }
