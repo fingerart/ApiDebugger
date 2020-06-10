@@ -12,7 +12,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiVariableNameImpl extends ApiElementImpl implements ApiVariableName {
+public class ApiVariableNameImpl extends ApiVariableNameMixin implements ApiVariableName {
 
   public ApiVariableNameImpl(ASTNode node) {
     super(node);

@@ -5,6 +5,7 @@ package io.chengguo.api.debugger.lang.psi;
 
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiNamedElement;
 
 public class ApiVisitor<R> extends PsiElementVisitor {
 
@@ -94,6 +95,7 @@ public class ApiVisitor<R> extends PsiElementVisitor {
 
   public R visitVariableName(@NotNull ApiVariableName o) {
     return visitElement(o);
+    // visitPsiNamedElement(o);
   }
 
   public R visitElement(@NotNull ApiElement o) {

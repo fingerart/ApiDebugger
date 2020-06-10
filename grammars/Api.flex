@@ -175,7 +175,7 @@ ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
     {WS}+                                       { return TokenType.WHITE_SPACE; }
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
     {NL}                                        { return TokenType.WHITE_SPACE; }
-    [^ \n\t\f:"{{"] ([^\n\t\f:"{{"] [^ \n\t\f:"{{"])?   { return Api_HEADER_FIELD_NAME; } // 排除起始和末尾位置的空格
+    [^ \n\t\f:"{{"] ([^\n\t\f:"{{"]* [^ \n\t\f:"{{"])?   { return Api_HEADER_FIELD_NAME; } // 排除起始和末尾位置的空格
     ":"                                         { pushState(IN_HEADER_VALUE); return Api_COLON; }
     {NL} {NL}+                                  { pushState(IN_MESSAGE_BODY); return TokenType.WHITE_SPACE; }
 }
