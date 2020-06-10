@@ -12,7 +12,7 @@
   psiImplClassSuffix="Impl"
   psiPackage="io.chengguo.api.debugger.lang.psi"
   psiImplPackage="io.chengguo.api.debugger.lang.psi.impl"
-  psiImplUtilClass="io.chengguo.api.debugger.lang.psi.impl.ApiPsiImplUtil"
+  psiImplUtilClass="io.chengguo.api.debugger.lang.psi.impl.ApiPsiImplUtils"
 
   elementTypeHolderClass="io.chengguo.api.debugger.lang.psi.ApiTypes"
   elementTypePrefix="Api_"
@@ -41,6 +41,11 @@
     TRACE                   = "TRACE"
     CONNECT                 = "CONNECT"
   ]
+
+  implements("variable_name") = [
+    "io.chengguo.api.debugger.lang.psi.ApiElement"
+    "com.intellij.psi.PsiNamedElement"
+  ]
 }
 
 apiFile ::= api_*
@@ -55,7 +60,9 @@ description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT {pin=1}
 
 request ::= request_line header_field* message_body
 
-request_line ::= method request_target {pin=1}
+request_line ::= method request_target {
+    pin=1
+}
 
 method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
 
@@ -82,4 +89,6 @@ request_message_group ::= MESSAGE_TEXT
 
 variable ::= '{{' variable_name? '}}'
 
-variable_name ::= IDENTIFIER
+variable_name ::= IDENTIFIER {
+    mixin="io.chengguo.api.debugger.lang.psi.impl.ApiVariableNameMixin"
+}
