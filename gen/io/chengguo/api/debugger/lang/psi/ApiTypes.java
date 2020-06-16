@@ -7,6 +7,7 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
 import io.chengguo.api.debugger.lang.psi.impl.*;
+import com.intellij.psi.impl.source.tree.CompositePsiElement;
 
 public interface ApiTypes {
 
@@ -68,73 +69,72 @@ public interface ApiTypes {
   IElementType Api_TRACE = new ApiTokenType("TRACE");
 
   class Factory {
-    public static PsiElement createElement(ASTNode node) {
-      IElementType type = node.getElementType();
-      if (type == Api_API_BLOCK) {
-        return new ApiApiBlockImpl(node);
+    public static CompositePsiElement createElement(IElementType type) {
+       if (type == Api_API_BLOCK) {
+        return new ApiApiBlockImpl(type);
       }
       else if (type == Api_DESCRIPTION) {
-        return new ApiDescriptionImpl(node);
+        return new ApiDescriptionImpl(type);
       }
       else if (type == Api_DESCRIPTION_CONTENT) {
-        return new ApiDescriptionContentImpl(node);
+        return new ApiDescriptionContentImpl(type);
       }
       else if (type == Api_DESCRIPTION_TITLE) {
-        return new ApiDescriptionTitleImpl(node);
+        return new ApiDescriptionTitleImpl(type);
       }
       else if (type == Api_HEADER_FIELD) {
-        return new ApiHeaderFieldImpl(node);
+        return new ApiHeaderFieldImpl(type);
       }
       else if (type == Api_HEADER_FIELD_KEY) {
-        return new ApiHeaderFieldKeyImpl(node);
+        return new ApiHeaderFieldKeyImpl(type);
       }
       else if (type == Api_HEADER_FIELD_VAL) {
-        return new ApiHeaderFieldValImpl(node);
+        return new ApiHeaderFieldValImpl(type);
       }
       else if (type == Api_HOST) {
-        return new ApiHostImpl(node);
+        return new ApiHostImpl(type);
       }
       else if (type == Api_METHOD) {
-        return new ApiMethodImpl(node);
+        return new ApiMethodImpl(type);
       }
       else if (type == Api_PATH_ABSOLUTE) {
-        return new ApiPathAbsoluteImpl(node);
+        return new ApiPathAbsoluteImpl(type);
       }
       else if (type == Api_PORT) {
-        return new ApiPortImpl(node);
+        return new ApiPortImpl(type);
       }
       else if (type == Api_QUERY) {
-        return new ApiQueryImpl(node);
+        return new ApiQueryImpl(type);
       }
       else if (type == Api_QUERY_PARAMETER) {
-        return new ApiQueryParameterImpl(node);
+        return new ApiQueryParameterImpl(type);
       }
       else if (type == Api_QUERY_PARAMETER_KEY) {
-        return new ApiQueryParameterKeyImpl(node);
+        return new ApiQueryParameterKeyImpl(type);
       }
       else if (type == Api_QUERY_PARAMETER_VALUE) {
-        return new ApiQueryParameterValueImpl(node);
+        return new ApiQueryParameterValueImpl(type);
       }
       else if (type == Api_REQUEST) {
-        return new ApiRequestImpl(node);
+        return new ApiRequestImpl(type);
       }
       else if (type == Api_REQUEST_LINE) {
-        return new ApiRequestLineImpl(node);
+        return new ApiRequestLineImpl(type);
       }
       else if (type == Api_REQUEST_MESSAGE_GROUP) {
-        return new ApiRequestMessageGroupImpl(node);
+        return new ApiRequestMessageGroupImpl(type);
       }
       else if (type == Api_REQUEST_TARGET) {
-        return new ApiRequestTargetImpl(node);
+        return new ApiRequestTargetImpl(type);
       }
       else if (type == Api_SCHEME) {
-        return new ApiSchemeImpl(node);
+        return new ApiSchemeImpl(type);
       }
       else if (type == Api_VARIABLE) {
-        return new ApiVariableImpl(node);
+        return new ApiVariableImpl(type);
       }
       else if (type == Api_VARIABLE_NAME) {
-        return new ApiVariableNameImpl(node);
+        return new ApiVariableNameImpl(type);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

@@ -7,100 +7,99 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiNamedElement;
 
-public class ApiVisitor<R> extends PsiElementVisitor {
+public class ApiVisitor extends PsiElementVisitor {
 
-  public R visitApiBlock(@NotNull ApiApiBlock o) {
-    return visitElement(o);
+  public void visitApiBlock(@NotNull ApiApiBlock o) {
+    visitElement(o);
   }
 
-  public R visitDescription(@NotNull ApiDescription o) {
-    return visitElement(o);
+  public void visitDescription(@NotNull ApiDescription o) {
+    visitElement(o);
   }
 
-  public R visitDescriptionContent(@NotNull ApiDescriptionContent o) {
-    return visitElement(o);
+  public void visitDescriptionContent(@NotNull ApiDescriptionContent o) {
+    visitElement(o);
   }
 
-  public R visitDescriptionTitle(@NotNull ApiDescriptionTitle o) {
-    return visitElement(o);
+  public void visitDescriptionTitle(@NotNull ApiDescriptionTitle o) {
+    visitElement(o);
   }
 
-  public R visitHeaderField(@NotNull ApiHeaderField o) {
-    return visitElement(o);
+  public void visitHeaderField(@NotNull ApiHeaderField o) {
+    visitElement(o);
   }
 
-  public R visitHeaderFieldKey(@NotNull ApiHeaderFieldKey o) {
-    return visitElement(o);
+  public void visitHeaderFieldKey(@NotNull ApiHeaderFieldKey o) {
+    visitElement(o);
   }
 
-  public R visitHeaderFieldVal(@NotNull ApiHeaderFieldVal o) {
-    return visitElement(o);
+  public void visitHeaderFieldVal(@NotNull ApiHeaderFieldVal o) {
+    visitElement(o);
   }
 
-  public R visitHost(@NotNull ApiHost o) {
-    return visitElement(o);
+  public void visitHost(@NotNull ApiHost o) {
+    visitElement(o);
   }
 
-  public R visitMethod(@NotNull ApiMethod o) {
-    return visitElement(o);
+  public void visitMethod(@NotNull ApiMethod o) {
+    visitElement(o);
   }
 
-  public R visitPathAbsolute(@NotNull ApiPathAbsolute o) {
-    return visitElement(o);
+  public void visitPathAbsolute(@NotNull ApiPathAbsolute o) {
+    visitElement(o);
   }
 
-  public R visitPort(@NotNull ApiPort o) {
-    return visitElement(o);
+  public void visitPort(@NotNull ApiPort o) {
+    visitElement(o);
   }
 
-  public R visitQuery(@NotNull ApiQuery o) {
-    return visitElement(o);
+  public void visitQuery(@NotNull ApiQuery o) {
+    visitElement(o);
   }
 
-  public R visitQueryParameter(@NotNull ApiQueryParameter o) {
-    return visitElement(o);
+  public void visitQueryParameter(@NotNull ApiQueryParameter o) {
+    visitElement(o);
   }
 
-  public R visitQueryParameterKey(@NotNull ApiQueryParameterKey o) {
-    return visitElement(o);
+  public void visitQueryParameterKey(@NotNull ApiQueryParameterKey o) {
+    visitElement(o);
   }
 
-  public R visitQueryParameterValue(@NotNull ApiQueryParameterValue o) {
-    return visitElement(o);
+  public void visitQueryParameterValue(@NotNull ApiQueryParameterValue o) {
+    visitElement(o);
   }
 
-  public R visitRequest(@NotNull ApiRequest o) {
-    return visitElement(o);
+  public void visitRequest(@NotNull ApiRequest o) {
+    visitElement(o);
   }
 
-  public R visitRequestLine(@NotNull ApiRequestLine o) {
-    return visitElement(o);
+  public void visitRequestLine(@NotNull ApiRequestLine o) {
+    visitElement(o);
   }
 
-  public R visitRequestMessageGroup(@NotNull ApiRequestMessageGroup o) {
-    return visitElement(o);
+  public void visitRequestMessageGroup(@NotNull ApiRequestMessageGroup o) {
+    visitElement(o);
   }
 
-  public R visitRequestTarget(@NotNull ApiRequestTarget o) {
-    return visitElement(o);
+  public void visitRequestTarget(@NotNull ApiRequestTarget o) {
+    visitElement(o);
   }
 
-  public R visitScheme(@NotNull ApiScheme o) {
-    return visitElement(o);
+  public void visitScheme(@NotNull ApiScheme o) {
+    visitElement(o);
   }
 
-  public R visitVariable(@NotNull ApiVariable o) {
-    return visitElement(o);
+  public void visitVariable(@NotNull ApiVariable o) {
+    visitElement(o);
   }
 
-  public R visitVariableName(@NotNull ApiVariableName o) {
-    return visitElement(o);
+  public void visitVariableName(@NotNull ApiVariableName o) {
+    visitElement(o);
     // visitPsiNamedElement(o);
   }
 
-  public R visitElement(@NotNull ApiElement o) {
+  public void visitElement(@NotNull ApiElement o) {
     super.visitElement(o);
-    return null;
   }
 
 }

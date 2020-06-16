@@ -1,6 +1,6 @@
 {
   classHeader="license.txt"
-  generate=[java="8" names="long" visitor-value="R"]
+  generate=[java="8" names="long"]
 
   parserClass="io.chengguo.api.debugger.lang.parser.ApiParser"
   parserUtilClass="io.chengguo.api.debugger.lang.parser.ApiParserUtil"
@@ -91,5 +91,5 @@ variable ::= '{{' variable_name? '}}'
 
 variable_name ::= IDENTIFIER {
     mixin="io.chengguo.api.debugger.lang.psi.impl.ApiVariableNameMixin"
-    methods=[getName getValue]
+    methods=[getName setName getValue]
 }

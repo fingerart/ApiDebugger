@@ -1,21 +1,18 @@
 package io.chengguo.api.debugger.lang;
 
-import com.intellij.core.CoreASTFactory;
+import com.intellij.lang.ASTFactory;
+import com.intellij.lang.ASTNode;
 import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.impl.source.tree.LeafElement;
 import com.intellij.psi.tree.IElementType;
+import io.chengguo.api.debugger.lang.lexer.ApiTokenTypes;
+import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import org.jetbrains.annotations.NotNull;
 
-public class ApiASTFactory extends CoreASTFactory {
+public class ApiASTFactory extends ASTFactory {
     @NotNull
     @Override
-    public CompositeElement createComposite(IElementType type) {
-        return super.createComposite(type);
-    }
-
-    @NotNull
-    @Override
-    public LeafElement createLeaf(@NotNull IElementType type, @NotNull CharSequence text) {
-        return super.createLeaf(type, text);
+    public CompositeElement createComposite(@NotNull IElementType type) {
+        return ApiTypes.Factory.createElement(type);
     }
 }

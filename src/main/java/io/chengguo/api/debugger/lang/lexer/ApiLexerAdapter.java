@@ -6,6 +6,6 @@ import java.io.Reader;
 
 public class ApiLexerAdapter extends FlexAdapter {
     public ApiLexerAdapter() {
-        super(new ApiLexer((Reader) null));
+        super(new ApiLexer());
     }
 }

@@ -11,15 +11,20 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
+import com.intellij.psi.tree.IElementType;
 
 public class ApiPathAbsoluteImpl extends ApiElementImpl implements ApiPathAbsolute {
+
+  public ApiPathAbsoluteImpl(IElementType type) {
+    super(type);
+  }
 
   public ApiPathAbsoluteImpl(@NotNull ASTNode node) {
     super(node);
   }
 
-  public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitPathAbsolute(this);
+  public void accept(@NotNull ApiVisitor visitor) {
+    visitor.visitPathAbsolute(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -30,7 +35,7 @@ public class ApiPathAbsoluteImpl extends ApiElementImpl implements ApiPathAbsolu
   @Override
   @Nullable
   public ApiQuery getQuery() {
-    return findChildByClass(ApiQuery.class);
+    return PsiTreeUtil.getChildOfType(this, ApiQuery.class);
   }
 
 }

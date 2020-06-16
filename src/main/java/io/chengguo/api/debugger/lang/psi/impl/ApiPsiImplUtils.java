@@ -2,10 +2,7 @@ package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
-import io.chengguo.api.debugger.lang.psi.ApiTypes;
-import io.chengguo.api.debugger.lang.psi.ApiVariable;
-import io.chengguo.api.debugger.lang.psi.ApiVariableName;
+import io.chengguo.api.debugger.lang.psi.*;
 import org.jetbrains.annotations.NotNull;
 
 public class ApiPsiImplUtils {
@@ -18,6 +15,14 @@ public class ApiPsiImplUtils {
         } else {
             return null;
         }
+    }
+
+    public static PsiElement setName(ApiVariableName element,@NotNull String newName) {
+        if (element != null) {
+            ApiVariableName newVariableName = new ApiElementGenerator(element.getProject()).createVariableName(newName);
+            element.replace(newVariableName);
+        }
+        return element;
     }
 
     @NotNull

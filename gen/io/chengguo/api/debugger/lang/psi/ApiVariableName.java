@@ -13,6 +13,8 @@ public interface ApiVariableName extends ApiElement, PsiNamedElement {
   @NotNull
   String getName();
 
+  PsiElement setName(@NotNull String newName);
+
   @NotNull
   String getValue();
 

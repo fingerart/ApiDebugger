@@ -20,9 +20,9 @@ public class ApiFromEditorRenameHandler implements RenameHandler {
             return false;
         }
 //        final ResourceBundle bundle = ResourceBundleUtil.getResourceBundleFromDataContext(dataContext);
-//        if (bundle == null) {
-//            return false;
-//        }
+////        if (bundle == null) {
+////            return false;
+////        }
         final FileEditor fileEditor = PlatformDataKeys.FILE_EDITOR.getData(dataContext);
         if (!(fileEditor instanceof ApiFileViewEditor)) {
             return false;
