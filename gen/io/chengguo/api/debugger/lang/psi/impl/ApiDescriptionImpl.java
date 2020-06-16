@@ -11,15 +11,20 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
+import com.intellij.psi.tree.IElementType;
 
 public class ApiDescriptionImpl extends ApiElementImpl implements ApiDescription {
+
+  public ApiDescriptionImpl(IElementType type) {
+    super(type);
+  }
 
   public ApiDescriptionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
-  public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitDescription(this);
+  public void accept(@NotNull ApiVisitor visitor) {
+    visitor.visitDescription(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -30,13 +35,13 @@ public class ApiDescriptionImpl extends ApiElementImpl implements ApiDescription
   @Override
   @Nullable
   public ApiDescriptionContent getDescriptionContent() {
-    return findChildByClass(ApiDescriptionContent.class);
+    return PsiTreeUtil.getChildOfType(this, ApiDescriptionContent.class);
   }
 
   @Override
   @NotNull
   public ApiDescriptionTitle getDescriptionTitle() {
-    return findNotNullChildByClass(ApiDescriptionTitle.class);
+    return PsiTreeUtil.getChildOfType(this, ApiDescriptionTitle.class);
   }
 
 }

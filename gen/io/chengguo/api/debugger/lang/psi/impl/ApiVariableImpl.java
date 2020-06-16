@@ -11,15 +11,20 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
+import com.intellij.psi.tree.IElementType;
 
 public class ApiVariableImpl extends ApiElementImpl implements ApiVariable {
+
+  public ApiVariableImpl(IElementType type) {
+    super(type);
+  }
 
   public ApiVariableImpl(@NotNull ASTNode node) {
     super(node);
   }
 
-  public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitVariable(this);
+  public void accept(@NotNull ApiVisitor visitor) {
+    visitor.visitVariable(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -30,7 +35,7 @@ public class ApiVariableImpl extends ApiElementImpl implements ApiVariable {
   @Override
   @Nullable
   public ApiVariableName getVariableName() {
-    return findChildByClass(ApiVariableName.class);
+    return PsiTreeUtil.getChildOfType(this, ApiVariableName.class);
   }
 
 }

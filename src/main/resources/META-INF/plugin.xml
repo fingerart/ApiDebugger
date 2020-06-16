@@ -8,7 +8,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="io.chengguo.api.debugger.lang.psi.ApiFileTypeFactory"/>
-<!--        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileViewEditorProvider"/>-->
+        <!--        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileViewEditorProvider"/>-->
         <lang.ast.factory language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiASTFactory"/>
         <lang.syntaxHighlighterFactory language="Api"
                                        implementationClass="io.chengguo.api.debugger.lang.highlight.ApiSyntaxHighlighterFactory"/>
@@ -27,7 +27,12 @@
                                   implementationClass="io.chengguo.api.debugger.lang.run.ApiLineMarkerProvider"/>
         <completion.contributor language="Api"
                                 implementationClass="io.chengguo.api.debugger.lang.completion.ApiCompletionContributor"/>
-        <renameHandler implementation="io.chengguo.api.debugger.lang.refactoring.rename.ApiFromEditorRenameHandler"/>
+        <!--        <renameHandler implementation="io.chengguo.api.debugger.lang.refactoring.rename.ApiFromEditorRenameHandler"/>-->
+<!--        <referencesSearch implementation="io.chengguo.api.debugger.lang.psi.impl.ApiSearcher"/>-->
+        <inlineActionHandler implementation="io.chengguo.api.debugger.lang.refactoring.ApiInlineVariableActionHandler"/>
+        <lang.refactoringSupport
+                language="Api"
+                implementationClass="io.chengguo.api.debugger.lang.refactoring.ApiRefactoringSupportProvider"/>
     </extensions>
 
     <actions>

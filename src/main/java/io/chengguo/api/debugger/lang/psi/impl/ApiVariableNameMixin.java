@@ -1,20 +1,25 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.IncorrectOperationException;
-import io.chengguo.api.debugger.lang.psi.ApiElementGenerator;
-import io.chengguo.api.debugger.lang.psi.ApiTypes;
+import com.intellij.psi.search.LocalSearchScope;
+import com.intellij.psi.search.SearchScope;
+import com.intellij.psi.tree.IElementType;
 import io.chengguo.api.debugger.lang.psi.ApiVariableName;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class ApiVariableNameMixin extends ApiElementImpl implements ApiVariableName {
+
+    public ApiVariableNameMixin(IElementType type) {
+        super(type);
+    }
+
     public ApiVariableNameMixin(@NotNull ASTNode node) {
         super(node);
     }
 
+    @NotNull
     @Override
-    public PsiElement setName(@NotNull String newName) throws IncorrectOperationException {
-        return new ApiElementGenerator(getProject()).createVariableName(newName);
+    public SearchScope getUseScope() {
+        return new LocalSearchScope(getContainingFile());
     }
 }

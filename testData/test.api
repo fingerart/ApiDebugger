@@ -16,9 +16,9 @@ Accept: application/xml
  */
 
 - titd: dsd
--descrdsdsd: hello
+- descrdsdsd: hello
 
-OPTIONS http://{{sub_domain}}.tenon.集团:{{default}}80/segment1/segment2/?{{key1}} raw =value
+OPTIONS http://{{hellocc}}.tenon.集团:{{default}}80/segment1/segment2/?{{key1}} raw =value
 Casdsontedsdsnt{{dsds}}dsds: {{content_type}}
 
 body

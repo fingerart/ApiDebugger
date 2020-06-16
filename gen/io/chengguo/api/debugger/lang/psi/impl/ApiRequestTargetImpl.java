@@ -11,15 +11,20 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
+import com.intellij.psi.tree.IElementType;
 
 public class ApiRequestTargetImpl extends ApiElementImpl implements ApiRequestTarget {
+
+  public ApiRequestTargetImpl(IElementType type) {
+    super(type);
+  }
 
   public ApiRequestTargetImpl(@NotNull ASTNode node) {
     super(node);
   }
 
-  public <R> R accept(@NotNull ApiVisitor<R> visitor) {
-    return visitor.visitRequestTarget(this);
+  public void accept(@NotNull ApiVisitor visitor) {
+    visitor.visitRequestTarget(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -30,25 +35,25 @@ public class ApiRequestTargetImpl extends ApiElementImpl implements ApiRequestTa
   @Override
   @NotNull
   public ApiHost getHost() {
-    return findNotNullChildByClass(ApiHost.class);
+    return PsiTreeUtil.getChildOfType(this, ApiHost.class);
   }
 
   @Override
   @NotNull
   public ApiPathAbsolute getPathAbsolute() {
-    return findNotNullChildByClass(ApiPathAbsolute.class);
+    return PsiTreeUtil.getChildOfType(this, ApiPathAbsolute.class);
   }
 
   @Override
   @Nullable
   public ApiPort getPort() {
-    return findChildByClass(ApiPort.class);
+    return PsiTreeUtil.getChildOfType(this, ApiPort.class);
   }
 
   @Override
   @Nullable
   public ApiScheme getScheme() {
-    return findChildByClass(ApiScheme.class);
+    return PsiTreeUtil.getChildOfType(this, ApiScheme.class);
   }
 
 }

@@ -10,6 +10,7 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 
 %%
 
+%public
 %class ApiLexer
 %implements FlexLexer
 %unicode
@@ -19,6 +20,13 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 %eof}
 
 %{
+    /**
+     * Creates a new scanner
+     */
+    public ApiLexer() {
+        this(null);
+    }
+
     /**
      * 切换状态，会记录切换前的状态
      *
