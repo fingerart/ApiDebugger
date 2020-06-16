@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiHeaderFieldKeyImpl extends ApiElementImpl implements ApiHeaderFieldKey {
 
-  public ApiHeaderFieldKeyImpl(ASTNode node) {
+  public ApiHeaderFieldKeyImpl(@NotNull ASTNode node) {
     super(node);
   }
 

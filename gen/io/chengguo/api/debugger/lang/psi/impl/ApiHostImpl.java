@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiHostImpl extends ApiElementImpl implements ApiHost {
 
-  public ApiHostImpl(ASTNode node) {
+  public ApiHostImpl(@NotNull ASTNode node) {
     super(node);
   }
 

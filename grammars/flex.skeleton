@@ -114,8 +114,6 @@
 
   /**
    * Saves the current lexical state onto stack
-   *
-   * @param state the lexical state to save
    */
   public final void yypush() {
     zzLexicalStateStack.push(yystate());

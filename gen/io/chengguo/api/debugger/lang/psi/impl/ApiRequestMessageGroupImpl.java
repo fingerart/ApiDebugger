@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiRequestMessageGroupImpl extends ApiElementImpl implements ApiRequestMessageGroup {
 
-  public ApiRequestMessageGroupImpl(ASTNode node) {
+  public ApiRequestMessageGroupImpl(@NotNull ASTNode node) {
     super(node);
   }
 

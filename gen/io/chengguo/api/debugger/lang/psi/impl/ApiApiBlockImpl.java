@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiApiBlockImpl extends ApiElementImpl implements ApiApiBlock {
 
-  public ApiApiBlockImpl(ASTNode node) {
+  public ApiApiBlockImpl(@NotNull ASTNode node) {
     super(node);
   }
 

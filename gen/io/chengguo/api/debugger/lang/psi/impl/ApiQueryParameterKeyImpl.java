@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiQueryParameterKeyImpl extends ApiElementImpl implements ApiQueryParameterKey {
 
-  public ApiQueryParameterKeyImpl(ASTNode node) {
+  public ApiQueryParameterKeyImpl(@NotNull ASTNode node) {
     super(node);
   }
 

@@ -45,10 +45,18 @@ task generateApiLexer(type: GenerateLexer) {
     purgeOldFiles = true
 }
 
+// Bug: https://github.com/JetBrains/gradle-grammar-kit-plugin/issues/3
+/*
 task generateApiParser(type: GenerateParser) {
     source = "grammars/Api.bnf"
     targetRoot = 'gen'
     pathToParser = '/io/chengguo/api/debugger/lang/parser/ApiParser.java'
     pathToPsiRoot = '/io/chengguo/api/debugger/lang/psi'
     purgeOldFiles = true
+}
+*/
+
+compileJava {
+    dependsOn generateApiLexer
+//    dependsOn generateApiParser
 }

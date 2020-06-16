@@ -8,8 +8,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-
 public class ApiPsiUtils {
     public static final ApiApiBlock[] EMPTY = new ApiApiBlock[]{};
 

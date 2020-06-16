@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiDescriptionTitleImpl extends ApiElementImpl implements ApiDescriptionTitle {
 
-  public ApiDescriptionTitleImpl(ASTNode node) {
+  public ApiDescriptionTitleImpl(@NotNull ASTNode node) {
     super(node);
   }
 

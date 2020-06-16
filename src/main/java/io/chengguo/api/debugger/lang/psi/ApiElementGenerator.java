@@ -5,6 +5,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import io.chengguo.api.debugger.lang.ApiFileType;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.psi.impl.ApiVariableNameImpl;
 import org.jetbrains.annotations.NotNull;
 
 public class ApiElementGenerator {
@@ -16,9 +17,9 @@ public class ApiElementGenerator {
     }
 
     public ApiVariableName createVariableName(String name) {
-        PsiFile dummyFile = createDummyFile("- title:value\r\n\r\nGET {{" + name + "}}");
+        PsiFile dummyFile = createDummyFile("- title:value\r\n\r\nGET {{" + name + "}}\r\n\r\nbody");
         ApiApiBlock firstApiBlock = ApiPsiUtils.getFirstApiBlock(dummyFile);
-        return null;
+        return firstApiBlock.getRequest().getRequestLine().getRequestTarget().getHost().getVariableList().get(0).getVariableName();
     }
 
     @NotNull

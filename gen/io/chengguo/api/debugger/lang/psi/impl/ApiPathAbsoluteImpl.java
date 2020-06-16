@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiPathAbsoluteImpl extends ApiElementImpl implements ApiPathAbsolute {
 
-  public ApiPathAbsoluteImpl(ASTNode node) {
+  public ApiPathAbsoluteImpl(@NotNull ASTNode node) {
     super(node);
   }
 

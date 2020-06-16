@@ -1,7 +1,7 @@
 - dsds: dsds
 - descrtion: 用户名密码登录
 
-PUT httphttpsecho.tenon.dev:8080/post?nickname=tenon&age=18&dsfsf=asdfasf
+PUT http://{{hello}}httphttpsecho.tenon.dev:8080/post?nickname=tenon&age=18&dsfsf=asdfasf
 Content-Type: application/json
 Accept: application/xml
 

@@ -14,8 +14,8 @@
   psiImplPackage="io.chengguo.api.debugger.lang.psi.impl"
   psiImplUtilClass="io.chengguo.api.debugger.lang.psi.impl.ApiPsiImplUtils"
 
-  elementTypeHolderClass="io.chengguo.api.debugger.lang.psi.ApiTypes"
   elementTypePrefix="Api_"
+  elementTypeHolderClass="io.chengguo.api.debugger.lang.psi.ApiTypes"
   elementTypeClass="io.chengguo.api.debugger.lang.psi.ApiElementType"
   tokenTypeClass="io.chengguo.api.debugger.lang.psi.ApiTokenType"
 
@@ -43,7 +43,7 @@
   ]
 
   implements("variable_name") = [
-    "io.chengguo.api.debugger.lang.psi.ApiElement"
+    "io.chengguo.api.debugger.lang.psi.ApiElement" // Default
     "com.intellij.psi.PsiNamedElement"
   ]
 }
@@ -91,4 +91,5 @@ variable ::= '{{' variable_name? '}}'
 
 variable_name ::= IDENTIFIER {
     mixin="io.chengguo.api.debugger.lang.psi.impl.ApiVariableNameMixin"
+    methods=[getName getValue]
 }

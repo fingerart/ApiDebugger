@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiPortImpl extends ApiElementImpl implements ApiPort {
 
-  public ApiPortImpl(ASTNode node) {
+  public ApiPortImpl(@NotNull ASTNode node) {
     super(node);
   }
 

@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiVariableImpl extends ApiElementImpl implements ApiVariable {
 
-  public ApiVariableImpl(ASTNode node) {
+  public ApiVariableImpl(@NotNull ASTNode node) {
     super(node);
   }
 

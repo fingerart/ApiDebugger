@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiVariableNameImpl extends ApiVariableNameMixin implements ApiVariableName {
 
-  public ApiVariableNameImpl(ASTNode node) {
+  public ApiVariableNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
@@ -25,6 +25,18 @@ public class ApiVariableNameImpl extends ApiVariableNameMixin implements ApiVari
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public String getName() {
+    return ApiPsiImplUtils.getName(this);
+  }
+
+  @Override
+  @NotNull
+  public String getValue() {
+    return ApiPsiImplUtils.getValue(this);
   }
 
 }
