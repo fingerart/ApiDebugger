@@ -10,4 +10,10 @@ import com.intellij.psi.PsiNamedElement;
 
 public interface ApiVariableName extends ApiElement, PsiNamedElement {
 
+  @NotNull
+  String getName();
+
+  @NotNull
+  String getValue();
+
 }

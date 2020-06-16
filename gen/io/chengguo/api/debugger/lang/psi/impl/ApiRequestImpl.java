@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiRequestImpl extends ApiElementImpl implements ApiRequest {
 
-  public ApiRequestImpl(ASTNode node) {
+  public ApiRequestImpl(@NotNull ASTNode node) {
     super(node);
   }
 

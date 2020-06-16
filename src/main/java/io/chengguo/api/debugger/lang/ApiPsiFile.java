@@ -3,7 +3,6 @@ package io.chengguo.api.debugger.lang;
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.util.PsiTreeUtil;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.ApiDebuggerIcons;
 import org.jetbrains.annotations.NotNull;

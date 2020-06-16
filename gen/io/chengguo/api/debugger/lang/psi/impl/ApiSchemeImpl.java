@@ -14,7 +14,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 
 public class ApiSchemeImpl extends ApiElementImpl implements ApiScheme {
 
-  public ApiSchemeImpl(ASTNode node) {
+  public ApiSchemeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
