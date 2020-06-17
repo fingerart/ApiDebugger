@@ -1,8 +1,11 @@
 package io.chengguo.api.debugger.lang.psi;
 
+import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
+import com.intellij.psi.util.PsiTreeUtil;
 import io.chengguo.api.debugger.lang.ApiFileType;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import org.jetbrains.annotations.NotNull;
@@ -15,10 +18,9 @@ public class ApiElementGenerator {
         mProject = project;
     }
 
-    public ApiVariableName createVariableName(String variableName) {
+    public ApiVariable createVariable(String variableName) {
         PsiFile dummyFile = createDummyFile("- title:value\r\n\r\nGET {{" + variableName + "}}\r\n\r\nbody");
-        ApiVariable variable = ApiPsiUtils.getFirstVariable(dummyFile);
-        return variable == null ? null : variable.getVariableName();
+        return ApiPsiUtils.findFirstVariable(dummyFile);
     }
 
     @NotNull
