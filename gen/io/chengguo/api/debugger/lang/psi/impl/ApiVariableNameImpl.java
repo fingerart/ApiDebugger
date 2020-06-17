@@ -13,7 +13,7 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 import com.intellij.psi.tree.IElementType;
 
-public class ApiVariableNameImpl extends ApiVariableNameMixin implements ApiVariableName {
+public class ApiVariableNameImpl extends ApiNamedElementImpl implements ApiVariableName {
 
   public ApiVariableNameImpl(IElementType type) {
     super(type);

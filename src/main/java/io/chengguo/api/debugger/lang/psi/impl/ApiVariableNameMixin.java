@@ -1,6 +1,5 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.psi.search.LocalSearchScope;
 import com.intellij.psi.search.SearchScope;
 import com.intellij.psi.tree.IElementType;
@@ -11,10 +10,6 @@ public abstract class ApiVariableNameMixin extends ApiElementImpl implements Api
 
     public ApiVariableNameMixin(IElementType type) {
         super(type);
-    }
-
-    public ApiVariableNameMixin(@NotNull ASTNode node) {
-        super(node);
     }
 
     @NotNull

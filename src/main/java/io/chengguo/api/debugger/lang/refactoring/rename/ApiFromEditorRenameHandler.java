@@ -12,6 +12,7 @@ import com.intellij.refactoring.rename.RenameHandler;
 import io.chengguo.api.debugger.ui.preview.ApiFileViewEditor;
 import org.jetbrains.annotations.NotNull;
 
+@Deprecated
 public class ApiFromEditorRenameHandler implements RenameHandler {
     @Override
     public boolean isAvailableOnDataContext(@NotNull DataContext dataContext) {
