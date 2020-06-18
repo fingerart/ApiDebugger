@@ -11,7 +11,6 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
-import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
 import io.chengguo.api.debugger.lang.psi.ApiVariableName;
 import org.jetbrains.annotations.NotNull;
@@ -49,11 +48,15 @@ public class ApiPsiUtils {
         return PsiTreeUtil.findChildrenOfType(psiFile, ApiVariable.class).toArray(new ApiVariable[0]);
     }
 
-    public static List<ApiVariableName> findVariables(@NotNull Project project) {
-        return findVariables(project, null);
+    public static ApiVariableName[] findVariableNames(PsiFile psiFile) {
+        return PsiTreeUtil.findChildrenOfType(psiFile, ApiVariableName.class).toArray(new ApiVariableName[0]);
     }
 
-    public static List<ApiVariableName> findVariables(@NotNull Project project, @Nullable String key) {
+    public static List<ApiVariableName> findVariableNames(@NotNull Project project) {
+        return findVariableNames(project, null);
+    }
+
+    public static List<ApiVariableName> findVariableNames(@NotNull Project project, @Nullable String key) {
         List<ApiVariableName> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(ApiFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {

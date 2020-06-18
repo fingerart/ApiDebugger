@@ -10,10 +10,10 @@ import com.intellij.psi.search.searches.ReferencesSearch;
 import com.intellij.util.Processor;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
-import io.chengguo.api.debugger.lang.psi.ApiVariable;
 import io.chengguo.api.debugger.lang.psi.ApiVariableName;
 import org.jetbrains.annotations.NotNull;
 
+@Deprecated
 public class ApiReferenceSearcher extends QueryExecutorBase<PsiReference, ReferencesSearch.SearchParameters> {
     @Override
     public void processQuery(@NotNull ReferencesSearch.SearchParameters queryParameters, @NotNull Processor<? super PsiReference> consumer) {
@@ -27,10 +27,8 @@ public class ApiReferenceSearcher extends QueryExecutorBase<PsiReference, Refere
         if (!(file instanceof ApiPsiFile)) return;
 
         ApiVariableName targetVariableName = (ApiVariableName) target;
-        ApiVariable[] variables = ApiPsiUtils.findVariables(file);
-        for (ApiVariable variable : variables) {
-            ApiVariableName currentVariableName = variable.getVariableName();
-            if (currentVariableName == null) continue;
+        ApiVariableName[] variables = ApiPsiUtils.findVariableNames(file);
+        for (ApiVariableName currentVariableName : variables) {
             if (targetVariableName.getName().equals(currentVariableName.getName())) {
                 PsiReference reference = currentVariableName.getReference();
                 if (reference != null && reference.isReferenceTo(target)) {

@@ -1,6 +1,7 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.patterns.ElementPattern;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
@@ -12,6 +13,7 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.lang.psi.ApiNamedElement;
+import io.chengguo.api.debugger.lang.psi.ApiReference;
 import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class ApiNamedElementImpl extends ApiElementImpl implements ApiNamedElement {
 
@@ -42,21 +45,18 @@ public abstract class ApiNamedElementImpl extends ApiElementImpl implements ApiN
     }
 
     @Override
-    public PsiReference getReference() {
-        return null;
+    public int getTextOffset() {
+        PsiElement identifier = getNameIdentifier();
+        return identifier != null ? identifier.getTextOffset() : super.getTextOffset();
     }
 
-    @NotNull
     @Override
-    public PsiReference[] getReferences() {
-//        List<PsiReference> result = ContainerUtil.newSmartList();
-//        for (Map.Entry<ElementPattern<? extends PsiElement>, PsiReferenceProvider> e : ourProviders.entrySet()) {
-//            ProcessingContext context = new ProcessingContext();
-//            if (e.getKey().accepts(this, context)) {
-//                result.addAll(Arrays.asList(e.getValue().getReferencesByElement(this, context)));
-//            }
-//        }
-//        return result.isEmpty() ? PsiReference.EMPTY_ARRAY : ContainerUtil.toArray(result, new PsiReference[result.size()]);
-        return ReferenceProvidersRegistry.getReferencesFromProviders(this);
+    public PsiReference getReference() {
+        return new ApiReference<>(this, getTextRange());
+    }
+
+    @Override
+    public boolean isEquivalentTo(PsiElement another) {
+        return this == another || (another instanceof ApiNamedElement && Objects.equals(getName(), ((ApiNamedElement) another).getName()));
     }
 }

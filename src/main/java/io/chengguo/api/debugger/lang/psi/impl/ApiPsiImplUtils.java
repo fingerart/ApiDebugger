@@ -12,9 +12,9 @@ public class ApiPsiImplUtils {
 
     @NotNull
     public static String getName(@NotNull ApiVariableName element) {
-        PsiElement keyElement = element.getNameIdentifier();
-        if (keyElement != null) {
-            return keyElement.getText();
+        PsiElement identifier = element.getNameIdentifier();
+        if (identifier != null) {
+            return identifier.getText();
         } else {
             return null;
         }
