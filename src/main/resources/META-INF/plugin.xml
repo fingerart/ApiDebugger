@@ -30,15 +30,15 @@
         <renamePsiElementProcessor
                 implementation="io.chengguo.api.debugger.lang.refactoring.rename.RenameApiVariableProcessor"/>
         <!--        <renameHandler implementation="io.chengguo.api.debugger.lang.refactoring.rename.ApiFromEditorRenameHandler"/>-->
-        <referencesSearch implementation="io.chengguo.api.debugger.lang.psi.impl.ApiReferenceSearcher"/>
+<!--        <referencesSearch implementation="io.chengguo.api.debugger.lang.psi.impl.ApiReferenceSearcher"/>-->
         <!--        <inlineActionHandler implementation="io.chengguo.api.debugger.lang.refactoring.ApiInlineVariableActionHandler"/>-->
         <lang.findUsagesProvider language="Api"
                                  implementationClass="io.chengguo.api.debugger.lang.ApiFindUsagesProvider"/>
         <lang.refactoringSupport
                 language="Api"
                 implementationClass="io.chengguo.api.debugger.lang.refactoring.ApiRefactoringSupportProvider"/>
-        <psi.referenceContributor language="Api"
-                                  implementation="io.chengguo.api.debugger.lang.psi.ApiReferenceContributor"/>
+<!--        <psi.referenceContributor language="Api"-->
+<!--                                  implementation="io.chengguo.api.debugger.lang.psi.ApiReferenceContributor"/>-->
         <!--        <stubElementTypeHolder class="io.chengguo.api.debugger.lang.psi.ApiTypes"/>-->
 
     </extensions>

@@ -5,6 +5,7 @@ import com.intellij.psi.*;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
+@Deprecated
 public class ApiReferenceContributor extends PsiReferenceContributor {
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
@@ -13,8 +14,8 @@ public class ApiReferenceContributor extends PsiReferenceContributor {
                     @NotNull
                     @Override
                     public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
-                        return new PsiReference[]{new ApiReference(element, element.getTextRange())};
-//                        return PsiReference.EMPTY_ARRAY;
+//                        return new PsiReference[]{new ApiReference(element, element.getTextRange())};
+                        return PsiReference.EMPTY_ARRAY;
                     }
                 }
         );

@@ -19,7 +19,7 @@ Accept: application/xml
 - descrdsdsd: hello
 
 OPTIONS http://{{java}}.tenon.集团:{{default}}80/segment1/segment2/?{{key1}} raw =value
-Casdsontedsdsnt{{dsds}}dsds: {{content_type}}
+Casdsontedsdsnt{{java}}dsds: {{content_type}}
 
 body
 
