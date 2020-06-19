@@ -27,11 +27,11 @@ public class ApiReference<T extends PsiElement> extends PsiPolyVariantReferenceB
     @Override
     public ResolveResult[] multiResolve(boolean incompleteCode) {
         Project project = myElement.getProject();
-        List<ApiVariableName> variableNames = ApiPsiUtils.findVariableNames(project, key);
+//        List<ApiVariableName> variableNames = ApiPsiUtils.findVariableNames(project, key);
         List<ResolveResult> results = new ArrayList<>();
-        for (ApiVariableName variableName : variableNames) {
-            results.add(new PsiElementResolveResult(variableName));
-        }
+//        for (ApiVariableName variableName : variableNames) {
+//            results.add(new PsiElementResolveResult(variableName));
+//        }
         ResolveResult[] resolveResults = results.toArray(ResolveResult.EMPTY_ARRAY);
         System.out.println("resolveResults = " + resolveResults);
         return resolveResults;
@@ -41,17 +41,17 @@ public class ApiReference<T extends PsiElement> extends PsiPolyVariantReferenceB
     @Override
     public Object[] getVariants() {
         Project project = myElement.getProject();
-        List<ApiVariableName> variableNames = ApiPsiUtils.findVariableNames(project);
+//        List<ApiVariableName> variableNames = ApiPsiUtils.findVariableNames(project);
         List<LookupElement> variants = new ArrayList<>();
-        for (ApiVariableName variableName : variableNames) {
-            if (!Strings.isNullOrEmpty(variableName.getName())) {
-                LookupElementBuilder lookupElementBuilder = LookupElementBuilder
-                        .create(variableName)
-                        .withIcon(ApiDebuggerIcons.FAVICON)
-                        .withTypeText(variableName.getContainingFile().getName());
-                variants.add(lookupElementBuilder);
-            }
-        }
+//        for (ApiVariableName variableName : variableNames) {
+//            if (!Strings.isNullOrEmpty(variableName.getName())) {
+//                LookupElementBuilder lookupElementBuilder = LookupElementBuilder
+//                        .create(variableName)
+//                        .withIcon(ApiDebuggerIcons.FAVICON)
+//                        .withTypeText(variableName.getContainingFile().getName());
+//                variants.add(lookupElementBuilder);
+//            }
+//        }
         return variants.toArray();
     }
 
@@ -61,6 +61,7 @@ public class ApiReference<T extends PsiElement> extends PsiPolyVariantReferenceB
     }
 
     private boolean couldBeReferenceTo(@NotNull PsiElement element) {
-        return element instanceof ApiVariableName;
+//        return element instanceof ApiVariableName;
+        return false;
     }
 }

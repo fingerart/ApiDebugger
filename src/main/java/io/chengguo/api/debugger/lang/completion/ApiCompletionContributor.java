@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
+@Deprecated
 public class ApiCompletionContributor extends CompletionContributor {
     public ApiCompletionContributor() {
 //        extend(CompletionType.BASIC, psiElement().withParent(ApiRequest.class), MethodCompletionProvider.INSTANCE);

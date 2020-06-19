@@ -10,14 +10,18 @@ import com.intellij.psi.search.searches.ReferencesSearch;
 import com.intellij.util.Processor;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
-import io.chengguo.api.debugger.lang.psi.ApiVariableName;
 import org.jetbrains.annotations.NotNull;
 
 @Deprecated
 public class ApiReferenceSearcher extends QueryExecutorBase<PsiReference, ReferencesSearch.SearchParameters> {
+    public ApiReferenceSearcher() {
+        super(true);
+    }
+
     @Override
     public void processQuery(@NotNull ReferencesSearch.SearchParameters queryParameters, @NotNull Processor<? super PsiReference> consumer) {
-        final PsiElement target = queryParameters.getElementToSearch();
+        System.out.println("ApiReferenceSearcher.processQuery" + "queryParameters = " + queryParameters + ", consumer = " + consumer);
+        /*final PsiElement target = queryParameters.getElementToSearch();
         if (!(target instanceof ApiVariableName)) return;
 
         SearchScope scope = queryParameters.getEffectiveSearchScope();
@@ -35,6 +39,6 @@ public class ApiReferenceSearcher extends QueryExecutorBase<PsiReference, Refere
                     if (!consumer.process(reference)) return;
                 }
             }
-        }
+        }*/
     }
 }

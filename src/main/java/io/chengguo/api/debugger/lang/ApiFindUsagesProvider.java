@@ -8,7 +8,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
 import io.chengguo.api.debugger.lang.lexer.ApiLexerAdapter;
 import io.chengguo.api.debugger.lang.psi.ApiTypes;
-import io.chengguo.api.debugger.lang.psi.ApiVariableName;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,7 +28,8 @@ public class ApiFindUsagesProvider implements FindUsagesProvider {
 
     @Override
     public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
-        return psiElement instanceof ApiVariableName;
+//        return psiElement instanceof ApiVariableName;
+        return false;
     }
 
     @Nullable
@@ -42,9 +42,9 @@ public class ApiFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getType(@NotNull PsiElement element) {
-        if (element instanceof ApiVariableName) {
-            return "Variable";
-        }
+//        if (element instanceof ApiVariableName) {
+//            return "Variable";
+//        }
         return "";
     }
 
@@ -52,9 +52,9 @@ public class ApiFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getDescriptiveName(@NotNull PsiElement element) {
-        if (element instanceof ApiVariableName) {
-            return Strings.nullToEmpty(((ApiVariableName) element).getName());
-        }
+//        if (element instanceof ApiVariableName) {
+//            return Strings.nullToEmpty(((ApiVariableName) element).getName());
+//        }
         return "";
     }
 

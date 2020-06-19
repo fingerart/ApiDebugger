@@ -3,7 +3,7 @@
 
 PUT http://{{java}}httphttpsecho.tenon.dev:8080/post?nickname=tenon&age=18&dsfsf=asdfasf
 Content-Type: application/json
-Accept: application/xml
+Accept: application/xml{{java}}
 
 {"what":"body"}
 

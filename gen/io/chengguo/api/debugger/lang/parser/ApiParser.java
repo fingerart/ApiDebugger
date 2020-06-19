@@ -627,7 +627,7 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '{{' variable_name? '}}'
+  // '{{' IDENTIFIER? '}}'
   public static boolean variable(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "variable")) return false;
     if (!nextTokenIs(builder, Api_LBRACES)) return false;
@@ -640,23 +640,11 @@ public class ApiParser implements PsiParser, LightPsiParser {
     return result;
   }
 
-  // variable_name?
+  // IDENTIFIER?
   private static boolean variable_1(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "variable_1")) return false;
-    variable_name(builder, level + 1);
+    consumeToken(builder, Api_IDENTIFIER);
     return true;
-  }
-
-  /* ********************************************************** */
-  // IDENTIFIER
-  public static boolean variable_name(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "variable_name")) return false;
-    if (!nextTokenIs(builder, Api_IDENTIFIER)) return false;
-    boolean result;
-    Marker marker = enter_section_(builder);
-    result = consumeToken(builder, Api_IDENTIFIER);
-    exit_section_(builder, marker, Api_VARIABLE_NAME, result);
-    return result;
   }
 
 }

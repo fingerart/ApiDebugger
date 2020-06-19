@@ -7,9 +7,8 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiVariable extends ApiElement {
+public interface ApiVariable extends ApiNamedElement {
 
-  @Nullable
-  ApiVariableName getVariableName();
+  PsiElement getIdentifier();
 
 }

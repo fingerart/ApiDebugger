@@ -12,7 +12,6 @@ import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
-import io.chengguo.api.debugger.lang.psi.ApiVariableName;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +46,7 @@ public class ApiPsiUtils {
     public static ApiVariable[] findVariables(PsiFile psiFile) {
         return PsiTreeUtil.findChildrenOfType(psiFile, ApiVariable.class).toArray(new ApiVariable[0]);
     }
-
+/*
     public static ApiVariableName[] findVariableNames(PsiFile psiFile) {
         return PsiTreeUtil.findChildrenOfType(psiFile, ApiVariableName.class).toArray(new ApiVariableName[0]);
     }
@@ -73,5 +72,5 @@ public class ApiPsiUtils {
             }
         }
         return result;
-    }
+    }*/
 }
