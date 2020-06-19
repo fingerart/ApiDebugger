@@ -1,8 +1,7 @@
-package io.chengguo.api.debugger.lang.refactoring;
+package io.chengguo.api.debugger.lang.refactor;
 
 import com.intellij.lang.refactoring.RefactoringSupportProvider;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
 import io.chengguo.api.debugger.lang.psi.ApiNamedElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

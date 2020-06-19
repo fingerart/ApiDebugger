@@ -89,10 +89,6 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitVariable(@NotNull ApiVariable o) {
-    visitElement(o);
-  }
-
-  public void visitVariableName(@NotNull ApiVariableName o) {
     visitNamedElement(o);
   }
 

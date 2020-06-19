@@ -13,14 +13,10 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 import com.intellij.psi.tree.IElementType;
 
-public class ApiVariableImpl extends ApiElementImpl implements ApiVariable {
+public class ApiVariableImpl extends ApiVariableMixin implements ApiVariable {
 
   public ApiVariableImpl(IElementType type) {
     super(type);
-  }
-
-  public ApiVariableImpl(@NotNull ASTNode node) {
-    super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
@@ -33,9 +29,8 @@ public class ApiVariableImpl extends ApiElementImpl implements ApiVariable {
   }
 
   @Override
-  @Nullable
-  public ApiVariableName getVariableName() {
-    return PsiTreeUtil.getChildOfType(this, ApiVariableName.class);
+  public PsiElement getIdentifier() {
+    return ApiPsiImplUtils.getIdentifier(this);
   }
 
 }

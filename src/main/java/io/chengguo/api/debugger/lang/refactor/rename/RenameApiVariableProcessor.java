@@ -1,4 +1,4 @@
-package io.chengguo.api.debugger.lang.refactoring.rename;
+package io.chengguo.api.debugger.lang.refactor.rename;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.refactoring.rename.RenamePsiElementProcessor;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 
+@Deprecated
 public class RenameApiVariableProcessor extends RenamePsiElementProcessor {
     @Override
     public boolean canProcessElement(@NotNull PsiElement element) {

@@ -1,4 +1,4 @@
-package io.chengguo.api.debugger.lang.refactoring.rename;
+package io.chengguo.api.debugger.lang.refactor.rename;
 
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;

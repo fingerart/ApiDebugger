@@ -7,6 +7,7 @@ import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@Deprecated
 public class ApiStructureViewFactory implements PsiStructureViewFactory {
     @Nullable
     @Override

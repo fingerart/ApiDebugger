@@ -1,29 +1,24 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.patterns.ElementPattern;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceProvider;
-import com.intellij.psi.PsiReferenceService;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
+import com.intellij.psi.search.LocalSearchScope;
+import com.intellij.psi.search.SearchScope;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.ProcessingContext;
-import com.intellij.util.containers.ContainerUtil;
+import com.intellij.util.IncorrectOperationException;
+import io.chengguo.api.debugger.ApiDebuggerIcons;
+import io.chengguo.api.debugger.extension.ObjectExKt;
+import io.chengguo.api.debugger.lang.psi.ApiElementGenerator;
 import io.chengguo.api.debugger.lang.psi.ApiNamedElement;
-import io.chengguo.api.debugger.lang.psi.ApiReference;
-import io.chengguo.api.debugger.lang.psi.ApiTypes;
+import io.chengguo.api.debugger.lang.psi.ApiVariable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import javax.swing.*;
 
 public abstract class ApiNamedElementImpl extends ApiElementImpl implements ApiNamedElement {
+
+    private String mCachedName;
 
     public ApiNamedElementImpl(IElementType type) {
         super(type);
@@ -36,27 +31,52 @@ public abstract class ApiNamedElementImpl extends ApiElementImpl implements ApiN
     @Nullable
     @Override
     public PsiElement getNameIdentifier() {
-        ASTNode keyNode = getNode().findChildByType(ApiTypes.Api_IDENTIFIER);
-        if (keyNode != null) {
-            return keyNode.getPsi();
-        } else {
-            return null;
+        return getIdentifier();
+    }
+
+    @Override
+    public void subtreeChanged() {
+        super.subtreeChanged();
+        mCachedName = null;
+    }
+
+    @Override
+    public String getName() {
+        if (mCachedName == null) {
+            mCachedName = ApiPsiImplUtils.getIdText(getIdentifier());
         }
+        return mCachedName;
+    }
+
+    @Override
+    public PsiElement setName(@NotNull String name) throws IncorrectOperationException {
+        PsiElement identifier = getIdentifier();
+        if (identifier != null) {
+            ApiVariable newVariable = new ApiElementGenerator(getProject()).createVariable(name);
+            PsiElement newIdentifier = newVariable.getIdentifier();
+            identifier.replace(ObjectExKt.requireNonNull(newIdentifier, IncorrectOperationException::new));
+        }
+        return this;
     }
 
     @Override
     public int getTextOffset() {
-        PsiElement identifier = getNameIdentifier();
+        PsiElement identifier = getIdentifier();
         return identifier != null ? identifier.getTextOffset() : super.getTextOffset();
     }
 
-    @Override
-    public PsiReference getReference() {
-        return new ApiReference<>(this, getTextRange());
-    }
+//    @NotNull
+//    @Override
+//    public SearchScope getUseScope() {
+//        return new LocalSearchScope(getContainingFile());
+//    }
 
+    @Nullable
     @Override
-    public boolean isEquivalentTo(PsiElement another) {
-        return this == another || (another instanceof ApiNamedElement && Objects.equals(getName(), ((ApiNamedElement) another).getName()));
+    public Icon getIcon(int flags) {
+        if (this instanceof ApiVariable) {
+            return ApiDebuggerIcons.API_FILE_TYPE;
+        }
+        return super.getIcon(flags);
     }
 }

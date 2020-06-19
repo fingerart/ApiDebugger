@@ -1,40 +1,21 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
+import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import io.chengguo.api.debugger.lang.psi.ApiElementGenerator;
+import com.intellij.psi.util.PsiTreeUtil;
+import io.chengguo.api.debugger.lang.psi.ApiHost;
+import io.chengguo.api.debugger.lang.psi.ApiRequestLine;
+import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
-import io.chengguo.api.debugger.lang.psi.ApiVariableName;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class ApiPsiImplUtils {
 
-    @NotNull
-    public static String getName(@NotNull ApiVariableName element) {
-        PsiElement identifier = element.getNameIdentifier();
-        if (identifier != null) {
-            return identifier.getText();
-        } else {
-            return null;
-        }
+    public static PsiElement getIdentifier(ApiVariable element) {
+        ASTNode node = element.getNode().findChildByType(ApiTypes.Api_IDENTIFIER);
+        return node == null ? null : node.getPsi();
     }
 
-    public static PsiElement setName(ApiVariableName element, @NotNull String newName) {
-        if (element != null && !Objects.equals(element.getName(), newName)) {
-            ApiVariable newVariable = new ApiElementGenerator(element.getProject()).createVariable(newName);
-            if (newVariable != null) {
-                ApiVariableName newVariableName = newVariable.getVariableName();
-                if (newVariableName != null) {
-                    element.replace(newVariableName);
-                }
-            }
-        }
-        return element;
-    }
-
-    @NotNull
-    public static String getValue(@NotNull ApiVariableName element) {
-        return "我是变量的值";
+    public static String getIdText(PsiElement element) {
+        return element == null ? "" : element.getText();
     }
 }

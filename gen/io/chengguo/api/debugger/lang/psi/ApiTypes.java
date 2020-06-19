@@ -32,7 +32,6 @@ public interface ApiTypes {
   IElementType Api_REQUEST_TARGET = new ApiElementType("Api_REQUEST_TARGET");
   IElementType Api_SCHEME = new ApiElementType("Api_SCHEME");
   IElementType Api_VARIABLE = new ApiElementType("Api_VARIABLE");
-  IElementType Api_VARIABLE_NAME = new ApiElementType("Api_VARIABLE_NAME");
 
   IElementType Api_AMPERSAND = new ApiTokenType("&");
   IElementType Api_COLON = new ApiTokenType(":");
@@ -132,9 +131,6 @@ public interface ApiTypes {
       }
       else if (type == Api_VARIABLE) {
         return new ApiVariableImpl(type);
-      }
-      else if (type == Api_VARIABLE_NAME) {
-        return new ApiVariableNameImpl(type);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

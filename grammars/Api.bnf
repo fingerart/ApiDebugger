@@ -32,6 +32,7 @@
     RBRACES                 = "}}"
     HYPHEN                  = "-"
 
+    //methods
     OPTIONS                 = "OPTIONS"
     GET                     = "GET"
     HEAD                    = "HEAD"
@@ -42,10 +43,11 @@
     CONNECT                 = "CONNECT"
   ]
 
-  implements("variable_name") = [
-    "io.chengguo.api.debugger.lang.psi.ApiNamedElement"
+  implements("variable") = "io.chengguo.api.debugger.lang.psi.ApiNamedElement"
+  extends("variable") = "io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"
+  methods("variable") = [
+    getIdentifier
   ]
-  extends("variable_name") = "io.chengguo.api.debugger.lang.psi.impl.ApiNamedElementImpl"
 }
 
 apiFile ::= api_*
@@ -87,9 +89,4 @@ header_field_val ::= (variable | HEADER_FIELD_VALUE)+
 private message_body ::= request_message_group /* | multipart_message*/
 request_message_group ::= MESSAGE_TEXT
 
-variable ::= '{{' variable_name? '}}'
-
-variable_name ::= IDENTIFIER {
-//    mixin="io.chengguo.api.debugger.lang.psi.impl.ApiVariableNameMixin"
-    methods=[getName setName getValue]
-}
+variable ::= '{{' IDENTIFIER? '}}'
