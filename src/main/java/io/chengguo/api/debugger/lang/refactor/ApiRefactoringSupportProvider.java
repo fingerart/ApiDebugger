@@ -13,6 +13,7 @@ public class ApiRefactoringSupportProvider extends RefactoringSupportProvider {
      */
     @Override
     public boolean isMemberInplaceRenameAvailable(@NotNull PsiElement element, @Nullable PsiElement context) {
+        System.out.println("element = " + element + ", context = " + context);
         return element instanceof ApiNamedElement;
     }
 }
