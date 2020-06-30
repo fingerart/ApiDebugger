@@ -1,11 +1,8 @@
 package io.chengguo.api.debugger.lang.psi;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.util.PsiTreeUtil;
 import io.chengguo.api.debugger.lang.ApiFileType;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import org.jetbrains.annotations.NotNull;

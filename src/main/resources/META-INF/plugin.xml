@@ -25,20 +25,21 @@
         <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiCommenter"/>
         <runLineMarkerContributor language="Api"
                                   implementationClass="io.chengguo.api.debugger.lang.run.ApiLineMarkerProvider"/>
-        <!--        <completion.contributor language="Api"-->
-        <!--                                implementationClass="io.chengguo.api.debugger.lang.completion.ApiCompletionContributor"/>-->
+        <completion.contributor language="Api"
+                                implementationClass="io.chengguo.api.debugger.lang.completion.ApiCompletionContributor"/>
         <!--        <renamePsiElementProcessor-->
         <!--                implementation="io.chengguo.api.debugger.lang.refactor.rename.RenameApiVariableProcessor"/>-->
         <!--        <renameHandler implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiFromEditorRenameHandler"/>-->
-<!--        <referencesSearch implementation="io.chengguo.api.debugger.lang.psi.impl.ApiReferenceSearcher"/>-->
+        <!--        <referencesSearch implementation="io.chengguo.api.debugger.lang.psi.impl.ApiReferenceSearcher"/>-->
         <!--        <inlineActionHandler implementation="io.chengguo.api.debugger.lang.refactor.ApiInlineVariableActionHandler"/>-->
         <lang.findUsagesProvider language="Api"
                                  implementationClass="io.chengguo.api.debugger.lang.ApiFindUsagesProvider"/>
         <lang.refactoringSupport
                 language="Api"
                 implementationClass="io.chengguo.api.debugger.lang.refactor.ApiRefactoringSupportProvider"/>
-        <!--        <psi.referenceContributor language="Api"-->
-        <!--                                  implementation="io.chengguo.api.debugger.lang.psi.ApiReferenceContributor"/>-->
+        <psi.referenceContributor language="Api"
+                                  implementation="io.chengguo.api.debugger.lang.psi.ApiReferenceContributor"/>
+        <fileBasedIndex implementation="io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex"/>
         <!--        <stubElementTypeHolder class="io.chengguo.api.debugger.lang.psi.ApiTypes"/>-->
 
     </extensions>

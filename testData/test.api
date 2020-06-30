@@ -1,9 +1,9 @@
 - dsds: dsds
 - descrtion: 用户名密码登录
 
-PUT http://{{java}}httphttpsecho.tenon.dev:8080/post?nickname=tenon&age=18&dsfsf=asdfasf
+PUT https://{{java}}httphttpsecho.tenon.dev:8080/post?nic{{java}}kname=tenon&age=18&dsfsf=asdfasf
 Content-Type: application/json
-Accept: application/xml{{java}}
+Accept: application/xml{{php}}{{java}}
 
 {"what":"body"}
 
@@ -18,7 +18,7 @@ Accept: application/xml{{java}}
 - titd: dsd
 - descrdsdsd: hello
 
-OPTIONS http://{{java}}.tenon.集团:{{default}}80/segment1/segment2/?{{key1}} raw =value
+OPTIONS http://{{java}}.tenon.集团:{{default}}80/segment1/segment2/?{{key}} raw =value
 Casdsontedsdsnt{{java}}dsds: {{content_type}}
 
 body
@@ -45,6 +45,6 @@ body
 
 - dsds:d
 
-GET {{}}
+GET http://sdsd
 
 ---

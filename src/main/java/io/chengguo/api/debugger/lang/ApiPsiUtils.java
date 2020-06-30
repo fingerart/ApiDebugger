@@ -73,4 +73,15 @@ public class ApiPsiUtils {
         }
         return result;
     }*/
+
+    public static int skipWhitespacesForward(int offset, @NotNull final CharSequence text) {
+        while (offset < text.length() && isWhitespaceOrTab(text.charAt(offset))) {
+            ++offset;
+        }
+        return offset;
+    }
+
+    private static boolean isWhitespaceOrTab(final char c) {
+        return c == ' ' || c == '\t';
+    }
 }
