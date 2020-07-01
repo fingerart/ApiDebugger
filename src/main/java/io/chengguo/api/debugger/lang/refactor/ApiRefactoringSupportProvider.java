@@ -12,8 +12,7 @@ public class ApiRefactoringSupportProvider extends RefactoringSupportProvider {
      * 支持在原始位置重命名
      */
     @Override
-    public boolean isMemberInplaceRenameAvailable(@NotNull PsiElement element, @Nullable PsiElement context) {
-        System.out.println("element = " + element + ", context = " + context);
-        return element instanceof ApiNamedElement;
+    public boolean isMemberInplaceRenameAvailable(@NotNull PsiElement elementToRename, @Nullable PsiElement context) {
+        return elementToRename instanceof ApiNamedElement;
     }
 }

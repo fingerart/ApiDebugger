@@ -1,6 +1,5 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.impl.source.tree.CompositePsiElement;
@@ -20,7 +19,7 @@ public class ApiElementImpl extends CompositePsiElement implements ApiElement {
 
     @Override
     public String toString() {
-        final String className = getClass().getSimpleName();
+        String className = getClass().getSimpleName();
         return StringUtil.trimEnd(className, "Impl");
     }
 }

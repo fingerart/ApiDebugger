@@ -1,11 +1,12 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiReference;
+import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.util.ArrayUtil;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
-import io.chengguo.api.debugger.lang.psi.ApiVariableDefinitionReference;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class ApiVariableMixin extends ApiNamedElementImpl implements ApiVariable {
 
@@ -15,12 +16,19 @@ public abstract class ApiVariableMixin extends ApiNamedElementImpl implements Ap
 
     @Override
     public PsiReference getReference() {
-        PsiElement identifier = getIdentifier();
-        if (identifier != null) {
-            int startOffset = identifier.getTextRange().getStartOffset() - getTextRange().getStartOffset();
-            TextRange rangeInElement = new TextRange(startOffset, startOffset + identifier.getTextLength());
-            return new ApiVariableDefinitionReference<>(this, identifier.getText(), getTextRange(), rangeInElement);
-        }
-        return null;
+        PsiReference[] references = getReferences();
+        return ArrayUtil.isEmpty(references) ? null : references[0];
+    }
+
+    @NotNull
+    @Override
+    public PsiReference[] getReferences() {
+        // 向 ReferenceContributor 获取 PsiReference
+        return ReferenceProvidersRegistry.getReferencesFromProviders(this);
+    }
+
+    @Override
+    public ItemPresentation getPresentation() {
+        return ApiPsiElementPresentationFactory.getItemPresentation(this);
     }
 }

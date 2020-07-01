@@ -1,9 +1,5 @@
 package io.chengguo.api.debugger.lang.psi;
 
-import com.google.common.base.Strings;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.ide.scratch.ScratchUtil;
 import com.intellij.json.JsonUtil;
 import com.intellij.json.psi.JsonFile;
 import com.intellij.json.psi.JsonObject;
@@ -12,43 +8,49 @@ import com.intellij.json.psi.JsonValue;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.indexing.FileBasedIndex;
-import com.intellij.util.indexing.ID;
-import io.chengguo.api.debugger.ApiDebuggerIcons;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentInputFilter;
-import io.chengguo.api.debugger.lang.psi.impl.ApiNamedElementImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ApiVariableDefinitionReference<T extends ApiNamedElementImpl> extends PsiPolyVariantReferenceBase<T> {
+/**
+ * 变量定义引用
+ *
+ * @param <T>
+ */
+public class ApiVariableDefinitionReference<T extends ApiVariable> extends PsiPolyVariantReferenceBase<T> {
 
-    private final TextRange mRangeInElement;
-    private final String mIdentifier;
+    private TextRange mRangeInElement;
+    private String mIdentifier;
 
-    public ApiVariableDefinitionReference(@NotNull T element, String identifier, TextRange textRange, TextRange rangeInElement) {
-        super(element, textRange);
-        mIdentifier = identifier;
-        mRangeInElement = rangeInElement;
+    public ApiVariableDefinitionReference(@NotNull T element, TextRange range) {
+        super(element, range);
+        PsiElement identifier = myElement.getIdentifier();
+        if (identifier != null) {
+            int startOffset = identifier.getTextRange().getStartOffset() - myElement.getTextRange().getStartOffset();
+            mRangeInElement = new TextRange(startOffset, startOffset + identifier.getTextLength());
+            mIdentifier = identifier.getText();
+        }
     }
 
     @NotNull
     @Override
     public TextRange getRangeInElement() {
-        return mRangeInElement;
+        return mRangeInElement == null ? super.getRangeInElement() : mRangeInElement;
     }
 
     @NotNull
     @Override
     public ResolveResult[] multiResolve(boolean incompleteCode) {
+        if (StringUtil.isEmpty(mIdentifier)) {
+            return ResolveResult.EMPTY_ARRAY;
+        }
         Project project = myElement.getProject();
         PsiFile containingFile = myElement.getContainingFile();
         GlobalSearchScope scope = ApiEnvironmentIndex.getSearchScope(project, containingFile);
@@ -62,11 +64,6 @@ public class ApiVariableDefinitionReference<T extends ApiNamedElementImpl> exten
             }
         }
         return result.isEmpty() ? ResolveResult.EMPTY_ARRAY : result.toArray(ResolveResult.EMPTY_ARRAY);
-    }
-
-    @Override
-    public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
-        return myElement.setName(newElementName);
     }
 
     private void addVariableDefinitions(Project project, String name, String env, List<ResolveResult> result, GlobalSearchScope scope) {
@@ -87,34 +84,21 @@ public class ApiVariableDefinitionReference<T extends ApiNamedElementImpl> exten
         }, scope);
     }
 
-    @NotNull
-    @Override
-    public Object[] getVariants() {
-        Project project = myElement.getProject();
-//        List<ApiVariableName> variableNames = ApiPsiUtils.findVariableNames(project);
-        List<LookupElement> variants = new ArrayList<>();
-        /*for (ApiVariableName variableName : variableNames) {
-            if (!Strings.isNullOrEmpty(variableName.getName())) {
-                LookupElementBuilder lookupElementBuilder = LookupElementBuilder
-                        .create(variableName)
-                        .withIcon(ApiDebuggerIcons.FAVICON)
-                        .withTypeText(variableName.getContainingFile().getName());
-                variants.add(lookupElementBuilder);
-            }
-        }*/
-        return variants.toArray();
-    }
-
     @Override
     public boolean isReferenceTo(@NotNull PsiElement element) {
         return couldBeReferenceTo(element);
     }
 
     private boolean couldBeReferenceTo(@NotNull PsiElement element) {
-        if (element instanceof JsonProperty && StringUtil.equals(((JsonProperty)element).getName(), myElement.getName()) && element.isValid() && element.isPhysical()) {
-            final PsiFile file = element.getContainingFile();
+        if (element instanceof JsonProperty && StringUtil.equals(((JsonProperty) element).getName(), myElement.getName()) && element.isValid() && element.isPhysical()) {
+            PsiFile file = element.getContainingFile();
             return file != null && ApiEnvironmentInputFilter.isApiEnvFile(file.getVirtualFile());
         }
         return false;
+    }
+
+    @Override
+    public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
+        return myElement.setName(newElementName);
     }
 }

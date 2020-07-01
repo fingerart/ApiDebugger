@@ -1,12 +1,12 @@
 package io.chengguo.api.debugger.lang;
 
-import com.google.common.base.Strings;
 import com.intellij.lang.cacheBuilder.DefaultWordsScanner;
 import com.intellij.lang.cacheBuilder.WordsScanner;
 import com.intellij.lang.findUsages.FindUsagesProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
 import io.chengguo.api.debugger.lang.lexer.ApiLexerAdapter;
+import io.chengguo.api.debugger.lang.psi.ApiNamedElement;
 import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -28,8 +28,7 @@ public class ApiFindUsagesProvider implements FindUsagesProvider {
 
     @Override
     public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
-//        return psiElement instanceof ApiVariableName;
-        return false;
+        return psiElement instanceof ApiNamedElement;
     }
 
     @Nullable
@@ -42,7 +41,7 @@ public class ApiFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getType(@NotNull PsiElement element) {
-//        if (element instanceof ApiVariableName) {
+//        if (element instanceof ApiVariable) {
 //            return "Variable";
 //        }
         return "";
@@ -52,8 +51,8 @@ public class ApiFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getDescriptiveName(@NotNull PsiElement element) {
-//        if (element instanceof ApiVariableName) {
-//            return Strings.nullToEmpty(((ApiVariableName) element).getName());
+//        if (element instanceof ApiVariable) {
+//            return Strings.nullToEmpty(((ApiVariable) element).getName());
 //        }
         return "";
     }
@@ -62,6 +61,9 @@ public class ApiFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getNodeText(@NotNull PsiElement element, boolean useFullName) {
+//        if (element instanceof ApiVariable) {
+//            return ((ApiVariable) element).getName() + " ➞ " + "value";
+//        }
         return element.getText();
     }
 }
