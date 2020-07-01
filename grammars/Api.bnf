@@ -48,6 +48,7 @@
   methods("variable") = [
     getIdentifier
   ]
+  extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
 }
 
 apiFile ::= api_*

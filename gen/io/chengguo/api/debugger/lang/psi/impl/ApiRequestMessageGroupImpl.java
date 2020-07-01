@@ -13,7 +13,7 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 import com.intellij.psi.tree.IElementType;
 
-public class ApiRequestMessageGroupImpl extends ApiElementImpl implements ApiRequestMessageGroup {
+public class ApiRequestMessageGroupImpl extends ApiBodyMixin implements ApiRequestMessageGroup {
 
   public ApiRequestMessageGroupImpl(IElementType type) {
     super(type);
