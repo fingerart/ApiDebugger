@@ -58,24 +58,31 @@ private api_ ::= api_block (SEPARATOR api_block?)*
 api_block ::= (description request) | LINE_COMMENT | MULTILINE_COMMENT
 
 description ::= description_title description_content?
-description_title ::= '-' DESCRIPTION_KEY ':' LINE_TEXT {pin=1}
-description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT {pin=1}
+description_title ::= '-' DESCRIPTION_KEY ':' LINE_TEXT
+description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT
 
 request ::= request_line header_field* message_body
 
-request_line ::= method request_target {
-    pin=1
-}
+request_line ::= method request_target
 
 method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
 
-request_target ::= (scheme '://')? host (':' port?)? path_absolute
+request_target ::= full_scheme? host full_port? path_absolute
+
+private full_scheme ::= scheme '://'
+
+private full_port ::= ':' port
+
 scheme ::= 'http' | 'https'
+
 host ::= (variable | HOST_VALUE)+
+
 port ::= (variable | PORT_SEGMENT)+
 
 path_absolute ::= path_segment* path_query?
+
 private path_segment ::= '/' SEGMENT?
+
 private path_query ::= '?' query
 
 query ::= query_parameter ('&' query_parameter)*

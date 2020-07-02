@@ -12,7 +12,7 @@ public interface ApiRequestLine extends ApiElement {
   @NotNull
   ApiMethod getMethod();
 
-  @Nullable
+  @NotNull
   ApiRequestTarget getRequestTarget();
 
 }
