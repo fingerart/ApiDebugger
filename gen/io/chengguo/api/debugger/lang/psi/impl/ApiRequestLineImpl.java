@@ -39,7 +39,7 @@ public class ApiRequestLineImpl extends ApiElementImpl implements ApiRequestLine
   }
 
   @Override
-  @Nullable
+  @NotNull
   public ApiRequestTarget getRequestTarget() {
     return PsiTreeUtil.getChildOfType(this, ApiRequestTarget.class);
   }
