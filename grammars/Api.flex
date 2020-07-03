@@ -174,7 +174,7 @@ ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
 
 <IN_HTTP_QUERY_VALUE> {
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
-    [^\r\n&"{{"]+                                   { return Api_QUERY_VALUE; }
+    [^\r\n&"{{"]+                               { return Api_QUERY_VALUE; }
     "&"                                         { popState(); return Api_AMPERSAND;}
     {NL}+                                       { yypushback(yylength()); popState(); }
 }

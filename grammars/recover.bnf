@@ -1,0 +1,12 @@
+{
+    generate=[java="8" names="long"]
+    tokens=[number="regexp:\d+" comma="," paren1="(" paren2=")" letter="\w+"]
+}
+
+list ::= "(" items? ")" {pin=1} // or {pin="("}
+
+private items ::= [!")" item (',' item) * ] {pin(".*")=1}
+
+item ::= number
+
+private item_recover ::= !(")" | ",")

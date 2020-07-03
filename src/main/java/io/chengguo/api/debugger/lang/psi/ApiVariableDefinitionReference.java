@@ -101,4 +101,9 @@ public class ApiVariableDefinitionReference<T extends ApiVariable> extends PsiPo
     public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
         return myElement.setName(newElementName);
     }
+
+    @Override
+    public boolean isSoft() {
+        return super.isSoft();
+    }
 }
