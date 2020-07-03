@@ -55,7 +55,11 @@ apiFile ::= api_*
 
 private api_ ::= api_block (SEPARATOR api_block?)*
 
-api_block ::= (description request) | LINE_COMMENT | MULTILINE_COMMENT
+api_block ::= (description request) | LINE_COMMENT | MULTILINE_COMMENT {
+    recoverWhile=recover_api_block
+}
+
+private recover_api_block ::= !("---")
 
 description ::= description_title description_content?
 description_title ::= '-' DESCRIPTION_KEY ':' LINE_TEXT
