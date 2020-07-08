@@ -15,7 +15,7 @@ public interface ApiRequest extends ApiElement {
   @NotNull
   ApiRequestLine getRequestLine();
 
-  @NotNull
+  @Nullable
   ApiRequestMessageGroup getRequestMessageGroup();
 
 }

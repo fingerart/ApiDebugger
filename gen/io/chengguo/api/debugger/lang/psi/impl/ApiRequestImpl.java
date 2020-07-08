@@ -45,7 +45,7 @@ public class ApiRequestImpl extends ApiElementImpl implements ApiRequest {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ApiRequestMessageGroup getRequestMessageGroup() {
     return PsiTreeUtil.getChildOfType(this, ApiRequestMessageGroup.class);
   }

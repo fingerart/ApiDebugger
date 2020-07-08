@@ -76,6 +76,9 @@ METHOD = {OPTIONS} | {GET} | {HEAD} | {POST} | {PUT} | {DELETE} | {TRACE} | {CON
 LBRACES = "{{"
 RBRACES = "}}"
 ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
+SEPARATOR = "---"
+HEADER_FIELD_NAME = [^ \n\t\f:"{{"] ([^\n\t\f:"{{"]* [^ \n\t\f:"{{"])?
+MESSAGE_TEXT = [^ \r\n"---"] ([^\r\n]* ([\r\n]+ [^\r\n"---"])? )*
 
 %state IN_HTTP_REQUEST
 %state IN_HTTP_PATH
@@ -97,7 +100,7 @@ ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
     ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
     {END_OF_LINE_COMMENT}                       { return Api_LINE_COMMENT; }
     {MULTILINE_COMMENT}                         { return Api_MULTILINE_COMMENT; }
-    "--" "-" [^\r\n]*                           { return Api_SEPARATOR; }
+    {SEPARATOR} [^\r\n]*                        { return Api_SEPARATOR; }
     {METHOD}                                    { yypushback(yylength()); pushState(IN_HTTP_REQUEST); }
     "-"                                         { yypushback(yylength()); pushState(IN_DESCRIPTION); }
 }
@@ -183,7 +186,7 @@ ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
     {WS}+                                       { return TokenType.WHITE_SPACE; }
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
     {NL}                                        { return TokenType.WHITE_SPACE; }
-    [^ \n\t\f:"{{"] ([^\n\t\f:"{{"]* [^ \n\t\f:"{{"])?   { return Api_HEADER_FIELD_NAME; } // 排除起始和末尾位置的空格
+    {HEADER_FIELD_NAME}                         { return Api_HEADER_FIELD_NAME; } // 排除起始和末尾位置的空格
     ":"                                         { pushState(IN_HEADER_VALUE); return Api_COLON; }
     {NL} {NL}+                                  { pushState(IN_MESSAGE_BODY); return TokenType.WHITE_SPACE; }
 }
@@ -197,8 +200,9 @@ ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
 }
 
 <IN_MESSAGE_BODY> {
-    ({NL}|{WS})+                                { return TokenType.WHITE_SPACE; }
-    [^\ \r\n\t\f]+                              { pushState(YYINITIAL); return Api_MESSAGE_TEXT; }
+    ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
+    {MESSAGE_TEXT}                              { return Api_MESSAGE_TEXT; }
+    {SEPARATOR}                                 { yypushback(yylength()); pushState(YYINITIAL); }
 }
 
 //BEFORE_MESSAGE_BODY
