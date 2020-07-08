@@ -59,15 +59,19 @@ api_block ::= (description request) | LINE_COMMENT | MULTILINE_COMMENT {
     recoverWhile=recover_api_block
 }
 
-private recover_api_block ::= !("---")
-
 description ::= description_title description_content?
-description_title ::= '-' DESCRIPTION_KEY ':' LINE_TEXT
-description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT
+description_title ::= '-' DESCRIPTION_KEY ':' LINE_TEXT? {
+    pin=1
+}
+description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT? {
+    pin=1
+}
 
-request ::= request_line header_field* message_body
+request ::= request_line header_field* message_body?
 
-request_line ::= method request_target
+request_line ::= method request_target {
+    pin(".*")=1
+}
 
 method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
 
@@ -102,3 +106,5 @@ private message_body ::= request_message_group /* | multipart_message*/
 request_message_group ::= MESSAGE_TEXT
 
 variable ::= '{{' IDENTIFIER? '}}'
+
+private recover_api_block ::= !("---")

@@ -2,49 +2,40 @@
 - descrtion: 用户名密码登录
 
 PUT https://{{host1}}httphttpsecho.tenon.dev:8080/post?nic{{host1}}kname=tenon&age=18&dsfsf=asdfasf
-Content-Type: application/json
-Accept: application/xml{{php2}}{{host1}}{{haha2}}
+Content-Type:json
 
-{"what":"body"}
 
----
+dsds
 
-// This line comment
+sdslkl
 
-/**
- * This block comment
- */
 
-- titd: dsd
-- descrdsdsd: hello
 
-OPTIONS http://{{host1}}.tenon.集团:{{default}}80/segment1/segment2/?{{key123}} raw =value
-Casdsontedsdsnt{{host1}}dsds: {{content_type}}{{content_type2}}
+k
 
-body
+k ;j;
 
----
 
-// This line comment
 
-- title: echo
+k
 
-GET https://echo.tenon.dev:8080/hello/world
-Key: {{key123}}
-Value: {{value}}
 
-body
-
-/*
- * asdfa
- * adsfsaf
- */
 
 
 ---
 
-- dsds:d
+- dsds:
+- ddsdsd:
 
-GET http://sdsd
+GET httdksdls?dsds==
+
+
+
 
 ---
+
+- dsds: dsds
+
+GET httdksdls
+
+
