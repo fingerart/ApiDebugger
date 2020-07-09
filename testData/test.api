@@ -1,3 +1,4 @@
+
 - dsds: dsds
 - descrtion: 用户名密码登录
 
@@ -27,15 +28,14 @@ k
 - dsds:
 - ddsdsd:
 
-GET httdksdls?dsds==
+GET httdksdls?dsds=dasdsds
 
 
 
 
 ---
 
-- dsds: dsds
+- ds:dsds
 
-GET httdksdls
-
-
+GET http://httdksdls?dsds==
+sds:sdsd

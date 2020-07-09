@@ -11,15 +11,10 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
-import com.intellij.psi.tree.IElementType;
 
 public class ApiQueryParameterImpl extends ApiElementImpl implements ApiQueryParameter {
 
-  public ApiQueryParameterImpl(IElementType type) {
-    super(type);
-  }
-
-  public ApiQueryParameterImpl(@NotNull ASTNode node) {
+  public ApiQueryParameterImpl(ASTNode node) {
     super(node);
   }
 
@@ -35,13 +30,13 @@ public class ApiQueryParameterImpl extends ApiElementImpl implements ApiQueryPar
   @Override
   @NotNull
   public ApiQueryParameterKey getQueryParameterKey() {
-    return PsiTreeUtil.getChildOfType(this, ApiQueryParameterKey.class);
+    return findNotNullChildByClass(ApiQueryParameterKey.class);
   }
 
   @Override
   @Nullable
   public ApiQueryParameterValue getQueryParameterValue() {
-    return PsiTreeUtil.getChildOfType(this, ApiQueryParameterValue.class);
+    return findChildByClass(ApiQueryParameterValue.class);
   }
 
 }

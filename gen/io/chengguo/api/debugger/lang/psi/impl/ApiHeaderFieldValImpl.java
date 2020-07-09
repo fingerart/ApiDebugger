@@ -11,15 +11,10 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
-import com.intellij.psi.tree.IElementType;
 
 public class ApiHeaderFieldValImpl extends ApiElementImpl implements ApiHeaderFieldVal {
 
-  public ApiHeaderFieldValImpl(IElementType type) {
-    super(type);
-  }
-
-  public ApiHeaderFieldValImpl(@NotNull ASTNode node) {
+  public ApiHeaderFieldValImpl(ASTNode node) {
     super(node);
   }
 

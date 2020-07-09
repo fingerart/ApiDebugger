@@ -11,12 +11,11 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
-import com.intellij.psi.tree.IElementType;
 
 public class ApiVariableImpl extends ApiVariableMixin implements ApiVariable {
 
-  public ApiVariableImpl(IElementType type) {
-    super(type);
+  public ApiVariableImpl(ASTNode node) {
+    super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
@@ -26,11 +25,6 @@ public class ApiVariableImpl extends ApiVariableMixin implements ApiVariable {
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  public PsiElement getIdentifier() {
-    return ApiPsiImplUtils.getIdentifier(this);
   }
 
 }

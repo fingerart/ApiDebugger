@@ -21,10 +21,6 @@ public abstract class ApiNamedElementImpl extends ApiElementImpl implements ApiN
 
     private String mCachedName;
 
-    public ApiNamedElementImpl(IElementType type) {
-        super(type);
-    }
-
     public ApiNamedElementImpl(@NotNull ASTNode node) {
         super(node);
     }

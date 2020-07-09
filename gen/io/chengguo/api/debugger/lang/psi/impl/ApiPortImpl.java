@@ -11,15 +11,10 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
-import com.intellij.psi.tree.IElementType;
 
 public class ApiPortImpl extends ApiElementImpl implements ApiPort {
 
-  public ApiPortImpl(IElementType type) {
-    super(type);
-  }
-
-  public ApiPortImpl(@NotNull ASTNode node) {
+  public ApiPortImpl(ASTNode node) {
     super(node);
   }
 

@@ -71,6 +71,6 @@ public class ApiParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public PsiElement createElement(ASTNode node) {
-        throw new UnsupportedOperationException(node.getElementType().toString());
+        return ApiTypes.Factory.createElement(node);
     }
 }

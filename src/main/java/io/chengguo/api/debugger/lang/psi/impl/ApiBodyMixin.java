@@ -8,9 +8,6 @@ import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
 public class ApiBodyMixin extends ApiElementImpl implements PsiLanguageInjectionHost {
-    public ApiBodyMixin(IElementType type) {
-        super(type);
-    }
 
     public ApiBodyMixin(@NotNull ASTNode node) {
         super(node);
