@@ -9,6 +9,4 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiVariable extends ApiNamedElement {
 
-  PsiElement getIdentifier();
-
 }

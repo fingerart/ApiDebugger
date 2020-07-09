@@ -8,6 +8,7 @@ import com.intellij.lang.PsiBuilder.Marker;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import static io.chengguo.api.debugger.lang.parser.ApiParserUtil.*;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.IFileElementType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.lang.PsiParser;
@@ -25,15 +26,16 @@ public class ApiParser implements PsiParser, LightPsiParser {
     boolean result;
     builder = adapt_builder_(type, builder, this, null);
     Marker marker = enter_section_(builder, 0, _COLLAPSE_, null);
-    result = parse_root_(type, builder);
+    if (type instanceof IFileElementType) {
+      result = parse_root_(type, builder, 0);
+    }
+    else {
+      result = false;
+    }
     exit_section_(builder, 0, marker, type, result, true, TRUE_CONDITION);
   }
 
-  protected boolean parse_root_(IElementType type, PsiBuilder builder) {
-    return parse_root_(type, builder, 0);
-  }
-
-  static boolean parse_root_(IElementType type, PsiBuilder builder, int level) {
+  protected boolean parse_root_(IElementType type, PsiBuilder builder, int level) {
     return apiFile(builder, level + 1);
   }
 
@@ -91,26 +93,49 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (description request) | LINE_COMMENT | MULTILINE_COMMENT
+  // comment* description comment* request
   public static boolean api_block(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "api_block")) return false;
     boolean result;
     Marker marker = enter_section_(builder, level, _NONE_, Api_API_BLOCK, "<api block>");
     result = api_block_0(builder, level + 1);
-    if (!result) result = consumeToken(builder, Api_LINE_COMMENT);
-    if (!result) result = consumeToken(builder, Api_MULTILINE_COMMENT);
+    result = result && description(builder, level + 1);
+    result = result && api_block_2(builder, level + 1);
+    result = result && request(builder, level + 1);
     exit_section_(builder, level, marker, result, false, ApiParser::recover_api_block);
     return result;
   }
 
-  // description request
+  // comment*
   private static boolean api_block_0(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "api_block_0")) return false;
+    while (true) {
+      int pos = current_position_(builder);
+      if (!comment(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "api_block_0", pos)) break;
+    }
+    return true;
+  }
+
+  // comment*
+  private static boolean api_block_2(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "api_block_2")) return false;
+    while (true) {
+      int pos = current_position_(builder);
+      if (!comment(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "api_block_2", pos)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // LINE_COMMENT | MULTILINE_COMMENT
+  static boolean comment(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "comment")) return false;
+    if (!nextTokenIs(builder, "", Api_LINE_COMMENT, Api_MULTILINE_COMMENT)) return false;
     boolean result;
-    Marker marker = enter_section_(builder);
-    result = description(builder, level + 1);
-    result = result && request(builder, level + 1);
-    exit_section_(builder, marker, null, result);
+    result = consumeToken(builder, Api_LINE_COMMENT);
+    if (!result) result = consumeToken(builder, Api_MULTILINE_COMMENT);
     return result;
   }
 
@@ -605,13 +630,12 @@ public class ApiParser implements PsiParser, LightPsiParser {
   // method request_target
   public static boolean request_line(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_line")) return false;
-    boolean result, pinned;
+    boolean result;
     Marker marker = enter_section_(builder, level, _NONE_, Api_REQUEST_LINE, "<request line>");
     result = method(builder, level + 1);
-    pinned = result; // pin = 1
     result = result && request_target(builder, level + 1);
-    exit_section_(builder, level, marker, result, pinned, null);
-    return result || pinned;
+    exit_section_(builder, level, marker, result, false, null);
+    return result;
   }
 
   /* ********************************************************** */
@@ -672,13 +696,14 @@ public class ApiParser implements PsiParser, LightPsiParser {
   public static boolean variable(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "variable")) return false;
     if (!nextTokenIs(builder, Api_LBRACES)) return false;
-    boolean result;
-    Marker marker = enter_section_(builder);
+    boolean result, pinned;
+    Marker marker = enter_section_(builder, level, _NONE_, Api_VARIABLE, null);
     result = consumeToken(builder, Api_LBRACES);
-    result = result && variable_1(builder, level + 1);
-    result = result && consumeToken(builder, Api_RBRACES);
-    exit_section_(builder, marker, Api_VARIABLE, result);
-    return result;
+    pinned = result; // pin = 1
+    result = result && report_error_(builder, variable_1(builder, level + 1));
+    result = pinned && consumeToken(builder, Api_RBRACES) && result;
+    exit_section_(builder, level, marker, result, pinned, null);
+    return result || pinned;
   }
 
   // IDENTIFIER?

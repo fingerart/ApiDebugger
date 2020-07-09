@@ -11,15 +11,10 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
-import com.intellij.psi.tree.IElementType;
 
 public class ApiRequestMessageGroupImpl extends ApiBodyMixin implements ApiRequestMessageGroup {
 
-  public ApiRequestMessageGroupImpl(IElementType type) {
-    super(type);
-  }
-
-  public ApiRequestMessageGroupImpl(@NotNull ASTNode node) {
+  public ApiRequestMessageGroupImpl(ASTNode node) {
     super(node);
   }
 

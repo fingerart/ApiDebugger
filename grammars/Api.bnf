@@ -45,9 +45,6 @@
 
   implements("variable") = "io.chengguo.api.debugger.lang.psi.ApiNamedElement"
   extends("variable") = "io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"
-  methods("variable") = [
-    getIdentifier
-  ]
   extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
 }
 
@@ -55,7 +52,7 @@ apiFile ::= api_*
 
 private api_ ::= api_block (SEPARATOR api_block?)*
 
-api_block ::= (description request) | LINE_COMMENT | MULTILINE_COMMENT {
+api_block ::= comment* description comment* request {
     recoverWhile=recover_api_block
 }
 
@@ -69,9 +66,7 @@ description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT? {
 
 request ::= request_line header_field* message_body?
 
-request_line ::= method request_target {
-    pin(".*")=1
-}
+request_line ::= method request_target
 
 method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
 
@@ -105,6 +100,10 @@ header_field_val ::= (variable | HEADER_FIELD_VALUE)+
 private message_body ::= request_message_group /* | multipart_message*/
 request_message_group ::= MESSAGE_TEXT
 
-variable ::= '{{' IDENTIFIER? '}}'
+variable ::= '{{' IDENTIFIER? '}}' {
+    pin=1
+}
+
+private comment ::= LINE_COMMENT | MULTILINE_COMMENT
 
 private recover_api_block ::= !("---")

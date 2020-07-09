@@ -9,10 +9,10 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiApiBlock extends ApiElement {
 
-  @Nullable
+  @NotNull
   ApiDescription getDescription();
 
-  @Nullable
+  @NotNull
   ApiRequest getRequest();
 
 }

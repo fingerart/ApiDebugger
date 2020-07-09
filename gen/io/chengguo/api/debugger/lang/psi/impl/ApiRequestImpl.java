@@ -11,15 +11,10 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
-import com.intellij.psi.tree.IElementType;
 
 public class ApiRequestImpl extends ApiElementImpl implements ApiRequest {
 
-  public ApiRequestImpl(IElementType type) {
-    super(type);
-  }
-
-  public ApiRequestImpl(@NotNull ASTNode node) {
+  public ApiRequestImpl(ASTNode node) {
     super(node);
   }
 
@@ -41,13 +36,13 @@ public class ApiRequestImpl extends ApiElementImpl implements ApiRequest {
   @Override
   @NotNull
   public ApiRequestLine getRequestLine() {
-    return PsiTreeUtil.getChildOfType(this, ApiRequestLine.class);
+    return findNotNullChildByClass(ApiRequestLine.class);
   }
 
   @Override
   @Nullable
   public ApiRequestMessageGroup getRequestMessageGroup() {
-    return PsiTreeUtil.getChildOfType(this, ApiRequestMessageGroup.class);
+    return findChildByClass(ApiRequestMessageGroup.class);
   }
 
 }

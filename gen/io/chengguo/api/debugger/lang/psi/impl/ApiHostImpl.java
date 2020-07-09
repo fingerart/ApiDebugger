@@ -11,15 +11,10 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
-import com.intellij.psi.tree.IElementType;
 
 public class ApiHostImpl extends ApiElementImpl implements ApiHost {
 
-  public ApiHostImpl(IElementType type) {
-    super(type);
-  }
-
-  public ApiHostImpl(@NotNull ASTNode node) {
+  public ApiHostImpl(ASTNode node) {
     super(node);
   }
 

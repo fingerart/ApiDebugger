@@ -11,15 +11,10 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
-import com.intellij.psi.tree.IElementType;
 
 public class ApiDescriptionTitleImpl extends ApiElementImpl implements ApiDescriptionTitle {
 
-  public ApiDescriptionTitleImpl(IElementType type) {
-    super(type);
-  }
-
-  public ApiDescriptionTitleImpl(@NotNull ASTNode node) {
+  public ApiDescriptionTitleImpl(ASTNode node) {
     super(node);
   }
 
