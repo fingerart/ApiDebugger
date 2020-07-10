@@ -26,15 +26,15 @@
                                   implementationClass="io.chengguo.api.debugger.lang.run.ApiLineMarkerProvider"/>
         <completion.contributor language="Api"
                                 implementationClass="io.chengguo.api.debugger.lang.completion.ApiCompletionContributor"/>
-<!--        <renamePsiElementProcessor-->
-<!--                implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableRenameProcessor"/>-->
-        <!--        <renameHandler implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiFromEditorRenameHandler"/>-->
+<!--                <renamePsiElementProcessor-->
+<!--                        implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableRenameProcessor"/>-->
+<!--        <renameHandler implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiFromEditorRenameHandler"/>-->
         <!--        <inlineActionHandler implementation="io.chengguo.api.debugger.lang.refactor.ApiInlineVariableActionHandler"/>-->
         <lang.findUsagesProvider language="Api"
                                  implementationClass="io.chengguo.api.debugger.lang.ApiFindUsagesProvider"/>
         <lang.refactoringSupport
                 language="Api"
-                implementationClass="io.chengguo.api.debugger.lang.refactor.ApiRefactoringSupportProvider"/>
+                implementationClass="io.chengguo.api.debugger.lang.refactor.ApiInplaceRefactoringSupportProvider"/>
         <psi.referenceContributor language="Api"
                                   implementation="io.chengguo.api.debugger.lang.psi.ApiReferenceContributor"/>
         <fileBasedIndex implementation="io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex"/>
@@ -44,6 +44,7 @@
         <lang.braceMatcher language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiPairedBraceMatcher"/>
         <nameSuggestionProvider
                 implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableNameSuggestionProvider"/>
+        <multiHostInjector implementation="io.chengguo.api.debugger.lang.injection.ApiRequestBodyInjector"/>
         <errorHandler implementation="io.chengguo.api.debugger.ApiDebuggerErrorReportSubmitter"/>
     </extensions>
 

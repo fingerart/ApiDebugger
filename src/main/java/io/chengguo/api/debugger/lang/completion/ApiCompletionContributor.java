@@ -16,6 +16,11 @@ import java.util.List;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
+/**
+ * 完成贡献者
+ * <br/>
+ * 当输入中或按 ⌃Space 时的内容展示
+ */
 public class ApiCompletionContributor extends CompletionContributor {
     public static final List<String> METHODS = ContainerUtil.newArrayList("GET", "POST", "HEAD", "PUT", "DELETE", "CONNECT", "PATCH", "OPTIONS", "TRACE");
     public static final List<String> SCHEMES = ContainerUtil.newArrayList("http", "https");
@@ -24,6 +29,7 @@ public class ApiCompletionContributor extends CompletionContributor {
 //        extend(CompletionType.BASIC, psiElement(ApiTypes.Api_METHOD).withParent(ApiRequestLine.class), MethodCompletionProvider.INSTANCE);
 //        extend(CompletionType.BASIC, psiElement(ApiTypes.Api_SCHEME), SchemeCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_IDENTIFIER), VariableCompletionProvider.INSTANCE);
+        extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_NAME), HeaderNameProvider.INSTANCE);
     }
 
     private static class VariableCompletionProvider extends CompletionProvider<CompletionParameters> {
@@ -73,6 +79,16 @@ public class ApiCompletionContributor extends CompletionContributor {
             for (final String scheme : SCHEMES) {
                 result.addElement(LookupElementBuilder.create(scheme).withBoldness(true).withInsertHandler(ApiSuffixInsertHandler.SCHEME));
             }
+        }
+    }
+
+    private static class HeaderNameProvider extends CompletionProvider<CompletionParameters> {
+        private static final HeaderNameProvider INSTANCE = new HeaderNameProvider();
+
+        @Override
+        protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
+
+            result.addElement(LookupElementBuilder.create("Content-Type").withIcon(PlatformIcons.EXPORT_ICON));
         }
     }
 }

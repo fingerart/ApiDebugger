@@ -2,12 +2,9 @@ package io.chengguo.api.debugger.lang.refactor.rename;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.FakePsiElement;
 import com.intellij.psi.search.SearchScope;
 import com.intellij.refactoring.rename.RenamePsiElementProcessor;
 import com.intellij.usageView.UsageInfo;
-import io.chengguo.api.debugger.lang.psi.ApiNamedElement;
-import io.chengguo.api.debugger.lang.psi.ApiVariable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -18,7 +15,8 @@ import java.util.Map;
 public class ApiVariableRenameProcessor extends RenamePsiElementProcessor {
     @Override
     public boolean canProcessElement(@NotNull PsiElement element) {
-        return true;
+        System.out.println("ApiVariableRenameProcessor.canProcessElement " + "element = " + element);
+        return false;
     }
 
     @NotNull

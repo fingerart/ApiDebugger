@@ -8,7 +8,8 @@ import com.intellij.psi.tree.IElementType;
 import io.chengguo.api.debugger.lang.psi.ApiElement;
 import org.jetbrains.annotations.NotNull;
 
-public class ApiElementImpl extends ASTWrapperPsiElement/*CompositePsiElement*/ implements ApiElement {
+//CompositePsiElement
+public class ApiElementImpl extends ASTWrapperPsiElement implements ApiElement {
 
     public ApiElementImpl(@NotNull ASTNode node) {
         super(node);

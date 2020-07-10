@@ -1,9 +1,9 @@
 - title: dsds
 - descrtion: 用户名密码登录
 
-PUT https://{{host1}}httphttpsecho.tenon.dev:8080/post?nic{{host1}}kname=tenon&age=18&dsfsf=asdfasf
+PUT https://{{hello1}}httphttpsecho.tenon.dev:8080/post?nic{{host}}kname=tenon&age=18&dsfsf=asdfasf
 Content-Type: application/json
-Accept: application/xml{{php2}}{{host1}}{{haha2}}
+Accept: application/xml{{php2}}{{host}}{{haha1}}
 
 {"what":"body"}
 
@@ -24,10 +24,11 @@ Accept: application/xml{{php2}}{{host1}}{{haha2}}
 - title: dsdasdfsa safdasf
 - descrdsdsd: hello
 
-GET http://{{host1}}.tenon.集团:{{default}}80/segment1/segment2/?{{key123}} raw =value
-Casdsontedsdsnt{{host1}}dsds: {{content_type}}{{content_type2}}
+GET http://{{host}}.tenon.集团:{{default}}80/segment1/segment2/?{{key123}} raw =value
+Casdsontedsdsnt{{host}}dsds: {{content_type}}{{content_type2}}
+Content-Type: dsdfs
 
-body
+[2, 1]
 
 ---
 
@@ -39,7 +40,9 @@ GET https://echo.tenon.dev:8080/hello/world
 Key: {{key123}}
 Value: {{value}}
 
-body
+{
+
+}
 
 
 ---
@@ -47,9 +50,3 @@ body
 - dsds:d
 
 GET http://sdsd
-dsdsd:dsds
-
-dsdsd
-
-
-asdasda
