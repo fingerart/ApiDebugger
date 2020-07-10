@@ -2,7 +2,7 @@
 - dsds: dsds
 - descrtion: 用户名密码登录
 
-PUT https://{{host1}}httphttpsecho.tenon.dev:8080/post?nic{{host1}}kname=tenon&age=18&dsfsf=asdfasf
+PUT https://{{host}}httphttpsecho.tenon.dev:8080/post?nic{{host}}kname=tenon&age=18&dsfsf=asdfasf
 Content-Type:json
 
 

@@ -58,3 +58,16 @@ compileJava {
     dependsOn generateApiLexer
     dependsOn generateApiParser
 }
+
+task generateHttpHeaders(type: Exec) {
+    def rootPath = rootProject.rootDir
+    def properties = new Properties()
+    try {
+        properties.load(rootProject.file('local.properties').newDataInputStream())
+    } catch (ignored) {
+    }
+    def pythonExec = properties.get("python", "python")
+
+    workingDir './tools'
+    commandLine pythonExec, "generate-http-headers.py", "http-headers.json", "$rootPath/src/main/resources/raw"
+}

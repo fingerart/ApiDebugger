@@ -102,8 +102,15 @@ public class ApiVariableDefinitionReference<T extends ApiVariable> extends PsiPo
         return myElement.setName(newElementName);
     }
 
+    @NotNull
+    @Override
+    public Object[] getVariants() {
+        // ⌃Space 或输入时，出现在建议选项中
+        return super.getVariants();
+    }
+
     @Override
     public boolean isSoft() {
-        return super.isSoft();
+        return false;
     }
 }

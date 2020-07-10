@@ -21,7 +21,7 @@ public class ApiPsiElementPresentationFactory {
             @Nullable
             @Override
             public String getLocationString() {
-                return null;
+                return "我是ItemPresentation";
             }
 
             @Nullable
