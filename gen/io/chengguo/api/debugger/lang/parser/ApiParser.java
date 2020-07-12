@@ -93,7 +93,7 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // comment* description comment* request
+  // comment* description comment* request?
   public static boolean api_block(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "api_block")) return false;
     boolean result;
@@ -101,7 +101,7 @@ public class ApiParser implements PsiParser, LightPsiParser {
     result = api_block_0(builder, level + 1);
     result = result && description(builder, level + 1);
     result = result && api_block_2(builder, level + 1);
-    result = result && request(builder, level + 1);
+    result = result && api_block_3(builder, level + 1);
     exit_section_(builder, level, marker, result, false, ApiParser::recover_api_block);
     return result;
   }
@@ -125,6 +125,13 @@ public class ApiParser implements PsiParser, LightPsiParser {
       if (!comment(builder, level + 1)) break;
       if (!empty_element_parsed_guard_(builder, "api_block_2", pos)) break;
     }
+    return true;
+  }
+
+  // request?
+  private static boolean api_block_3(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "api_block_3")) return false;
+    request(builder, level + 1);
     return true;
   }
 
@@ -575,23 +582,13 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !("---")
+  // !(SEPARATOR)
   static boolean recover_api_block(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "recover_api_block")) return false;
     boolean result;
     Marker marker = enter_section_(builder, level, _NOT_);
-    result = !recover_api_block_0(builder, level + 1);
+    result = !consumeToken(builder, Api_SEPARATOR);
     exit_section_(builder, level, marker, result, false, null);
-    return result;
-  }
-
-  // ("---")
-  private static boolean recover_api_block_0(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "recover_api_block_0")) return false;
-    boolean result;
-    Marker marker = enter_section_(builder);
-    result = consumeToken(builder, "---");
-    exit_section_(builder, marker, null, result);
     return result;
   }
 
@@ -630,12 +627,13 @@ public class ApiParser implements PsiParser, LightPsiParser {
   // method request_target
   public static boolean request_line(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_line")) return false;
-    boolean result;
+    boolean result, pinned;
     Marker marker = enter_section_(builder, level, _NONE_, Api_REQUEST_LINE, "<request line>");
     result = method(builder, level + 1);
+    pinned = result; // pin = 1
     result = result && request_target(builder, level + 1);
-    exit_section_(builder, level, marker, result, false, null);
-    return result;
+    exit_section_(builder, level, marker, result, pinned, null);
+    return result || pinned;
   }
 
   /* ********************************************************** */

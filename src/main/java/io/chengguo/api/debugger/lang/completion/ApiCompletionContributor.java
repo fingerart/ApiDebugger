@@ -4,11 +4,16 @@ import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
+import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex;
+import io.chengguo.api.debugger.lang.formatter.ApiBlock;
 import io.chengguo.api.debugger.lang.psi.*;
+import io.chengguo.api.debugger.ui.header.HttpHeaderDocumentation;
+import io.chengguo.api.debugger.ui.header.HttpHeadersDictionary;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -19,15 +24,15 @@ import static com.intellij.patterns.PlatformPatterns.psiElement;
 /**
  * 完成贡献者
  * <br/>
- * 当输入中或按 ⌃Space 时的内容展示
+ * 当输入中 或 按 ⌃Space 时的内容展示
  */
 public class ApiCompletionContributor extends CompletionContributor {
     public static final List<String> METHODS = ContainerUtil.newArrayList("GET", "POST", "HEAD", "PUT", "DELETE", "CONNECT", "PATCH", "OPTIONS", "TRACE");
     public static final List<String> SCHEMES = ContainerUtil.newArrayList("http", "https");
 
     public ApiCompletionContributor() {
-//        extend(CompletionType.BASIC, psiElement(ApiTypes.Api_METHOD).withParent(ApiRequestLine.class), MethodCompletionProvider.INSTANCE);
-//        extend(CompletionType.BASIC, psiElement(ApiTypes.Api_SCHEME), SchemeCompletionProvider.INSTANCE);
+//        extend(CompletionType.BASIC, psiElement(), MethodCompletionProvider.INSTANCE);
+        extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HOST_VALUE).withParent(ApiHost.class), SchemeCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_IDENTIFIER), VariableCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_NAME), HeaderNameProvider.INSTANCE);
     }
@@ -50,12 +55,12 @@ public class ApiCompletionContributor extends CompletionContributor {
         }
 
         private void fillVariables(Collection<String> allVariables, PsiElement element, CompletionResultSet result) {
+            CompletionResultSet resultSet = result.caseInsensitive();
             for (String variable : allVariables) {
-                result.addElement(LookupElementBuilder
-                        .create(variable)
+                LookupElementBuilder lookupBuilder = LookupElementBuilder.create(variable)
                         .withIcon(PlatformIcons.VARIABLE_ICON)
-                        .withInsertHandler(ApiSuffixInsertHandler.VARIABLE_OPTION)
-                );
+                        .withInsertHandler(ApiSuffixInsertHandler.VARIABLE_OPTION);
+                resultSet.addElement(lookupBuilder);
             }
         }
     }
@@ -65,8 +70,13 @@ public class ApiCompletionContributor extends CompletionContributor {
 
         @Override
         protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
-            for (final String method : METHODS) {
-                result.addElement(LookupElementBuilder.create(method).withIcon(PlatformIcons.METHOD_ICON).withBoldness(true).withInsertHandler(AddSpaceInsertHandler.INSTANCE));
+            CompletionResultSet resultSet = result.caseInsensitive();
+            for (String method : METHODS) {
+                LookupElementBuilder lookupBuilder = LookupElementBuilder.create(method)
+                        .withIcon(PlatformIcons.METHOD_ICON)
+                        .withBoldness(true)
+                        .withInsertHandler(AddSpaceInsertHandler.INSTANCE);
+                resultSet.addElement(lookupBuilder);
             }
         }
     }
@@ -76,8 +86,13 @@ public class ApiCompletionContributor extends CompletionContributor {
 
         @Override
         protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
-            for (final String scheme : SCHEMES) {
-                result.addElement(LookupElementBuilder.create(scheme).withBoldness(true).withInsertHandler(ApiSuffixInsertHandler.SCHEME));
+            CompletionResultSet resultSet = result.caseInsensitive();
+            for (String scheme : SCHEMES) {
+                LookupElementBuilder lookupBuilder = LookupElementBuilder.create(scheme)
+                        .withBoldness(true)
+                        .withIcon(PlatformIcons.FIELD_ICON)
+                        .withInsertHandler(ApiSuffixInsertHandler.SCHEME);
+                resultSet.addElement(lookupBuilder);
             }
         }
     }
@@ -87,8 +102,15 @@ public class ApiCompletionContributor extends CompletionContributor {
 
         @Override
         protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
-
-            result.addElement(LookupElementBuilder.create("Content-Type").withIcon(PlatformIcons.EXPORT_ICON));
+            CompletionResultSet resultSet = result.caseInsensitive();
+            for (HttpHeaderDocumentation header : HttpHeadersDictionary.getHeaders().values()) {
+                LookupElementBuilder lookupBuilder = LookupElementBuilder.create(header, header.getName())
+                        .withStrikeoutness(header.isDeprecated())
+                        .withIcon(PlatformIcons.METHOD_ICON)
+                        .withTypeIconRightAligned(true)
+                        .withInsertHandler(ApiSuffixInsertHandler.FIELD_SEPARATOR);
+                resultSet.addElement(lookupBuilder);
+            }
         }
     }
 }

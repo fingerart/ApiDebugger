@@ -12,7 +12,7 @@ public interface ApiApiBlock extends ApiElement {
   @NotNull
   ApiDescription getDescription();
 
-  @NotNull
+  @Nullable
   ApiRequest getRequest();
 
 }

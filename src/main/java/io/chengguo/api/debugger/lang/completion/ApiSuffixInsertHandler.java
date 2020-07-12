@@ -17,12 +17,12 @@ public class ApiSuffixInsertHandler implements InsertHandler<LookupElement> {
     public static final ApiSuffixInsertHandler HEADER_OPTION = new ApiSuffixInsertHandler("=");
     public static final ApiSuffixInsertHandler SCHEME = new ApiSuffixInsertHandler("://");
     public static final ApiSuffixInsertHandler FIELD_SEPARATOR = new ApiSuffixInsertHandler(": ");
-    private final String mySuffix;
-    private final String myShortSuffix;
+    private final String mSuffix;
+    private final String mShortSuffix;
 
     public ApiSuffixInsertHandler(@NotNull String suffix) {
-        this.mySuffix = suffix;
-        this.myShortSuffix = suffix.trim();
+        this.mSuffix = suffix;
+        this.mShortSuffix = suffix.trim();
     }
 
     public void handleInsert(@NotNull InsertionContext context, @NotNull LookupElement item) {
@@ -32,16 +32,16 @@ public class ApiSuffixInsertHandler implements InsertHandler<LookupElement> {
             Document document = editor.getDocument();
             int offset = ApiPsiUtils.skipWhitespacesForward(editor.getCaretModel().getOffset(), document.getCharsSequence());
             if (document.getTextLength() == offset || !this.isEqualsToSuffix(document, offset)) {
-                EditorModificationUtil.insertStringAtCaret(editor, this.mySuffix);
+                EditorModificationUtil.insertStringAtCaret(editor, this.mSuffix);
                 PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
             }
-            editor.getCaretModel().moveToOffset(offset + this.mySuffix.length());
+            editor.getCaretModel().moveToOffset(offset + this.mSuffix.length());
         }
     }
 
     private boolean isEqualsToSuffix(@NotNull Document document, int offset) {
-        int endOffset = offset + this.myShortSuffix.length() - 1;
-        return document.getTextLength() > endOffset && StringUtil.equals((CharSequence) this.myShortSuffix, (CharSequence) document.getCharsSequence().subSequence(offset, endOffset + 1).toString());
+        int endOffset = offset + mShortSuffix.length() - 1;
+        return document.getTextLength() > endOffset && StringUtil.equals(mShortSuffix, document.getCharsSequence().subSequence(offset, endOffset + 1).toString());
     }
 
 }

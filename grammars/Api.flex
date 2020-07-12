@@ -58,7 +58,7 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
     }
 %}
 
-NL=\R
+NL=[\r\n]
 WS=[\ \t\f]
 LETTER = [a-zA-Z]
 DIGIT =  [0-9]

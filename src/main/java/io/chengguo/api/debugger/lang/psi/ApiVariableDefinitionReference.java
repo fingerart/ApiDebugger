@@ -105,7 +105,7 @@ public class ApiVariableDefinitionReference<T extends ApiVariable> extends PsiPo
     @NotNull
     @Override
     public Object[] getVariants() {
-        // ⌃Space 或输入时，出现在建议选项中
+        // ⌃Space 或 输入时，出现在建议选项中
         return super.getVariants();
     }
 
