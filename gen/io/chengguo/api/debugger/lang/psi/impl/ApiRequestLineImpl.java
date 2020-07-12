@@ -34,9 +34,9 @@ public class ApiRequestLineImpl extends ApiElementImpl implements ApiRequestLine
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ApiRequestTarget getRequestTarget() {
-    return findNotNullChildByClass(ApiRequestTarget.class);
+    return findChildByClass(ApiRequestTarget.class);
   }
 
 }

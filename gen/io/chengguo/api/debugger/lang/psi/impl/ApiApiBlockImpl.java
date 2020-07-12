@@ -34,9 +34,9 @@ public class ApiApiBlockImpl extends ApiElementImpl implements ApiApiBlock {
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ApiRequest getRequest() {
-    return findNotNullChildByClass(ApiRequest.class);
+    return findChildByClass(ApiRequest.class);
   }
 
 }

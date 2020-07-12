@@ -6,6 +6,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.tree.TokenSet;
@@ -83,5 +84,12 @@ public class ApiPsiUtils {
 
     private static boolean isWhitespaceOrTab(final char c) {
         return c == ' ' || c == '\t';
+    }
+
+
+    @Nullable
+    public static PsiElement getPrevSiblingIgnoreWhitespace(@Nullable final PsiElement element) {
+        final PsiElement sibling = (element != null) ? element.getPrevSibling() : null;
+        return (sibling instanceof PsiWhiteSpace) ? sibling.getPrevSibling() : sibling;
     }
 }
