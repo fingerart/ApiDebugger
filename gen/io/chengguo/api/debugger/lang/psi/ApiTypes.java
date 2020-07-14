@@ -62,6 +62,7 @@ public interface ApiTypes {
   IElementType Api_RBRACES = new ApiTokenType("}}");
   IElementType Api_SCHEME_SEPARATOR = new ApiTokenType("://");
   IElementType Api_SEGMENT = new ApiTokenType("SEGMENT");
+  IElementType Api_SEMICOLON = new ApiTokenType(";");
   IElementType Api_SEPARATOR = new ApiTokenType("SEPARATOR");
   IElementType Api_SLASH = new ApiTokenType("/");
   IElementType Api_TRACE = new ApiTokenType("TRACE");

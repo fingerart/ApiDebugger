@@ -31,6 +31,7 @@
     LBRACES                 = "{{"
     RBRACES                 = "}}"
     HYPHEN                  = "-"
+    SEMICOLON               = ";"
 
     //methods
     OPTIONS                 = "OPTIONS"
@@ -46,6 +47,8 @@
   implements("variable") = "io.chengguo.api.debugger.lang.psi.ApiNamedElement"
   extends("variable") = "io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"
   extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
+  implements("header_field") = "io.chengguo.api.debugger.lang.psi.ApiKeyValueElement"
+  extends("header_field") = "io.chengguo.api.debugger.lang.psi.impl.ApiHeaderFieldMixin"
 }
 
 apiFile ::= api_*
@@ -91,7 +94,8 @@ query_parameter_value ::= (variable | QUERY_VALUE)+
 
 header_field ::= header_field_key (':' header_field_val?)?
 header_field_key ::= (variable | HEADER_FIELD_NAME)+
-header_field_val ::= (variable | HEADER_FIELD_VALUE)+
+header_field_val ::= header_field_val_item (';' header_field_val_item?)*
+private header_field_val_item ::= (variable | HEADER_FIELD_VALUE)+
 
 private message_body ::= request_message_group /* | multipart_message*/
 request_message_group ::= MESSAGE_TEXT

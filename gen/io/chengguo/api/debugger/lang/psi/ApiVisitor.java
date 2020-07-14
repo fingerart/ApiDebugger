@@ -25,7 +25,7 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitHeaderField(@NotNull ApiHeaderField o) {
-    visitElement(o);
+    visitKeyValueElement(o);
   }
 
   public void visitHeaderFieldKey(@NotNull ApiHeaderFieldKey o) {
@@ -90,6 +90,10 @@ public class ApiVisitor extends PsiElementVisitor {
 
   public void visitVariable(@NotNull ApiVariable o) {
     visitNamedElement(o);
+  }
+
+  public void visitKeyValueElement(@NotNull ApiKeyValueElement o) {
+    visitElement(o);
   }
 
   public void visitNamedElement(@NotNull ApiNamedElement o) {

@@ -59,7 +59,7 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 %}
 
 NL=[\r\n]
-WS=[\ \t\f]
+WS=[ \t\f]
 LETTER = [a-zA-Z]
 DIGIT =  [0-9]
 END_OF_LINE_COMMENT=("//")[^\r\n]*
@@ -165,7 +165,8 @@ MESSAGE_TEXT = [^ \r\n"---"] ([^\r\n]* ([\r\n]+ [^\r\n"---"])? )*
 
 <IN_HTTP_PATH_SEGMENT> {
     [^\r\n/?#]+                                 { return Api_SEGMENT; }
-    [\r\n/?#]                                   { yypushback(yylength()); popState(); } //Segment can be empty
+    {NL}+                                       { yypushback(yylength()); popState(); }
+    [/?#]                                       { yypushback(yylength()); popState(); } //Segment can be empty
 }
 
 <IN_HTTP_QUERY> {
@@ -194,7 +195,8 @@ MESSAGE_TEXT = [^ \r\n"---"] ([^\r\n]* ([\r\n]+ [^\r\n"---"])? )*
 <IN_HEADER_VALUE> {
     {WS}+                                       { return TokenType.WHITE_SPACE; }
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
-    [^ \r\n"{{"] [^\r\n"{{"]*                   { return Api_HEADER_FIELD_VALUE; } // 排除起始位置的空格
+    ";"                                         { return Api_SEMICOLON; }
+    [^ \r\n;"{{"] [^\r\n;"{{"]*                 { return Api_HEADER_FIELD_VALUE; } // 排除起始位置的空格
     {NL}                                        { popState(); return TokenType.WHITE_SPACE; }
     {NL} {NL}+                                  { pushState(IN_MESSAGE_BODY);return TokenType.WHITE_SPACE; }
 }
