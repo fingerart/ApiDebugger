@@ -9,7 +9,7 @@ import com.intellij.psi.PsiElementVisitor;
 public class ApiVisitor extends PsiElementVisitor {
 
   public void visitApiBlock(@NotNull ApiApiBlock o) {
-    visitElement(o);
+    visitBlockElment(o);
   }
 
   public void visitDescription(@NotNull ApiDescription o) {
@@ -90,6 +90,10 @@ public class ApiVisitor extends PsiElementVisitor {
 
   public void visitVariable(@NotNull ApiVariable o) {
     visitNamedElement(o);
+  }
+
+  public void visitBlockElment(@NotNull ApiBlockElment o) {
+    visitElement(o);
   }
 
   public void visitKeyValueElement(@NotNull ApiKeyValueElement o) {
