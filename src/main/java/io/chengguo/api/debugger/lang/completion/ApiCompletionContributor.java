@@ -1,8 +1,10 @@
 package io.chengguo.api.debugger.lang.completion;
 
 import com.intellij.codeInsight.completion.*;
+import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.PlatformIcons;
@@ -35,6 +37,7 @@ public class ApiCompletionContributor extends CompletionContributor {
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HOST_VALUE).withParent(ApiHost.class), SchemeCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_IDENTIFIER), VariableCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_NAME), HeaderNameProvider.INSTANCE);
+        extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_VALUE), HeaderValueProvider.INSTANCE);
     }
 
     private static class VariableCompletionProvider extends CompletionProvider<CompletionParameters> {
@@ -110,6 +113,27 @@ public class ApiCompletionContributor extends CompletionContributor {
                         .withTypeIconRightAligned(true)
                         .withInsertHandler(ApiSuffixInsertHandler.FIELD_SEPARATOR);
                 resultSet.addElement(lookupBuilder);
+            }
+        }
+    }
+
+    private static class HeaderValueProvider extends CompletionProvider<CompletionParameters> {
+        private static HeaderValueProvider INSTANCE = new HeaderValueProvider();
+
+        @Override
+        protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
+            ApiHeaderField headerField = PsiTreeUtil.getParentOfType(parameters.getPosition(), ApiHeaderField.class);
+            String fieldName = headerField != null ? headerField.getName() : null;
+            if (StringUtil.isNotEmpty(fieldName)) {
+                CompletionResultSet resultSet = result.caseInsensitive();
+                Collection<String> headerValues = HttpHeadersDictionary.getHeaderValues(parameters.getPosition().getProject(), fieldName);
+                for (String headerValue : headerValues) {
+                    resultSet.addElement(LookupElementBuilder.create(headerValue));
+                }
+                Collection<String> headerOptionNames = HttpHeadersDictionary.getHeaderOptionNames(fieldName);
+                for (String headerOptionName : headerOptionNames) {
+                    resultSet.addElement(LookupElementBuilder.create(headerOptionName).withInsertHandler(ApiSuffixInsertHandler.HEADER_OPTION));
+                }
             }
         }
     }

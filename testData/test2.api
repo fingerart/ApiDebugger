@@ -31,7 +31,7 @@ Content-Type:csdsd
 
 GET http://{{host}}.tenon.集团:{{default}}80/segment1/segment2/?{{key123}} raw =value
 Casdsontedsdsnt{{host}}dsds: {{content_type}}{{content_type2}}
-Content-Type: dsdfs
+Content-Type:ds
 
 [2, 1]
 
@@ -41,9 +41,8 @@ Content-Type: dsdfs
 
 - title:ec
 
-GET https://echo.tenon.dev:8080/hello/world
-Key: {{key123}}
-Value: {{value}}
+GET https://echo.tenon.dev:8080/hello/world///dsd/
+dsds
 
 {
 

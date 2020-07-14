@@ -73,10 +73,10 @@ public class HttpHeadersDictionary {
             HttpHeadersDictionary.ourHeaderValues = readHeaderValues();
         }
         if (StringUtil.equals(headerName, "Accept")) {
-            RestClientDataProvider[] extensions = RestClientDataProvider.EP_NAME.getExtensions();
+            ApiDebuggerDataProvider[] extensions = ApiDebuggerDataProvider.EP_NAME.getExtensions();
             if (extensions.length > 0) {
                 List<String> mimeTypes = new ArrayList<>(HttpHeadersDictionary.ourHeaderValues.get(headerName));
-                for (RestClientDataProvider extension : extensions) {
+                for (ApiDebuggerDataProvider extension : extensions) {
                     Collections.addAll(mimeTypes, extension.getAllMimeTypes(project));
                 }
                 return mimeTypes;

@@ -12,7 +12,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiHeaderFieldImpl extends ApiElementImpl implements ApiHeaderField {
+public class ApiHeaderFieldImpl extends ApiHeaderFieldMixin implements ApiHeaderField {
 
   public ApiHeaderFieldImpl(ASTNode node) {
     super(node);

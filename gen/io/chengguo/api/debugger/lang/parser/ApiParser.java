@@ -299,25 +299,67 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (variable | HEADER_FIELD_VALUE)+
+  // header_field_val_item (';' header_field_val_item?)*
   public static boolean header_field_val(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "header_field_val")) return false;
     if (!nextTokenIs(builder, "<header field val>", Api_HEADER_FIELD_VALUE, Api_LBRACES)) return false;
     boolean result;
     Marker marker = enter_section_(builder, level, _NONE_, Api_HEADER_FIELD_VAL, "<header field val>");
-    result = header_field_val_0(builder, level + 1);
-    while (result) {
-      int pos = current_position_(builder);
-      if (!header_field_val_0(builder, level + 1)) break;
-      if (!empty_element_parsed_guard_(builder, "header_field_val", pos)) break;
-    }
+    result = header_field_val_item(builder, level + 1);
+    result = result && header_field_val_1(builder, level + 1);
     exit_section_(builder, level, marker, result, false, null);
     return result;
   }
 
+  // (';' header_field_val_item?)*
+  private static boolean header_field_val_1(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "header_field_val_1")) return false;
+    while (true) {
+      int pos = current_position_(builder);
+      if (!header_field_val_1_0(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "header_field_val_1", pos)) break;
+    }
+    return true;
+  }
+
+  // ';' header_field_val_item?
+  private static boolean header_field_val_1_0(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "header_field_val_1_0")) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = consumeToken(builder, Api_SEMICOLON);
+    result = result && header_field_val_1_0_1(builder, level + 1);
+    exit_section_(builder, marker, null, result);
+    return result;
+  }
+
+  // header_field_val_item?
+  private static boolean header_field_val_1_0_1(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "header_field_val_1_0_1")) return false;
+    header_field_val_item(builder, level + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // (variable | HEADER_FIELD_VALUE)+
+  static boolean header_field_val_item(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "header_field_val_item")) return false;
+    if (!nextTokenIs(builder, "", Api_HEADER_FIELD_VALUE, Api_LBRACES)) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = header_field_val_item_0(builder, level + 1);
+    while (result) {
+      int pos = current_position_(builder);
+      if (!header_field_val_item_0(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "header_field_val_item", pos)) break;
+    }
+    exit_section_(builder, marker, null, result);
+    return result;
+  }
+
   // variable | HEADER_FIELD_VALUE
-  private static boolean header_field_val_0(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "header_field_val_0")) return false;
+  private static boolean header_field_val_item_0(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "header_field_val_item_0")) return false;
     boolean result;
     result = variable(builder, level + 1);
     if (!result) result = consumeToken(builder, Api_HEADER_FIELD_VALUE);
