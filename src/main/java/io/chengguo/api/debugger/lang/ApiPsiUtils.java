@@ -9,6 +9,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
@@ -87,9 +88,22 @@ public class ApiPsiUtils {
     }
 
 
+    public static boolean isOfType(@NotNull final PsiElement element, @NotNull final IElementType type) {
+        ASTNode node = element.getNode();
+        return node != null && node.getElementType() == type;
+    }
+
     @Nullable
     public static PsiElement getPrevSiblingIgnoreWhitespace(@Nullable final PsiElement element) {
         final PsiElement sibling = (element != null) ? element.getPrevSibling() : null;
         return (sibling instanceof PsiWhiteSpace) ? sibling.getPrevSibling() : sibling;
+    }
+
+    @Nullable
+    public static PsiElement getNextSiblingByType(@Nullable PsiElement element, @NotNull IElementType type, final boolean strict) {
+        PsiElement sibling;
+        for (sibling = ((element != null && strict) ? element.getNextSibling() : element); sibling != null && !isOfType(sibling, type); sibling = sibling.getNextSibling()) {
+        }
+        return sibling;
     }
 }

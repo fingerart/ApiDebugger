@@ -7,7 +7,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiApiBlock extends ApiElement {
+public interface ApiApiBlock extends ApiBlockElment {
 
   @NotNull
   ApiDescription getDescription();

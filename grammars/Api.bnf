@@ -49,6 +49,8 @@
   extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
   implements("header_field") = "io.chengguo.api.debugger.lang.psi.ApiKeyValueElement"
   extends("header_field") = "io.chengguo.api.debugger.lang.psi.impl.ApiHeaderFieldMixin"
+  implements("api_block") = "io.chengguo.api.debugger.lang.psi.ApiBlockElment"
+  extends("api_block") = "io.chengguo.api.debugger.lang.psi.impl.ApiBlockMixin"
 }
 
 apiFile ::= api_*

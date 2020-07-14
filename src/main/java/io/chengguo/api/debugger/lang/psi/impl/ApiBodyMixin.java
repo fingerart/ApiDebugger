@@ -40,16 +40,4 @@ public class ApiBodyMixin extends ApiElementImpl implements PsiLanguageInjection
     public PsiReference[] getReferences() {
         return ReferenceProvidersRegistry.getReferencesFromProviders(this);
     }
-
-    @Nullable
-    public String getContentType() {
-        ApiRequest apiRequest = PsiTreeUtil.getParentOfType(this, ApiRequest.class);
-        List<ApiHeaderField> headerFields = apiRequest != null ? apiRequest.getHeaderFieldList() : null;
-        for (ApiHeaderField headerField : headerFields) {
-            if ("Content-Type".equalsIgnoreCase(headerField.getName())) {
-                return headerField.getValue();
-            }
-        }
-        return null;
-    }
 }
