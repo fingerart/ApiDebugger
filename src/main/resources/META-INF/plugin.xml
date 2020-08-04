@@ -26,20 +26,24 @@
                                   implementationClass="io.chengguo.api.debugger.lang.run.ApiLineMarkerProvider"/>
         <completion.contributor language="Api"
                                 implementationClass="io.chengguo.api.debugger.lang.completion.ApiCompletionContributor"/>
-<!--                <renamePsiElementProcessor-->
-<!--                        implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableRenameProcessor"/>-->
-<!--        <renameHandler implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiFromEditorRenameHandler"/>-->
+        <!--        <renamePsiElementProcessor-->
+        <!--                implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableRenameProcessor"/>-->
+        <!--        <renameHandler implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiFromEditorRenameHandler"/>-->
+        <renameHandler implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableInplaceRenameHandler"/>
         <!--        <inlineActionHandler implementation="io.chengguo.api.debugger.lang.refactor.ApiInlineVariableActionHandler"/>-->
         <lang.findUsagesProvider language="Api"
                                  implementationClass="io.chengguo.api.debugger.lang.ApiFindUsagesProvider"/>
         <lang.refactoringSupport
                 language="Api"
                 implementationClass="io.chengguo.api.debugger.lang.refactor.ApiInplaceRefactoringSupportProvider"/>
+        <lang.refactoringSupport
+                language="JSON"
+                implementationClass="io.chengguo.api.debugger.lang.refactor.JsonInplaceRefactoringSupportProvider"/>
         <psi.referenceContributor language="Api"
                                   implementation="io.chengguo.api.debugger.lang.psi.ApiReferenceContributor"/>
         <fileBasedIndex implementation="io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex"/>
-        <!--        <lang.elementManipulator forClass="io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"-->
-        <!--                                 implementationClass="io.chengguo.api.debugger.lang.refactor.ApiIdentifierManipulator"/>-->
+        <!--                <lang.elementManipulator forClass="io.chengguo.api.debugger.lang.psi.ApiVariable"-->
+        <!--                                         implementationClass="io.chengguo.api.debugger.lang.refactor.ApiIdentifierManipulator"/>-->
         <!--        <stubElementTypeHolder class="io.chengguo.api.debugger.lang.psi.ApiTypes"/>-->
         <lang.braceMatcher language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiPairedBraceMatcher"/>
         <nameSuggestionProvider

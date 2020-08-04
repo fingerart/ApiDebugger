@@ -16,7 +16,7 @@ public class ApiVariableRenameProcessor extends RenamePsiElementProcessor {
     @Override
     public boolean canProcessElement(@NotNull PsiElement element) {
         System.out.println("ApiVariableRenameProcessor.canProcessElement " + "element = " + element);
-        return false;
+        return true;
     }
 
     @NotNull
@@ -24,7 +24,7 @@ public class ApiVariableRenameProcessor extends RenamePsiElementProcessor {
     public Collection<PsiReference> findReferences(@NotNull PsiElement element,
                                                    @NotNull SearchScope searchScope,
                                                    boolean searchInCommentsAndStrings) {
-        System.out.println("RenameApiVariableProcessor.findReferences " + "element = " + element + ", searchScope = " + searchScope + ", searchInCommentsAndStrings = " + searchInCommentsAndStrings);
+        System.out.println("ApiVariableRenameProcessor.findReferences " + "element = " + element + ", searchScope = " + searchScope + ", searchInCommentsAndStrings = " + searchInCommentsAndStrings);
         return super.findReferences(element, searchScope, searchInCommentsAndStrings);
     }
 
@@ -33,10 +33,10 @@ public class ApiVariableRenameProcessor extends RenamePsiElementProcessor {
                                @NotNull String newName,
                                @NotNull Map<? extends PsiElement, String> allRenames,
                                @NotNull List<UsageInfo> result) {
-        System.out.println("RenameApiVariableProcessor.findCollisions " + "element = " + element + ", newName = " + newName + ", allRenames = " + allRenames + ", result = " + result);
+        System.out.println("ApiVariableRenameProcessor.findCollisions " + "element = " + element + ", newName = " + newName + ", allRenames = " + allRenames + ", result = " + result);
         allRenames.forEach((psiElement, value) -> {
             //TODO 查找所有的变量节点，抽取到工具类中
-            System.out.println("RenameApiVariableProcessor.findCollisions: " + psiElement + " - " + value);
+            System.out.println("ApiVariableRenameProcessor.findCollisions: " + psiElement + " - " + value);
         });
     }
 }

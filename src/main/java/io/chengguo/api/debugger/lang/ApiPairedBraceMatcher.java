@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ApiPairedBraceMatcher implements PairedBraceMatcher {
-    private static BracePair[] PAIRS = new BracePair[]{new BracePair(ApiTypes.Api_LBRACES, ApiTypes.Api_RBRACES, false)};
+    private static BracePair[] PAIRS = new BracePair[]{new BracePair(ApiTypes.Api_LBRACES, ApiTypes.Api_RBRACES, true)};
 
     @NotNull
     @Override
