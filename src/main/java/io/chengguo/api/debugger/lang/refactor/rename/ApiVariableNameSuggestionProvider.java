@@ -8,6 +8,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
+/**
+ * 原地重命名建议
+ * <p>
+ * 原地重命名时弹出建议项
+ */
 public class ApiVariableNameSuggestionProvider implements NameSuggestionProvider {
     @Nullable
     @Override
