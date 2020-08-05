@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public class ApiRequestBodyInjector implements MultiHostInjector {
+public class ApiRequestBodyMultiHostInjector implements MultiHostInjector {
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
         if (context instanceof ApiBodyMixin) {

@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 import io.chengguo.api.debugger.lang.ApiLanguage;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
 
+/**
+ * 节点上的内联操作
+ */
 @Deprecated
 public class ApiInlineVariableActionHandler extends InlineActionHandler {
     @Override

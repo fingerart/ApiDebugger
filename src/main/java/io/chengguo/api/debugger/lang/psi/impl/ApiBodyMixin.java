@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ApiBodyMixin extends ApiElementImpl implements PsiLanguageInjectionHost {
+public abstract class ApiBodyMixin extends ApiElementImpl implements PsiLanguageInjectionHost {
 
     public ApiBodyMixin(@NotNull ASTNode node) {
         super(node);

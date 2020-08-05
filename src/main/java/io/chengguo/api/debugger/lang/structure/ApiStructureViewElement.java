@@ -3,19 +3,38 @@ package io.chengguo.api.debugger.lang.structure;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
 import com.intellij.navigation.ColoredItemPresentation;
+import com.intellij.openapi.editor.colors.CodeInsightColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.containers.ContainerUtil;
+import io.chengguo.api.debugger.ApiDebuggerIcons;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
+import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
+import io.chengguo.api.debugger.lang.psi.ApiPathAbsolute;
+import io.chengguo.api.debugger.lang.psi.ApiRequest;
+import io.chengguo.api.debugger.lang.psi.ApiRequestTarget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * API文件视图结构
+ */
 public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> implements ColoredItemPresentation {
-    protected ApiStructureViewElement(PsiElement psiElement) {
+
+    private final String mPresentableText;
+    private final Icon mIcon;
+    private final Boolean mIsValid;
+
+    public ApiStructureViewElement(PsiElement psiElement, String text, Icon icon, Boolean isValid) {
         super(psiElement);
+        mPresentableText = text;
+        mIcon = icon;
+        mIsValid = isValid;
     }
 
     @NotNull
@@ -23,10 +42,19 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
     public Collection<StructureViewTreeElement> getChildrenBase() {
         PsiElement element = getElement();
         if (element instanceof ApiPsiFile) {
-            ApiDebugger type = PsiTreeUtil.findChildOfType(element, ApiDebugger.class);
-            if (type != null) {
-                return ContainerUtil.emptyList();
+            ArrayList<StructureViewTreeElement> treeElements = new ArrayList<>();
+            ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(element.getContainingFile());
+            for (ApiApiBlock apiBlock : apiBlocks) {
+                ApiRequest request = apiBlock.getRequest();
+                if (request != null) {
+                    ApiRequestTarget requestTarget = request.getRequestLine().getRequestTarget();
+                    if (requestTarget != null) {
+                        ApiPathAbsolute pathAbsolute = requestTarget.getPathAbsolute();
+                        treeElements.add(createApiBlockViewTreeElement(apiBlock, pathAbsolute.getText(), true));
+                    }
+                }
             }
+            return treeElements;
         }
         return ContainerUtil.emptyList();
     }
@@ -34,16 +62,28 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
     @Nullable
     @Override
     public String getPresentableText() {
-        return null;
+        return mPresentableText;
+    }
+
+    @Override
+    public Icon getIcon(boolean open) {
+        return mIcon;
     }
 
     @Nullable
     @Override
     public TextAttributesKey getTextAttributesKey() {
+        if (!this.mIsValid) {
+            return CodeInsightColors.ERRORS_ATTRIBUTES;
+        }
         return null;
     }
 
-    public static ApiStructureViewElement create(PsiElement psiElement) {
-        return new ApiStructureViewElement(psiElement);
+    public static ApiStructureViewElement create(PsiElement psiElement, String text, Icon icon) {
+        return new ApiStructureViewElement(psiElement, text, icon, true);
+    }
+
+    public static StructureViewTreeElement createApiBlockViewTreeElement(ApiApiBlock apiBlock, String text, Boolean isValid) {
+        return new ApiStructureViewElement(apiBlock, text, ApiDebuggerIcons.API_REQUEST_NAV, isValid);
     }
 }

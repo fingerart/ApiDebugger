@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>api_request_nav</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="api_request_nav" transform="translate(0.000000, -2.000000)">
+            <g id="overridingMethod" transform="translate(7.500000, 8.500000) rotate(90.000000) translate(-7.500000, -8.500000) translate(-1.000000, 1.000000)">
+                <g id="编组" transform="translate(2.000000, 1.000000)" fill="#40B6E0" fill-opacity="0.6" fill-rule="nonzero">
+                    <path d="M9.39017294,0.418679811 L8,1.80322266 L8,2.85714286 L10,2.85714286 L10,7 L14,7 C14,10.866 10.866,14 7,14 C3.134,14 0,10.866 0,7 C0,3.134 3.134,0 7,0 C7.83943175,0 8.64435244,0.147756322 9.39017294,0.418679811 Z" id="路径"></path>
+                </g>
+                <polygon id="路径" fill="#9AA7B0" fill-rule="nonzero" transform="translate(14.000000, 3.500000) scale(-1, 1) rotate(-180.000000) translate(-14.000000, -3.500000) " points="15 4 17 4 14 7 11 4 13 4 13 0 15 0"></polygon>
+                <g id="R" transform="translate(7.500000, 8.500000) rotate(-90.000000) translate(-7.500000, -8.500000) translate(4.000000, 1.000000)" fill="#231F20" fill-opacity="0.7" font-family="NotoSansCJKsc-Bold, Noto Sans CJK SC" font-size="10" font-weight="bold">
+                    <text>
+                        <tspan x="0" y="12">R</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
