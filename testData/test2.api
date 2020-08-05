@@ -3,13 +3,15 @@
 
 PUT https://{{hello1}}httphttpsecho.tenon.dev:8080/post?nic{{host}}kname=tenon&age=18&dsfsf=asdfasf
 Content-Type: application/json
-Accept: application/xml{{php}}{{host}}{{haha1}}
+Accept: application/xml{{php1}}{{host}}{{haha1}}
 Accept:dsd
-Content-Type:csdsd{{dsds}}
+Content-Type: asdfasf{{dsds}}ssfasf; DSD   Sdsds ; dsd ;;  ;
 
 
 {
-    "what": "body"
+
+"": ""
+
 }
 
 ---

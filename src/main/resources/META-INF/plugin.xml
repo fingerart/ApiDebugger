@@ -19,8 +19,8 @@
                                implementationClass="io.chengguo.api.debugger.lang.parser.ApiParserDefinition"/>
         <lang.foldingBuilder language="Api"
                              implementationClass="io.chengguo.api.debugger.lang.folding.ApiFoldingBuilder"/>
-        <!--        <lang.psiStructureViewFactory language="Api"-->
-        <!--                                      implementationClass="io.chengguo.api.debugger.lang.structure.ApiStructureViewFactory"/>-->
+        <lang.psiStructureViewFactory language="Api"
+                                      implementationClass="io.chengguo.api.debugger.lang.structure.ApiStructureViewFactory"/>
         <lang.commenter language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiCommenter"/>
         <runLineMarkerContributor language="Api"
                                   implementationClass="io.chengguo.api.debugger.lang.run.ApiLineMarkerProvider"/>
@@ -28,17 +28,13 @@
                                 implementationClass="io.chengguo.api.debugger.lang.completion.ApiCompletionContributor"/>
         <!--        <renamePsiElementProcessor-->
         <!--                implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableRenameProcessor"/>-->
-        <!--        <renameHandler implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiFromEditorRenameHandler"/>-->
-        <renameHandler implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableInplaceRenameHandler"/>
+        <!--        <renameHandler implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableInplaceRenameHandler"/>-->
         <!--        <inlineActionHandler implementation="io.chengguo.api.debugger.lang.refactor.ApiInlineVariableActionHandler"/>-->
         <lang.findUsagesProvider language="Api"
                                  implementationClass="io.chengguo.api.debugger.lang.ApiFindUsagesProvider"/>
         <lang.refactoringSupport
                 language="Api"
                 implementationClass="io.chengguo.api.debugger.lang.refactor.ApiInplaceRefactoringSupportProvider"/>
-        <lang.refactoringSupport
-                language="JSON"
-                implementationClass="io.chengguo.api.debugger.lang.refactor.JsonInplaceRefactoringSupportProvider"/>
         <psi.referenceContributor language="Api"
                                   implementation="io.chengguo.api.debugger.lang.psi.ApiReferenceContributor"/>
         <fileBasedIndex implementation="io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex"/>
@@ -48,7 +44,7 @@
         <lang.braceMatcher language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiPairedBraceMatcher"/>
         <nameSuggestionProvider
                 implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableNameSuggestionProvider"/>
-        <multiHostInjector implementation="io.chengguo.api.debugger.lang.injection.ApiRequestBodyInjector"/>
+        <multiHostInjector implementation="io.chengguo.api.debugger.lang.injection.ApiRequestBodyMultiHostInjector"/>
         <errorHandler implementation="io.chengguo.api.debugger.ApiDebuggerErrorReportSubmitter"/>
     </extensions>
 

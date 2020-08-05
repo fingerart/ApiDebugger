@@ -15,4 +15,6 @@ public interface ApiDebuggerIcons {
     Icon FAVICON = loadIcon("/icons/favicon.png");
 
     Icon API_FILE_TYPE = loadIcon("/icons/api_file_type.svg");
+
+    Icon API_REQUEST_NAV = loadIcon("/icons/api_request_nav.svg");
 }

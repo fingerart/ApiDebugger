@@ -1,6 +1,7 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -46,5 +47,10 @@ public abstract class ApiBlockMixin extends ApiElementImpl implements ApiApiBloc
 
     private static boolean isValidMimeType(@Nullable String value) {
         return StringUtil.isNotEmpty(value) && !StringUtil.containsAnyChar(value, "\";,");
+    }
+
+    @Override
+    public ItemPresentation getPresentation() {
+        return ApiPsiElementPresentationFactory.getItemPresentation(this);
     }
 }
