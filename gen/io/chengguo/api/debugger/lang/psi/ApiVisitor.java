@@ -20,6 +20,10 @@ public class ApiVisitor extends PsiElementVisitor {
     visitElement(o);
   }
 
+  public void visitDescriptionItem(@NotNull ApiDescriptionItem o) {
+    visitElement(o);
+  }
+
   public void visitDescriptionTitle(@NotNull ApiDescriptionTitle o) {
     visitElement(o);
   }

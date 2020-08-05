@@ -13,6 +13,7 @@ public interface ApiTypes {
   IElementType Api_API_BLOCK = new ApiElementType("Api_API_BLOCK");
   IElementType Api_DESCRIPTION = new ApiElementType("Api_DESCRIPTION");
   IElementType Api_DESCRIPTION_CONTENT = new ApiElementType("Api_DESCRIPTION_CONTENT");
+  IElementType Api_DESCRIPTION_ITEM = new ApiElementType("Api_DESCRIPTION_ITEM");
   IElementType Api_DESCRIPTION_TITLE = new ApiElementType("Api_DESCRIPTION_TITLE");
   IElementType Api_HEADER_FIELD = new ApiElementType("Api_HEADER_FIELD");
   IElementType Api_HEADER_FIELD_KEY = new ApiElementType("Api_HEADER_FIELD_KEY");
@@ -78,6 +79,9 @@ public interface ApiTypes {
       }
       else if (type == Api_DESCRIPTION_CONTENT) {
         return new ApiDescriptionContentImpl(node);
+      }
+      else if (type == Api_DESCRIPTION_ITEM) {
+        return new ApiDescriptionItemImpl(node);
       }
       else if (type == Api_DESCRIPTION_TITLE) {
         return new ApiDescriptionTitleImpl(node);

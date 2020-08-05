@@ -147,7 +147,7 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // description_title description_content?
+  // description_title description_content? description_item*
   public static boolean description(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "description")) return false;
     if (!nextTokenIs(builder, Api_HYPHEN)) return false;
@@ -155,6 +155,7 @@ public class ApiParser implements PsiParser, LightPsiParser {
     Marker marker = enter_section_(builder);
     result = description_title(builder, level + 1);
     result = result && description_1(builder, level + 1);
+    result = result && description_2(builder, level + 1);
     exit_section_(builder, marker, Api_DESCRIPTION, result);
     return result;
   }
@@ -166,46 +167,60 @@ public class ApiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
+  // description_item*
+  private static boolean description_2(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "description_2")) return false;
+    while (true) {
+      int pos = current_position_(builder);
+      if (!description_item(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "description_2", pos)) break;
+    }
+    return true;
+  }
+
   /* ********************************************************** */
-  // '-' DESCRIPTION_KEY ':' LINE_TEXT?
+  // description_item
   public static boolean description_content(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "description_content")) return false;
     if (!nextTokenIs(builder, Api_HYPHEN)) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = description_item(builder, level + 1);
+    exit_section_(builder, marker, Api_DESCRIPTION_CONTENT, result);
+    return result;
+  }
+
+  /* ********************************************************** */
+  // '-' DESCRIPTION_KEY ':' LINE_TEXT?
+  public static boolean description_item(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "description_item")) return false;
+    if (!nextTokenIs(builder, Api_HYPHEN)) return false;
     boolean result, pinned;
-    Marker marker = enter_section_(builder, level, _NONE_, Api_DESCRIPTION_CONTENT, null);
+    Marker marker = enter_section_(builder, level, _NONE_, Api_DESCRIPTION_ITEM, null);
     result = consumeTokens(builder, 1, Api_HYPHEN, Api_DESCRIPTION_KEY, Api_COLON);
     pinned = result; // pin = 1
-    result = result && description_content_3(builder, level + 1);
+    result = result && description_item_3(builder, level + 1);
     exit_section_(builder, level, marker, result, pinned, null);
     return result || pinned;
   }
 
   // LINE_TEXT?
-  private static boolean description_content_3(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "description_content_3")) return false;
+  private static boolean description_item_3(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "description_item_3")) return false;
     consumeToken(builder, Api_LINE_TEXT);
     return true;
   }
 
   /* ********************************************************** */
-  // '-' DESCRIPTION_KEY ':' LINE_TEXT?
+  // description_item
   public static boolean description_title(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "description_title")) return false;
     if (!nextTokenIs(builder, Api_HYPHEN)) return false;
-    boolean result, pinned;
-    Marker marker = enter_section_(builder, level, _NONE_, Api_DESCRIPTION_TITLE, null);
-    result = consumeTokens(builder, 1, Api_HYPHEN, Api_DESCRIPTION_KEY, Api_COLON);
-    pinned = result; // pin = 1
-    result = result && description_title_3(builder, level + 1);
-    exit_section_(builder, level, marker, result, pinned, null);
-    return result || pinned;
-  }
-
-  // LINE_TEXT?
-  private static boolean description_title_3(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "description_title_3")) return false;
-    consumeToken(builder, Api_LINE_TEXT);
-    return true;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = description_item(builder, level + 1);
+    exit_section_(builder, marker, Api_DESCRIPTION_TITLE, result);
+    return result;
   }
 
   /* ********************************************************** */

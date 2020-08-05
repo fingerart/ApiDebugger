@@ -12,25 +12,19 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiDescriptionContentImpl extends ApiElementImpl implements ApiDescriptionContent {
+public class ApiDescriptionItemImpl extends ApiElementImpl implements ApiDescriptionItem {
 
-  public ApiDescriptionContentImpl(ASTNode node) {
+  public ApiDescriptionItemImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
-    visitor.visitDescriptionContent(this);
+    visitor.visitDescriptionItem(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public ApiDescriptionItem getDescriptionItem() {
-    return findNotNullChildByClass(ApiDescriptionItem.class);
   }
 
 }

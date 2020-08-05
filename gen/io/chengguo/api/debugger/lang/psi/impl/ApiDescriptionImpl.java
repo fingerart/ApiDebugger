@@ -35,6 +35,12 @@ public class ApiDescriptionImpl extends ApiElementImpl implements ApiDescription
 
   @Override
   @NotNull
+  public List<ApiDescriptionItem> getDescriptionItemList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ApiDescriptionItem.class);
+  }
+
+  @Override
+  @NotNull
   public ApiDescriptionTitle getDescriptionTitle() {
     return findNotNullChildByClass(ApiDescriptionTitle.class);
   }

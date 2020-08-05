@@ -27,4 +27,10 @@ public class ApiDescriptionTitleImpl extends ApiElementImpl implements ApiDescri
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public ApiDescriptionItem getDescriptionItem() {
+    return findNotNullChildByClass(ApiDescriptionItem.class);
+  }
+
 }

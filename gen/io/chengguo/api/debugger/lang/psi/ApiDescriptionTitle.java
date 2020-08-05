@@ -9,4 +9,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiDescriptionTitle extends ApiElement {
 
+  @NotNull
+  ApiDescriptionItem getDescriptionItem();
+
 }
