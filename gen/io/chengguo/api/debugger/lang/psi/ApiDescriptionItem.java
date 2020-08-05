@@ -7,9 +7,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiDescriptionContent extends ApiElement {
-
-  @NotNull
-  ApiDescriptionItem getDescriptionItem();
+public interface ApiDescriptionItem extends ApiElement {
 
 }

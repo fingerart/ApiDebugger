@@ -61,9 +61,10 @@ api_block ::= comment* description comment* request? {
     recoverWhile=recover_api_block
 }
 
-description ::= description_title description_content?
-description_title ::= '-' DESCRIPTION_KEY ':' LINE_TEXT? {pin=1}
-description_content ::= '-' DESCRIPTION_KEY ':' LINE_TEXT? {pin=1}
+description ::= description_title description_content? description_item*
+description_title ::= description_item
+description_content ::= description_item
+description_item ::='-' DESCRIPTION_KEY ':' LINE_TEXT? {pin=1}
 
 request ::= request_line header_field* message_body?
 

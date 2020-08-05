@@ -13,6 +13,9 @@ public interface ApiDescription extends ApiElement {
   ApiDescriptionContent getDescriptionContent();
 
   @NotNull
+  List<ApiDescriptionItem> getDescriptionItemList();
+
+  @NotNull
   ApiDescriptionTitle getDescriptionTitle();
 
 }

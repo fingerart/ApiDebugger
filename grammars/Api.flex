@@ -77,9 +77,9 @@ LBRACES = "{{"
 RBRACES = "}}"
 ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
 SEPARATOR = "---"
-HEADER_FIELD_NAME = [^ \n\t\f:"{{"] ([^\n\t\f:"{{"]* [^ \n\t\f:"{{"])?
-HEADER_FIELD_VALUE = [^ \r\n;"{{"] ([^\r\n;"{{"]* [^ \r\n;"{{"])?
-MESSAGE_TEXT = [^ \r\n"---"] ([^\r\n]* ([\r\n]+ [^\r\n"---"])? )*
+HEADER_FIELD_NAME = [^ \r\n\t\f:] ([^\r\n\t\f:{]* [^ \r\n\t\f:{])?
+HEADER_FIELD_VALUE = [^ \r\n\t\f;] ([^\r\n;{]* [^ \r\n\t\f;{])?
+MESSAGE_TEXT = [^ \t\f\r\n-] ([^\r\n]* ([\r\n]+ [^\r\n-])? )*
 
 %state IN_HTTP_REQUEST
 %state IN_HTTP_PATH
@@ -190,16 +190,16 @@ MESSAGE_TEXT = [^ \r\n"---"] ([^\r\n]* ([\r\n]+ [^\r\n"---"])? )*
     {NL}                                        { return TokenType.WHITE_SPACE; }
     {HEADER_FIELD_NAME}                         { return Api_HEADER_FIELD_NAME; } // 排除起始和末尾位置的空格
     ":"                                         { pushState(IN_HEADER_VALUE); return Api_COLON; }
-    {NL} {NL}+                                  { pushState(IN_MESSAGE_BODY); return TokenType.WHITE_SPACE; }
+    {WS}* {NL} {NL} ({WS} | {NL})*                                  { pushState(IN_MESSAGE_BODY); return TokenType.WHITE_SPACE; }
 }
 
 <IN_HEADER_VALUE> {
     {WS}+                                       { return TokenType.WHITE_SPACE; }
+    {NL}                                        { popState(); return TokenType.WHITE_SPACE; }
+    {WS}* {NL} {NL} ({WS} | {NL})*                                  { yypushback(yylength()); popState(); }
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
     ";"                                         { return Api_SEMICOLON; }
     {HEADER_FIELD_VALUE}                        { return Api_HEADER_FIELD_VALUE; } // 排除起始位置的空格
-    {NL}                                        { popState(); return TokenType.WHITE_SPACE; }
-    {NL} {NL}+                                  { pushState(IN_MESSAGE_BODY); return TokenType.WHITE_SPACE; }
 }
 
 <IN_MESSAGE_BODY> {
