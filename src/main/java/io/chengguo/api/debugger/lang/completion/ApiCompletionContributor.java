@@ -1,7 +1,6 @@
 package io.chengguo.api.debugger.lang.completion;
 
 import com.intellij.codeInsight.completion.*;
-import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
@@ -10,10 +9,10 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex;
-import io.chengguo.api.debugger.lang.formatter.ApiBlock;
-import io.chengguo.api.debugger.lang.psi.*;
+import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
+import io.chengguo.api.debugger.lang.psi.ApiHost;
+import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import io.chengguo.api.debugger.ui.header.HttpHeaderDocumentation;
 import io.chengguo.api.debugger.ui.header.HttpHeadersDictionary;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +37,12 @@ public class ApiCompletionContributor extends CompletionContributor {
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_IDENTIFIER), VariableCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_NAME), HeaderNameProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_VALUE), HeaderValueProvider.INSTANCE);
+    }
+
+    @Override
+    public void beforeCompletion(@NotNull CompletionInitializationContext context) {
+        super.beforeCompletion(context);
+        // TODO: 2020/8/6
     }
 
     private static class VariableCompletionProvider extends CompletionProvider<CompletionParameters> {
