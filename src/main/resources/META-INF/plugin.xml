@@ -41,6 +41,7 @@
         <!--                <lang.elementManipulator forClass="io.chengguo.api.debugger.lang.psi.ApiVariable"-->
         <!--                                         implementationClass="io.chengguo.api.debugger.lang.refactor.ApiIdentifierManipulator"/>-->
         <!--        <stubElementTypeHolder class="io.chengguo.api.debugger.lang.psi.ApiTypes"/>-->
+        <typedHandler implementation="io.chengguo.api.debugger.lang.ApiTypeHandler"/>
         <lang.braceMatcher language="Api" implementationClass="io.chengguo.api.debugger.lang.ApiPairedBraceMatcher"/>
         <nameSuggestionProvider
                 implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableNameSuggestionProvider"/>
