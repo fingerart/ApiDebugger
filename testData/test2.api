@@ -58,3 +58,4 @@ dsds
 
 - d: dsds
 
+GET http://{{host}}
