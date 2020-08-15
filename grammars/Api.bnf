@@ -13,6 +13,7 @@
   psiPackage="io.chengguo.api.debugger.lang.psi"
   psiImplPackage="io.chengguo.api.debugger.lang.psi.impl"
   psiImplUtilClass="io.chengguo.api.debugger.lang.psi.impl.ApiPsiImplUtils"
+  psiTreeUtilClass="io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil"
 
   elementTypePrefix="Api_"
   elementTypeHolderClass="io.chengguo.api.debugger.lang.psi.ApiTypes"
@@ -64,11 +65,11 @@ api_block ::= comment* description comment* request? {
 description ::= description_title description_content? description_item*
 description_title ::= description_item
 description_content ::= description_item
-description_item ::='-' DESCRIPTION_KEY ':' LINE_TEXT? {pin=1}
+description_item ::= '-' DESCRIPTION_KEY ':' LINE_TEXT? {pin=1}
 
 request ::= request_line header_field* message_body?
 
-request_line ::= method request_target {pin=1}
+request_line ::= method request_target
 
 method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
 

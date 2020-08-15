@@ -6,6 +6,9 @@
 
     <depends>com.intellij.modules.lang</depends>
 
+    <extensionPoints>
+        <extensionPoint qualifiedName="io.chengguo.api.debugger.dataProvider" interface="io.chengguo.api.debugger.ui.header.ApiDebuggerDataProvider"/>
+    </extensionPoints>
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="io.chengguo.api.debugger.lang.psi.ApiFileTypeFactory"/>
         <!--        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileViewEditorProvider"/>-->

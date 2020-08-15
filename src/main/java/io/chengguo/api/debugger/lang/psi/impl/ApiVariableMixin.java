@@ -41,4 +41,6 @@ public abstract class ApiVariableMixin extends ApiNamedElementImpl implements Ap
     public PsiElement getIdentifier() {
         return ApiPsiImplUtils.getIdentifier(this);
     }
+
+
 }

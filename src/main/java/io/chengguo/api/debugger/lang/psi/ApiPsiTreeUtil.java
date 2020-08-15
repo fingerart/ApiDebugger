@@ -1,4 +1,6 @@
 package io.chengguo.api.debugger.lang.psi;
 
-public class ApiPsiTreeUtil {
+import com.intellij.psi.util.PsiTreeUtil;
+
+public class ApiPsiTreeUtil extends PsiTreeUtil {
 }

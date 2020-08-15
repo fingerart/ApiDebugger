@@ -3,19 +3,23 @@ package io.chengguo.api.debugger.lang.completion;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.patterns.ElementPattern;
+import com.intellij.patterns.PatternCondition;
+import com.intellij.patterns.PatternConditionPlus;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.PairProcessor;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex;
-import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
-import io.chengguo.api.debugger.lang.psi.ApiHost;
-import io.chengguo.api.debugger.lang.psi.ApiTypes;
+import io.chengguo.api.debugger.lang.psi.*;
 import io.chengguo.api.debugger.ui.header.HttpHeaderDocumentation;
 import io.chengguo.api.debugger.ui.header.HttpHeadersDictionary;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,8 +36,8 @@ public class ApiCompletionContributor extends CompletionContributor {
     public static final List<String> SCHEMES = ContainerUtil.newArrayList("http", "https");
 
     public ApiCompletionContributor() {
-//        extend(CompletionType.BASIC, psiElement(), MethodCompletionProvider.INSTANCE);
-        extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HOST_VALUE).withParent(ApiHost.class), SchemeCompletionProvider.INSTANCE);
+//        extend(CompletionType.BASIC, psiElement().inside(ApiApiBlock.class), MethodCompletionProvider.INSTANCE);
+        extend(CompletionType.BASIC, SchemeCompletionProvider.PLACE, SchemeCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_IDENTIFIER), VariableCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_NAME), HeaderNameProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_VALUE), HeaderValueProvider.INSTANCE);
@@ -42,7 +46,16 @@ public class ApiCompletionContributor extends CompletionContributor {
     @Override
     public void beforeCompletion(@NotNull CompletionInitializationContext context) {
         super.beforeCompletion(context);
-        // TODO: 2020/8/6
+    }
+
+    private static PatternCondition<PsiElement> debug() {
+        return new PatternCondition<PsiElement>("debug") {
+            @Override
+            public boolean accepts(@NotNull PsiElement t, final ProcessingContext context) {
+                System.out.println("t = " + t + ", context = " + context);
+                return true;
+            }
+        };
     }
 
     private static class VariableCompletionProvider extends CompletionProvider<CompletionParameters> {
@@ -52,6 +65,11 @@ public class ApiCompletionContributor extends CompletionContributor {
         protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
             PsiElement element = parameters.getOriginalPosition();
             if (element != null) {
+                TextRange range = element.getTextRange();
+                if (range.contains(parameters.getOffset()) || range.getEndOffset() == parameters.getOffset()) {
+                    int endOffset = parameters.getOffset() - range.getStartOffset();
+                    result = result.withPrefixMatcher((endOffset != 0) ? element.getText().substring(0, endOffset) : "");
+                }
                 addCompletions(parameters, context, result, element);
             }
         }
@@ -91,6 +109,11 @@ public class ApiCompletionContributor extends CompletionContributor {
 
     private static class SchemeCompletionProvider extends CompletionProvider<CompletionParameters> {
         private static final SchemeCompletionProvider INSTANCE = new SchemeCompletionProvider();
+        private static final ElementPattern<? extends PsiElement> PLACE =
+                psiElement(ApiTypes.Api_HOST_VALUE)
+                        .andNot(
+                                psiElement().withSuperParent(2, psiElement().withFirstChild(psiElement(ApiTypes.Api_SCHEME)))
+                        );
 
         @Override
         protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {

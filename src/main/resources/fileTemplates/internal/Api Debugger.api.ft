@@ -1,43 +1,9 @@
-## GET接口
+- title: Sample
+- descrtion: this is sample.
 
-``` markdown
-接口描述
-```
-
->{%
-    \$userId = 10
-%}
-
-GET \${host}/user/\${userId}/intro
-Accept: */*
-Cache-Control: no-cache
-Authorization: Basic b3Jhbmc6YWJjZGVmZw==
-
-<{%
-    validate(response.statusCode == 200)
-    fun() {
-
-    }
-%}
-
-## POST文件接口
-
-``` markdown
-这是描述
-```
-
->>> javascript
-$host = "http://httpbin.org"
->>>
-
-POST ${host}/user
+PUT https://echo.tenon.dev/post?name=tenon&age=18&{{key}}={{value}}
 Content-Type: application/json
 
 {
-  "username": "hello"
+    "key": 11232
 }
-
-<<< javascript
-client.env.sid = response.body.sid;
-validate(response.statusCode == 200);
-<<<

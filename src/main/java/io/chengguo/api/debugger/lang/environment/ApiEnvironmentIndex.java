@@ -76,7 +76,7 @@ public class ApiEnvironmentIndex extends FileBasedIndexExtension<String, Set<Str
             @Override
             public void save(@NotNull DataOutput out, Set<String> value) throws IOException {
                 out.writeInt(value.size());
-                for (final String s : value) {
+                for (String s : value) {
                     EnumeratorStringDescriptor.INSTANCE.save(out, s);
                 }
             }
@@ -115,6 +115,12 @@ public class ApiEnvironmentIndex extends FileBasedIndexExtension<String, Set<Str
             return Collections.emptySet();
         }
         return properties.stream().map(property -> StringUtil.nullize(property.getName())).filter(Objects::nonNull).collect(Collectors.toSet());
+    }
+
+    @NotNull
+    public static Collection<String> getAllEnvironments(@NotNull Project project) {
+        GlobalSearchScope scope = GlobalSearchScope.projectScope(project);
+        return getAllEnvironments(project, scope);
     }
 
     @NotNull

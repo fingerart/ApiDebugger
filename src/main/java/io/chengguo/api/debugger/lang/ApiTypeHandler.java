@@ -33,7 +33,7 @@ public class ApiTypeHandler extends TypedHandlerDelegate {
     }
 
     @NotNull
-    public TypedHandlerDelegate.Result addBrace(@NotNull Project project, @NotNull Editor editor, @NotNull Document document, @NotNull String s, int caretShift) {
+    private TypedHandlerDelegate.Result addBrace(@NotNull Project project, @NotNull Editor editor, @NotNull Document document, @NotNull String s, int caretShift) {
         PsiDocumentManager documentManager = PsiDocumentManager.getInstance(project);
         if (documentManager != null) {
             EditorModificationUtil.insertStringAtCaret(editor, s, true, caretShift);

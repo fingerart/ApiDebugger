@@ -8,7 +8,7 @@ import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
+import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
@@ -30,7 +30,7 @@ public class ApiQueryImpl extends ApiElementImpl implements ApiQuery {
   @Override
   @NotNull
   public List<ApiQueryParameter> getQueryParameterList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ApiQueryParameter.class);
+    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiQueryParameter.class);
   }
 
 }

@@ -1,0 +1,11 @@
+
+// This line comment
+
+- title:Test Content-Type
+
+GET https://echo.tenon.dev:8080/hello/world/
+Content-Type: application/json
+
+{
+    "language": "json"
+}

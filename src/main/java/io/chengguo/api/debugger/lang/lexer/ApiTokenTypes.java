@@ -1,5 +1,6 @@
 package io.chengguo.api.debugger.lang.lexer;
 
+import com.google.protobuf.Api;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.TokenSet;
 
@@ -16,5 +17,6 @@ public class ApiTokenTypes {
     public static final TokenSet QUERY_PARAMETER_VALUE = TokenSet.create(Api_QUERY_VALUE);
     public static final TokenSet REQUEST_BODY = TokenSet.create(Api_REQUEST_MESSAGE_GROUP);
     public static final TokenSet VARIABLE_NAME = TokenSet.create(Api_IDENTIFIER);
+    public static final TokenSet VARIABLE_NAME_BRACES = TokenSet.create(Api_LBRACES, Api_RBRACES);
     public static final TokenSet API_BLOCK_SEPARATOR = TokenSet.create(Api_SEPARATOR);
 }
