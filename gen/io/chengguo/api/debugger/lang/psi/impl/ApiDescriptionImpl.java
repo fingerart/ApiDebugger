@@ -8,7 +8,7 @@ import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
+import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
@@ -36,7 +36,7 @@ public class ApiDescriptionImpl extends ApiElementImpl implements ApiDescription
   @Override
   @NotNull
   public List<ApiDescriptionItem> getDescriptionItemList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ApiDescriptionItem.class);
+    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiDescriptionItem.class);
   }
 
   @Override

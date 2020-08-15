@@ -23,6 +23,7 @@ public class ApiColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Query Parameter Value", ApiSyntaxHighlighter.Companion.getQUERY_PARAMETER_VALUE()),
             new AttributesDescriptor("Request Body", ApiSyntaxHighlighter.Companion.getREQUEST_BODY()),
             new AttributesDescriptor("Variable Name", ApiSyntaxHighlighter.Companion.getVARIABLE_NAME()),
+            new AttributesDescriptor("Variable Braces", ApiSyntaxHighlighter.Companion.getVARIABLE_BRACES()),
             new AttributesDescriptor("Api Block Separator", ApiSyntaxHighlighter.Companion.getAPI_BLOCK_SEPARATOR()),
             new AttributesDescriptor("Line Comment", ApiSyntaxHighlighter.Companion.getLINE_COMMENT()),
             new AttributesDescriptor("Block Comment", ApiSyntaxHighlighter.Companion.getBLOCK_COMMENT()),
@@ -46,7 +47,7 @@ public class ApiColorSettingsPage implements ColorSettingsPage {
         return "\n" +
                 "Post\n" +
                 "\n" +
-                "OPTIONS https://echo.tenon.dev:8080/post?nickname=tenon&age=18&dsfsf=asdfasf\n" +
+                "OPTIONS https://echo.tenon.dev:8080/post?nickname=tenon&age=18&dsfsf=asdfasf{{username}}\n" +
                 "Content-Type: application/json\n" +
                 "Accept: application/json\n" +
                 "\n" +
@@ -54,7 +55,6 @@ public class ApiColorSettingsPage implements ColorSettingsPage {
                 "\n" +
                 "---\n" +
                 "\n" +
-                "{{username}}\n" +
                 "\n" +
                 "// This line comment\n" +
                 "\n" +

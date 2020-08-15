@@ -1,0 +1,32 @@
+- title: Api Block 1
+- descrtion: block 1.
+
+PUT http://echo.tenon.dev/post?name=tenon&age=18
+Content-Type: application/json
+Accept: application/xml
+
+{
+    "key": "value"
+}
+
+---
+
+- title: Api Block 2
+- descrdsdsd: block 2.
+
+GET http://{{host}}/segment1/segment2/?lang={{language}}&raw=value
+Content-Type: application/json
+
+[2, 1]
+
+---
+
+- title: Api Block 3
+- descript: block 3.
+
+GET https://{{host}}/hello/world.html
+Content-Type: application/xml
+
+<option name="set">
+    Api Block 3
+</option>

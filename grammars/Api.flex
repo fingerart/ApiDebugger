@@ -121,7 +121,7 @@ MESSAGE_TEXT = [^ \t\f\r\n-] ([^\r\n]* ([\r\n]+ [^\r\n-])? )*
 <IN_DESCRIPTION_VALUE> {
     {WS}+                                       { return TokenType.WHITE_SPACE; }
     [^ \r\n] [^\r\n]*                           { return Api_LINE_TEXT; }
-    {NL}                                        { popState(); return TokenType.WHITE_SPACE;}
+    {NL}                                        { yypushback(yylength()); popState(); }
 }
 
 <IN_VARIABLE> {

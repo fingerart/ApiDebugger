@@ -1,11 +1,11 @@
 package io.chengguo.api.debugger.lang.formatter;
 
-import com.google.protobuf.Api;
-import com.intellij.formatting.*;
+import com.intellij.formatting.Block;
+import com.intellij.formatting.Spacing;
+import com.intellij.formatting.SpacingBuilder;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import io.chengguo.api.debugger.lang.ApiLanguage;
-import io.chengguo.api.debugger.lang.psi.ApiDescriptionItem;
 import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
