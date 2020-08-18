@@ -12,7 +12,7 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiRequestTargetImpl extends ApiElementImpl implements ApiRequestTarget {
+public class ApiRequestTargetImpl extends ApiRequestTargetMixin implements ApiRequestTarget {
 
   public ApiRequestTargetImpl(ASTNode node) {
     super(node);
@@ -34,15 +34,15 @@ public class ApiRequestTargetImpl extends ApiElementImpl implements ApiRequestTa
   }
 
   @Override
-  @NotNull
-  public ApiPathAbsolute getPathAbsolute() {
-    return findNotNullChildByClass(ApiPathAbsolute.class);
+  @Nullable
+  public ApiPort getPort() {
+    return findChildByClass(ApiPort.class);
   }
 
   @Override
   @Nullable
-  public ApiPort getPort() {
-    return findChildByClass(ApiPort.class);
+  public ApiQuery getQuery() {
+    return findChildByClass(ApiQuery.class);
   }
 
   @Override

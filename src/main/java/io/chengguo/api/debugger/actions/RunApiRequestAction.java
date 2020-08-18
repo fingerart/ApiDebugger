@@ -14,8 +14,8 @@ import com.intellij.openapi.project.Project;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.lang.ApiBlockConverter;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
-import io.chengguo.api.debugger.lang.psi.ApiRequest;
 import io.chengguo.api.debugger.lang.run.ApiHttpRequestRunProfileState;
+import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,11 +23,11 @@ import javax.swing.*;
 
 public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
 
-    protected final ApiApiBlock mApiBlock;
+    protected final ApiApiBlock mApiBlockElement;
 
     public RunApiRequestAction(ApiApiBlock apiBlock, String env) {
         super(ApiDebuggerBundle.message("api.debugger.editor.action.run.with.env", env), ApiDebuggerBundle.message("api.debugger.editor.action.run.with.env", env), AllIcons.RunConfigurations.TestState.Run);
-        mApiBlock = apiBlock;
+        mApiBlockElement = apiBlock;
     }
 
     @Override
@@ -40,18 +40,18 @@ public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
         try {
             Project project = e.getProject();
             if (project == null) return;
-            ApiBlockConverter.toApiBlock(mApiBlock);
+            ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(mApiBlockElement);
             final ExecutionEnvironmentBuilder builder = ExecutionEnvironmentBuilder.create(project, DefaultRunExecutor.getRunExecutorInstance(), new RunProfile() {
                 @Nullable
                 @Override
                 public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) throws ExecutionException {
-                    return new ApiHttpRequestRunProfileState();
+                    return new ApiHttpRequestRunProfileState(environment.getProject(), request, mApiBlockElement);
                 }
 
                 @NotNull
                 @Override
                 public String getName() {
-                    return "执行Api请求";
+                    return request.baseUrl;
                 }
 
                 @Nullable

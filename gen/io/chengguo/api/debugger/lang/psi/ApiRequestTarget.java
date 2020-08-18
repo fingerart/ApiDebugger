@@ -7,16 +7,16 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiRequestTarget extends ApiElement {
+public interface ApiRequestTarget extends ApiRequestTargetElement {
 
   @NotNull
   ApiHost getHost();
 
-  @NotNull
-  ApiPathAbsolute getPathAbsolute();
-
   @Nullable
   ApiPort getPort();
+
+  @Nullable
+  ApiQuery getQuery();
 
   @Nullable
   ApiScheme getScheme();
