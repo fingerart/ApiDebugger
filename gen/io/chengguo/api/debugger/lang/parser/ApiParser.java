@@ -432,36 +432,6 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // path_segment* path_query?
-  public static boolean path_absolute(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "path_absolute")) return false;
-    boolean result;
-    Marker marker = enter_section_(builder, level, _NONE_, Api_PATH_ABSOLUTE, "<path absolute>");
-    result = path_absolute_0(builder, level + 1);
-    result = result && path_absolute_1(builder, level + 1);
-    exit_section_(builder, level, marker, result, false, null);
-    return result;
-  }
-
-  // path_segment*
-  private static boolean path_absolute_0(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "path_absolute_0")) return false;
-    while (true) {
-      int pos = current_position_(builder);
-      if (!path_segment(builder, level + 1)) break;
-      if (!empty_element_parsed_guard_(builder, "path_absolute_0", pos)) break;
-    }
-    return true;
-  }
-
-  // path_query?
-  private static boolean path_absolute_1(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "path_absolute_1")) return false;
-    path_query(builder, level + 1);
-    return true;
-  }
-
-  /* ********************************************************** */
   // '?' query
   static boolean path_query(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "path_query")) return false;
@@ -705,7 +675,7 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // full_scheme? host full_port? path_absolute
+  // full_scheme? host full_port? path_segment* path_query?
   public static boolean request_target(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_target")) return false;
     boolean result;
@@ -713,7 +683,8 @@ public class ApiParser implements PsiParser, LightPsiParser {
     result = request_target_0(builder, level + 1);
     result = result && host(builder, level + 1);
     result = result && request_target_2(builder, level + 1);
-    result = result && path_absolute(builder, level + 1);
+    result = result && request_target_3(builder, level + 1);
+    result = result && request_target_4(builder, level + 1);
     exit_section_(builder, level, marker, result, false, null);
     return result;
   }
@@ -729,6 +700,24 @@ public class ApiParser implements PsiParser, LightPsiParser {
   private static boolean request_target_2(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_target_2")) return false;
     full_port(builder, level + 1);
+    return true;
+  }
+
+  // path_segment*
+  private static boolean request_target_3(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "request_target_3")) return false;
+    while (true) {
+      int pos = current_position_(builder);
+      if (!path_segment(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "request_target_3", pos)) break;
+    }
+    return true;
+  }
+
+  // path_query?
+  private static boolean request_target_4(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "request_target_4")) return false;
+    path_query(builder, level + 1);
     return true;
   }
 

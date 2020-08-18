@@ -48,10 +48,6 @@ public class ApiVisitor extends PsiElementVisitor {
     visitElement(o);
   }
 
-  public void visitPathAbsolute(@NotNull ApiPathAbsolute o) {
-    visitElement(o);
-  }
-
   public void visitPort(@NotNull ApiPort o) {
     visitElement(o);
   }
@@ -85,7 +81,7 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitRequestTarget(@NotNull ApiRequestTarget o) {
-    visitElement(o);
+    visitRequestTargetElement(o);
   }
 
   public void visitScheme(@NotNull ApiScheme o) {
@@ -105,6 +101,10 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitNamedElement(@NotNull ApiNamedElement o) {
+    visitElement(o);
+  }
+
+  public void visitRequestTargetElement(@NotNull ApiRequestTargetElement o) {
     visitElement(o);
   }
 

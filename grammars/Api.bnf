@@ -52,6 +52,8 @@
   extends("header_field") = "io.chengguo.api.debugger.lang.psi.impl.ApiHeaderFieldMixin"
   implements("api_block") = "io.chengguo.api.debugger.lang.psi.ApiBlockElment"
   extends("api_block") = "io.chengguo.api.debugger.lang.psi.impl.ApiBlockMixin"
+  implements("request_target")="io.chengguo.api.debugger.lang.psi.ApiRequestTargetElement"
+  extends("request_target")="io.chengguo.api.debugger.lang.psi.impl.ApiRequestTargetMixin"
 }
 
 apiFile ::= api_*
@@ -73,7 +75,7 @@ request_line ::= method request_target
 
 method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
 
-request_target ::= full_scheme? host full_port? path_absolute
+request_target ::= full_scheme? host full_port? path_segment* path_query?
 
 private full_scheme ::= scheme '://'
 
@@ -84,8 +86,6 @@ scheme ::= 'http' | 'https'
 host ::= (variable | HOST_VALUE)+
 
 port ::= (variable | PORT_SEGMENT)+
-
-path_absolute ::= path_segment* path_query?
 
 private path_segment ::= '/' SEGMENT?
 

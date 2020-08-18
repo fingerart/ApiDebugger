@@ -20,7 +20,6 @@ public interface ApiTypes {
   IElementType Api_HEADER_FIELD_VAL = new ApiElementType("Api_HEADER_FIELD_VAL");
   IElementType Api_HOST = new ApiElementType("Api_HOST");
   IElementType Api_METHOD = new ApiElementType("Api_METHOD");
-  IElementType Api_PATH_ABSOLUTE = new ApiElementType("Api_PATH_ABSOLUTE");
   IElementType Api_PORT = new ApiElementType("Api_PORT");
   IElementType Api_QUERY = new ApiElementType("Api_QUERY");
   IElementType Api_QUERY_PARAMETER = new ApiElementType("Api_QUERY_PARAMETER");
@@ -100,9 +99,6 @@ public interface ApiTypes {
       }
       else if (type == Api_METHOD) {
         return new ApiMethodImpl(node);
-      }
-      else if (type == Api_PATH_ABSOLUTE) {
-        return new ApiPathAbsoluteImpl(node);
       }
       else if (type == Api_PORT) {
         return new ApiPortImpl(node);

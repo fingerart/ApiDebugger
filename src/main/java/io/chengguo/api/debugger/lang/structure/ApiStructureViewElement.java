@@ -11,7 +11,6 @@ import io.chengguo.api.debugger.ApiDebuggerIcons;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
-import io.chengguo.api.debugger.lang.psi.ApiPathAbsolute;
 import io.chengguo.api.debugger.lang.psi.ApiRequest;
 import io.chengguo.api.debugger.lang.psi.ApiRequestTarget;
 import org.jetbrains.annotations.NotNull;
@@ -49,8 +48,8 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
                 if (request != null) {
                     ApiRequestTarget requestTarget = request.getRequestLine().getRequestTarget();
                     if (requestTarget != null) {
-                        ApiPathAbsolute pathAbsolute = requestTarget.getPathAbsolute();
-                        treeElements.add(createApiBlockViewTreeElement(apiBlock, pathAbsolute.getText(), true));
+                        String baseUrl = requestTarget.getBaseUrl();
+                        treeElements.add(createApiBlockViewTreeElement(apiBlock, baseUrl, true));
                     }
                 }
             }
