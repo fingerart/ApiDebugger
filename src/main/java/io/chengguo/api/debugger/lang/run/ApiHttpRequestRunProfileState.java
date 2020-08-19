@@ -15,6 +15,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
+import org.apache.http.impl.client.HttpClients;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,9 +37,19 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
     @Override
     public ExecutionResult execute(Executor executor, @NotNull ProgramRunner runner) throws ExecutionException {
         ProcessHandler processHandler = createProcessHandler();
-        ConsoleViewImpl consoleView = new ConsoleViewImpl(mProject, false);
-        consoleView.attachToProcess(processHandler);
-        consoleView.print(mRequest.baseUrl, ConsoleViewContentType.SYSTEM_OUTPUT);
+            ConsoleViewImpl consoleView = new ConsoleViewImpl(mProject, false);
+            consoleView.attachToProcess(processHandler);
+            new Thread(() -> {
+                for (int i = 0; i < 3; i++) {
+                    try {
+                        Thread.sleep(1000);
+                        consoleView.print(mRequest.baseUrl+"\r\n", ConsoleViewContentType.SYSTEM_OUTPUT);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                processHandler.detachProcess();
+        }).start();
         return new DefaultExecutionResult(consoleView, processHandler, new AnAction("其它操作") {
             @Override
             public void actionPerformed(@NotNull AnActionEvent e) {
@@ -50,6 +61,7 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
     @NotNull
     private ProcessHandler createProcessHandler() {
         return new ProcessHandler() {
+
             @Override
             protected void destroyProcessImpl() {
                 notifyProcessTerminated(0);
