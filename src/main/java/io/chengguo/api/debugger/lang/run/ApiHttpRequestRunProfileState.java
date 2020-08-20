@@ -9,11 +9,10 @@ import com.intellij.execution.impl.ConsoleViewImpl;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ProgramRunner;
 import com.intellij.execution.ui.ConsoleViewContentType;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
+import io.chengguo.api.debugger.ui.ApiDebugger;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,23 +44,19 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
         ProcessHandler processHandler = createProcessHandler();
         ConsoleViewImpl consoleView = new ConsoleViewImpl(mProject, false);
         consoleView.attachToProcess(processHandler);
-        new Thread(() -> {
-            for (int i = 0; i < 3; i++) {
-                try {
-                    Thread.sleep(1000);
-                    consoleView.print(mRequest.baseUrl + "\r\n", ConsoleViewContentType.SYSTEM_OUTPUT);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            processHandler.detachProcess();
-        }).start();
-        return new DefaultExecutionResult(consoleView, processHandler, new AnAction("其它操作") {
+        ApiDebugger debugger = new ApiDebugger(mProject);
+        debugger.debug(mRequest, new ApiDebugger.IDebugListener() {
             @Override
-            public void actionPerformed(@NotNull AnActionEvent e) {
+            public void onResponse(StringBuffer buffer) {
+                consoleView.print(buffer.toString(), ConsoleViewContentType.NORMAL_OUTPUT);
+            }
 
+            @Override
+            public void onDone() {
+                processHandler.detachProcess();
             }
         });
+        return new DefaultExecutionResult(consoleView, processHandler);
     }
 
     @NotNull

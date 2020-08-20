@@ -3,7 +3,7 @@
 
 - title:Test Content-Type
 
-GET https://echo.tenon.dev:8080/hello/world/
+GET http://httpbin.org/delay/5
 Content-Type: application/json
 
 {

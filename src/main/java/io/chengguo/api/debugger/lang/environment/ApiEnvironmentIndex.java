@@ -151,6 +151,11 @@ public class ApiEnvironmentIndex extends FileBasedIndexExtension<String, Set<Str
         return variables.size() == 1 ? variables.get(0) : Collections.emptyList();
     }
 
+    public static Collection<VirtualFile> getAllVirtualFiles(Project project, String evn) {
+        GlobalSearchScope scope = GlobalSearchScope.projectScope(project);
+        return FileBasedIndex.getInstance().getContainingFiles(KEY, evn, scope);
+    }
+
     @NotNull
     public static GlobalSearchScope getSearchScope(@NotNull final Project project, @Nullable final PsiFile contextFile) {
         GlobalSearchScope projectScope = GlobalSearchScope.projectScope(project);
