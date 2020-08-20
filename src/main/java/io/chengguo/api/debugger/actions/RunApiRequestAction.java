@@ -13,6 +13,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.lang.ApiBlockConverter;
+import io.chengguo.api.debugger.lang.ApiVariableTrimmer;
+import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.run.ApiHttpRequestRunProfileState;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
@@ -24,10 +26,12 @@ import javax.swing.*;
 public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
 
     protected final ApiApiBlock mApiBlockElement;
+    private final String mEnvName;
 
     public RunApiRequestAction(ApiApiBlock apiBlock, String env) {
         super(ApiDebuggerBundle.message("api.debugger.editor.action.run.with.env", env), ApiDebuggerBundle.message("api.debugger.editor.action.run.with.env", env), AllIcons.RunConfigurations.TestState.Run);
         mApiBlockElement = apiBlock;
+        mEnvName = env;
     }
 
     @Override
@@ -40,9 +44,9 @@ public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
         try {
             Project project = e.getProject();
             if (project == null) return;
-            ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(mApiBlockElement);
+            ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(mApiBlockElement, ApiVariableTrimmer.create(ApiEnvironment.create(project, mEnvName)));
             final ExecutionEnvironmentBuilder builder = ExecutionEnvironmentBuilder.create(project, DefaultRunExecutor.getRunExecutorInstance(), new RunProfile() {
-                @Nullable
+                @NotNull
                 @Override
                 public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) throws ExecutionException {
                     return new ApiHttpRequestRunProfileState(environment.getProject(), request, mApiBlockElement);

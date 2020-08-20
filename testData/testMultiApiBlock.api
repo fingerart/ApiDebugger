@@ -24,8 +24,7 @@ Content-Type: application/json
 - title: Api Block 3
 - descript: block 3.
 
-GET https://{{host}}/hello/world.html
-Content-Type: application/xml
+GET http://httpbin.org/delay/3
 
 <option name="set">
     Api Block 3
