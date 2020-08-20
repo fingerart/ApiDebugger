@@ -9,23 +9,29 @@ import com.intellij.execution.impl.ConsoleViewImpl;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ProgramRunner;
 import com.intellij.execution.ui.ConsoleViewContentType;
-import com.intellij.execution.ui.ExecutionConsole;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Key;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
-import org.apache.http.impl.client.HttpClients;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.OutputStream;
+
+import static com.intellij.execution.ui.ConsoleViewContentType.registerNewConsoleViewType;
 
 public class ApiHttpRequestRunProfileState implements RunProfileState {
 
     private final ApiDebuggerRequest mRequest;
     private final Project mProject;
     private final ApiApiBlock mElement;
+    private final static Key KK = Key.create("debug.level.title");
+
+    static {
+        registerNewConsoleViewType(KK, new ConsoleViewContentType(KK.toString(), ConsoleViewContentType.ERROR_OUTPUT_KEY));
+    }
 
     public ApiHttpRequestRunProfileState(Project project, ApiDebuggerRequest request, ApiApiBlock element) {
         mRequest = request;
@@ -37,18 +43,18 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
     @Override
     public ExecutionResult execute(Executor executor, @NotNull ProgramRunner runner) throws ExecutionException {
         ProcessHandler processHandler = createProcessHandler();
-            ConsoleViewImpl consoleView = new ConsoleViewImpl(mProject, false);
-            consoleView.attachToProcess(processHandler);
-            new Thread(() -> {
-                for (int i = 0; i < 3; i++) {
-                    try {
-                        Thread.sleep(1000);
-                        consoleView.print(mRequest.baseUrl+"\r\n", ConsoleViewContentType.SYSTEM_OUTPUT);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        ConsoleViewImpl consoleView = new ConsoleViewImpl(mProject, false);
+        consoleView.attachToProcess(processHandler);
+        new Thread(() -> {
+            for (int i = 0; i < 3; i++) {
+                try {
+                    Thread.sleep(1000);
+                    consoleView.print(mRequest.baseUrl + "\r\n", ConsoleViewContentType.SYSTEM_OUTPUT);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                processHandler.detachProcess();
+            }
+            processHandler.detachProcess();
         }).start();
         return new DefaultExecutionResult(consoleView, processHandler, new AnAction("其它操作") {
             @Override

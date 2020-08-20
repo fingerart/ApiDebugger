@@ -11,11 +11,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.util.net.HttpConfigurable;
 import com.intellij.util.net.IdeHttpClientHelpers;
 import com.intellij.util.net.ssl.CertificateManager;
+import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.*;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -29,6 +27,8 @@ import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URI;
+
+import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 
 
 public class ApiDebugger {
@@ -60,10 +60,16 @@ public class ApiDebugger {
 
     private HttpRequestBase createHttpRequest(ApiDebuggerRequest apiRequest) {
         String url = apiRequest.baseUrl;
-        if ("GET".equals(apiRequest.method)) {
+        if (Api_GET.equals(apiRequest.method)) {
             return new HttpGet(url);
-        } else if ("POST".equals(apiRequest.method)) {
+        } else if (Api_POST.equals(apiRequest.method)) {
             return new HttpPost(url);
+        } else if (Api_DELETE.equals(apiRequest.method)) {
+            return new HttpDelete(url);
+        }else if (Api_HEAD.equals(apiRequest.method)) {
+            return new HttpHead(url);
+        }else if(Api_OPTIONS.equals(apiRequest.method)){
+            return new HttpOptions(url);
         }
         return new HttpRequestBase() {
             {
