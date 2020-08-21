@@ -1,15 +1,16 @@
 package io.chengguo.api.debugger.ui;
 
+import com.intellij.execution.process.ProcessHandler;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.progress.Task;
+import com.intellij.openapi.progress.*;
+import com.intellij.openapi.progress.impl.BackgroundableProcessIndicator;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.net.HttpConfigurable;
 import com.intellij.util.net.IdeHttpClientHelpers;
 import com.intellij.util.net.ssl.CertificateManager;
+import io.chengguo.api.debugger.lang.run.ApiDebuggerRequestConsole;
 import org.apache.commons.io.input.CountingInputStream;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -41,15 +42,26 @@ public class ApiDebugger {
     private static final Logger LOG = Logger.getInstance(ApiDebugger.class);
 
     private final Project mProject;
+    private final ApiDebuggerRequest mRequest;
+    private final ApiDebuggerRequestConsole mConsole;
+    private final ProcessHandler mProcessHandler;
+    private final boolean mIsWithProgress;
 
-    public ApiDebugger(Project project) {
+    public ApiDebugger(Project project, ApiDebuggerRequest request, ApiDebuggerRequestConsole console, ProcessHandler processHandler, boolean isWithProgress) {
         mProject = project;
+        mRequest = request;
+        mConsole = console;
+        mProcessHandler = processHandler;
+        mIsWithProgress = isWithProgress;
     }
 
-    public void debug(@NotNull ApiDebuggerRequest apiRequest, @NotNull IDebugListener debugListener) {
+    public static ApiDebugger create(Project project, ApiDebuggerRequest request, ApiDebuggerRequestConsole consoleView, ProcessHandler processHandler, boolean isWithProgress) {
+        return new ApiDebugger(project, request, consoleView, processHandler, isWithProgress);
+    }
+
+    public void debug() {
         FileDocumentManager.getInstance().saveAllDocuments();
-        debugListener.onStart();
-        ProgressManager.getInstance().run(new Task.Backgroundable(mProject, apiRequest.baseUrl, true) {
+        Task.Backgroundable task = new Task.Backgroundable(mProject, mRequest.baseUrl, true) {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
                 try {
@@ -91,7 +103,13 @@ public class ApiDebugger {
                     ApplicationManager.getApplication().invokeLater(debugListener::onDone);
                 }
             }
-        });
+        };
+        StandardProgressIndicator indicator = ApplicationManager.getApplication().isHeadlessEnvironment() || !isWithProgress ? new EmptyProgressIndicator() : new BackgroundableProcessIndicator(task);
+        if (ApplicationManager.getApplication().isDispatchThread()) {
+            ProgressManager.getInstance().runProcessWithProgressAsynchronously(task, indicator);
+        } else {
+            ApplicationManager.getApplication().invokeLater(() -> ProgressManager.getInstance().runProcessWithProgressAsynchronously(task, indicator));
+        }
     }
 
     private HttpRequestBase createHttpRequest(ApiDebuggerRequest apiRequest) {

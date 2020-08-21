@@ -6,7 +6,7 @@ Content-Type: application/json
 Accept: application/xml
 
 {
-    "key": "value"
+"key": "value"
 }
 
 ---

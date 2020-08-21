@@ -48,7 +48,7 @@ public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
             final ExecutionEnvironmentBuilder builder = ExecutionEnvironmentBuilder.create(project, DefaultRunExecutor.getRunExecutorInstance(), new RunProfile() {
                 @NotNull
                 @Override
-                public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) throws ExecutionException {
+                public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) {
                     return new ApiHttpRequestRunProfileState(environment.getProject(), request, mApiBlockElement);
                 }
 

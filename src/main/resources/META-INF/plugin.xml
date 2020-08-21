@@ -7,7 +7,8 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensionPoints>
-        <extensionPoint qualifiedName="io.chengguo.api.debugger.dataProvider" interface="io.chengguo.api.debugger.ui.header.ApiDebuggerDataProvider"/>
+        <extensionPoint qualifiedName="io.chengguo.api.debugger.dataProvider"
+                        interface="io.chengguo.api.debugger.ui.header.ApiDebuggerDataProvider"/>
     </extensionPoints>
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="io.chengguo.api.debugger.lang.psi.ApiFileTypeFactory"/>
@@ -50,6 +51,7 @@
                 implementation="io.chengguo.api.debugger.lang.refactor.rename.ApiVariableNameSuggestionProvider"/>
         <multiHostInjector implementation="io.chengguo.api.debugger.lang.injection.ApiRequestBodyMultiHostInjector"/>
         <errorHandler implementation="io.chengguo.api.debugger.ApiDebuggerErrorReportSubmitter"/>
+        <configurationType implementation="io.chengguo.api.debugger.lang.run.ApiDebuggerConfigurationType"/>
     </extensions>
 
     <actions>

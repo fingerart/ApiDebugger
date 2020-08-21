@@ -17,4 +17,6 @@ public interface ApiDebuggerIcons {
     Icon API_FILE_TYPE = loadIcon("/icons/api_file_type.svg");
 
     Icon API_REQUEST_NAV = loadIcon("/icons/api_request_nav.svg");
+
+    Icon API_DEBUGGER_RUN_CONFIGURATION = loadIcon("/icons/api_debugger_run_configuration.svg");
 }
