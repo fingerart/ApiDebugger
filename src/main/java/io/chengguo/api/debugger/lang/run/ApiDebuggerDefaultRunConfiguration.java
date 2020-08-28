@@ -12,19 +12,19 @@ import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ApiDebuggerRunConfiguration extends LocatableConfigurationBase {
-    protected ApiDebuggerRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, @Nullable String name) {
+public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBase {
+    protected ApiDebuggerDefaultRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, @Nullable String name) {
         super(project, factory, name);
     }
 
-    protected ApiDebuggerRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory) {
+    protected ApiDebuggerDefaultRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory) {
         this(project, factory, null);
     }
 
     @NotNull
     @Override
     public SettingsEditor<? extends RunConfiguration> getConfigurationEditor() {
-        return null;
+        return new ApiDebuggerDefaultRunConfigurationSettingsEditor(getProject());
     }
 
     @Nullable

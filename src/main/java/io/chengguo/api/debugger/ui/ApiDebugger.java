@@ -68,7 +68,7 @@ public class ApiDebugger {
                     indicator.setIndeterminate(true);
                     indicator.setText("Creating connection……");
                     CloseableHttpClient client = createHttpClient();
-                    HttpRequestBase httpRequest = createHttpRequest(apiRequest);
+                    HttpRequestBase httpRequest = createHttpRequest(mRequest);
                     CloseableHttpResponse response = client.execute(httpRequest);
                     Header contentLength = response.getFirstHeader("Content-Length");
                     Long length = contentLength == null ? null : Long.parseLong(contentLength.getValue());
@@ -95,16 +95,16 @@ public class ApiDebugger {
                             indicator.setText(countingInputStream.getCount() / 1000L + " of " + length / 1000L + "Kb");
                         }
                     }
-                    ApplicationManager.getApplication().invokeLater(() -> debugListener.onResponse(buffer));
+//                    ApplicationManager.getApplication().invokeLater(() -> debugListener.onResponse(buffer));
                 } catch (Exception e) {
                     LOG.error(e);
-                    ApplicationManager.getApplication().invokeLater(() -> debugListener.onError(e));
+//                    ApplicationManager.getApplication().invokeLater(() -> debugListener.onError(e));
                 } finally {
-                    ApplicationManager.getApplication().invokeLater(debugListener::onDone);
+//                    ApplicationManager.getApplication().invokeLater(debugListener::onDone);
                 }
             }
         };
-        StandardProgressIndicator indicator = ApplicationManager.getApplication().isHeadlessEnvironment() || !isWithProgress ? new EmptyProgressIndicator() : new BackgroundableProcessIndicator(task);
+        StandardProgressIndicator indicator = ApplicationManager.getApplication().isHeadlessEnvironment() || !mIsWithProgress ? new EmptyProgressIndicator() : new BackgroundableProcessIndicator(task);
         if (ApplicationManager.getApplication().isDispatchThread()) {
             ProgressManager.getInstance().runProcessWithProgressAsynchronously(task, indicator);
         } else {
