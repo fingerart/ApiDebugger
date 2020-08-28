@@ -13,10 +13,10 @@ import javax.swing.*;
 
 public class ApiDebuggerConfigurationType implements ConfigurationType {
 
-    private final ApiDebuggerConfigurationFactory mConfigurationFactory;
+    private final ApiDebuggerDefaultConfigurationFactory mConfigurationFactory;
 
     public ApiDebuggerConfigurationType() {
-        mConfigurationFactory = new ApiDebuggerConfigurationFactory(this);
+        mConfigurationFactory = new ApiDebuggerDefaultConfigurationFactory(this);
     }
 
     public static ApiDebuggerConfigurationType getInstance() {

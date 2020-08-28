@@ -6,14 +6,14 @@ import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
-public class ApiDebuggerConfigurationFactory extends ConfigurationFactory {
-    protected ApiDebuggerConfigurationFactory(@NotNull ConfigurationType type) {
+public class ApiDebuggerDefaultConfigurationFactory extends ConfigurationFactory {
+    protected ApiDebuggerDefaultConfigurationFactory(@NotNull ConfigurationType type) {
         super(type);
     }
 
     @NotNull
     @Override
     public RunConfiguration createTemplateConfiguration(@NotNull Project project) {
-        return new ApiDebuggerRunConfiguration(project, this);
+        return new ApiDebuggerDefaultRunConfiguration(project, this);
     }
 }

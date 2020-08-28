@@ -53,20 +53,8 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
     }
 
     private void executeHttpRequest(ApiDebuggerRequestConsole consoleView, ProcessHandler processHandler) {
-        ApiDebugger debugger = ApiDebugger.create(mProject, mRequest, consoleView, processHandler);
-        debugger.debug(mRequest, new ApiDebugger.IDebugListener() {
-            @Override
-            public void onResponse(StringBuffer buffer) {
-                consoleView.print(buffer.toString(), ConsoleViewContentType.NORMAL_OUTPUT);
-            }
-
-            @Override
-            public void onDone() {
-                if (!processHandler.isProcessTerminating() && !processHandler.isProcessTerminated()) {
-                    processHandler.detachProcess();
-                }
-            }
-        }, true);
+        ApiDebugger debugger = ApiDebugger.create(mProject, mRequest, consoleView, processHandler, false);
+        debugger.debug();
     }
 
     @NotNull
