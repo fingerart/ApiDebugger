@@ -9,6 +9,8 @@ import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
+import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,6 +32,11 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
     @Nullable
     @Override
     public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) throws ExecutionException {
-        return null;
+        Project project = getProject();
+        String envName = "Default";
+        ApiVariableReplacer variableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(project, envName));
+        return new ApiHttpRequestRunProfileState(project, variableReplacer);
     }
+
+
 }

@@ -8,18 +8,18 @@ import io.chengguo.api.debugger.lang.psi.ApiElement;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
 import org.jetbrains.annotations.NotNull;
 
-public class ApiVariableTrimmer {
+public class ApiVariableReplacer {
 
-    public static final ApiVariableTrimmer EMPTY = new ApiVariableTrimmer(ApiEnvironment.empty());
+    public static final ApiVariableReplacer EMPTY = new ApiVariableReplacer(ApiEnvironment.empty());
 
     private final ApiEnvironment mEnvironment;
 
-    public ApiVariableTrimmer(ApiEnvironment environment) {
+    public ApiVariableReplacer(ApiEnvironment environment) {
         mEnvironment = environment;
     }
 
-    public static ApiVariableTrimmer create(ApiEnvironment environment) {
-        return new ApiVariableTrimmer(environment);
+    public static ApiVariableReplacer create(ApiEnvironment environment) {
+        return new ApiVariableReplacer(environment);
     }
 
     @NotNull

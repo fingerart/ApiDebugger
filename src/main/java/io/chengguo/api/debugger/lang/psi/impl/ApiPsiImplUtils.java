@@ -2,11 +2,8 @@ package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
-import io.chengguo.api.debugger.lang.ApiVariableTrimmer;
+import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.*;
-
-import java.lang.reflect.Method;
 
 public class ApiPsiImplUtils {
 
@@ -29,7 +26,7 @@ public class ApiPsiImplUtils {
         return element == null ? ApiTypes.Api_HTTP.toString() : element.getText();
     }
 
-    public static String getBaseUrl(ApiRequestTarget element, ApiVariableTrimmer trimmer) {
+    public static String getBaseUrl(ApiRequestTarget element, ApiVariableReplacer trimmer) {
         return getScheme(element.getScheme()) + "://" + trimmer.getValue(element.getHost());
     }
 }

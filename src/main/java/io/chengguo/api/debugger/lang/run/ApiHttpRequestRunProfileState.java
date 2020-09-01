@@ -10,6 +10,7 @@ import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ProgramRunner;
 import com.intellij.execution.ui.ConsoleViewContentType;
 import com.intellij.openapi.project.Project;
+import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.ui.ApiDebugger;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
@@ -22,14 +23,12 @@ import static com.intellij.execution.ui.ConsoleViewContentType.registerNewConsol
 
 public class ApiHttpRequestRunProfileState implements RunProfileState {
 
-    private final ApiDebuggerRequest mRequest;
     private final Project mProject;
-    private final ApiApiBlock mElement;
+    private final ApiVariableReplacer mVariableReplacer;
 
-    public ApiHttpRequestRunProfileState(Project project, ApiDebuggerRequest request, ApiApiBlock element) {
-        mRequest = request;
+    public ApiHttpRequestRunProfileState(Project project, ApiVariableReplacer variableReplacer) {
         mProject = project;
-        mElement = element;
+        mVariableReplacer = variableReplacer;
     }
 
     @Nullable

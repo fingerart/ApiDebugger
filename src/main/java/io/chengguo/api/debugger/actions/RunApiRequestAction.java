@@ -1,6 +1,5 @@
 package io.chengguo.api.debugger.actions;
 
-import com.intellij.execution.ExecutionException;
 import com.intellij.execution.ExecutionManager;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.RunProfile;
@@ -13,7 +12,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.lang.ApiBlockConverter;
-import io.chengguo.api.debugger.lang.ApiVariableTrimmer;
+import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.run.ApiHttpRequestRunProfileState;
@@ -44,7 +43,8 @@ public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
         try {
             Project project = e.getProject();
             if (project == null) return;
-            ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(mApiBlockElement, ApiVariableTrimmer.create(ApiEnvironment.create(project, mEnvName)));
+            ApiVariableReplacer variableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(project, mEnvName));
+            ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(mApiBlockElement, variableReplacer);
             final ExecutionEnvironmentBuilder builder = ExecutionEnvironmentBuilder.create(project, DefaultRunExecutor.getRunExecutorInstance(), new RunProfile() {
                 @NotNull
                 @Override
