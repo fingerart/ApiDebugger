@@ -12,21 +12,31 @@ import java.util.Collection;
 
 public abstract class ApiEnvironment {
 
+    private String mName;
+
+    public ApiEnvironment(String name) {
+        this.mName = name;
+    }
+
     public abstract String getVariableValue(String variableName);
+
+    public String getName() {
+        return mName;
+    }
 
     public static ApiEnvironment empty() {
         return ApiEmptyEnvironment.EMPTY_ENVIRONMENT;
     }
 
-    public static ApiEnvironment create(Project project, String evnName) {
-        if (StringUtil.isNotEmpty(evnName)) {
-            Collection<VirtualFile> files = ApiEnvironmentIndex.getAllVirtualFiles(project, evnName);
+    public static ApiEnvironment create(Project project, String envName) {
+        if (StringUtil.isNotEmpty(envName)) {
+            Collection<VirtualFile> files = ApiEnvironmentIndex.getAllVirtualFiles(project, envName);
             if (files.iterator().hasNext()) {
                 PsiFile file = PsiManager.getInstance(project).findFile(files.iterator().next());
                 if (file instanceof JsonFile) {
                     JsonValue value = ((JsonFile) file).getTopLevelValue();
-                    JsonObject environment = value instanceof JsonObject ? JsonUtil.getPropertyValueOfType((JsonObject) value, evnName, JsonObject.class) : null;
-                    return new ApiJsonEnvironment(environment);
+                    JsonObject environment = value instanceof JsonObject ? JsonUtil.getPropertyValueOfType((JsonObject) value, envName, JsonObject.class) : null;
+                    return new ApiJsonEnvironment(envName, environment);
                 }
             }
         }
@@ -37,7 +47,8 @@ public abstract class ApiEnvironment {
 
         private final JsonObject mVariables;
 
-        public ApiJsonEnvironment(JsonObject variables) {
+        public ApiJsonEnvironment(String envName, JsonObject variables) {
+            super(envName);
             mVariables = variables;
         }
 
@@ -59,7 +70,11 @@ public abstract class ApiEnvironment {
     }
 
     private static class ApiEmptyEnvironment extends ApiEnvironment {
-        private static final ApiEmptyEnvironment EMPTY_ENVIRONMENT = new ApiEmptyEnvironment();
+        private static final ApiEmptyEnvironment EMPTY_ENVIRONMENT = new ApiEmptyEnvironment("<Default Environment>");
+
+        public ApiEmptyEnvironment(String name) {
+            super(name);
+        }
 
         @Override
         public String getVariableValue(String variableName) {

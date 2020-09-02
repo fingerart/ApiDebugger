@@ -49,7 +49,7 @@ public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
                 @NotNull
                 @Override
                 public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) {
-                    return new ApiHttpRequestRunProfileState(environment.getProject(), request, mApiBlockElement);
+                    return new ApiHttpRequestRunProfileState(environment.getProject(), variableReplacer);
                 }
 
                 @NotNull

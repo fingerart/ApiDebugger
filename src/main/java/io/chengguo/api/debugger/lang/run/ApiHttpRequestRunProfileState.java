@@ -47,12 +47,12 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
     }
 
     private ApiDebuggerRequestConsole createConsole(ProcessHandler processHandler) {
-        String target = mRequest.method + " " + mRequest.toString() + "\r\n\r\n";
+        String target = "mRequest.method" + " " + "mRequest.toString()" + "\r\n\r\n";
         return new ApiDebuggerRequestConsole(mProject, target, processHandler);
     }
 
     private void executeHttpRequest(ApiDebuggerRequestConsole consoleView, ProcessHandler processHandler) {
-        ApiDebugger debugger = ApiDebugger.create(mProject, mRequest, consoleView, processHandler, false);
+        ApiDebugger debugger = ApiDebugger.create(mProject, null, consoleView, processHandler, false);
         debugger.debug();
     }
 
