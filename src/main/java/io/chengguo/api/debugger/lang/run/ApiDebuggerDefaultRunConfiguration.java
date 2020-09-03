@@ -1,5 +1,6 @@
 package io.chengguo.api.debugger.lang.run;
 
+import com.intellij.configurationStore.XmlSerializer;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.*;
@@ -7,34 +8,40 @@ import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.InvalidDataException;
+import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VfsUtilCore;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
+import com.intellij.util.xmlb.annotations.Attribute;
+import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
-import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
+import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBase {
 
-    private final Settings mSettings;
+    private Settings mSettings;
 
     protected ApiDebuggerDefaultRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, @Nullable String name) {
         super(project, factory, name);
-        mSettings = new Settings();
+        mSettings = createSettings();
     }
 
     protected ApiDebuggerDefaultRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory) {
         this(project, factory, null);
+    }
+
+    @NotNull
+    private Settings createSettings() {
+        return new Settings();
+    }
+
+    public void setSettings(Settings settings) {
+        mSettings = settings;
     }
 
     @NotNull
@@ -46,10 +53,25 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
     @Override
     public void readExternal(@NotNull Element element) throws InvalidDataException {
         super.readExternal(element);
+        XmlSerializer.deserializeInto(element, (mSettings = createSettings()));
+        if (mSettings != null) {
+            String filePath = mSettings.getFilePath();
+            if (StringUtil.isNotEmpty(filePath)) {
+                mSettings.setFilePath(FileUtil.toSystemDependentName(filePath));
+            }
+        }
     }
 
     @Override
     public void writeExternal(@NotNull Element element) {
+        if (mSettings != null) {
+            Settings settings = mSettings.clone();
+            String filePath = settings.getFilePath();
+            if (StringUtil.isNotEmpty(filePath)) {
+                settings.setFilePath(FileUtil.toSystemIndependentName(filePath));
+            }
+            XmlSerializer.serializeObjectInto(mSettings, element);
+        }
         super.writeExternal(element);
     }
 
@@ -62,14 +84,20 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
         Project project = getProject();
         String filePath = mSettings.getFilePath();
         if (StringUtil.isEmpty(filePath)) {
-            throw new RuntimeConfigurationException("文件路径不能为空");
+            throw new RuntimeConfigurationException(ApiDebuggerBundle.message("api.debugger.run.configuration.file_is_not_configured"));
         }
         PsiFile file = ApiPsiUtils.findFileByPath(project, filePath);
         if (file == null) {
-            throw new RuntimeConfigurationException("找不到Api文件");
+            throw new RuntimeConfigurationException(ApiDebuggerBundle.message("api.debugger.run.configuration.file_doesnt_exists"));
         }
         if (file instanceof ApiPsiFile && mSettings.getRunFileType() == RunFileType.ALL_IN_FILE) {
             return new ApiDebuggerFileExecutionConfig();
+        }
+        ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(file);
+        int index = mSettings.getIndexInFile();
+        int length = apiBlocks.length;
+        if (index >= length || index < 0) {
+            throw new RuntimeConfigurationException(ApiDebuggerBundle.message("api.debugger.run.configuration.api_request_doesnt_exists"));
         }
         return new ApiDebuggerFileExecutionConfig();
     }
@@ -88,6 +116,13 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
         return mSettings;
     }
 
+    @Override
+    public RunConfiguration clone() {
+        ApiDebuggerDefaultRunConfiguration clone = (ApiDebuggerDefaultRunConfiguration) super.clone();
+        clone.setSettings(mSettings.clone());
+        return clone;
+    }
+
     public static class Settings {
         private RunFileType runFileType;
         private String envName;
@@ -99,6 +134,7 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
             envName = ApiEnvironment.empty().getName();
         }
 
+        @Attribute("runFileType")
         public RunFileType getRunFileType() {
             return runFileType;
         }
@@ -110,6 +146,7 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
             this.runFileType = runFileType;
         }
 
+        @Attribute("environment")
         public String getEnvName() {
             return envName;
         }
@@ -118,6 +155,7 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
             this.envName = envName;
         }
 
+        @Attribute("path")
         public String getFilePath() {
             return filePath;
         }
@@ -126,12 +164,23 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
             this.filePath = filePath;
         }
 
+        @Attribute("index")
         public int getIndexInFile() {
             return indexInFile;
         }
 
         public void setIndexInFile(int indexInFile) {
             this.indexInFile = indexInFile;
+        }
+
+        @Override
+        public Settings clone() {
+            Settings settings = new Settings();
+            settings.setRunFileType(getRunFileType());
+            settings.setEnvName(getEnvName());
+            settings.setFilePath(getFilePath());
+            settings.setIndexInFile(getIndexInFile());
+            return settings;
         }
 
         @Override
