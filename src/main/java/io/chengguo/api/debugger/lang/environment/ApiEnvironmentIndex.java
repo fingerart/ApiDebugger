@@ -130,6 +130,11 @@ public class ApiEnvironmentIndex extends FileBasedIndexExtension<String, Set<Str
     }
 
     @NotNull
+    public static Collection<String> getAllEnvironments(@NotNull Project project, @Nullable PsiFile file) {
+        return getAllEnvironments(project, getSearchScope(project, file));
+    }
+
+    @NotNull
     public static Collection<String> getAllVariables(@NotNull Project project, @Nullable PsiFile contextFile) {
         GlobalSearchScope scope = getSearchScope(project, contextFile);
         Collection<String> environments = getAllEnvironments(project, scope);

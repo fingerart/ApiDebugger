@@ -2,7 +2,10 @@ package io.chengguo.api.debugger.lang;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
@@ -48,6 +51,17 @@ public class ApiPsiUtils {
     public static ApiVariable[] findVariables(PsiFile psiFile) {
         return PsiTreeUtil.findChildrenOfType(psiFile, ApiVariable.class).toArray(new ApiVariable[0]);
     }
+
+    public static PsiFile findFileByPath(Project project, String filePath) {
+        if (StringUtil.isEmpty(filePath)) {
+            return null;
+        }
+        String url = StringUtil.isEmpty(VirtualFileManager.extractProtocol(filePath)) ? VfsUtilCore.pathToUrl(filePath) : filePath;
+        VirtualFileManager virtualFileManager = VirtualFileManager.getInstance();
+        VirtualFile virtualFile = virtualFileManager.findFileByUrl(url);
+        return virtualFile != null ? PsiManager.getInstance(project).findFile(virtualFile) : null;
+    }
+
 /*
     public static ApiVariableName[] findVariableNames(PsiFile psiFile) {
         return PsiTreeUtil.findChildrenOfType(psiFile, ApiVariableName.class).toArray(new ApiVariableName[0]);

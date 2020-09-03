@@ -49,7 +49,7 @@ public class ApiDebuggerConfigurationType implements ConfigurationType {
     @Nullable
     @Override
     public String getHelpTopic() {
-        return null;
+        return "配置API debugger";
     }
 
     @Override
