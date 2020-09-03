@@ -2,22 +2,31 @@ package io.chengguo.api.debugger.lang.run;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
-import com.intellij.execution.configurations.ConfigurationFactory;
-import com.intellij.execution.configurations.LocatableConfigurationBase;
-import com.intellij.execution.configurations.RunConfiguration;
-import com.intellij.execution.configurations.RunProfileState;
+import com.intellij.execution.configurations.*;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.InvalidDataException;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.openapi.vfs.VfsUtilCore;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
+import io.chengguo.api.debugger.lang.ApiPsiFile;
+import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
+import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
+import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBase {
 
-    private Settings mSettings;
+    private final Settings mSettings;
 
     protected ApiDebuggerDefaultRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, @Nullable String name) {
         super(project, factory, name);
@@ -32,6 +41,37 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
     @Override
     public SettingsEditor<? extends RunConfiguration> getConfigurationEditor() {
         return new ApiDebuggerDefaultRunConfigurationSettingsEditor(getProject());
+    }
+
+    @Override
+    public void readExternal(@NotNull Element element) throws InvalidDataException {
+        super.readExternal(element);
+    }
+
+    @Override
+    public void writeExternal(@NotNull Element element) {
+        super.writeExternal(element);
+    }
+
+    @Override
+    public void checkConfiguration() throws RuntimeConfigurationException {
+        createConfig();
+    }
+
+    private ApiDebuggerExecutionConfig createConfig() throws RuntimeConfigurationException {
+        Project project = getProject();
+        String filePath = mSettings.getFilePath();
+        if (StringUtil.isEmpty(filePath)) {
+            throw new RuntimeConfigurationException("文件路径不能为空");
+        }
+        PsiFile file = ApiPsiUtils.findFileByPath(project, filePath);
+        if (file == null) {
+            throw new RuntimeConfigurationException("找不到Api文件");
+        }
+        if (file instanceof ApiPsiFile && mSettings.getRunFileType() == RunFileType.ALL_IN_FILE) {
+            return new ApiDebuggerFileExecutionConfig();
+        }
+        return new ApiDebuggerFileExecutionConfig();
     }
 
     @Nullable
@@ -51,6 +91,8 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
     public static class Settings {
         private RunFileType runFileType;
         private String envName;
+        private String filePath;
+        private int indexInFile;
 
         public Settings() {
             this.runFileType = RunFileType.SINGLE_REQUEST;
@@ -73,10 +115,23 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
         }
 
         public void setEnvName(@Nullable String envName) {
-            if (StringUtil.isEmpty(envName)) {
-                envName = ApiEnvironment.empty().getName();
-            }
             this.envName = envName;
+        }
+
+        public String getFilePath() {
+            return filePath;
+        }
+
+        public void setFilePath(String filePath) {
+            this.filePath = filePath;
+        }
+
+        public int getIndexInFile() {
+            return indexInFile;
+        }
+
+        public void setIndexInFile(int indexInFile) {
+            this.indexInFile = indexInFile;
         }
 
         @Override
@@ -84,6 +139,8 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
             return "Settings{" +
                     "runFileType=" + runFileType +
                     ", envName='" + envName + '\'' +
+                    ", filePath='" + filePath + '\'' +
+                    ", indexInFile=" + indexInFile +
                     '}';
         }
     }
