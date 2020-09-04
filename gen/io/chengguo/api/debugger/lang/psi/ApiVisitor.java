@@ -88,6 +88,10 @@ public class ApiVisitor extends PsiElementVisitor {
     visitElement(o);
   }
 
+  public void visitSegmentBlock(@NotNull ApiSegmentBlock o) {
+    visitElement(o);
+  }
+
   public void visitVariable(@NotNull ApiVariable o) {
     visitNamedElement(o);
   }

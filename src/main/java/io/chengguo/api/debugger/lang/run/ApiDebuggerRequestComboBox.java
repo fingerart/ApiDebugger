@@ -1,20 +1,17 @@
 package io.chengguo.api.debugger.lang.run;
 
-import com.intellij.ide.todo.MultiLineTodoRenderer;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.psi.PsiFile;
-import com.intellij.ui.*;
-import com.intellij.ui.popup.list.IconListPopupRenderer;
-import com.intellij.ui.scale.JBUIScale;
-import com.intellij.util.ui.table.IconTableCellRenderer;
+import com.intellij.ui.CollectionComboBoxModel;
+import com.intellij.ui.ColoredListCellRenderer;
+import com.intellij.ui.SimpleTextAttributes;
 import io.chengguo.api.debugger.lang.ApiBlockConverter;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
-import org.jdesktop.swingx.renderer.DefaultListRenderer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,10 +33,9 @@ public class ApiDebuggerRequestComboBox extends ComboBox<ApiDebuggerRequestCombo
         setRenderer(new ColoredListCellRenderer<RequestItem>() {
             @Override
             protected void customizeCellRenderer(@NotNull JList<? extends RequestItem> list, RequestItem item, int index, boolean selected, boolean hasFocus) {
-                append(item.index + " #");
-                append(item.getMethod(), SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES);
-                appendTextPadding(JBUIScale.scale(10));
-                append(item.getUri(), SimpleTextAttributes.GRAYED_ATTRIBUTES);
+                append(String.format("%d # ", item.index), SimpleTextAttributes.GRAYED_ATTRIBUTES);
+                append(String.format(" %s ", item.getMethod()), SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES);
+                append(item.getUri());
             }
         });
     }

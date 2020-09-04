@@ -445,22 +445,14 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '/' SEGMENT?
-  static boolean path_segment(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "path_segment")) return false;
-    if (!nextTokenIs(builder, Api_SLASH)) return false;
-    boolean result;
-    Marker marker = enter_section_(builder);
-    result = consumeToken(builder, Api_SLASH);
-    result = result && path_segment_1(builder, level + 1);
-    exit_section_(builder, marker, null, result);
-    return result;
-  }
-
-  // SEGMENT?
-  private static boolean path_segment_1(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "path_segment_1")) return false;
-    consumeToken(builder, Api_SEGMENT);
+  // segment_block*
+  static boolean path_segments(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "path_segments")) return false;
+    while (true) {
+      int pos = current_position_(builder);
+      if (!segment_block(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "path_segments", pos)) break;
+    }
     return true;
   }
 
@@ -675,7 +667,7 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // full_scheme? host full_port? path_segment* path_query?
+  // full_scheme? host full_port? path_segments path_query?
   public static boolean request_target(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_target")) return false;
     boolean result;
@@ -683,7 +675,7 @@ public class ApiParser implements PsiParser, LightPsiParser {
     result = request_target_0(builder, level + 1);
     result = result && host(builder, level + 1);
     result = result && request_target_2(builder, level + 1);
-    result = result && request_target_3(builder, level + 1);
+    result = result && path_segments(builder, level + 1);
     result = result && request_target_4(builder, level + 1);
     exit_section_(builder, level, marker, result, false, null);
     return result;
@@ -700,17 +692,6 @@ public class ApiParser implements PsiParser, LightPsiParser {
   private static boolean request_target_2(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_target_2")) return false;
     full_port(builder, level + 1);
-    return true;
-  }
-
-  // path_segment*
-  private static boolean request_target_3(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "request_target_3")) return false;
-    while (true) {
-      int pos = current_position_(builder);
-      if (!path_segment(builder, level + 1)) break;
-      if (!empty_element_parsed_guard_(builder, "request_target_3", pos)) break;
-    }
     return true;
   }
 
@@ -732,6 +713,26 @@ public class ApiParser implements PsiParser, LightPsiParser {
     if (!result) result = consumeToken(builder, Api_HTTPS);
     exit_section_(builder, level, marker, result, false, null);
     return result;
+  }
+
+  /* ********************************************************** */
+  // '/' SEGMENT?
+  public static boolean segment_block(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "segment_block")) return false;
+    if (!nextTokenIs(builder, Api_SLASH)) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = consumeToken(builder, Api_SLASH);
+    result = result && segment_block_1(builder, level + 1);
+    exit_section_(builder, marker, Api_SEGMENT_BLOCK, result);
+    return result;
+  }
+
+  // SEGMENT?
+  private static boolean segment_block_1(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "segment_block_1")) return false;
+    consumeToken(builder, Api_SEGMENT);
+    return true;
   }
 
   /* ********************************************************** */

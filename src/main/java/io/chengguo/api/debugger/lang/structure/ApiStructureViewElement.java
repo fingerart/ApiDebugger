@@ -49,7 +49,7 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
                 if (request != null) {
                     ApiRequestTarget requestTarget = request.getRequestLine().getRequestTarget();
                     if (requestTarget != null) {
-                        String baseUrl = requestTarget.getBaseUrl(ApiVariableReplacer.EMPTY);
+                        String baseUrl = requestTarget.getUrl(ApiVariableReplacer.EMPTY);
                         treeElements.add(createApiBlockViewTreeElement(apiBlock, baseUrl, true));
                     }
                 }

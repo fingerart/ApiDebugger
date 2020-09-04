@@ -75,7 +75,7 @@ request_line ::= method request_target
 
 method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
 
-request_target ::= full_scheme? host full_port? path_segment* path_query?
+request_target ::= full_scheme? host full_port? path_segments path_query?
 
 private full_scheme ::= scheme '://'
 
@@ -87,7 +87,9 @@ host ::= (variable | HOST_VALUE)+
 
 port ::= (variable | PORT_SEGMENT)+
 
-private path_segment ::= '/' SEGMENT?
+private path_segments ::= segment_block*
+
+segment_block ::= '/' SEGMENT?
 
 private path_query ::= '?' query
 

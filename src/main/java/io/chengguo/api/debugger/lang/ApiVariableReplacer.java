@@ -3,6 +3,7 @@ package io.chengguo.api.debugger.lang;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Conditions;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.util.PsiTreeUtil;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiElement;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
@@ -38,7 +39,14 @@ public class ApiVariableReplacer {
                 if (child instanceof ApiVariable) {
                     builder.append(getValue((((ApiVariable) child))));
                 } else if (filter.value(child)) {
-                    builder.append(child.getText());
+//                    if (ApiPsiUtils.isLeafElement(element)) {
+                        builder.append(child.getText());
+//                    } else {
+//                        // 深度遍历
+//                        for (PsiElement elementChild : element.getChildren()) {
+//                            builder.append(getValue(elementChild, filter));
+//                        }
+//                    }
                 }
             }
             return builder.toString();

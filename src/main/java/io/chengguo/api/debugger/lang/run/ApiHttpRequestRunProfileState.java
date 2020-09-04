@@ -8,12 +8,9 @@ import com.intellij.execution.process.ProcessAdapter;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ProgramRunner;
-import com.intellij.execution.ui.ConsoleViewContentType;
 import com.intellij.openapi.project.Project;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
-import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.ui.ApiDebugger;
-import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,10 +22,12 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
 
     private final Project mProject;
     private final ApiVariableReplacer mVariableReplacer;
+    private final ApiDebuggerExecutionConfig mExecutionConfig;
 
-    public ApiHttpRequestRunProfileState(Project project, ApiVariableReplacer variableReplacer) {
+    public ApiHttpRequestRunProfileState(Project project, ApiVariableReplacer variableReplacer, ApiDebuggerExecutionConfig config) {
         mProject = project;
         mVariableReplacer = variableReplacer;
+        mExecutionConfig = config;
     }
 
     @Nullable
@@ -52,8 +51,7 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
     }
 
     private void executeHttpRequest(ApiDebuggerRequestConsole consoleView, ProcessHandler processHandler) {
-        ApiDebugger debugger = ApiDebugger.create(mProject, null, consoleView, processHandler, false);
-        debugger.debug();
+        ApiDebugger.create(mProject, null, consoleView, processHandler, false).execute();
     }
 
     @NotNull

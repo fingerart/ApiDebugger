@@ -15,7 +15,7 @@ public class ApiTokenType extends IElementType {
 
     @Override
     public boolean equals(Object other) {
-        return other == this
+        return super.equals(other)
                 || (other instanceof ApiTokenType && mDebugName.equals(((ApiTokenType) other).mDebugName))
                 || (other instanceof String && mDebugName.equals(other))
                 || toString().equals(other.toString());

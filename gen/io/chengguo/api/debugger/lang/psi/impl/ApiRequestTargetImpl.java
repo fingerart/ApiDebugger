@@ -51,4 +51,10 @@ public class ApiRequestTargetImpl extends ApiRequestTargetMixin implements ApiRe
     return findChildByClass(ApiScheme.class);
   }
 
+  @Override
+  @NotNull
+  public List<ApiSegmentBlock> getSegmentBlockList() {
+    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiSegmentBlock.class);
+  }
+
 }

@@ -5,6 +5,7 @@ import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.*;
 import com.intellij.execution.runners.ExecutionEnvironment;
+import com.intellij.execution.testframework.sm.runner.SMTRunnerConsoleProperties;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.InvalidDataException;
@@ -91,7 +92,7 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
             throw new RuntimeConfigurationException(ApiDebuggerBundle.message("api.debugger.run.configuration.file_doesnt_exists"));
         }
         if (file instanceof ApiPsiFile && mSettings.getRunFileType() == RunFileType.ALL_IN_FILE) {
-            return new ApiDebuggerFileExecutionConfig();
+            return new ApiDebuggerFileExecutionConfig(mSettings.getEnvName(), mSettings.getFilePath());
         }
         ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(file);
         int index = mSettings.getIndexInFile();
@@ -99,17 +100,21 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
         if (index >= length || index < 0) {
             throw new RuntimeConfigurationException(ApiDebuggerBundle.message("api.debugger.run.configuration.api_request_doesnt_exists"));
         }
-        return new ApiDebuggerFileExecutionConfig();
+        return new ApiDebuggerSingleRequestExecutionConfig(mSettings.getEnvName(), mSettings.getFilePath(), mSettings.getIndexInFile());
     }
 
     @Nullable
     @Override
     public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) throws ExecutionException {
-        Project project = getProject();
-        String envName = "Default";
-        ApiVariableReplacer variableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(project, envName));
-        ApiDebuggerExecutionConfig executionConfig;
-        return new ApiHttpRequestRunProfileState(project, variableReplacer);
+        try {
+            Project project = getProject();
+            ApiDebuggerExecutionConfig config = createConfig();
+            ApiVariableReplacer variableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(project, config.getEnvironment()));
+//            SMTRunnerConsoleProperties properties = new SMTRunnerConsoleProperties(project , this, "", executor);
+            return new ApiHttpRequestRunProfileState(project, variableReplacer, config);
+        } catch (RuntimeConfigurationException e) {
+            throw new ExecutionException(e.getMessage());
+        }
     }
 
     public Settings getSettings() {
