@@ -10,8 +10,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.search.FileTypeIndex;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -19,10 +17,6 @@ import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class ApiPsiUtils {
     public static final ApiApiBlock[] EMPTY = new ApiApiBlock[]{};
@@ -38,6 +32,7 @@ public class ApiPsiUtils {
         return apiBlocks.length == 0 ? null : apiBlocks[0];
     }
 
+    @NotNull
     public static ApiApiBlock[] findApiBlocks(PsiFile psiFile) {
         return PsiTreeUtil.findChildrenOfType(psiFile, ApiApiBlock.class).toArray(EMPTY);
     }
@@ -60,6 +55,16 @@ public class ApiPsiUtils {
         VirtualFileManager virtualFileManager = VirtualFileManager.getInstance();
         VirtualFile virtualFile = virtualFileManager.findFileByUrl(url);
         return virtualFile != null ? PsiManager.getInstance(project).findFile(virtualFile) : null;
+    }
+
+    /**
+     * 是否是叶子节点
+     *
+     * @param element
+     * @return
+     */
+    public static boolean isLeafElement(@Nullable PsiElement element) {
+        return element == null || element.getNode().getFirstChildNode() == null;
     }
 
 /*

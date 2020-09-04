@@ -49,7 +49,6 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
                 String environmentName = environment != null ? environment.getName() : null;
                 RunFileType runFileType = getSelectedRunFileType();
                 int selectedRequestIndex = mRequestComboBox.getSelectedIndex();
-                System.out.println("mFilePathWithBrowseBtn");
                 updateState(runFileType, mFilePathWithBrowseBtn.getText(), environmentName, selectedRequestIndex);
             }
         });
@@ -61,7 +60,6 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
                 ApiDebuggerEnvironmentComboBox.EnvironmentItem environment = mEnvComboBox.getSelectedItem();
                 String environmentName = environment != null ? environment.getName() : null;
                 int selectedRequestIndex = mRequestComboBox.getSelectedIndex();
-                System.out.println("createRunTypeChangeListener");
                 updateState(type, mFilePathWithBrowseBtn.getText(), environmentName, selectedRequestIndex);
             }
         };
@@ -118,7 +116,6 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
     @Override
     protected void resetEditorFrom(@NotNull ApiDebuggerDefaultRunConfiguration configuration) {
         ApiDebuggerDefaultRunConfiguration.Settings settings = configuration.getSettings();
-        System.out.println("resetEditorFrom");
         mFilePathWithBrowseBtn.setText(settings.getFilePath());
         updateState(settings.getRunFileType(), settings.getFilePath(), settings.getEnvName(), settings.getIndexInFile());
     }
@@ -132,6 +129,11 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
         settings.setIndexInFile(mRequestComboBox.getSelectedIndex());
     }
 
+    /**
+     * 换取选中的RunType
+     *
+     * @return
+     */
     private RunFileType getSelectedRunFileType() {
         if (mRunAllInFileBtn.isSelected()) {
             return RunFileType.ALL_IN_FILE;
@@ -139,6 +141,11 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
         return RunFileType.SINGLE_REQUEST;
     }
 
+    /**
+     * 切换RunType
+     *
+     * @param runFileType
+     */
     private void switchRunFileType(RunFileType runFileType) {
         if (runFileType == RunFileType.ALL_IN_FILE && !mRunAllInFileBtn.isSelected()) {
             mRunAllInFileBtn.setSelected(true);
@@ -148,8 +155,15 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
         }
     }
 
+    /**
+     * 更新试图
+     *
+     * @param runFileType
+     * @param filePath
+     * @param envName
+     * @param selectedRequestIndex
+     */
     private void updateState(RunFileType runFileType, String filePath, String envName, int selectedRequestIndex) {
-        System.out.println("runFileType = " + runFileType + ", filePath = " + filePath + ", envName = " + envName + ", selectedRequestIndex = " + selectedRequestIndex);
         PsiFile file = ApiPsiUtils.findFileByPath(mProject, filePath);
         switchRunFileType(runFileType);
         mRequestJBL.setVisible(runFileType == RunFileType.SINGLE_REQUEST);

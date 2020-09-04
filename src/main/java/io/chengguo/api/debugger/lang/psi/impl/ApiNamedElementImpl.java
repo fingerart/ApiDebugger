@@ -3,9 +3,6 @@ package io.chengguo.api.debugger.lang.psi.impl;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.search.LocalSearchScope;
-import com.intellij.psi.search.SearchScope;
-import com.intellij.psi.tree.IElementType;
 import com.intellij.util.IncorrectOperationException;
 import io.chengguo.api.debugger.ApiDebuggerIcons;
 import io.chengguo.api.debugger.extension.ObjectExKt;
@@ -40,7 +37,7 @@ public abstract class ApiNamedElementImpl extends ApiElementImpl implements ApiN
     @Override
     public String getName() {
         if (mCachedName == null) {
-            mCachedName = ApiPsiImplUtils.getIdText(getIdentifier());
+            mCachedName = ApiPsiImplUtils.getElementTextNotNull(getIdentifier());
         }
         return mCachedName;
     }

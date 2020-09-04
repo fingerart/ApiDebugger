@@ -21,4 +21,7 @@ public interface ApiRequestTarget extends ApiRequestTargetElement {
   @Nullable
   ApiScheme getScheme();
 
+  @NotNull
+  List<ApiSegmentBlock> getSegmentBlockList();
+
 }

@@ -4,12 +4,12 @@ import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 
 import java.util.List;
 
-public class ApiDebuggerFileExecutionConfig implements ApiDebuggerExecutionConfig {
+public class ApiDebuggerSingleRequestExecutionConfig implements ApiDebuggerExecutionConfig {
 
     private final String mEnvironment;
     private final String mFilePath;
 
-    public ApiDebuggerFileExecutionConfig(String envName, String filePath) {
+    public ApiDebuggerSingleRequestExecutionConfig(String envName, String filePath, int indexInFile) {
         mEnvironment = envName;
         mFilePath = filePath;
     }

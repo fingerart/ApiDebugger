@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public abstract class ApiEnvironment {
 
-    private String mName;
+    private final String mName;
 
     public ApiEnvironment(String name) {
         this.mName = name;
@@ -78,7 +78,7 @@ public abstract class ApiEnvironment {
 
         @Override
         public String getVariableValue(String variableName) {
-            return null;
+            return "";
         }
     }
 }

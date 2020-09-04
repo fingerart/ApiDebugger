@@ -30,6 +30,7 @@ public interface ApiTypes {
   IElementType Api_REQUEST_MESSAGE_GROUP = new ApiElementType("Api_REQUEST_MESSAGE_GROUP");
   IElementType Api_REQUEST_TARGET = new ApiElementType("Api_REQUEST_TARGET");
   IElementType Api_SCHEME = new ApiElementType("Api_SCHEME");
+  IElementType Api_SEGMENT_BLOCK = new ApiElementType("Api_SEGMENT_BLOCK");
   IElementType Api_VARIABLE = new ApiElementType("Api_VARIABLE");
 
   IElementType Api_AMPERSAND = new ApiTokenType("&");
@@ -129,6 +130,9 @@ public interface ApiTypes {
       }
       else if (type == Api_SCHEME) {
         return new ApiSchemeImpl(node);
+      }
+      else if (type == Api_SEGMENT_BLOCK) {
+        return new ApiSegmentBlockImpl(node);
       }
       else if (type == Api_VARIABLE) {
         return new ApiVariableImpl(node);

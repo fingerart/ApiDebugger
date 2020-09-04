@@ -59,7 +59,7 @@ public class ApiDebugger {
         return new ApiDebugger(project, request, consoleView, processHandler, isWithProgress);
     }
 
-    public void debug() {
+    public void execute() {
         FileDocumentManager.getInstance().saveAllDocuments();
         Task.Backgroundable task = new Task.Backgroundable(mProject, mRequest.baseUrl, true) {
             @Override
