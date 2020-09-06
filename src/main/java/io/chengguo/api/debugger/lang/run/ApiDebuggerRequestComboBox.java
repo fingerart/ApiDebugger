@@ -3,6 +3,7 @@ package io.chengguo.api.debugger.lang.run;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.CollectionComboBoxModel;
 import com.intellij.ui.ColoredListCellRenderer;
@@ -35,7 +36,7 @@ public class ApiDebuggerRequestComboBox extends ComboBox<ApiDebuggerRequestCombo
             protected void customizeCellRenderer(@NotNull JList<? extends RequestItem> list, RequestItem item, int index, boolean selected, boolean hasFocus) {
                 append(String.format("%d # ", item.index), SimpleTextAttributes.GRAYED_ATTRIBUTES);
                 append(String.format(" %s ", item.getMethod()), SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES);
-                append(item.getUri());
+                append(StringUtil.notNullize(item.getUri()));
             }
         });
     }
@@ -55,7 +56,7 @@ public class ApiDebuggerRequestComboBox extends ComboBox<ApiDebuggerRequestCombo
         for (int index = 0; index < apiBlocks.length; index++) {
             try {
                 ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(apiBlocks[index], ApiVariableReplacer.EMPTY);
-                results.add(new RequestItem(index + 1, request.method, request.baseUrl, true));
+                results.add(new RequestItem(index + 1, request.method, request.url, true));
             } catch (ApiRequestInvalidException e) {
                 LOG.error(e);
                 results.add(new RequestItem(index + 1, null, null, false));

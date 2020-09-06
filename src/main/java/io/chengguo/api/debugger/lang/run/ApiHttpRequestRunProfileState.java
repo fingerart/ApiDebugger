@@ -1,6 +1,7 @@
 package io.chengguo.api.debugger.lang.run;
 
 import com.intellij.execution.DefaultExecutionResult;
+import com.intellij.execution.ExecutionException;
 import com.intellij.execution.ExecutionResult;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.RunProfileState;
@@ -9,14 +10,14 @@ import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ProgramRunner;
 import com.intellij.openapi.project.Project;
+import io.chengguo.api.debugger.lang.ApiBlockConverter;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.ui.ApiDebugger;
+import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.OutputStream;
-
-import static com.intellij.execution.ui.ConsoleViewContentType.registerNewConsoleViewType;
 
 public class ApiHttpRequestRunProfileState implements RunProfileState {
 
@@ -24,34 +25,39 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
     private final ApiVariableReplacer mVariableReplacer;
     private final ApiDebuggerExecutionConfig mExecutionConfig;
 
-    public ApiHttpRequestRunProfileState(Project project, ApiVariableReplacer variableReplacer, ApiDebuggerExecutionConfig config) {
+    public ApiHttpRequestRunProfileState(Project project, ApiVariableReplacer variableReplacer, ApiDebuggerExecutionConfig executionConfig) {
         mProject = project;
         mVariableReplacer = variableReplacer;
-        mExecutionConfig = config;
+        mExecutionConfig = executionConfig;
     }
 
     @Nullable
     @Override
-    public ExecutionResult execute(Executor executor, @NotNull ProgramRunner runner) {
-        ProcessHandler processHandler = createProcessHandler();
-        ApiDebuggerRequestConsole console = createConsole(processHandler);
-        processHandler.addProcessListener(new ProcessAdapter() {
-            @Override
-            public void processTerminated(@NotNull ProcessEvent event) {
+    public ExecutionResult execute(Executor executor, @NotNull ProgramRunner runner) throws ExecutionException {
+        try {
+            ProcessHandler processHandler = createProcessHandler();
+            ApiDebuggerRequestConsole console = createConsole(processHandler);
+            processHandler.addProcessListener(new ProcessAdapter() {
+                @Override
+                public void processTerminated(@NotNull ProcessEvent event) {
 
-            }
-        });
-        executeHttpRequest(console, processHandler);
-        return new DefaultExecutionResult(console.getConsole(), processHandler);
+                }
+            });
+            executeHttpRequest(console, processHandler);
+            return new DefaultExecutionResult(console.getConsole(), processHandler);
+        } catch (Exception e) {
+            throw new ExecutionException(e);
+        }
     }
 
     private ApiDebuggerRequestConsole createConsole(ProcessHandler processHandler) {
-        String target = "mRequest.method" + " " + "mRequest.toString()" + "\r\n\r\n";
+        String target = mExecutionConfig.getName();
         return new ApiDebuggerRequestConsole(mProject, target, processHandler);
     }
 
-    private void executeHttpRequest(ApiDebuggerRequestConsole consoleView, ProcessHandler processHandler) {
-        ApiDebugger.create(mProject, null, consoleView, processHandler, false).execute();
+    private void executeHttpRequest(ApiDebuggerRequestConsole consoleView, ProcessHandler processHandler) throws ApiRequestInvalidException {
+        ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(mExecutionConfig.getApiBlocks().get(0), mVariableReplacer);
+        ApiDebugger.create(mProject, request, consoleView, processHandler, false).execute();
     }
 
     @NotNull

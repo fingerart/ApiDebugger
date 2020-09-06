@@ -1,26 +1,26 @@
 package io.chengguo.api.debugger.lang.run;
 
-import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
+import com.intellij.util.containers.ContainerUtil;
+import com.twelvemonkeys.util.CollectionUtil;
+import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 
 import java.util.List;
 
 public class ApiDebuggerSingleRequestExecutionConfig implements ApiDebuggerExecutionConfig {
 
-    private final String mEnvironment;
-    private final String mFilePath;
+    private final List<ApiApiBlock> mApiBlocks;
 
-    public ApiDebuggerSingleRequestExecutionConfig(String envName, String filePath, int indexInFile) {
-        mEnvironment = envName;
-        mFilePath = filePath;
+    public ApiDebuggerSingleRequestExecutionConfig(ApiApiBlock apiBlock) {
+        mApiBlocks = ContainerUtil.newSmartList(apiBlock);
     }
 
     @Override
-    public List<ApiDebuggerRequest> getRequests() {
-        return null;
+    public List<ApiApiBlock> getApiBlocks() {
+        return mApiBlocks;
     }
 
     @Override
-    public String getEnvironment() {
-        return mEnvironment;
+    public String getName() {
+        return mApiBlocks.get(0).getDescription().getDescriptionTitle().getDescriptionItem().getText();
     }
 }

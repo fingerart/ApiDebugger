@@ -1,26 +1,27 @@
 package io.chengguo.api.debugger.lang.run;
 
-import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
+import com.intellij.psi.PsiFile;
+import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ApiDebuggerFileExecutionConfig implements ApiDebuggerExecutionConfig {
 
-    private final String mEnvironment;
-    private final String mFilePath;
+    private final PsiFile mFile;
 
-    public ApiDebuggerFileExecutionConfig(String envName, String filePath) {
-        mEnvironment = envName;
-        mFilePath = filePath;
+    public ApiDebuggerFileExecutionConfig(PsiFile file) {
+        mFile = file;
     }
 
     @Override
-    public List<ApiDebuggerRequest> getRequests() {
-        return null;
+    public List<ApiApiBlock> getApiBlocks() {
+        return Arrays.asList(ApiPsiUtils.findApiBlocks(mFile));
     }
 
     @Override
-    public String getEnvironment() {
-        return mEnvironment;
+    public String getName() {
+        return mFile.getName();
     }
 }

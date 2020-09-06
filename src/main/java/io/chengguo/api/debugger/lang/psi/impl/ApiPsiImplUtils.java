@@ -21,6 +21,7 @@ public class ApiPsiImplUtils {
 
     /**
      * 获取
+     *
      * @param element
      * @return
      */
@@ -78,4 +79,18 @@ public class ApiPsiImplUtils {
         }
         return Collections.emptyList();
     }
+
+    @NotNull
+    public static String getDescriptionKey(ApiDescriptionItem descriptionItem) {
+        ASTNode node = descriptionItem.getNode().findChildByType(ApiTypes.Api_DESCRIPTION_KEY);
+        return node == null ? "" : node.getText();
+    }
+
+    @NotNull
+    public static String getDescriptionValue(ApiDescriptionItem descriptionItem) {
+        ASTNode node = descriptionItem.getNode().findChildByType(ApiTypes.Api_DESCRIPTION_CONTENT);
+        return node == null ? "" : node.getText();
+    }
+
+
 }
