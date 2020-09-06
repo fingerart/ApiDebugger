@@ -5,7 +5,6 @@ import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.*;
 import com.intellij.execution.runners.ExecutionEnvironment;
-import com.intellij.execution.testframework.sm.runner.SMTRunnerConsoleProperties;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.InvalidDataException;
@@ -51,6 +50,12 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
         return new ApiDebuggerDefaultRunConfigurationSettingsEditor(getProject());
     }
 
+    /**
+     * 获取持久化的设置
+     *
+     * @param element
+     * @throws InvalidDataException
+     */
     @Override
     public void readExternal(@NotNull Element element) throws InvalidDataException {
         super.readExternal(element);
@@ -63,6 +68,11 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
         }
     }
 
+    /**
+     * 持久化设置
+     *
+     * @param element
+     */
     @Override
     public void writeExternal(@NotNull Element element) {
         if (mSettings != null) {
@@ -92,7 +102,7 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
             throw new RuntimeConfigurationException(ApiDebuggerBundle.message("api.debugger.run.configuration.file_doesnt_exists"));
         }
         if (file instanceof ApiPsiFile && mSettings.getRunFileType() == RunFileType.ALL_IN_FILE) {
-            return new ApiDebuggerFileExecutionConfig(mSettings.getEnvName(), mSettings.getFilePath());
+            return new ApiDebuggerFileExecutionConfig(file);
         }
         ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(file);
         int index = mSettings.getIndexInFile();
@@ -100,7 +110,7 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
         if (index >= length || index < 0) {
             throw new RuntimeConfigurationException(ApiDebuggerBundle.message("api.debugger.run.configuration.api_request_doesnt_exists"));
         }
-        return new ApiDebuggerSingleRequestExecutionConfig(mSettings.getEnvName(), mSettings.getFilePath(), mSettings.getIndexInFile());
+        return new ApiDebuggerSingleRequestExecutionConfig(apiBlocks[index]);
     }
 
     @Nullable
@@ -109,12 +119,17 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
         try {
             Project project = getProject();
             ApiDebuggerExecutionConfig config = createConfig();
-            ApiVariableReplacer variableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(project, config.getEnvironment()));
+            String apiEnvironment = getEnvironment();
+            ApiVariableReplacer variableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(project, apiEnvironment));
 //            SMTRunnerConsoleProperties properties = new SMTRunnerConsoleProperties(project , this, "", executor);
             return new ApiHttpRequestRunProfileState(project, variableReplacer, config);
         } catch (RuntimeConfigurationException e) {
             throw new ExecutionException(e.getMessage());
         }
+    }
+
+    private String getEnvironment() {
+        return mSettings.getEnvName();
     }
 
     public Settings getSettings() {

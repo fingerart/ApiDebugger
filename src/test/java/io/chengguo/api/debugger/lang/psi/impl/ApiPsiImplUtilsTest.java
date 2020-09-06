@@ -58,7 +58,16 @@ public class ApiPsiImplUtilsTest extends ApiDebuggerTestCase {
         ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
         assertTrue(apiBlock != null && apiBlock.getRequest() != null);
         List<Pair<String, String>> parameters = ApiPsiImplUtils.getParameters(apiBlock.getRequest().getRequestLine().getRequestTarget().getQuery(), ApiVariableReplacer.EMPTY);
+        assertSize(3, parameters);
         assertEquals("apiDebugger", parameters.get(0).second);
         assertEquals("18", parameters.get(1).second);
+    }
+
+    public void testGetDescriptionKey() {
+        // TODO: 2020/9/6  
+    }
+    
+    public void testGetDescriptionValue(){
+        // TODO: 2020/9/6  
     }
 }

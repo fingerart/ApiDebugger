@@ -61,7 +61,7 @@ public class ApiDebugger {
 
     public void execute() {
         FileDocumentManager.getInstance().saveAllDocuments();
-        Task.Backgroundable task = new Task.Backgroundable(mProject, mRequest.baseUrl, true) {
+        Task.Backgroundable task = new Task.Backgroundable(mProject, "标题", true) {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
                 try {
@@ -113,7 +113,7 @@ public class ApiDebugger {
     }
 
     private HttpRequestBase createHttpRequest(ApiDebuggerRequest apiRequest) {
-        final String url = apiRequest.baseUrl;
+        final String url = apiRequest.url;
         final String method = apiRequest.method;
         if (Api_GET.equals(method)) {
             return new HttpGet(url);
