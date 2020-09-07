@@ -1,7 +1,7 @@
 
 - title: Test Variable
 
-PUT https://{{host}}/post?name=tenon&age=18
+POST https://{{host}}/post?name=tenon&age=18
 Content-Type: application/x-www-form-urlencoded
 
 k1=v1&k2=v2

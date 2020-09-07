@@ -7,10 +7,8 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.patterns.ElementPattern;
 import com.intellij.patterns.PatternCondition;
-import com.intellij.patterns.PatternConditionPlus;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.PairProcessor;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
@@ -19,7 +17,6 @@ import io.chengguo.api.debugger.lang.psi.*;
 import io.chengguo.api.debugger.ui.header.HttpHeaderDocumentation;
 import io.chengguo.api.debugger.ui.header.HttpHeadersDictionary;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.List;
@@ -151,7 +148,7 @@ public class ApiCompletionContributor extends CompletionContributor {
         @Override
         protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
             ApiHeaderField headerField = PsiTreeUtil.getParentOfType(parameters.getPosition(), ApiHeaderField.class);
-            String fieldName = headerField != null ? headerField.getName() : null;
+            String fieldName = headerField != null ? headerField.getKey() : null;
             if (StringUtil.isNotEmpty(fieldName)) {
                 CompletionResultSet resultSet = result.caseInsensitive();
                 Collection<String> headerValues = HttpHeadersDictionary.getHeaderValues(parameters.getPosition().getProject(), fieldName);

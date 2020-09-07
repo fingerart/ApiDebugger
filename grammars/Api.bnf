@@ -45,6 +45,8 @@
     CONNECT                 = "CONNECT"
   ]
 
+  implements("description_item") = "io.chengguo.api.debugger.lang.psi.ApiKeyValueElement"
+  extends("description_item") = "io.chengguo.api.debugger.lang.psi.impl.ApiDescriptionItemMixin"
   implements("variable") = "io.chengguo.api.debugger.lang.psi.ApiNamedElement"
   extends("variable") = "io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"
   extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"

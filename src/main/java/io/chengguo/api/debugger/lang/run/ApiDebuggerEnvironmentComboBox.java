@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.List;
 
 public class ApiDebuggerEnvironmentComboBox extends ComboBox<ApiDebuggerEnvironmentComboBox.EnvironmentItem> {
-    private static final EnvironmentItem EMPTY = new EnvironmentItem("<No Environment>", true);
     private static final EnvironmentItem DEFAULT = new EnvironmentItem(ApiEnvironment.empty().getName(), true);
 
     public ApiDebuggerEnvironmentComboBox() {
@@ -39,7 +38,7 @@ public class ApiDebuggerEnvironmentComboBox extends ComboBox<ApiDebuggerEnvironm
 
     @NotNull
     private EnvironmentItem findSelectedEnvironmentItem(List<EnvironmentItem> items, String envName) {
-        if (StringUtil.isEmpty(envName)) return EMPTY;
+        if (StringUtil.isEmpty(envName)) return DEFAULT;
         for (EnvironmentItem item : items) {
             if (item.getName().equals(envName)) {
                 return item;
@@ -56,7 +55,6 @@ public class ApiDebuggerEnvironmentComboBox extends ComboBox<ApiDebuggerEnvironm
             result.add(new EnvironmentItem(environment, true));
         }
         result.add(DEFAULT);
-        result.add(EMPTY);
         return result;
     }
 

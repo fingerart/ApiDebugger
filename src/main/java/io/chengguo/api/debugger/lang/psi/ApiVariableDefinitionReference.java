@@ -12,6 +12,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.indexing.FileBasedIndex;
+import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentInputFilter;
 import org.jetbrains.annotations.NotNull;
@@ -69,7 +70,7 @@ public class ApiVariableDefinitionReference<T extends ApiVariable> extends PsiPo
     private void addVariableDefinitions(Project project, String name, String env, List<ResolveResult> result, GlobalSearchScope scope) {
         FileBasedIndex.getInstance().processValues(ApiEnvironmentIndex.KEY, env, null, (file, value) -> {
             if (value.contains(name)) {
-                PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
+                PsiFile psiFile = ApiPsiUtils.findFileByVF(project, file);
                 if (!(psiFile instanceof JsonFile)) {
                     return true;
                 }

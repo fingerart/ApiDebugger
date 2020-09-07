@@ -21,7 +21,7 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitDescriptionItem(@NotNull ApiDescriptionItem o) {
-    visitElement(o);
+    visitKeyValueElement(o);
   }
 
   public void visitDescriptionTitle(@NotNull ApiDescriptionTitle o) {

@@ -10,7 +10,7 @@ public abstract class ApiHeaderFieldMixin extends ApiElementImpl implements ApiH
         super(node);
     }
 
-    public String getName() {
+    public String getKey() {
         return getHeaderFieldKey().getText();
     }
 

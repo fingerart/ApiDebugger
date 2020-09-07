@@ -21,6 +21,11 @@ import org.jetbrains.annotations.Nullable;
 public class ApiPsiUtils {
     public static final ApiApiBlock[] EMPTY = new ApiApiBlock[]{};
 
+    public static boolean isOfType(@NotNull final PsiElement element, @NotNull final IElementType type) {
+        ASTNode node = element.getNode();
+        return node != null && node.getElementType() == type;
+    }
+
     public static boolean isOfTypes(@NotNull PsiElement element, @NotNull final TokenSet types) {
         ASTNode node = element.getNode();
         return node != null && types.contains(node.getElementType());
@@ -54,6 +59,10 @@ public class ApiPsiUtils {
         String url = StringUtil.isEmpty(VirtualFileManager.extractProtocol(filePath)) ? VfsUtilCore.pathToUrl(filePath) : filePath;
         VirtualFileManager virtualFileManager = VirtualFileManager.getInstance();
         VirtualFile virtualFile = virtualFileManager.findFileByUrl(url);
+        return findFileByVF(project, virtualFile);
+    }
+
+    public static PsiFile findFileByVF(Project project, VirtualFile virtualFile) {
         return virtualFile != null ? PsiManager.getInstance(project).findFile(virtualFile) : null;
     }
 
@@ -106,12 +115,6 @@ public class ApiPsiUtils {
         return c == ' ' || c == '\t';
     }
 
-
-    public static boolean isOfType(@NotNull final PsiElement element, @NotNull final IElementType type) {
-        ASTNode node = element.getNode();
-        return node != null && node.getElementType() == type;
-    }
-
     @Nullable
     public static PsiElement getPrevSiblingIgnoreWhitespace(@Nullable final PsiElement element) {
         final PsiElement sibling = (element != null) ? element.getPrevSibling() : null;
@@ -119,7 +122,7 @@ public class ApiPsiUtils {
     }
 
     @Nullable
-    public static PsiElement getNextSiblingByType(@Nullable PsiElement element, @NotNull IElementType type, final boolean strict) {
+    public static PsiElement getNextSiblingByType(@Nullable PsiElement element, @NotNull IElementType type, boolean strict) {
         PsiElement sibling;
         for (sibling = ((element != null && strict) ? element.getNextSibling() : element); sibling != null && !isOfType(sibling, type); sibling = sibling.getNextSibling()) {
         }

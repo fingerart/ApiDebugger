@@ -17,6 +17,7 @@ import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.lang.ApiFileType;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -41,6 +42,7 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
         setupUI();
         mRunSingleRequestBtn.addItemListener(createRunTypeChangeListener(RunFileType.SINGLE_REQUEST));
         mRunAllInFileBtn.addItemListener(createRunTypeChangeListener(RunFileType.ALL_IN_FILE));
+        mEnvComboBox.addItemListener(createEnvChangeListener());
         mFilePathWithBrowseBtn.addBrowseFolderListener(null, null, mProject, FileChooserDescriptorFactory.createSingleFileDescriptor(ApiFileType.INSTANCE.getDefaultExtension()));
         mFilePathWithBrowseBtn.getTextField().getDocument().addDocumentListener(new DocumentAdapter() {
             @Override
@@ -52,6 +54,18 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
                 updateState(runFileType, mFilePathWithBrowseBtn.getText(), environmentName, selectedRequestIndex);
             }
         });
+    }
+
+    private ItemListener createEnvChangeListener() {
+        return event -> {
+            if (event.getStateChange() == ItemEvent.DESELECTED) {
+                RunFileType runFileType = getSelectedRunFileType();
+                ApiDebuggerEnvironmentComboBox.EnvironmentItem environment = mEnvComboBox.getSelectedItem();
+                String environmentName = environment != null ? environment.getName() : null;
+                int selectedRequestIndex = mRequestComboBox.getSelectedIndex();
+                updateState(runFileType, mFilePathWithBrowseBtn.getText(), environmentName, selectedRequestIndex);
+            }
+        };
     }
 
     private ItemListener createRunTypeChangeListener(RunFileType type) {
@@ -170,7 +184,7 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
         mRequestComboBox.setVisible(runFileType == RunFileType.SINGLE_REQUEST);
         mEnvComboBox.update(mProject, file, envName);
         if (file instanceof ApiPsiFile) {
-            mRequestComboBox.update(mProject, file, selectedRequestIndex);
+            mRequestComboBox.update(mProject, envName, file, selectedRequestIndex);
             mRequestComboBox.setEnabled(mRequestComboBox.getModel().getSize() > 0);
         } else {
             mRequestComboBox.setEnabled(false);

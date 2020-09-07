@@ -15,6 +15,7 @@ import io.chengguo.api.debugger.lang.ApiBlockConverter;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
+import io.chengguo.api.debugger.lang.run.ApiDebuggerSingleRequestExecutionConfig;
 import io.chengguo.api.debugger.lang.run.ApiHttpRequestRunProfileState;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 import org.jetbrains.annotations.NotNull;
@@ -45,17 +46,18 @@ public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
             if (project == null) return;
             ApiVariableReplacer variableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(project, mEnvName));
             ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(mApiBlockElement, variableReplacer);
+            ApiDebuggerSingleRequestExecutionConfig executionConfig = new ApiDebuggerSingleRequestExecutionConfig(mApiBlockElement);
             final ExecutionEnvironmentBuilder builder = ExecutionEnvironmentBuilder.create(project, DefaultRunExecutor.getRunExecutorInstance(), new RunProfile() {
                 @NotNull
                 @Override
                 public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) {
-                    return new ApiHttpRequestRunProfileState(environment.getProject(), variableReplacer, null);
+                    return new ApiHttpRequestRunProfileState(environment.getProject(), variableReplacer, executionConfig);
                 }
 
                 @NotNull
                 @Override
                 public String getName() {
-                    return request.baseUrl;
+                    return request.url;
                 }
 
                 @Nullable

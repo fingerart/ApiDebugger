@@ -12,7 +12,7 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiDescriptionItemImpl extends ApiElementImpl implements ApiDescriptionItem {
+public class ApiDescriptionItemImpl extends ApiDescriptionItemMixin implements ApiDescriptionItem {
 
   public ApiDescriptionItemImpl(ASTNode node) {
     super(node);

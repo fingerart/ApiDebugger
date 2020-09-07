@@ -21,6 +21,6 @@ public class ApiDebuggerSingleRequestExecutionConfig implements ApiDebuggerExecu
 
     @Override
     public String getName() {
-        return mApiBlocks.get(0).getDescription().getDescriptionTitle().getDescriptionItem().getText();
+        return mApiBlocks.get(0).getDescription().getDescriptionTitle().getDescriptionItem().getValue();
     }
 }
