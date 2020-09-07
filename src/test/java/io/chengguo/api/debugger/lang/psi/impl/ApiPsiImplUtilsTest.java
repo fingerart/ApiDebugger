@@ -64,10 +64,16 @@ public class ApiPsiImplUtilsTest extends ApiDebuggerTestCase {
     }
 
     public void testGetDescriptionKey() {
-        // TODO: 2020/9/6  
+        ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
+        assertNotNull(apiBlock);
+        String key = apiBlock.getDescription().getDescriptionTitle().getDescriptionItem().getKey();
+        assertEquals("title", key);
     }
-    
-    public void testGetDescriptionValue(){
-        // TODO: 2020/9/6  
+
+    public void testGetDescriptionValue() {
+        ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
+        assertNotNull(apiBlock);
+        String value = apiBlock.getDescription().getDescriptionTitle().getDescriptionItem().getValue();
+        assertEquals("Create Dummy File", value);
     }
 }

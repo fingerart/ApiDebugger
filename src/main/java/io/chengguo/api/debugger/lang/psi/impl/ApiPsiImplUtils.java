@@ -14,6 +14,12 @@ import java.util.List;
 
 public class ApiPsiImplUtils {
 
+    /**
+     * 获取 Identifier Element
+     *
+     * @param element
+     * @return
+     */
     public static PsiElement getIdentifier(PsiElement element) {
         ASTNode node = element.getNode().findChildByType(ApiTypes.Api_IDENTIFIER);
         return node == null ? null : node.getPsi();
@@ -80,15 +86,27 @@ public class ApiPsiImplUtils {
         return Collections.emptyList();
     }
 
+    /**
+     * 获取描述的名称
+     *
+     * @param descriptionItem
+     * @return
+     */
     @NotNull
     public static String getDescriptionKey(ApiDescriptionItem descriptionItem) {
         ASTNode node = descriptionItem.getNode().findChildByType(ApiTypes.Api_DESCRIPTION_KEY);
         return node == null ? "" : node.getText();
     }
 
+    /**
+     * 获取描述的值
+     *
+     * @param descriptionItem
+     * @return
+     */
     @NotNull
     public static String getDescriptionValue(ApiDescriptionItem descriptionItem) {
-        ASTNode node = descriptionItem.getNode().findChildByType(ApiTypes.Api_DESCRIPTION_CONTENT);
+        ASTNode node = descriptionItem.getNode().findChildByType(ApiTypes.Api_LINE_TEXT);
         return node == null ? "" : node.getText();
     }
 

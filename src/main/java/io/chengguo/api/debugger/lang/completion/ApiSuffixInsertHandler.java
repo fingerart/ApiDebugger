@@ -26,15 +26,17 @@ public class ApiSuffixInsertHandler implements InsertHandler<LookupElement> {
     }
 
     public void handleInsert(@NotNull InsertionContext context, @NotNull LookupElement item) {
-        final Project project = context.getProject();
+        Project project = context.getProject();
         if (project != null) {
             Editor editor = context.getEditor();
             Document document = editor.getDocument();
+            // 跳过空格
             int offset = ApiPsiUtils.skipWhitespacesForward(editor.getCaretModel().getOffset(), document.getCharsSequence());
             if (document.getTextLength() == offset || !this.isEqualsToSuffix(document, offset)) {
                 EditorModificationUtil.insertStringAtCaret(editor, this.mSuffix);
                 PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());
             }
+            // 移动光标到后缀之后
             editor.getCaretModel().moveToOffset(offset + this.mSuffix.length());
         }
     }

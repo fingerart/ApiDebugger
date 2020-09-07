@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ---
 
-- title: Api Block 3
+- title: httpbin delay 3
 - descript: block 3.
 
 GET http://httpbin.org/delay/3

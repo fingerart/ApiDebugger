@@ -12,7 +12,6 @@ import com.intellij.execution.runners.ProgramRunner;
 import com.intellij.openapi.project.Project;
 import io.chengguo.api.debugger.lang.ApiBlockConverter;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
-import io.chengguo.api.debugger.ui.ApiDebugger;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -57,7 +56,7 @@ public class ApiHttpRequestRunProfileState implements RunProfileState {
 
     private void executeHttpRequest(ApiDebuggerRequestConsole consoleView, ProcessHandler processHandler) throws ApiRequestInvalidException {
         ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(mExecutionConfig.getApiBlocks().get(0), mVariableReplacer);
-        ApiDebugger.create(mProject, request, consoleView, processHandler, false).execute();
+        ApiDebuggerBuiltinExecutor.create(mProject, request, consoleView, processHandler, false).execute();
     }
 
     @NotNull

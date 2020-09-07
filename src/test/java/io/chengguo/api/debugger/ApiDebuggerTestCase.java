@@ -6,11 +6,7 @@ import io.chengguo.api.debugger.lang.ApiFileType;
 import java.io.File;
 
 public abstract class ApiDebuggerTestCase extends BasePlatformTestCase {
-    protected static final String EXT = ApiFileType.INSTANCE.getDefaultExtension();
-
-    protected String mergeApiExt(String fileName) {
-        return fileName + "." + EXT;
-    }
+    protected static final String API_EXT = ApiFileType.INSTANCE.getDefaultExtension();
 
     @Override
     protected String getTestDataPath() {

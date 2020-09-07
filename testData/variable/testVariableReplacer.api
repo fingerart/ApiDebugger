@@ -1,0 +1,6 @@
+- title: Test variable replacer
+
+PUT https://{{host}}/post?name=tenon&age=18&language={{language}}
+Content-Type: application/x-www-form-urlencoded
+
+k1=v1&k2=v2

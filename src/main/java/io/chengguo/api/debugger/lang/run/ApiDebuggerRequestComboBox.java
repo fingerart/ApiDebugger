@@ -11,6 +11,7 @@ import com.intellij.ui.SimpleTextAttributes;
 import io.chengguo.api.debugger.lang.ApiBlockConverter;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 import org.jetbrains.annotations.NotNull;
@@ -26,8 +27,10 @@ public class ApiDebuggerRequestComboBox extends ComboBox<ApiDebuggerRequestCombo
     public ApiDebuggerRequestComboBox() {
     }
 
-    public void update(Project project, PsiFile psiFile, int selectedIndex) {
-        List<RequestItem> items = findAllRequestItems(psiFile);
+    public void update(Project project, String envName, PsiFile psiFile, int selectedIndex) {
+        ApiEnvironment environment = ApiEnvironment.create(project, envName);
+        ApiVariableReplacer variableReplacer = environment == ApiEnvironment.empty() ? ApiVariableReplacer.PLAIN : ApiVariableReplacer.create(environment);
+        List<RequestItem> items = findAllRequestItems(psiFile, variableReplacer);
         RequestItem selectedRequestItem = findSelectedRequestItem(items, selectedIndex);
         setModel(new CollectionComboBoxModel<>(items));
         setSelectedItem(selectedRequestItem);
@@ -50,12 +53,12 @@ public class ApiDebuggerRequestComboBox extends ComboBox<ApiDebuggerRequestCombo
         return null;
     }
 
-    private List<RequestItem> findAllRequestItems(PsiFile psiFile) {
+    private List<RequestItem> findAllRequestItems(PsiFile psiFile, ApiVariableReplacer variableReplacer) {
         ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(psiFile);
         ArrayList<RequestItem> results = new ArrayList<>();
         for (int index = 0; index < apiBlocks.length; index++) {
             try {
-                ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(apiBlocks[index], ApiVariableReplacer.EMPTY);
+                ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(apiBlocks[index], variableReplacer);
                 results.add(new RequestItem(index + 1, request.method, request.url, true));
             } catch (ApiRequestInvalidException e) {
                 LOG.error(e);

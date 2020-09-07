@@ -4,7 +4,6 @@ import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.psi.*;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +22,7 @@ public abstract class ApiBlockMixin extends ApiElementImpl implements ApiApiBloc
         ApiRequest apiRequest = getRequest();
         List<ApiHeaderField> headerFields = apiRequest != null ? apiRequest.getHeaderFieldList() : Collections.emptyList();
         for (ApiHeaderField headerField : headerFields) {
-            if (StringUtil.equalsIgnoreCase(key, headerField.getName())) {
+            if (StringUtil.equalsIgnoreCase(key, headerField.getKey())) {
                 return headerField;
             }
         }

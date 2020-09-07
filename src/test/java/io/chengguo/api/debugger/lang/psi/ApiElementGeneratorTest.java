@@ -29,7 +29,7 @@ public class ApiElementGeneratorTest extends ApiDebuggerTestCase {
     }
 
     public void testCreateDummyFile() throws IOException {
-        File testFile = new File(getTestDataPath(), mergeApiExt(getTestName(true)));
+        File testFile = new File(getTestDataPath(), getTestName(true) + ".api");
         String content = FileUtil.loadFile(testFile);
         PsiFile dummyFile = elementGenerator.createDummyFile(content);
         ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(dummyFile);

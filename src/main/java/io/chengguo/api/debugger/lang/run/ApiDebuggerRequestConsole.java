@@ -1,6 +1,5 @@
 package io.chengguo.api.debugger.lang.run;
 
-import com.intellij.execution.impl.ConsoleViewImpl;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ConsoleViewContentType;
@@ -22,4 +21,15 @@ public class ApiDebuggerRequestConsole {
     }
 
 
+    public void onRequestStart() {
+
+    }
+
+    public void onRequestResponse(StringBuilder builder) {
+        getConsole().print(builder.toString(), ConsoleViewContentType.SYSTEM_OUTPUT);
+    }
+
+    public void onRequestError(Exception e) {
+        getConsole().print(e.getMessage(), ConsoleViewContentType.ERROR_OUTPUT);
+    }
 }

@@ -1,6 +1,5 @@
-package io.chengguo.api.debugger.ui;
+package io.chengguo.api.debugger.lang.run;
 
-import com.intellij.execution.process.ProcessHandler;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
@@ -10,7 +9,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.util.net.HttpConfigurable;
 import com.intellij.util.net.IdeHttpClientHelpers;
 import com.intellij.util.net.ssl.CertificateManager;
-import io.chengguo.api.debugger.lang.run.ApiDebuggerRequestConsole;
+import io.chengguo.api.debugger.ApiDebuggerBundle;
+import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 import org.apache.commons.io.input.CountingInputStream;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -38,44 +38,32 @@ import java.nio.charset.Charset;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 
 
-public class ApiDebugger {
-    private static final Logger LOG = Logger.getInstance(ApiDebugger.class);
+public class ApiDebuggerExecutor {
+    private static final Logger LOG = Logger.getInstance(ApiDebuggerExecutor.class);
 
     private final Project mProject;
-    private final ApiDebuggerRequest mRequest;
-    private final ApiDebuggerRequestConsole mConsole;
-    private final ProcessHandler mProcessHandler;
-    private final boolean mIsWithProgress;
 
-    public ApiDebugger(Project project, ApiDebuggerRequest request, ApiDebuggerRequestConsole console, ProcessHandler processHandler, boolean isWithProgress) {
+    public ApiDebuggerExecutor(Project project) {
         mProject = project;
-        mRequest = request;
-        mConsole = console;
-        mProcessHandler = processHandler;
-        mIsWithProgress = isWithProgress;
     }
 
-    public static ApiDebugger create(Project project, ApiDebuggerRequest request, ApiDebuggerRequestConsole consoleView, ProcessHandler processHandler, boolean isWithProgress) {
-        return new ApiDebugger(project, request, consoleView, processHandler, isWithProgress);
-    }
-
-    public void execute() {
+    public void execute(ApiDebuggerRequest request, IDebugListener debugListener, boolean isWithProgress) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        Task.Backgroundable task = new Task.Backgroundable(mProject, "标题", true) {
+        Task.Backgroundable task = new Task.Backgroundable(mProject, request.url, true) {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
                 try {
                     indicator.setIndeterminate(true);
-                    indicator.setText("Creating connection……");
+                    indicator.setText(ApiDebuggerBundle.message("api.debugger.run.indicator.connecting"));
                     CloseableHttpClient client = createHttpClient();
-                    HttpRequestBase httpRequest = createHttpRequest(mRequest);
+                    HttpRequestBase httpRequest = createHttpRequest(request);
                     CloseableHttpResponse response = client.execute(httpRequest);
                     Header contentLength = response.getFirstHeader("Content-Length");
                     Long length = contentLength == null ? null : Long.parseLong(contentLength.getValue());
                     if (length != null) {
                         indicator.setIndeterminate(false);
                         indicator.setFraction(0.0);
-                        indicator.setText("Accessing resource……");
+                        indicator.setText(ApiDebuggerBundle.message("api.debugger.run.indicator.accessing"));
                     }
                     HttpEntity entity = response.getEntity();
                     InputStream body = entity.getContent();
@@ -86,25 +74,24 @@ public class ApiDebugger {
                     }
                     CountingInputStream countingInputStream = new CountingInputStream(body);
                     InputStreamReader in = new InputStreamReader(countingInputStream, charset);
-                    StringBuffer buffer = new StringBuffer();
+                    StringBuilder sb = new StringBuilder();
                     char[] b = new char[4096];
                     for (int len; (len = in.read(b)) != -1 && !indicator.isCanceled(); ) {
-                        buffer.append(new String(b, 0, len));
+                        sb.append(new String(b, 0, len));
                         if (length != null) {
                             indicator.setFraction(((double) (countingInputStream.getCount())) / length);
                             indicator.setText(countingInputStream.getCount() / 1000L + " of " + length / 1000L + "Kb");
                         }
                     }
-//                    ApplicationManager.getApplication().invokeLater(() -> debugListener.onResponse(buffer));
+                    ApplicationManager.getApplication().invokeLater(() -> debugListener.onResponse(sb));
                 } catch (Exception e) {
-                    LOG.error(e);
-//                    ApplicationManager.getApplication().invokeLater(() -> debugListener.onError(e));
+                    ApplicationManager.getApplication().invokeLater(() -> debugListener.onError(e));
                 } finally {
-//                    ApplicationManager.getApplication().invokeLater(debugListener::onDone);
+                    ApplicationManager.getApplication().invokeLater(debugListener::onDone);
                 }
             }
         };
-        StandardProgressIndicator indicator = ApplicationManager.getApplication().isHeadlessEnvironment() || !mIsWithProgress ? new EmptyProgressIndicator() : new BackgroundableProcessIndicator(task);
+        StandardProgressIndicator indicator = ApplicationManager.getApplication().isHeadlessEnvironment() || !isWithProgress ? new EmptyProgressIndicator() : new BackgroundableProcessIndicator(task);
         if (ApplicationManager.getApplication().isDispatchThread()) {
             ProgressManager.getInstance().runProcessWithProgressAsynchronously(task, indicator);
         } else {
@@ -181,7 +168,7 @@ public class ApiDebugger {
         public void onStart() {
         }
 
-        public void onResponse(StringBuffer buffer) {
+        public void onResponse(StringBuilder builder) {
         }
 
         public void onError(Exception e) {

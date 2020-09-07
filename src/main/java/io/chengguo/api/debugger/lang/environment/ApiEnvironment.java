@@ -6,7 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
+import io.chengguo.api.debugger.lang.ApiPsiUtils;
 
 import java.util.Collection;
 
@@ -32,9 +32,9 @@ public abstract class ApiEnvironment {
         if (StringUtil.isNotEmpty(envName)) {
             Collection<VirtualFile> files = ApiEnvironmentIndex.getAllVirtualFiles(project, envName);
             if (files.iterator().hasNext()) {
-                PsiFile file = PsiManager.getInstance(project).findFile(files.iterator().next());
-                if (file instanceof JsonFile) {
-                    JsonValue value = ((JsonFile) file).getTopLevelValue();
+                PsiFile psiFile = ApiPsiUtils.findFileByVF(project, files.iterator().next());
+                if (psiFile instanceof JsonFile) {
+                    JsonValue value = ((JsonFile) psiFile).getTopLevelValue();
                     JsonObject environment = value instanceof JsonObject ? JsonUtil.getPropertyValueOfType((JsonObject) value, envName, JsonObject.class) : null;
                     return new ApiJsonEnvironment(envName, environment);
                 }
