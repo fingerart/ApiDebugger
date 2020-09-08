@@ -12,11 +12,12 @@
     </extensionPoints>
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="io.chengguo.api.debugger.lang.psi.ApiFileTypeFactory"/>
-        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.preview.ApiFileViewEditorProvider"/>
+        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.editor.ApiSplitEditorProvider"/>
         <lang.syntaxHighlighterFactory language="Api"
                                        implementationClass="io.chengguo.api.debugger.lang.highlight.ApiSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="io.chengguo.api.debugger.lang.highlight.ApiColorSettingsPage"/>
         <additionalTextAttributes scheme="Default" file="colorSchemes/ApiDebuggerDefault.xml"/>
+        <additionalTextAttributes scheme="Darcula" file="colorSchemes/ApiDebuggerDarcula.xml"/>
         <lang.formatter language="Api"
                         implementationClass="io.chengguo.api.debugger.lang.formatter.ApiFormattingModelBuilder"/>
         <lang.parserDefinition language="Api"
@@ -52,6 +53,9 @@
         <multiHostInjector implementation="io.chengguo.api.debugger.lang.injection.ApiRequestBodyMultiHostInjector"/>
         <errorHandler implementation="io.chengguo.api.debugger.ApiDebuggerErrorReportSubmitter"/>
         <configurationType implementation="io.chengguo.api.debugger.lang.run.ApiDebuggerConfigurationType"/>
+        <!--        <spellchecker.support-->
+        <!--                language="Api"-->
+        <!--                implementationClass="io.chengguo.api.debugger.lang.spellchecking.ApiSpellcheckingStrategy"/>-->
     </extensions>
 
     <actions>

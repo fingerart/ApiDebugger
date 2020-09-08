@@ -47,7 +47,7 @@ public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
             ApiVariableReplacer variableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(project, mEnvName));
             ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(mApiBlockElement, variableReplacer);
             ApiDebuggerSingleRequestExecutionConfig executionConfig = new ApiDebuggerSingleRequestExecutionConfig(mApiBlockElement);
-            final ExecutionEnvironmentBuilder builder = ExecutionEnvironmentBuilder.create(project, DefaultRunExecutor.getRunExecutorInstance(), new RunProfile() {
+            ExecutionEnvironmentBuilder builder = ExecutionEnvironmentBuilder.create(project, DefaultRunExecutor.getRunExecutorInstance(), new RunProfile() {
                 @NotNull
                 @Override
                 public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) {
@@ -76,6 +76,13 @@ public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
 
         public WithEnv(ApiApiBlock apiBlock, String env) {
             super(apiBlock, env);
+        }
+    }
+
+    public static class WithDefaultEnv extends RunApiRequestAction {
+
+        public WithDefaultEnv(ApiApiBlock apiBlock) {
+            super(apiBlock, ApiEnvironment.empty().getName());
         }
     }
 }

@@ -3,7 +3,6 @@
 
 PUT http://echo.tenon.dev/post?name=tenon&age=18
 Content-Type: application/json
-Accept: application/xml
 
 {
 "key": "value"
@@ -25,6 +24,7 @@ Content-Type: application/json
 - descript: block 3.
 
 GET http://httpbin.org/delay/3
+Content-Type: application/xml
 
 <option name="set">
     Api Block 3

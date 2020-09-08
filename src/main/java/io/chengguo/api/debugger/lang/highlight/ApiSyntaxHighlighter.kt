@@ -42,7 +42,7 @@ class ApiSyntaxHighlighter : SyntaxHighlighterBase() {
         val VARIABLE_NAME =
             TextAttributesKey.createTextAttributesKey(
                 "API_DEBUGGER_VARIABLE_NAME",
-                DefaultLanguageHighlighterColors.LOCAL_VARIABLE
+                DefaultLanguageHighlighterColors.KEYWORD
             )
         val VARIABLE_BRACES =
             TextAttributesKey.createTextAttributesKey(
