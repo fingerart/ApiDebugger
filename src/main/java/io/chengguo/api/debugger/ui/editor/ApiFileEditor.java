@@ -1,52 +1,54 @@
-package io.chengguo.api.debugger.ui.preview;
+package io.chengguo.api.debugger.ui.editor;
 
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorLocation;
 import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.UserDataHolderBase;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.wm.impl.status.TextPanel;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import io.chengguo.api.debugger.ApiDebuggerBundle;
+import com.intellij.util.EventDispatcher;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class ApiFileViewEditor extends UserDataHolderBase implements FileEditor {
+public class ApiFileEditor extends UserDataHolderBase implements FileEditor, PropertyChangeListener {
+    private static final String NAME = "ApiFileEditor";
 
     private final Project mProject;
     private final VirtualFile mFile;
+    private final ApiEditorImpl mEditor;
+    private final EventDispatcher<PropertyChangeListener> mDispatcher = EventDispatcher.create(PropertyChangeListener.class);
 
-    public ApiFileViewEditor(@NotNull Project project, @NotNull VirtualFile file) {
+    public ApiFileEditor(Project project, VirtualFile file) {
         mProject = project;
         mFile = file;
+        mEditor = new ApiEditorImpl(project, file);
     }
 
     @NotNull
     @Override
     public JComponent getComponent() {
-        return new JPanel();
+        return mEditor.getComponent();
     }
 
     @Nullable
     @Override
     public JComponent getPreferredFocusedComponent() {
-        return null;
+        return mEditor.getComponent();
     }
 
     @NotNull
     @Override
     public String getName() {
-        return ApiDebuggerBundle.message("api.debugger.editor.mode.view.name");
+        return NAME;
     }
 
     @Override
-    public void setState(@NotNull FileEditorState fileEditorState) {
+    public void setState(@NotNull FileEditorState state) {
 
     }
 
@@ -57,27 +59,31 @@ public class ApiFileViewEditor extends UserDataHolderBase implements FileEditor 
 
     @Override
     public boolean isValid() {
-        return true;
+        return mEditor.isValid();
     }
 
     @Override
     public void selectNotify() {
-
     }
 
     @Override
     public void deselectNotify() {
-
     }
 
     @Override
-    public void addPropertyChangeListener(@NotNull PropertyChangeListener propertyChangeListener) {
-
+    public void addPropertyChangeListener(@NotNull PropertyChangeListener listener) {
+        mDispatcher.addListener(listener);
     }
 
     @Override
-    public void removePropertyChangeListener(@NotNull PropertyChangeListener propertyChangeListener) {
+    public void removePropertyChangeListener(@NotNull PropertyChangeListener listener) {
+        mDispatcher.removeListener(listener);
+    }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent event) {
+        PropertyChangeEvent editorEvent = new PropertyChangeEvent(this, event.getPropertyName(), event.getOldValue(), event.getNewValue());
+        mDispatcher.getMulticaster().propertyChange(editorEvent);
     }
 
     @Nullable
@@ -94,6 +100,9 @@ public class ApiFileViewEditor extends UserDataHolderBase implements FileEditor 
 
     @Override
     public void dispose() {
-        Disposer.dispose(this);
+    }
+
+    public ApiEditor getApiEditor() {
+        return mEditor;
     }
 }

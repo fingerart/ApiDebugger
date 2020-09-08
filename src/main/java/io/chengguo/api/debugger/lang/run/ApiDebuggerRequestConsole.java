@@ -20,7 +20,6 @@ public class ApiDebuggerRequestConsole {
         return mConsolePrinter.getConsole();
     }
 
-
     public void onRequestStart() {
 
     }
