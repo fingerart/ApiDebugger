@@ -4,10 +4,8 @@ import com.intellij.execution.lineMarker.RunLineMarkerContributor;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.tree.TokenSet;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.actions.RunApiRequestAction;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex;
 import io.chengguo.api.debugger.lang.lexer.ApiTokenTypes;
 import io.chengguo.api.debugger.lang.psi.*;
@@ -40,6 +38,6 @@ public class ApiLineMarkerProvider extends RunLineMarkerContributor {
     }
 
     private boolean isApiRunElement(PsiElement element) {
-        return isOfTypes(element, ApiTokenTypes.METHOD_TYPE);
+        return isOfTypes(element, ApiTokenTypes.METHODS);
     }
 }

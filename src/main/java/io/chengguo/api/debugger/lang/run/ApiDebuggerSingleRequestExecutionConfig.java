@@ -1,8 +1,10 @@
 package io.chengguo.api.debugger.lang.run;
 
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.containers.ContainerUtil;
-import com.twelvemonkeys.util.CollectionUtil;
+import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
+import io.chengguo.api.debugger.lang.psi.ApiDescription;
 
 import java.util.List;
 
@@ -21,6 +23,12 @@ public class ApiDebuggerSingleRequestExecutionConfig implements ApiDebuggerExecu
 
     @Override
     public String getName() {
-        return mApiBlocks.get(0).getDescription().getDescriptionTitle().getDescriptionItem().getValue();
+        ApiApiBlock apiApiBlock = mApiBlocks.get(0);
+        ApiDescription titleDescriptionItem = apiApiBlock.getDescriptionByKey("title");
+        String descrTitle = titleDescriptionItem != null ? titleDescriptionItem.getValue() : null;
+        if (StringUtil.isNotEmpty(descrTitle)) {
+            return descrTitle;
+        }
+        return apiApiBlock.getRequest().getRequestLine().getRequestTarget().getUrl(ApiVariableReplacer.EMPTY);
     }
 }

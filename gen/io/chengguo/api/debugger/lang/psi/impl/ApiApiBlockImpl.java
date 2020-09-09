@@ -29,14 +29,14 @@ public class ApiApiBlockImpl extends ApiBlockMixin implements ApiApiBlock {
 
   @Override
   @NotNull
-  public ApiDescription getDescription() {
-    return findNotNullChildByClass(ApiDescription.class);
+  public List<ApiDescription> getDescriptionList() {
+    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiDescription.class);
   }
 
   @Override
-  @Nullable
+  @NotNull
   public ApiRequest getRequest() {
-    return findChildByClass(ApiRequest.class);
+    return findNotNullChildByClass(ApiRequest.class);
   }
 
 }

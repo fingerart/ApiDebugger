@@ -59,7 +59,7 @@ class ApiSyntaxHighlighter : SyntaxHighlighterBase() {
         )
         private val attributesToTokenMap: ImmutableMultimap<TextAttributesKey, IElementType> =
             ImmutableMultimap.builder<TextAttributesKey, IElementType>()
-                .putAll(METHOD_TYPE, *ApiTokenTypes.METHOD_TYPE.types)
+                .putAll(METHOD_TYPE, *ApiTokenTypes.METHODS.types)
                 .putAll(HEADER_FIELD_NAME, *ApiTokenTypes.HEADER_FIELD_NAME.types)
                 .putAll(HEADER_FIELD_VALUE, *ApiTokenTypes.HEADER_FIELD_VALUE.types)
                 .putAll(API_BLOCK_SEPARATOR, *ApiTokenTypes.API_BLOCK_SEPARATOR.types)

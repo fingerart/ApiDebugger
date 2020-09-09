@@ -10,6 +10,7 @@ import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
+import io.chengguo.api.debugger.lang.psi.ApiRequest;
 import io.chengguo.api.debugger.lang.psi.ApiRequestMessageGroup;
 import io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin;
 import org.jetbrains.annotations.NotNull;
@@ -35,9 +36,9 @@ public class ApiRequestBodyMultiHostInjector implements MultiHostInjector {
     @Nullable
     private Language getInjectingLanguage(@NotNull PsiElement psiElement) {
         // 根据 Content-Type 动态调整语言
-        ApiApiBlock apiBlock = PsiTreeUtil.getParentOfType(psiElement, ApiApiBlock.class);
-        if (apiBlock != null) {
-            String mimeType = apiBlock.getMimeType();
+        ApiRequest apiRequest = PsiTreeUtil.getParentOfType(psiElement, ApiRequest.class);
+        if (apiRequest != null) {
+            String mimeType = apiRequest.getMimeType();
             if (StringUtil.isNotEmpty(mimeType)) {
                 if (mimeType.endsWith("+json")) {
                     mimeType = "application/json";

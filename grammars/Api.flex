@@ -72,7 +72,8 @@ PUT = "PUT"
 DELETE = "DELETE"
 TRACE = "TRACE"
 CONNECT = "CONNECT"
-METHOD = {OPTIONS} | {GET} | {HEAD} | {POST} | {PUT} | {DELETE} | {TRACE} | {CONNECT}
+PATCH = "PATCH"
+METHOD = {OPTIONS} | {GET} | {HEAD} | {POST} | {PUT} | {DELETE} | {TRACE} | {CONNECT} | {PATCH}
 LBRACES = "{{"
 RBRACES = "}}"
 ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
@@ -138,6 +139,7 @@ MESSAGE_TEXT = [^ \t\f\r\n-] ([^\r\n]* ([\r\n]+ [^\r\n-])? )*
     {DELETE}                                    { return Api_DELETE; }
     {TRACE}                                     { return Api_TRACE; }
     {CONNECT}                                   { return Api_CONNECT; }
+    {PATCH}                                     { return Api_PATCH; }
     {WS}+                                       { pushState(IN_HTTP_PATH); return TokenType.WHITE_SPACE; }
 }
 
@@ -210,5 +212,4 @@ MESSAGE_TEXT = [^ \t\f\r\n-] ([^\r\n]* ([\r\n]+ [^\r\n-])? )*
 
 //BEFORE_MESSAGE_BODY
 
-({NL}|{WS})+                                    { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 [^]                                             { return TokenType.BAD_CHARACTER; }

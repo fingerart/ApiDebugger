@@ -35,7 +35,7 @@ public class HttpHeadersDictionary {
     }
 
     @Nullable
-    public static HttpHeaderDocumentation getDocumentation(@NotNull final String fieldName) {
+    public static HttpHeaderDocumentation getDocumentation(@NotNull String fieldName) {
         Map<String, HttpHeaderDocumentation> headers = getHeaders();
         return headers.get(fieldName);
     }
@@ -45,9 +45,9 @@ public class HttpHeadersDictionary {
         Map<String, HttpHeaderDocumentation> result = new HashMap<>();
         InputStream stream = HttpHeadersDictionary.class.getResourceAsStream("/raw/http-headers.json");
         try {
-            String file = (stream != null) ? FileUtil.loadTextAndClose(stream) : "";
-            if (StringUtil.isNotEmpty(file)) {
-                JsonElement root = new JsonParser().parse(file);
+            String text = (stream != null) ? FileUtil.loadTextAndClose(stream) : "";
+            if (StringUtil.isNotEmpty(text)) {
+                JsonElement root = new JsonParser().parse(text);
                 if (root.isJsonArray()) {
                     JsonArray array = root.getAsJsonArray();
                     for (JsonElement element : array) {

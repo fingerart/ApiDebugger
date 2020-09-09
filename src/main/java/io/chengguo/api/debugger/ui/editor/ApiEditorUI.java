@@ -12,7 +12,7 @@ import java.awt.*;
 public class ApiEditorUI extends JPanel implements DataProvider, Disposable {
     public ApiEditorUI(ApiEditor editor) {
         setLayout(new BorderLayout());
-        add(new JBLabel("测试"), BorderLayout.NORTH);
+        add(new JBLabel("Do something..."), BorderLayout.NORTH);
     }
 
     @Nullable

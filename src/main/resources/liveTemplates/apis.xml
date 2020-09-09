@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templateSet group="Api Debugger">
+    <template name="ga" value="GET http://$HOST$/$PATH$&#10;$HEADER$: $HEADER_VALUE$&#10;&#10;---"
+              description="GET http://example.com/get" toReformat="true" toShortenFQNames="false">
+        <variable name="HOST" expression="" defaultValue="&quot;localhost:80&quot;" alwaysStopAt="true"/>
+        <variable name="PATH" expression="" defaultValue="&quot;api/item&quot;" alwaysStopAt="true"/>
+        <variable name="HEADER" expression="" defaultValue="&quot;Accept&quot;" alwaysStopAt="true"/>
+        <variable name="HEADER_VALUE" expression="" defaultValue="&quot;application/json&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="Api" value="true"/>
+        </context>
+    </template>
+</templateSet>

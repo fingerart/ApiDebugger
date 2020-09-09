@@ -12,7 +12,7 @@
     </extensionPoints>
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="io.chengguo.api.debugger.lang.psi.ApiFileTypeFactory"/>
-        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.editor.ApiSplitEditorProvider"/>
+        <!--        <fileEditorProvider implementation="io.chengguo.api.debugger.ui.editor.ApiSplitEditorProvider"/>-->
         <lang.syntaxHighlighterFactory language="Api"
                                        implementationClass="io.chengguo.api.debugger.lang.highlight.ApiSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="io.chengguo.api.debugger.lang.highlight.ApiColorSettingsPage"/>
@@ -40,6 +40,13 @@
         <lang.refactoringSupport
                 language="Api"
                 implementationClass="io.chengguo.api.debugger.lang.refactor.ApiInplaceRefactoringSupportProvider"/>
+        <lang.documentationProvider language="Api"
+                                    implementationClass="io.chengguo.api.debugger.lang.documentation.ApiVariableDocumentationProvider"/>
+        <lang.documentationProvider language="Api"
+                                    implementationClass="io.chengguo.api.debugger.lang.documentation.ApiHeaderDocumentationProvider"/>
+        <liveTemplateContext implementation="io.chengguo.api.debugger.lang.liveTemplates.ApiTemplateContextType"/>
+        <defaultLiveTemplatesProvider
+                implementation="io.chengguo.api.debugger.lang.liveTemplates.ApiDefaultLiveTemplatesProvider"/>
         <psi.referenceContributor language="Api"
                                   implementation="io.chengguo.api.debugger.lang.psi.ApiReferenceContributor"/>
         <fileBasedIndex implementation="io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex"/>

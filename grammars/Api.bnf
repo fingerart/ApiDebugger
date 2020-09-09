@@ -45,14 +45,15 @@
     CONNECT                 = "CONNECT"
   ]
 
-  implements("description_item") = "io.chengguo.api.debugger.lang.psi.ApiKeyValueElement"
-  extends("description_item") = "io.chengguo.api.debugger.lang.psi.impl.ApiDescriptionItemMixin"
+  implements("request") = "io.chengguo.api.debugger.lang.psi.ApiRequestElement"
+  extends("request") = "io.chengguo.api.debugger.lang.psi.impl.ApiRequestMixin"
+  implements("description|header_field") = "io.chengguo.api.debugger.lang.psi.ApiKeyValueElement"
+  extends("description") = "io.chengguo.api.debugger.lang.psi.impl.ApiDescriptionMixin"
   implements("variable") = "io.chengguo.api.debugger.lang.psi.ApiNamedElement"
   extends("variable") = "io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"
   extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
-  implements("header_field") = "io.chengguo.api.debugger.lang.psi.ApiKeyValueElement"
   extends("header_field") = "io.chengguo.api.debugger.lang.psi.impl.ApiHeaderFieldMixin"
-  implements("api_block") = "io.chengguo.api.debugger.lang.psi.ApiBlockElment"
+  implements("api_block") = "io.chengguo.api.debugger.lang.psi.ApiBlockElement"
   extends("api_block") = "io.chengguo.api.debugger.lang.psi.impl.ApiBlockMixin"
   implements("request_target")="io.chengguo.api.debugger.lang.psi.ApiRequestTargetElement"
   extends("request_target")="io.chengguo.api.debugger.lang.psi.impl.ApiRequestTargetMixin"
@@ -62,20 +63,17 @@ apiFile ::= api_*
 
 private api_ ::= api_block (SEPARATOR api_block?)*
 
-api_block ::= comment* description comment* request? {
+api_block ::= comment* description* comment* request {
     recoverWhile=recover_api_block
 }
 
-description ::= description_title description_content? description_item*
-description_title ::= description_item
-description_content ::= description_item
-description_item ::= '-' DESCRIPTION_KEY ':' LINE_TEXT? {pin=1}
+description ::= '-' DESCRIPTION_KEY ':' LINE_TEXT? {pin=1}
 
 request ::= request_line header_field* message_body?
 
 request_line ::= method request_target
 
-method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT
+method ::= OPTIONS | GET | HEAD | POST | PUT | DELETE | TRACE | CONNECT | PATCH
 
 request_target ::= full_scheme? host full_port? path_segments path_query?
 

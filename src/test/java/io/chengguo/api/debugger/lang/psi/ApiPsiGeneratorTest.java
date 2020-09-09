@@ -8,15 +8,7 @@ import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import java.io.File;
 import java.io.IOException;
 
-public class ApiElementGeneratorTest extends ApiDebuggerTestCase {
-
-    private ApiElementGenerator elementGenerator;
-
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        elementGenerator = new ApiElementGenerator(getProject());
-    }
+public class ApiPsiGeneratorTest extends ApiDebuggerTestCase {
 
     @Override
     protected String getBasePath() {
@@ -24,14 +16,14 @@ public class ApiElementGeneratorTest extends ApiDebuggerTestCase {
     }
 
     public void testCreateVariable() {
-        ApiVariable username = elementGenerator.createVariable("username");
+        ApiVariable username = ApiPsiGenerator.createVariable(getProject(), "username");
         assertEquals("{{username}}", username.getText());
     }
 
     public void testCreateDummyFile() throws IOException {
         File testFile = new File(getTestDataPath(), getTestName(true) + ".api");
         String content = FileUtil.loadFile(testFile);
-        PsiFile dummyFile = elementGenerator.createDummyFile(content);
+        PsiFile dummyFile = ApiPsiGenerator.createDummyFile(getProject(), content);
         ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(dummyFile);
         assertEquals(1, apiBlocks.length);
     }

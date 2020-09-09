@@ -12,7 +12,6 @@ import io.chengguo.api.debugger.lang.ApiPsiFile;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
-import io.chengguo.api.debugger.lang.psi.ApiRequest;
 import io.chengguo.api.debugger.lang.psi.ApiRequestTarget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,14 +44,9 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
             ArrayList<StructureViewTreeElement> treeElements = new ArrayList<>();
             ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(element.getContainingFile());
             for (ApiApiBlock apiBlock : apiBlocks) {
-                ApiRequest request = apiBlock.getRequest();
-                if (request != null) {
-                    ApiRequestTarget requestTarget = request.getRequestLine().getRequestTarget();
-                    if (requestTarget != null) {
-                        String baseUrl = requestTarget.getUrl(ApiVariableReplacer.EMPTY);
-                        treeElements.add(createApiBlockViewTreeElement(apiBlock, baseUrl, true));
-                    }
-                }
+                ApiRequestTarget requestTarget = apiBlock.getRequest().getRequestLine().getRequestTarget();
+                String baseUrl = requestTarget.getUrl(ApiVariableReplacer.EMPTY);
+                treeElements.add(createApiBlockViewTreeElement(apiBlock, baseUrl, true));
             }
             return treeElements;
         }

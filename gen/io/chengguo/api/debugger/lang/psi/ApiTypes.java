@@ -12,9 +12,6 @@ public interface ApiTypes {
 
   IElementType Api_API_BLOCK = new ApiElementType("Api_API_BLOCK");
   IElementType Api_DESCRIPTION = new ApiElementType("Api_DESCRIPTION");
-  IElementType Api_DESCRIPTION_CONTENT = new ApiElementType("Api_DESCRIPTION_CONTENT");
-  IElementType Api_DESCRIPTION_ITEM = new ApiElementType("Api_DESCRIPTION_ITEM");
-  IElementType Api_DESCRIPTION_TITLE = new ApiElementType("Api_DESCRIPTION_TITLE");
   IElementType Api_HEADER_FIELD = new ApiElementType("Api_HEADER_FIELD");
   IElementType Api_HEADER_FIELD_KEY = new ApiElementType("Api_HEADER_FIELD_KEY");
   IElementType Api_HEADER_FIELD_VAL = new ApiElementType("Api_HEADER_FIELD_VAL");
@@ -54,6 +51,7 @@ public interface ApiTypes {
   IElementType Api_MESSAGE_TEXT = new ApiTokenType("MESSAGE_TEXT");
   IElementType Api_MULTILINE_COMMENT = new ApiTokenType("MULTILINE_COMMENT");
   IElementType Api_OPTIONS = new ApiTokenType("OPTIONS");
+  IElementType Api_PATCH = new ApiTokenType("PATCH");
   IElementType Api_PORT_SEGMENT = new ApiTokenType("PORT_SEGMENT");
   IElementType Api_POST = new ApiTokenType("POST");
   IElementType Api_PUT = new ApiTokenType("PUT");
@@ -76,15 +74,6 @@ public interface ApiTypes {
       }
       else if (type == Api_DESCRIPTION) {
         return new ApiDescriptionImpl(node);
-      }
-      else if (type == Api_DESCRIPTION_CONTENT) {
-        return new ApiDescriptionContentImpl(node);
-      }
-      else if (type == Api_DESCRIPTION_ITEM) {
-        return new ApiDescriptionItemImpl(node);
-      }
-      else if (type == Api_DESCRIPTION_TITLE) {
-        return new ApiDescriptionTitleImpl(node);
       }
       else if (type == Api_HEADER_FIELD) {
         return new ApiHeaderFieldImpl(node);

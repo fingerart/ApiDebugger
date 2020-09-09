@@ -7,7 +7,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiRequest extends ApiElement {
+public interface ApiRequest extends ApiRequestElement {
 
   @NotNull
   List<ApiHeaderField> getHeaderFieldList();

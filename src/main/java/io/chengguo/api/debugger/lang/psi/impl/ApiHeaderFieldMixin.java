@@ -15,7 +15,6 @@ public abstract class ApiHeaderFieldMixin extends ApiElementImpl implements ApiH
     }
 
     public String getValue() {
-        //TODO 解析变量
         ApiHeaderFieldVal headerField = getHeaderFieldVal();
         return headerField != null ? headerField.getText() : "";
     }

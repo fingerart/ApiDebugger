@@ -7,15 +7,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiDescription extends ApiElement {
-
-  @Nullable
-  ApiDescriptionContent getDescriptionContent();
-
-  @NotNull
-  List<ApiDescriptionItem> getDescriptionItemList();
-
-  @NotNull
-  ApiDescriptionTitle getDescriptionTitle();
+public interface ApiDescription extends ApiKeyValueElement {
 
 }

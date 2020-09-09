@@ -12,7 +12,7 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiDescriptionImpl extends ApiElementImpl implements ApiDescription {
+public class ApiDescriptionImpl extends ApiDescriptionMixin implements ApiDescription {
 
   public ApiDescriptionImpl(ASTNode node) {
     super(node);
@@ -25,24 +25,6 @@ public class ApiDescriptionImpl extends ApiElementImpl implements ApiDescription
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public ApiDescriptionContent getDescriptionContent() {
-    return findChildByClass(ApiDescriptionContent.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ApiDescriptionItem> getDescriptionItemList() {
-    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiDescriptionItem.class);
-  }
-
-  @Override
-  @NotNull
-  public ApiDescriptionTitle getDescriptionTitle() {
-    return findNotNullChildByClass(ApiDescriptionTitle.class);
   }
 
 }

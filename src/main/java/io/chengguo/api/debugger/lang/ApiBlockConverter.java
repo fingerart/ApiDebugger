@@ -18,11 +18,7 @@ import java.util.Map;
 public class ApiBlockConverter {
 
     public static ApiDebuggerRequest toApiBlock(ApiApiBlock element, ApiVariableReplacer replacer) throws ApiRequestInvalidException {
-        ApiRequest reqElement = element.getRequest();
-        if (reqElement == null) {
-            throw new ApiRequestInvalidException();
-        }
-        ApiRequestLine reqLineElement = reqElement.getRequestLine();
+        ApiRequestLine reqLineElement = element.getRequest().getRequestLine();
         ApiRequestTarget reqTargetElement = reqLineElement.getRequestTarget();
         ApiDebuggerRequest request = new ApiDebuggerRequest();
         request.method = reqLineElement.getMethod().getText();

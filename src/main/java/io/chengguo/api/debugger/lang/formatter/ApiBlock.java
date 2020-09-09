@@ -30,10 +30,10 @@ public class ApiBlock extends ApiBaseBlock {
     public Spacing getSpacing(@Nullable Block child1, @NotNull Block child2) {
         SpacingBuilder sb = newSpacingBuilder();
         sb.around(ApiTypes.Api_SEPARATOR).blankLines(1);
-        sb.around(ApiTypes.Api_DESCRIPTION).blankLines(1);
-        sb.afterInside(ApiTypes.Api_COLON, ApiTypes.Api_DESCRIPTION_ITEM).spaces(1);
-        sb.afterInside(ApiTypes.Api_HYPHEN, ApiTypes.Api_DESCRIPTION_ITEM).spaces(1);
-        sb.between(ApiTypes.Api_DESCRIPTION_ITEM, ApiTypes.Api_DESCRIPTION_ITEM).blankLines(0);
+        sb.afterInside(ApiTypes.Api_COLON, ApiTypes.Api_DESCRIPTION).spaces(1);
+        sb.afterInside(ApiTypes.Api_HYPHEN, ApiTypes.Api_DESCRIPTION).spaces(1);
+        sb.between(ApiTypes.Api_DESCRIPTION, ApiTypes.Api_DESCRIPTION).blankLines(0);
+        sb.after(ApiTypes.Api_DESCRIPTION).blankLines(1);
         sb.after(ApiTypes.Api_METHOD).spaces(1);
         sb.around(ApiTypes.Api_REQUEST_MESSAGE_GROUP).blankLines(1);
         sb.afterInside(ApiTypes.Api_COLON, ApiTypes.Api_HEADER_FIELD).spaces(1);

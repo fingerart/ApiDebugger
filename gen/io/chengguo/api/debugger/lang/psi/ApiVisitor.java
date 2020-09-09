@@ -9,23 +9,11 @@ import com.intellij.psi.PsiElementVisitor;
 public class ApiVisitor extends PsiElementVisitor {
 
   public void visitApiBlock(@NotNull ApiApiBlock o) {
-    visitBlockElment(o);
+    visitBlockElement(o);
   }
 
   public void visitDescription(@NotNull ApiDescription o) {
-    visitElement(o);
-  }
-
-  public void visitDescriptionContent(@NotNull ApiDescriptionContent o) {
-    visitElement(o);
-  }
-
-  public void visitDescriptionItem(@NotNull ApiDescriptionItem o) {
     visitKeyValueElement(o);
-  }
-
-  public void visitDescriptionTitle(@NotNull ApiDescriptionTitle o) {
-    visitElement(o);
   }
 
   public void visitHeaderField(@NotNull ApiHeaderField o) {
@@ -69,7 +57,7 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitRequest(@NotNull ApiRequest o) {
-    visitElement(o);
+    visitRequestElement(o);
   }
 
   public void visitRequestLine(@NotNull ApiRequestLine o) {
@@ -96,7 +84,7 @@ public class ApiVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
-  public void visitBlockElment(@NotNull ApiBlockElment o) {
+  public void visitBlockElement(@NotNull ApiBlockElement o) {
     visitElement(o);
   }
 
@@ -105,6 +93,10 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitNamedElement(@NotNull ApiNamedElement o) {
+    visitElement(o);
+  }
+
+  public void visitRequestElement(@NotNull ApiRequestElement o) {
     visitElement(o);
   }
 
