@@ -1,12 +1,11 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import io.chengguo.api.debugger.lang.psi.ApiDescriptionItem;
-import io.chengguo.api.debugger.lang.psi.ApiKeyValueElement;
+import io.chengguo.api.debugger.lang.psi.ApiDescription;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class ApiDescriptionItemMixin extends ApiElementImpl implements ApiDescriptionItem {
-    public ApiDescriptionItemMixin(@NotNull ASTNode node) {
+public abstract class ApiDescriptionMixin extends ApiElementImpl implements ApiDescription {
+    public ApiDescriptionMixin(@NotNull ASTNode node) {
         super(node);
     }
 

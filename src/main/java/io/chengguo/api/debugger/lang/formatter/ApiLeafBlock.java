@@ -12,14 +12,14 @@ import java.util.List;
 
 public class ApiLeafBlock extends ApiBaseBlock {
 
-    private SpacingBuilder mSpacingBuilder;
+    private final SpacingBuilder mSpacingBuilder;
 
     public ApiLeafBlock(ASTNode node) {
-        super(node);
+        this(node, null);
     }
 
     public ApiLeafBlock(ASTNode node, SpacingBuilder spacingBuilder) {
-        this(node);
+        super(node);
         mSpacingBuilder = spacingBuilder;
     }
 
@@ -32,7 +32,6 @@ public class ApiLeafBlock extends ApiBaseBlock {
     @Nullable
     @Override
     public Spacing getSpacing(@Nullable Block child1, @NotNull Block child2) {
-        System.out.println("ApiLeafBlock.getSpacing");
         return mSpacingBuilder == null ? null : mSpacingBuilder.getSpacing(this, child1, child2);
     }
 

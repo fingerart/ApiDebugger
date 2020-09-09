@@ -13,20 +13,21 @@ import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
-import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
-import io.chengguo.api.debugger.lang.psi.ApiVariable;
+import io.chengguo.api.debugger.lang.psi.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ApiPsiUtils {
-    public static final ApiApiBlock[] EMPTY = new ApiApiBlock[]{};
+    public static final ApiApiBlock[] EMPTY_API_BLOCK = new ApiApiBlock[]{};
+    public static final ApiRequest[] EMPTY_API_REQUEST = new ApiRequest[]{};
+    public static final ApiHeaderField[] EMPTY_API_HEADER = new ApiHeaderField[]{};
 
-    public static boolean isOfType(@NotNull final PsiElement element, @NotNull final IElementType type) {
+    public static boolean isOfType(@NotNull PsiElement element, @NotNull IElementType type) {
         ASTNode node = element.getNode();
         return node != null && node.getElementType() == type;
     }
 
-    public static boolean isOfTypes(@NotNull PsiElement element, @NotNull final TokenSet types) {
+    public static boolean isOfTypes(@NotNull PsiElement element, @NotNull TokenSet types) {
         ASTNode node = element.getNode();
         return node != null && types.contains(node.getElementType());
     }
@@ -39,7 +40,18 @@ public class ApiPsiUtils {
 
     @NotNull
     public static ApiApiBlock[] findApiBlocks(PsiFile psiFile) {
-        return PsiTreeUtil.findChildrenOfType(psiFile, ApiApiBlock.class).toArray(EMPTY);
+        return PsiTreeUtil.findChildrenOfType(psiFile, ApiApiBlock.class).toArray(EMPTY_API_BLOCK);
+    }
+
+    @Nullable
+    public static ApiRequest findFirstApiRequest(PsiFile psiFile) {
+        ApiRequest[] apiRequests = findApiRequests(psiFile);
+        return apiRequests.length == 0 ? null : apiRequests[0];
+    }
+
+    @NotNull
+    public static ApiRequest[] findApiRequests(PsiFile psiFile) {
+        return PsiTreeUtil.findChildrenOfType(psiFile, ApiRequest.class).toArray(EMPTY_API_REQUEST);
     }
 
     @Nullable

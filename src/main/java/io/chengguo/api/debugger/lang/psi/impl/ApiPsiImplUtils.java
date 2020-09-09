@@ -2,6 +2,7 @@ package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.Pair;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.*;
@@ -93,7 +94,7 @@ public class ApiPsiImplUtils {
      * @return
      */
     @NotNull
-    public static String getDescriptionKey(ApiDescriptionItem descriptionItem) {
+    public static String getDescriptionKey(ApiDescription descriptionItem) {
         ASTNode node = descriptionItem.getNode().findChildByType(ApiTypes.Api_DESCRIPTION_KEY);
         return node == null ? "" : node.getText();
     }
@@ -105,10 +106,21 @@ public class ApiPsiImplUtils {
      * @return
      */
     @NotNull
-    public static String getDescriptionValue(ApiDescriptionItem descriptionItem) {
+    public static String getDescriptionValue(ApiDescription descriptionItem) {
         ASTNode node = descriptionItem.getNode().findChildByType(ApiTypes.Api_LINE_TEXT);
         return node == null ? "" : node.getText();
     }
 
-
+    @Nullable
+    public static ApiDescription getDescriptionByKey(List<ApiDescription> apiDescriptions, String key) {
+        if (apiDescriptions == null || apiDescriptions.isEmpty()) {
+            return null;
+        }
+        for (ApiDescription descriptionItem : apiDescriptions) {
+            if (StringUtil.equals(key, descriptionItem.getKey())) {
+                return descriptionItem;
+            }
+        }
+        return null;
+    }
 }

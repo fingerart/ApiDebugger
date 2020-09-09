@@ -16,7 +16,12 @@ Content-Type: application/json
 GET http://{{host}}/segment1/segment2/?lang={{language}}&raw=value
 Content-Type: application/json
 
-[2, 1]
+{"": ""}
+
+---
+
+GET http://localhost:80/api/item
+Accept: application/json
 
 ---
 
@@ -29,3 +34,16 @@ Content-Type: application/xml
 <option name="set">
     Api Block 3
 </option>
+
+---
+
+- title: This is delete api
+- description: host is echo.tenon.dev
+
+DELETE http://echo.tenon.dev/delete
+Content-Type: application/json
+
+{
+    "username": "foo",
+    "password": "foo"
+}

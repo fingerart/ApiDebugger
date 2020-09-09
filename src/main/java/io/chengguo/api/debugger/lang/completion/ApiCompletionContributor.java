@@ -13,7 +13,10 @@ import com.intellij.util.PlatformIcons;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex;
-import io.chengguo.api.debugger.lang.psi.*;
+import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
+import io.chengguo.api.debugger.lang.psi.ApiMethod;
+import io.chengguo.api.debugger.lang.psi.ApiRequest;
+import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import io.chengguo.api.debugger.ui.header.HttpHeaderDocumentation;
 import io.chengguo.api.debugger.ui.header.HttpHeadersDictionary;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +25,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
+import static com.intellij.psi.TokenType.BAD_CHARACTER;
 
 /**
  * 完成贡献者
@@ -31,13 +35,15 @@ import static com.intellij.patterns.PlatformPatterns.psiElement;
 public class ApiCompletionContributor extends CompletionContributor {
     public static final List<String> METHODS = ContainerUtil.newArrayList("GET", "POST", "HEAD", "PUT", "DELETE", "CONNECT", "PATCH", "OPTIONS", "TRACE");
     public static final List<String> SCHEMES = ContainerUtil.newArrayList("http", "https");
+    public static final List<String> DESCR_KEYS = ContainerUtil.newArrayList("title", "description");
 
     public ApiCompletionContributor() {
-//        extend(CompletionType.BASIC, psiElement().inside(ApiApiBlock.class), MethodCompletionProvider.INSTANCE);
+        extend(CompletionType.BASIC, psiElement(BAD_CHARACTER), MethodCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, SchemeCompletionProvider.PLACE, SchemeCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_IDENTIFIER), VariableCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_NAME), HeaderNameProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_HEADER_FIELD_VALUE), HeaderValueProvider.INSTANCE);
+        extend(CompletionType.BASIC, DescriptionKeyCompletionProvider.PLACE, DescriptionKeyCompletionProvider.INSTANCE);
     }
 
     @Override
@@ -143,7 +149,7 @@ public class ApiCompletionContributor extends CompletionContributor {
     }
 
     private static class HeaderValueProvider extends CompletionProvider<CompletionParameters> {
-        private static HeaderValueProvider INSTANCE = new HeaderValueProvider();
+        private static final HeaderValueProvider INSTANCE = new HeaderValueProvider();
 
         @Override
         protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
@@ -159,6 +165,23 @@ public class ApiCompletionContributor extends CompletionContributor {
                 for (String headerOptionName : headerOptionNames) {
                     resultSet.addElement(LookupElementBuilder.create(headerOptionName).withInsertHandler(ApiSuffixInsertHandler.HEADER_OPTION));
                 }
+            }
+        }
+    }
+
+    private static class DescriptionKeyCompletionProvider extends CompletionProvider<CompletionParameters> {
+        private static final DescriptionKeyCompletionProvider INSTANCE = new DescriptionKeyCompletionProvider();
+        private static final ElementPattern<? extends PsiElement> PLACE = psiElement(ApiTypes.Api_DESCRIPTION_KEY);
+
+        @Override
+        protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
+            CompletionResultSet resultSet = result.caseInsensitive();
+            for (String method : DESCR_KEYS) {
+                LookupElementBuilder lookupBuilder = LookupElementBuilder.create(method)
+                        .withIcon(PlatformIcons.CLASS_ICON)
+                        .withBoldness(true)
+                        .withInsertHandler(ApiSuffixInsertHandler.FIELD_SEPARATOR);
+                resultSet.addElement(lookupBuilder);
             }
         }
     }

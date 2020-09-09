@@ -12,7 +12,7 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiRequestImpl extends ApiElementImpl implements ApiRequest {
+public class ApiRequestImpl extends ApiRequestMixin implements ApiRequest {
 
   public ApiRequestImpl(ASTNode node) {
     super(node);

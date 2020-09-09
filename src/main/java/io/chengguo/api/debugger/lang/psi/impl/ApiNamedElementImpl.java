@@ -6,7 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.util.IncorrectOperationException;
 import io.chengguo.api.debugger.ApiDebuggerIcons;
 import io.chengguo.api.debugger.extension.ObjectExKt;
-import io.chengguo.api.debugger.lang.psi.ApiElementGenerator;
+import io.chengguo.api.debugger.lang.psi.ApiPsiGenerator;
 import io.chengguo.api.debugger.lang.psi.ApiNamedElement;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +46,7 @@ public abstract class ApiNamedElementImpl extends ApiElementImpl implements ApiN
     public PsiElement setName(@NotNull String newName) throws IncorrectOperationException {
         PsiElement identifier = getIdentifier();
         if (identifier != null && StringUtil.isNotEmpty(newName) && !StringUtil.equals(getName(), newName)) {
-            ApiVariable newVariable = new ApiElementGenerator(getProject()).createVariable(newName);
+            ApiVariable newVariable = ApiPsiGenerator.createVariable(getProject(), newName);
             PsiElement newIdentifier = newVariable.getIdentifier();
             identifier.replace(ObjectExKt.requireNonNull(newIdentifier, IncorrectOperationException::new));
         }

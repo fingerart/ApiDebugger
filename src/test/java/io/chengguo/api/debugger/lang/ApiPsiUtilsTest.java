@@ -22,7 +22,7 @@ public class ApiPsiUtilsTest extends ApiDebuggerTestCase {
 
     public void testIsOfTypes() {
         ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
-        assertTrue(apiBlock != null && apiBlock.getRequest() != null);
+        assertNotNull(apiBlock);
         ApiPsiUtils.isOfTypes(apiBlock.getRequest().getRequestLine().getMethod(), TokenSet.create(
                 ApiTypes.Api_GET,
                 ApiTypes.Api_POST,
@@ -38,6 +38,16 @@ public class ApiPsiUtilsTest extends ApiDebuggerTestCase {
     public void testFindApiBlocks() {
         ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(myFixture.getFile());
         assertSize(1, apiBlocks);
+    }
+
+    public void testFindApiRequests() {
+        ApiRequest apiRequest = ApiPsiUtils.findFirstApiRequest(myFixture.getFile());
+        assertNotNull(apiRequest);
+    }
+
+    public void testFindFirstApiRequest() {
+        ApiRequest[] apiRequests = ApiPsiUtils.findApiRequests(myFixture.getFile());
+        assertSize(1, apiRequests);
     }
 
     public void testFindFirstVariable() {
@@ -94,7 +104,7 @@ public class ApiPsiUtilsTest extends ApiDebuggerTestCase {
     public void testGetNextSiblingByType() {
         ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
         assertNotNull(apiBlock);
-        ApiDescription descriptionElement = apiBlock.getDescription();
+        ApiDescription descriptionElement = apiBlock.getDescriptionByKey("title");
         PsiElement psiElement = ApiPsiUtils.getNextSiblingByType(descriptionElement, ApiTypes.Api_REQUEST, true);
         assertNotNull(psiElement);
     }

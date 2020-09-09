@@ -6,6 +6,7 @@ import io.chengguo.api.debugger.ApiDebuggerTestCase;
 import io.chengguo.api.debugger.lang.ApiPsiUtils;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
+import io.chengguo.api.debugger.lang.psi.ApiDescription;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
 
 import java.util.List;
@@ -66,14 +67,18 @@ public class ApiPsiImplUtilsTest extends ApiDebuggerTestCase {
     public void testGetDescriptionKey() {
         ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
         assertNotNull(apiBlock);
-        String key = apiBlock.getDescription().getDescriptionTitle().getDescriptionItem().getKey();
+        ApiDescription titleDescription = apiBlock.getDescriptionByKey("title");
+        assertNotNull(titleDescription);
+        String key = titleDescription.getKey();
         assertEquals("title", key);
     }
 
     public void testGetDescriptionValue() {
         ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
         assertNotNull(apiBlock);
-        String value = apiBlock.getDescription().getDescriptionTitle().getDescriptionItem().getValue();
+        ApiDescription titleDescription = apiBlock.getDescriptionByKey("title");
+        assertNotNull(titleDescription);
+        String value = titleDescription.getValue();
         assertEquals("Create Dummy File", value);
     }
 }

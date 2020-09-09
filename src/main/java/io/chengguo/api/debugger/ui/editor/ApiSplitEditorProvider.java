@@ -10,6 +10,15 @@ import com.intellij.openapi.vfs.VirtualFile;
 import io.chengguo.api.debugger.lang.ApiFileType;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * 参考
+ *
+ * @see org.intellij.images.editor.impl.ImageFileEditorProvider
+ * @see org.intellij.images.editor.impl.ImageFileEditorState
+ * @see org.intellij.images.editor.impl.ImageEditorImpl
+ * @see org.intellij.images.editor.impl.ImageEditorUI
+ * @see org.intellij.images.editor.ImageEditor
+ */
 public class ApiSplitEditorProvider implements FileEditorProvider {
 
     @Override
