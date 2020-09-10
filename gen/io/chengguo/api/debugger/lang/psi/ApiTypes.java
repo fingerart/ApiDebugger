@@ -17,6 +17,8 @@ public interface ApiTypes {
   IElementType Api_HEADER_FIELD_VAL = new ApiElementType("Api_HEADER_FIELD_VAL");
   IElementType Api_HOST = new ApiElementType("Api_HOST");
   IElementType Api_METHOD = new ApiElementType("Api_METHOD");
+  IElementType Api_MULTIPART_FIELD = new ApiElementType("Api_MULTIPART_FIELD");
+  IElementType Api_MULTIPART_MESSAGE = new ApiElementType("Api_MULTIPART_MESSAGE");
   IElementType Api_PORT = new ApiElementType("Api_PORT");
   IElementType Api_QUERY = new ApiElementType("Api_QUERY");
   IElementType Api_QUERY_PARAMETER = new ApiElementType("Api_QUERY_PARAMETER");
@@ -48,6 +50,8 @@ public interface ApiTypes {
   IElementType Api_LBRACES = new ApiTokenType("{{");
   IElementType Api_LINE_COMMENT = new ApiTokenType("LINE_COMMENT");
   IElementType Api_LINE_TEXT = new ApiTokenType("LINE_TEXT");
+  IElementType Api_MESSAGE_BOUNDARY = new ApiTokenType("MESSAGE_BOUNDARY");
+  IElementType Api_MESSAGE_BOUNDARY_END = new ApiTokenType("MESSAGE_BOUNDARY_END");
   IElementType Api_MESSAGE_TEXT = new ApiTokenType("MESSAGE_TEXT");
   IElementType Api_MULTILINE_COMMENT = new ApiTokenType("MULTILINE_COMMENT");
   IElementType Api_OPTIONS = new ApiTokenType("OPTIONS");
@@ -89,6 +93,12 @@ public interface ApiTypes {
       }
       else if (type == Api_METHOD) {
         return new ApiMethodImpl(node);
+      }
+      else if (type == Api_MULTIPART_FIELD) {
+        return new ApiMultipartFieldImpl(node);
+      }
+      else if (type == Api_MULTIPART_MESSAGE) {
+        return new ApiMultipartMessageImpl(node);
       }
       else if (type == Api_PORT) {
         return new ApiPortImpl(node);

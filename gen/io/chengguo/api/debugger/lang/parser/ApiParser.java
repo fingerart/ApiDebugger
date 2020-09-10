@@ -356,9 +356,14 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // request_message_group
+  // request_message_group  | multipart_message
   static boolean message_body(PsiBuilder builder, int level) {
-    return request_message_group(builder, level + 1);
+    if (!recursion_guard_(builder, level, "message_body")) return false;
+    if (!nextTokenIs(builder, "", Api_MESSAGE_BOUNDARY, Api_MESSAGE_TEXT)) return false;
+    boolean result;
+    result = request_message_group(builder, level + 1);
+    if (!result) result = multipart_message(builder, level + 1);
+    return result;
   }
 
   /* ********************************************************** */
@@ -377,6 +382,76 @@ public class ApiParser implements PsiParser, LightPsiParser {
     if (!result) result = consumeToken(builder, Api_CONNECT);
     if (!result) result = consumeToken(builder, Api_PATCH);
     exit_section_(builder, level, marker, result, false, null);
+    return result;
+  }
+
+  /* ********************************************************** */
+  // header_field* MESSAGE_TEXT
+  public static boolean multipart_field(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "multipart_field")) return false;
+    boolean result;
+    Marker marker = enter_section_(builder, level, _NONE_, Api_MULTIPART_FIELD, "<multipart field>");
+    result = multipart_field_0(builder, level + 1);
+    result = result && consumeToken(builder, Api_MESSAGE_TEXT);
+    exit_section_(builder, level, marker, result, false, null);
+    return result;
+  }
+
+  // header_field*
+  private static boolean multipart_field_0(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "multipart_field_0")) return false;
+    while (true) {
+      int pos = current_position_(builder);
+      if (!header_field(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "multipart_field_0", pos)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // MESSAGE_BOUNDARY (multipart_field MESSAGE_BOUNDARY)* (multipart_field MESSAGE_BOUNDARY_END)
+  public static boolean multipart_message(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "multipart_message")) return false;
+    if (!nextTokenIs(builder, Api_MESSAGE_BOUNDARY)) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = consumeToken(builder, Api_MESSAGE_BOUNDARY);
+    result = result && multipart_message_1(builder, level + 1);
+    result = result && multipart_message_2(builder, level + 1);
+    exit_section_(builder, marker, Api_MULTIPART_MESSAGE, result);
+    return result;
+  }
+
+  // (multipart_field MESSAGE_BOUNDARY)*
+  private static boolean multipart_message_1(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "multipart_message_1")) return false;
+    while (true) {
+      int pos = current_position_(builder);
+      if (!multipart_message_1_0(builder, level + 1)) break;
+      if (!empty_element_parsed_guard_(builder, "multipart_message_1", pos)) break;
+    }
+    return true;
+  }
+
+  // multipart_field MESSAGE_BOUNDARY
+  private static boolean multipart_message_1_0(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "multipart_message_1_0")) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = multipart_field(builder, level + 1);
+    result = result && consumeToken(builder, Api_MESSAGE_BOUNDARY);
+    exit_section_(builder, marker, null, result);
+    return result;
+  }
+
+  // multipart_field MESSAGE_BOUNDARY_END
+  private static boolean multipart_message_2(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "multipart_message_2")) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = multipart_field(builder, level + 1);
+    result = result && consumeToken(builder, Api_MESSAGE_BOUNDARY_END);
+    exit_section_(builder, marker, null, result);
     return result;
   }
 

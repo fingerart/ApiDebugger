@@ -2,10 +2,8 @@ package io.chengguo.api.debugger.lang.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-
-import java.util.LinkedList;
-
 import com.intellij.psi.TokenType;
+
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 
 %%
@@ -20,42 +18,80 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 %eof}
 
 %{
-    /**
-     * Creates a new scanner
-     */
-    public ApiLexer() {
-        this(null);
-    }
+        private final ApiLexerMultipartBodyManipulator multipartBodyManipulator;
 
-    /**
-     * 切换状态，会记录切换前的状态
-     *
-     * @param newState
-     */
-    public void pushState(int newState) {
-        yypush();
-        yybegin(newState);
-    }
-
-    /**
-     * 切换至上一个状态
-     */
-    public void popState() {
-        yypop();
-    }
-
-    /**
-     * 当路径匹配完成，切换至下一个状态
-     */
-    private void onPathFinish() {
-        if (yylength() == 1) {
-            yypushback(yylength());
-            pushState(IN_HEADER);
-        } else {
-            yypushback(yylength());
-            pushState(IN_MESSAGE_BODY);
+        /**
+         * Creates a new scanner
+         */
+        public ApiLexer() {
+            this(null);
         }
-    }
+
+        {
+            multipartBodyManipulator = new ApiLexerMultipartBodyManipulator();
+        }
+
+        public final CharSequence yytext(int offset) {
+            return zzBuffer.subSequence(zzStartRead, zzMarkedPos + offset);
+        }
+
+        /**
+         * 切换状态，会记录切换前的状态
+         *
+         * @param newState
+         */
+        public void pushState(int newState) {
+            yypush();
+            yybegin(newState);
+        }
+
+        /**
+         * 切换至上一个状态
+         */
+        public void popState() {
+            yypop();
+        }
+
+        /**
+         * 当路径匹配完成，切换至下一个状态
+         */
+        private void onPathFinish() {
+            if (yylength() == 1) {
+                yypushback(yylength());
+                pushState(IN_HEADER);
+            } else {
+                yypushback(yylength());
+                pushState(IN_BEFORE_BODY);
+            }
+        }
+
+        /**
+         * 处理ContentType
+         */
+        private void handleContentTypeHeader() {
+            if(!multipartBodyManipulator.isStarted() && multipartBodyManipulator.isMultipartType(yytext())) {
+                multipartBodyManipulator.start();
+            }else {
+                multipartBodyManipulator.trySetBoundary(yytext());
+            }
+        }
+
+        private int inMessageBodyState() {
+            if(multipartBodyManipulator.isStartedAndDefined()) {
+                if(multipartBodyManipulator.isInBoundary()) {
+                    return IN_MESSAGE_BODY;
+                }else {
+                    multipartBodyManipulator.setIsInBoundary();
+                    return IN_MESSAGE_MULTIPART;
+                }
+            }
+            return IN_MESSAGE_BODY;
+        }
+
+        private void reset() {
+            multipartBodyManipulator.reset();
+            pushState(YYINITIAL);
+        }
 %}
 
 NL=[\r\n]
@@ -80,10 +116,13 @@ ID = ({LETTER} | "_") ({LETTER} | {DIGIT} | "_")*
 SEPARATOR = "---"
 HEADER_FIELD_NAME = [^ \r\n\t\f:] ([^\r\n\t\f:{]* [^ \r\n\t\f:{])?
 HEADER_FIELD_VALUE = [^ \r\n\t\f;] ([^\r\n;{]* [^ \r\n\t\f;{])?
+BODY_SEPARATOR = {WS}* {NL} {NL} ({WS} | {NL})*
 MESSAGE_TEXT = [^ \t\f\r\n-] ([^\r\n]* ([\r\n]+ [^\r\n-])? )*
+MESSAGE_BOUNDARY = "--" [^ \r\n\t\f]*
+MESSAGE_BOUNDARY_END = "--" [^ \r\n\t\f]* "--"
 
 %state IN_HTTP_REQUEST
-%state IN_HTTP_PATH
+%state IN_HTTP_TARGET
 %state IN_HTTP_REQUEST_HOST
 %state IN_HTTP_REQUEST_PORT
 %state IN_HTTP_PATH_SEGMENT
@@ -91,7 +130,9 @@ MESSAGE_TEXT = [^ \t\f\r\n-] ([^\r\n]* ([\r\n]+ [^\r\n-])? )*
 %state IN_HTTP_QUERY_VALUE
 %state IN_HEADER
 %state IN_HEADER_VALUE
+%state IN_BEFORE_BODY
 %state IN_MESSAGE_BODY
+%state IN_MESSAGE_MULTIPART
 %state IN_VARIABLE
 %state IN_DESCRIPTION
 %state IN_DESCRIPTION_KEY
@@ -140,10 +181,10 @@ MESSAGE_TEXT = [^ \t\f\r\n-] ([^\r\n]* ([\r\n]+ [^\r\n-])? )*
     {TRACE}                                     { return Api_TRACE; }
     {CONNECT}                                   { return Api_CONNECT; }
     {PATCH}                                     { return Api_PATCH; }
-    {WS}+                                       { pushState(IN_HTTP_PATH); return TokenType.WHITE_SPACE; }
+    {WS}+                                       { pushState(IN_HTTP_TARGET); return TokenType.WHITE_SPACE; }
 }
 
-<IN_HTTP_PATH> {
+<IN_HTTP_TARGET> {
     "https"                                     { return Api_HTTPS; }
     "http"                                      { return Api_HTTP; }
     "://"                                       { return Api_SCHEME_SEPARATOR; }
@@ -192,24 +233,30 @@ MESSAGE_TEXT = [^ \t\f\r\n-] ([^\r\n]* ([\r\n]+ [^\r\n-])? )*
     {NL}                                        { return TokenType.WHITE_SPACE; }
     {HEADER_FIELD_NAME}                         { return Api_HEADER_FIELD_NAME; } // 排除起始和末尾位置的空格
     ":"                                         { pushState(IN_HEADER_VALUE); return Api_COLON; }
-    {WS}* {NL} {NL} ({WS} | {NL})*                                  { pushState(IN_MESSAGE_BODY); return TokenType.WHITE_SPACE; }
+    {BODY_SEPARATOR}                            { yypushback(yylength()); pushState(IN_BEFORE_BODY); }
 }
 
 <IN_HEADER_VALUE> {
     {WS}+                                       { return TokenType.WHITE_SPACE; }
     {NL}                                        { popState(); return TokenType.WHITE_SPACE; }
-    {WS}* {NL} {NL} ({WS} | {NL})*                                  { yypushback(yylength()); popState(); }
+    {BODY_SEPARATOR}                            { yypushback(yylength()); popState(); }
     {LBRACES}                                   { pushState(IN_VARIABLE); return Api_LBRACES; }
     ";"                                         { return Api_SEMICOLON; }
-    {HEADER_FIELD_VALUE}                        { return Api_HEADER_FIELD_VALUE; } // 排除起始位置的空格
+    {HEADER_FIELD_VALUE}                        { handleContentTypeHeader(); return Api_HEADER_FIELD_VALUE; } // 排除起始位置的空格
+}
+
+<IN_BEFORE_BODY> {
+    {BODY_SEPARATOR}                            { pushState(inMessageBodyState()); return TokenType.WHITE_SPACE; }// 判断进入普通body还是multipart body
 }
 
 <IN_MESSAGE_BODY> {
     ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
-    {MESSAGE_TEXT}                              { return Api_MESSAGE_TEXT; }
-    {SEPARATOR}                                 { yypushback(yylength()); pushState(YYINITIAL); }
+    {MESSAGE_TEXT}                              { if(multipartBodyManipulator.isInBoundary()) pushState(IN_MESSAGE_MULTIPART); else pushState(YYINITIAL); return Api_MESSAGE_TEXT; }
 }
 
-//BEFORE_MESSAGE_BODY
+<IN_MESSAGE_MULTIPART> {
+    {MESSAGE_BOUNDARY_END}                      { reset(); return Api_MESSAGE_BOUNDARY_END; }
+    {MESSAGE_BOUNDARY}                          { pushState(IN_HEADER); return Api_MESSAGE_BOUNDARY; }
+}
 
 [^]                                             { return TokenType.BAD_CHARACTER; }
