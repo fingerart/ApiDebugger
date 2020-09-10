@@ -17,7 +17,7 @@ public class ApiTypeHandler extends TypedHandlerDelegate {
     @NotNull
     @Override
     public Result beforeCharTyped(char c, @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file, @NotNull FileType fileType) {
-        if (fileType != ApiFileType.INSTANCE || (c != '{' && c != '-')) {
+        if (fileType != ApiFileType.INSTANCE || (c != '{' && c != '#')) {
             return super.beforeCharTyped(c, project, editor, file, fileType);
         }
         final int offset = editor.getCaretModel().getOffset();
@@ -28,9 +28,9 @@ public class ApiTypeHandler extends TypedHandlerDelegate {
             if (c == '{' && charAfter != '}') {
                 return addBrace(project, editor, document, "{}}", 1);
             }
-        } else if (charBefore == '-') {
-            if (c == '-' && charAfter != '-') {
-                return addBrace(project, editor, document, "-- ", 3);
+        } else if (charBefore == '#') {
+            if (c == '#' && charAfter != '#') {
+                return addBrace(project, editor, document, "###", 3);
             }
         }
         return super.beforeCharTyped(c, project, editor, file, fileType);
