@@ -36,6 +36,14 @@ public class ApiVisitor extends PsiElementVisitor {
     visitElement(o);
   }
 
+  public void visitMultipartField(@NotNull ApiMultipartField o) {
+    visitElement(o);
+  }
+
+  public void visitMultipartMessage(@NotNull ApiMultipartMessage o) {
+    visitElement(o);
+  }
+
   public void visitPort(@NotNull ApiPort o) {
     visitElement(o);
   }

@@ -1,0 +1,19 @@
+
+- title: Multipart
+/**
+ * dsfsd
+ */
+POST http://httpbin.org/post
+
+--__X__BOUNDARY__
+Content-Disposition: form-data; name="username"
+
+foo
+--__X__BOUNDARY__
+Content-Disposition: form-data; name="file"; filename="channel.ini"
+Content-Type: application/octet-stream
+
+--__X_PAW_BOUNDARY__--
+
+
+---

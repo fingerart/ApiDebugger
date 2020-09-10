@@ -12,14 +12,14 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiRequestImpl extends ApiRequestMixin implements ApiRequest {
+public class ApiMultipartFieldImpl extends ApiElementImpl implements ApiMultipartField {
 
-  public ApiRequestImpl(ASTNode node) {
+  public ApiMultipartFieldImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
-    visitor.visitRequest(this);
+    visitor.visitMultipartField(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -31,24 +31,6 @@ public class ApiRequestImpl extends ApiRequestMixin implements ApiRequest {
   @NotNull
   public List<ApiHeaderField> getHeaderFieldList() {
     return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiHeaderField.class);
-  }
-
-  @Override
-  @Nullable
-  public ApiMultipartMessage getMultipartMessage() {
-    return findChildByClass(ApiMultipartMessage.class);
-  }
-
-  @Override
-  @NotNull
-  public ApiRequestLine getRequestLine() {
-    return findNotNullChildByClass(ApiRequestLine.class);
-  }
-
-  @Override
-  @Nullable
-  public ApiRequestMessageGroup getRequestMessageGroup() {
-    return findChildByClass(ApiRequestMessageGroup.class);
   }
 
 }

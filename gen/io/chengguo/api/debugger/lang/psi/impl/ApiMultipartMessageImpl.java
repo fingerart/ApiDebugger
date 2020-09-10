@@ -12,14 +12,14 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiRequestImpl extends ApiRequestMixin implements ApiRequest {
+public class ApiMultipartMessageImpl extends ApiElementImpl implements ApiMultipartMessage {
 
-  public ApiRequestImpl(ASTNode node) {
+  public ApiMultipartMessageImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
-    visitor.visitRequest(this);
+    visitor.visitMultipartMessage(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -29,26 +29,8 @@ public class ApiRequestImpl extends ApiRequestMixin implements ApiRequest {
 
   @Override
   @NotNull
-  public List<ApiHeaderField> getHeaderFieldList() {
-    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiHeaderField.class);
-  }
-
-  @Override
-  @Nullable
-  public ApiMultipartMessage getMultipartMessage() {
-    return findChildByClass(ApiMultipartMessage.class);
-  }
-
-  @Override
-  @NotNull
-  public ApiRequestLine getRequestLine() {
-    return findNotNullChildByClass(ApiRequestLine.class);
-  }
-
-  @Override
-  @Nullable
-  public ApiRequestMessageGroup getRequestMessageGroup() {
-    return findChildByClass(ApiRequestMessageGroup.class);
+  public List<ApiMultipartField> getMultipartFieldList() {
+    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiMultipartField.class);
   }
 
 }
