@@ -386,13 +386,13 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // header_field* MESSAGE_TEXT
+  // header_field* MESSAGE_TEXT?
   public static boolean multipart_field(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "multipart_field")) return false;
     boolean result;
     Marker marker = enter_section_(builder, level, _NONE_, Api_MULTIPART_FIELD, "<multipart field>");
     result = multipart_field_0(builder, level + 1);
-    result = result && consumeToken(builder, Api_MESSAGE_TEXT);
+    result = result && multipart_field_1(builder, level + 1);
     exit_section_(builder, level, marker, result, false, null);
     return result;
   }
@@ -405,6 +405,13 @@ public class ApiParser implements PsiParser, LightPsiParser {
       if (!header_field(builder, level + 1)) break;
       if (!empty_element_parsed_guard_(builder, "multipart_field_0", pos)) break;
     }
+    return true;
+  }
+
+  // MESSAGE_TEXT?
+  private static boolean multipart_field_1(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "multipart_field_1")) return false;
+    consumeToken(builder, Api_MESSAGE_TEXT);
     return true;
   }
 

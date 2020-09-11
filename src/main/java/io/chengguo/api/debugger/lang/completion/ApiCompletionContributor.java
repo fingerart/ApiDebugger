@@ -9,6 +9,7 @@ import com.intellij.patterns.ElementPattern;
 import com.intellij.patterns.PatternCondition;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.ArrayUtil;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
@@ -17,10 +18,12 @@ import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
 import io.chengguo.api.debugger.lang.psi.ApiMethod;
 import io.chengguo.api.debugger.lang.psi.ApiRequest;
 import io.chengguo.api.debugger.lang.psi.ApiTypes;
+import io.chengguo.api.debugger.ui.header.ApiDebuggerDataProvider;
 import io.chengguo.api.debugger.ui.header.HttpHeaderDocumentation;
 import io.chengguo.api.debugger.ui.header.HttpHeadersDictionary;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,6 +41,7 @@ public class ApiCompletionContributor extends CompletionContributor {
     public static final List<String> DESCR_KEYS = ContainerUtil.newArrayList("title", "description");
 
     public ApiCompletionContributor() {
+        extend(CompletionType.BASIC, psiElement(), FilePathCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(BAD_CHARACTER), MethodCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, SchemeCompletionProvider.PLACE, SchemeCompletionProvider.INSTANCE);
         extend(CompletionType.BASIC, psiElement(ApiTypes.Api_IDENTIFIER), VariableCompletionProvider.INSTANCE);
@@ -182,6 +186,32 @@ public class ApiCompletionContributor extends CompletionContributor {
                         .withBoldness(true)
                         .withInsertHandler(ApiSuffixInsertHandler.FIELD_SEPARATOR);
                 resultSet.addElement(lookupBuilder);
+            }
+        }
+    }
+
+    private static class FilePathCompletionProvider extends CompletionProvider<CompletionParameters> {
+        public static final FilePathCompletionProvider INSTANCE = new FilePathCompletionProvider();
+
+        @Override
+        protected void addCompletions(@NotNull CompletionParameters parameters, @NotNull ProcessingContext context, @NotNull CompletionResultSet result) {
+            ApiDebuggerDataProvider[] extensions = ApiDebuggerDataProvider.EP_NAME.getExtensions();
+            System.out.println("extensions: " + Arrays.toString(extensions));
+            if (ArrayUtil.isEmpty(extensions)) {
+                return;
+            }
+            if (parameters.getOriginalPosition() == null) {
+                return;
+            }
+            Project project = parameters.getOriginalPosition().getProject();
+            result = result.caseInsensitive();
+            for (ApiDebuggerDataProvider dataProvider : extensions) {
+                String[] paths = dataProvider.getAllPaths(project);
+                for (String path : paths) {
+                    LookupElementBuilder lookupBuilder = LookupElementBuilder.create(path)
+                            .withIcon(PlatformIcons.FILE_ICON);
+                    result.addElement(lookupBuilder);
+                }
             }
         }
     }
