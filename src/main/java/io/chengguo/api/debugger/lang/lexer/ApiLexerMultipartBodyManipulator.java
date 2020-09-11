@@ -64,4 +64,13 @@ public class ApiLexerMultipartBodyManipulator {
     public String getBoundary() {
         return mBoundary;
     }
+
+    @Override
+    public String toString() {
+        return "ApiLexerMultipartBodyManipulator{" +
+                "mIsStarted=" + mIsStarted +
+                ", mIsInBoundary=" + mIsInBoundary +
+                ", mBoundary='" + mBoundary + '\'' +
+                '}';
+    }
 }

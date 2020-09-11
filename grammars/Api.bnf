@@ -106,7 +106,7 @@ private header_field_val_item ::= (variable | HEADER_FIELD_VALUE)+
 private message_body ::= request_message_group  | multipart_message
 request_message_group ::= MESSAGE_TEXT
 multipart_message ::= MESSAGE_BOUNDARY (multipart_field MESSAGE_BOUNDARY)* (multipart_field MESSAGE_BOUNDARY_END)
-multipart_field ::= header_field* MESSAGE_TEXT
+multipart_field ::= header_field* MESSAGE_TEXT?
 
 variable ::= '{{' IDENTIFIER? '}}' {
     pin=1

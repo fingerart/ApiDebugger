@@ -61,7 +61,7 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
                 pushState(IN_HEADER);
             } else {
                 yypushback(yylength());
-                pushState(IN_BEFORE_BODY);
+                pushState(BEFORE_BODY);
             }
         }
 
@@ -79,7 +79,7 @@ import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
         private int inMessageBodyState() {
             if(multipartBodyManipulator.isStartedAndDefined()) {
                 if(multipartBodyManipulator.isInBoundary()) {
-                    return IN_MESSAGE_BODY;
+                    return IN_MESSAGE_BODY_MULTIPART;
                 }else {
                     multipartBodyManipulator.setIsInBoundary();
                     return IN_MESSAGE_MULTIPART;
@@ -117,7 +117,8 @@ SEPARATOR = "###"
 HEADER_FIELD_NAME = [^ \r\n\t\f:] ([^\r\n\t\f:{]* [^ \r\n\t\f:{])?
 HEADER_FIELD_VALUE = [^ \r\n\t\f;] ([^\r\n;{]* [^ \r\n\t\f;{])?
 BODY_SEPARATOR = {WS}* {NL} {NL} ({WS} | {NL})*
-MESSAGE_TEXT = [^ \t\f\r\n-] ([^\r\n]* ([\r\n]+ [^\r\n-])? )*
+MESSAGE_TEXT = [^ \t\f\r\n\#] ([^\r\n]* ([\r\n]+ [^\r\n\#])? )*
+MESSAGE_TEXT_BOUNDARY = [^ \t\f\r\n\-] ([^\r\n]* ([\r\n]+ [^\r\n\-])? )*
 MESSAGE_BOUNDARY = "--" [^ \r\n\t\f]*
 MESSAGE_BOUNDARY_END = "--" [^ \r\n\t\f]* "--"
 
@@ -130,8 +131,9 @@ MESSAGE_BOUNDARY_END = "--" [^ \r\n\t\f]* "--"
 %state IN_HTTP_QUERY_VALUE
 %state IN_HEADER
 %state IN_HEADER_VALUE
-%state IN_BEFORE_BODY
+%state BEFORE_BODY
 %state IN_MESSAGE_BODY
+%state IN_MESSAGE_BODY_MULTIPART
 %state IN_MESSAGE_MULTIPART
 %state IN_VARIABLE
 %state IN_DESCRIPTION
@@ -233,7 +235,7 @@ MESSAGE_BOUNDARY_END = "--" [^ \r\n\t\f]* "--"
     {NL}                                        { return TokenType.WHITE_SPACE; }
     {HEADER_FIELD_NAME}                         { return Api_HEADER_FIELD_NAME; } // 排除起始和末尾位置的空格
     ":"                                         { pushState(IN_HEADER_VALUE); return Api_COLON; }
-    {BODY_SEPARATOR}                            { yypushback(yylength()); pushState(IN_BEFORE_BODY); }
+    {BODY_SEPARATOR}                            { yypushback(yylength()); pushState(BEFORE_BODY); }
 }
 
 <IN_HEADER_VALUE> {
@@ -245,13 +247,20 @@ MESSAGE_BOUNDARY_END = "--" [^ \r\n\t\f]* "--"
     {HEADER_FIELD_VALUE}                        { handleContentTypeHeader(); return Api_HEADER_FIELD_VALUE; } // 排除起始位置的空格
 }
 
-<IN_BEFORE_BODY> {
+<BEFORE_BODY> {
     {BODY_SEPARATOR}                            { pushState(inMessageBodyState()); return TokenType.WHITE_SPACE; }// 判断进入普通body还是multipart body
 }
 
 <IN_MESSAGE_BODY> {
     ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
-    {MESSAGE_TEXT}                              { if(multipartBodyManipulator.isInBoundary()) pushState(IN_MESSAGE_MULTIPART); else pushState(YYINITIAL); return Api_MESSAGE_TEXT; }
+    {SEPARATOR}                                 { yypushback(yylength()); reset(); }
+    {MESSAGE_TEXT}                              { reset(); return Api_MESSAGE_TEXT; }
+}
+
+<IN_MESSAGE_BODY_MULTIPART> {
+    {MESSAGE_TEXT_BOUNDARY}                     { return Api_MESSAGE_TEXT; }
+    {MESSAGE_BOUNDARY_END}                      { yypushback(yylength()); pushState(IN_MESSAGE_MULTIPART); }
+    {MESSAGE_BOUNDARY}                          { yypushback(yylength()); pushState(IN_MESSAGE_MULTIPART); }
 }
 
 <IN_MESSAGE_MULTIPART> {
