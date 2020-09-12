@@ -7,7 +7,6 @@ public class ApiLexerMultipartBodyManipulator {
     private static final String MULTIPART_PREFIX = "boundary=";
     private static final String BOUNDARY_PREFIX = "--";
     private boolean mIsStarted;
-    private boolean mIsInBoundary;
     private String mBoundary;
 
     public ApiLexerMultipartBodyManipulator() {
@@ -20,10 +19,6 @@ public class ApiLexerMultipartBodyManipulator {
 
     public boolean isStartedAndDefined() {
         return isStarted() && StringUtil.isNotEmpty(mBoundary);
-    }
-
-    public boolean isInBoundary() {
-        return mIsInBoundary;
     }
 
     public boolean isMultipartType(CharSequence type) {
@@ -51,13 +46,8 @@ public class ApiLexerMultipartBodyManipulator {
         mIsStarted = true;
     }
 
-    public void setIsInBoundary() {
-        mIsInBoundary = true;
-    }
-
     public void reset() {
         mIsStarted = false;
-        mIsInBoundary = false;
         mBoundary = null;
     }
 
@@ -69,7 +59,6 @@ public class ApiLexerMultipartBodyManipulator {
     public String toString() {
         return "ApiLexerMultipartBodyManipulator{" +
                 "mIsStarted=" + mIsStarted +
-                ", mIsInBoundary=" + mIsInBoundary +
                 ", mBoundary='" + mBoundary + '\'' +
                 '}';
     }

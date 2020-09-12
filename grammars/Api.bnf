@@ -33,6 +33,7 @@
     RBRACES                 = "}}"
     HYPHEN                  = "-"
     SEMICOLON               = ";"
+    INPUT_SIGNAL            = "< "
 
     //methods
     OPTIONS                 = "OPTIONS"
@@ -53,6 +54,7 @@
   extends("variable") = "io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"
   extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
   extends("header_field") = "io.chengguo.api.debugger.lang.psi.impl.ApiHeaderFieldMixin"
+  extends("input_file") = "io.chengguo.api.debugger.lang.psi.impl.ApiInputFileMixin"
   implements("api_block") = "io.chengguo.api.debugger.lang.psi.ApiBlockElement"
   extends("api_block") = "io.chengguo.api.debugger.lang.psi.impl.ApiBlockMixin"
   implements("request_target")="io.chengguo.api.debugger.lang.psi.ApiRequestTargetElement"
@@ -104,9 +106,10 @@ header_field_val ::= header_field_val_item (';' header_field_val_item?)*
 private header_field_val_item ::= (variable | HEADER_FIELD_VALUE)+
 
 private message_body ::= request_message_group  | multipart_message
-request_message_group ::= MESSAGE_TEXT
+request_message_group ::= (MESSAGE_TEXT | input_file)+
+input_file ::= '< ' RELATIVE_FILE_PATH {pin=1}
 multipart_message ::= MESSAGE_BOUNDARY (multipart_field MESSAGE_BOUNDARY)* (multipart_field MESSAGE_BOUNDARY_END)
-multipart_field ::= header_field* MESSAGE_TEXT?
+multipart_field ::= header_field* request_message_group?
 
 variable ::= '{{' IDENTIFIER? '}}' {
     pin=1

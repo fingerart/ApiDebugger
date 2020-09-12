@@ -32,6 +32,10 @@ public class ApiVisitor extends PsiElementVisitor {
     visitElement(o);
   }
 
+  public void visitInputFile(@NotNull ApiInputFile o) {
+    visitElement(o);
+  }
+
   public void visitMethod(@NotNull ApiMethod o) {
     visitElement(o);
   }

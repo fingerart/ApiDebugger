@@ -3,7 +3,7 @@ package io.chengguo.api.debugger.lang.psi;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.psi.PsiFile;
 import io.chengguo.api.debugger.ApiDebuggerTestCase;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class ApiPsiGeneratorTest extends ApiDebuggerTestCase {
         File testFile = new File(getTestDataPath(), getTestName(true) + ".api");
         String content = FileUtil.loadFile(testFile);
         PsiFile dummyFile = ApiPsiGenerator.createDummyFile(getProject(), content);
-        ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(dummyFile);
+        ApiApiBlock[] apiBlocks = ApiPsiUtil.findApiBlocks(dummyFile);
         assertEquals(1, apiBlocks.length);
     }
 }

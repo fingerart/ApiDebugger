@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Function;
 
-import static io.chengguo.api.debugger.lang.ApiPsiUtils.isOfTypes;
+import static io.chengguo.api.debugger.lang.ApiPsiUtil.isOfTypes;
 
 public class ApiLineMarkerProvider extends RunLineMarkerContributor {
     private static final Function<PsiElement, String> TOOLTIP = psiElement -> ApiDebuggerBundle.message("api.debugger.editor.action.run.current");

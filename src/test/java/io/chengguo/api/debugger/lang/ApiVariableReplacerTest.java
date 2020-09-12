@@ -25,14 +25,14 @@ public class ApiVariableReplacerTest extends ApiDebuggerTestCase {
     }
 
     public void testGetValue() {
-        ApiVariable variable = ApiPsiUtils.findFirstVariable(ApiPsiUtils.findFileByVF(getProject(), mApiFile));
+        ApiVariable variable = ApiPsiUtil.findFirstVariable(ApiPsiUtil.findFileByVF(getProject(), mApiFile));
         assertNotNull(variable);
         String host = variableReplacer.getValue(variable);
         assertEquals("tenon.dev", host);
     }
 
     public void testGetValueByDeepTraversal() {
-        ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(ApiPsiUtils.findFileByVF(getProject(), mApiFile));
+        ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(ApiPsiUtil.findFileByVF(getProject(), mApiFile));
         assertNotNull(apiBlock);
         assertNotNull(apiBlock.getRequest());
         ApiQuery apiQuery = apiBlock.getRequest().getRequestLine().getRequestTarget().getQuery();

@@ -16,8 +16,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.lang.ApiFileType;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
-import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -178,7 +177,7 @@ public class ApiDebuggerDefaultRunConfigurationSettingsEditor extends SettingsEd
      * @param selectedRequestIndex
      */
     private void updateState(RunFileType runFileType, String filePath, String envName, int selectedRequestIndex) {
-        PsiFile file = ApiPsiUtils.findFileByPath(mProject, filePath);
+        PsiFile file = ApiPsiUtil.findFileByPath(mProject, filePath);
         switchRunFileType(runFileType);
         mRequestJBL.setVisible(runFileType == RunFileType.SINGLE_REQUEST);
         mRequestComboBox.setVisible(runFileType == RunFileType.SINGLE_REQUEST);

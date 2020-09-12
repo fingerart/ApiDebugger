@@ -9,7 +9,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiWhiteSpace;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.lexer.ApiTokenTypes;
 import io.chengguo.api.debugger.lang.psi.*;
 import io.chengguo.api.debugger.ui.header.HttpHeaderDocumentation;
@@ -54,7 +54,7 @@ public class ApiHeaderDocumentationProvider extends DocumentationProviderEx {
             return element;
         }
         PsiFile dummyFile = ApiPsiGenerator.createDummyFile(project, "- title: localhost\nGET 127.0.0.1\n" + name);
-        ApiRequest apiRequest = ApiPsiUtils.findFirstApiRequest(dummyFile);
+        ApiRequest apiRequest = ApiPsiUtil.findFirstApiRequest(dummyFile);
         ApiHeaderField headerField = apiRequest != null ? apiRequest.getFirstHeader() : null;
         assert headerField != null;
         return headerField;
@@ -64,10 +64,10 @@ public class ApiHeaderDocumentationProvider extends DocumentationProviderEx {
     @Override
     public PsiElement getCustomDocumentationElement(@NotNull Editor editor, @NotNull PsiFile file, @Nullable PsiElement contextElement) {
         if (file instanceof ApiPsiFile && contextElement != null) {
-            while (contextElement instanceof PsiWhiteSpace || (contextElement != null && ApiPsiUtils.isOfType(contextElement, ApiTypes.Api_COLON))) {
+            while (contextElement instanceof PsiWhiteSpace || (contextElement != null && ApiPsiUtil.isOfType(contextElement, ApiTypes.Api_COLON))) {
                 contextElement = contextElement.getPrevSibling();
             }
-            if (contextElement != null && ApiPsiUtils.isOfTypes(contextElement, ApiTokenTypes.HEADER)) {
+            if (contextElement != null && ApiPsiUtil.isOfTypes(contextElement, ApiTokenTypes.HEADER)) {
                 contextElement = contextElement.getParent();
             }
             if (contextElement instanceof ApiHeaderFieldKey || contextElement instanceof ApiHeaderFieldVal) {

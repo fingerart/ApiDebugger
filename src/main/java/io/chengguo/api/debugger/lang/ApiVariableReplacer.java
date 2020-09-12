@@ -49,7 +49,7 @@ public class ApiVariableReplacer {
                 if (child instanceof ApiVariable) {
                     builder.append(getValue((((ApiVariable) child))));
                 } else if (filter.value(child)) {
-                    if (ApiPsiUtils.isLeafElement(child) || !deepTraversal) {
+                    if (ApiPsiUtil.isLeafElement(child) || !deepTraversal) {
                         builder.append(child.getText());
                     } else {
                         // 深度遍历

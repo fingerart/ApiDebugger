@@ -9,7 +9,7 @@ import com.intellij.ui.CollectionComboBoxModel;
 import com.intellij.ui.ColoredListCellRenderer;
 import com.intellij.ui.SimpleTextAttributes;
 import io.chengguo.api.debugger.lang.ApiBlockConverter;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
@@ -54,7 +54,7 @@ public class ApiDebuggerRequestComboBox extends ComboBox<ApiDebuggerRequestCombo
     }
 
     private List<RequestItem> findAllRequestItems(PsiFile psiFile, ApiVariableReplacer variableReplacer) {
-        ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(psiFile);
+        ApiApiBlock[] apiBlocks = ApiPsiUtil.findApiBlocks(psiFile);
         ArrayList<RequestItem> results = new ArrayList<>();
         for (int index = 0; index < apiBlocks.length; index++) {
             try {

@@ -1,4 +1,4 @@
-package io.chengguo.api.debugger.lang.psi;
+package io.chengguo.api.debugger.lang.reference;
 
 import com.intellij.json.JsonUtil;
 import com.intellij.json.psi.JsonFile;
@@ -12,9 +12,10 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.indexing.FileBasedIndex;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironmentInputFilter;
+import io.chengguo.api.debugger.lang.psi.ApiVariable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class ApiVariableDefinitionReference<T extends ApiVariable> extends PsiPo
     private void addVariableDefinitions(Project project, String name, String env, List<ResolveResult> result, GlobalSearchScope scope) {
         FileBasedIndex.getInstance().processValues(ApiEnvironmentIndex.KEY, env, null, (file, value) -> {
             if (value.contains(name)) {
-                PsiFile psiFile = ApiPsiUtils.findFileByVF(project, file);
+                PsiFile psiFile = ApiPsiUtil.findFileByVF(project, file);
                 if (!(psiFile instanceof JsonFile)) {
                     return true;
                 }

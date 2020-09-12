@@ -9,7 +9,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.ApiDebuggerIcons;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.psi.ApiRequestTarget;
@@ -42,7 +42,7 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
         PsiElement element = getElement();
         if (element instanceof ApiPsiFile) {
             ArrayList<StructureViewTreeElement> treeElements = new ArrayList<>();
-            ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(element.getContainingFile());
+            ApiApiBlock[] apiBlocks = ApiPsiUtil.findApiBlocks(element.getContainingFile());
             for (ApiApiBlock apiBlock : apiBlocks) {
                 ApiRequestTarget requestTarget = apiBlock.getRequest().getRequestLine().getRequestTarget();
                 String baseUrl = requestTarget.getUrl(ApiVariableReplacer.EMPTY);

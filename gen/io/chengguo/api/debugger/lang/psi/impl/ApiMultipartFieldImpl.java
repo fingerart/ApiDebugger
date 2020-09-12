@@ -33,4 +33,10 @@ public class ApiMultipartFieldImpl extends ApiElementImpl implements ApiMultipar
     return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiHeaderField.class);
   }
 
+  @Override
+  @Nullable
+  public ApiRequestMessageGroup getRequestMessageGroup() {
+    return findChildByClass(ApiRequestMessageGroup.class);
+  }
+
 }

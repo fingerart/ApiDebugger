@@ -16,6 +16,7 @@ public interface ApiTypes {
   IElementType Api_HEADER_FIELD_KEY = new ApiElementType("Api_HEADER_FIELD_KEY");
   IElementType Api_HEADER_FIELD_VAL = new ApiElementType("Api_HEADER_FIELD_VAL");
   IElementType Api_HOST = new ApiElementType("Api_HOST");
+  IElementType Api_INPUT_FILE = new ApiElementType("Api_INPUT_FILE");
   IElementType Api_METHOD = new ApiElementType("Api_METHOD");
   IElementType Api_MULTIPART_FIELD = new ApiElementType("Api_MULTIPART_FIELD");
   IElementType Api_MULTIPART_MESSAGE = new ApiElementType("Api_MULTIPART_MESSAGE");
@@ -47,6 +48,7 @@ public interface ApiTypes {
   IElementType Api_HTTPS = new ApiTokenType("https");
   IElementType Api_HYPHEN = new ApiTokenType("-");
   IElementType Api_IDENTIFIER = new ApiTokenType("IDENTIFIER");
+  IElementType Api_INPUT_SIGNAL = new ApiTokenType("< ");
   IElementType Api_LBRACES = new ApiTokenType("{{");
   IElementType Api_LINE_COMMENT = new ApiTokenType("LINE_COMMENT");
   IElementType Api_LINE_TEXT = new ApiTokenType("LINE_TEXT");
@@ -63,6 +65,7 @@ public interface ApiTypes {
   IElementType Api_QUERY_VALUE = new ApiTokenType("QUERY_VALUE");
   IElementType Api_QUESTION_MARK = new ApiTokenType("?");
   IElementType Api_RBRACES = new ApiTokenType("}}");
+  IElementType Api_RELATIVE_FILE_PATH = new ApiTokenType("RELATIVE_FILE_PATH");
   IElementType Api_SCHEME_SEPARATOR = new ApiTokenType("://");
   IElementType Api_SEGMENT = new ApiTokenType("SEGMENT");
   IElementType Api_SEMICOLON = new ApiTokenType(";");
@@ -90,6 +93,9 @@ public interface ApiTypes {
       }
       else if (type == Api_HOST) {
         return new ApiHostImpl(node);
+      }
+      else if (type == Api_INPUT_FILE) {
+        return new ApiInputFileImpl(node);
       }
       else if (type == Api_METHOD) {
         return new ApiMethodImpl(node);

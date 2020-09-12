@@ -9,4 +9,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ApiRequestMessageGroup extends ApiElement {
 
+  @NotNull
+  List<ApiInputFile> getInputFileList();
+
 }

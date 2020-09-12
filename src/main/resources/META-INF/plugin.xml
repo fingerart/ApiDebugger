@@ -48,7 +48,7 @@
         <defaultLiveTemplatesProvider
                 implementation="io.chengguo.api.debugger.lang.liveTemplates.ApiDefaultLiveTemplatesProvider"/>
         <psi.referenceContributor language="Api"
-                                  implementation="io.chengguo.api.debugger.lang.psi.ApiReferenceContributor"/>
+                                  implementation="io.chengguo.api.debugger.lang.reference.ApiReferenceContributor"/>
         <fileBasedIndex implementation="io.chengguo.api.debugger.lang.environment.ApiEnvironmentIndex"/>
         <!--                <lang.elementManipulator forClass="io.chengguo.api.debugger.lang.psi.ApiVariable"-->
         <!--                                         implementationClass="io.chengguo.api.debugger.lang.refactor.ApiIdentifierManipulator"/>-->

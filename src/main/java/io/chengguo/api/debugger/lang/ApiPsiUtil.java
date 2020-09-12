@@ -17,7 +17,7 @@ import io.chengguo.api.debugger.lang.psi.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ApiPsiUtils {
+public class ApiPsiUtil {
     public static final ApiApiBlock[] EMPTY_API_BLOCK = new ApiApiBlock[]{};
     public static final ApiRequest[] EMPTY_API_REQUEST = new ApiRequest[]{};
     public static final ApiHeaderField[] EMPTY_API_HEADER = new ApiHeaderField[]{};
