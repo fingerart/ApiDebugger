@@ -14,7 +14,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.xmlb.annotations.Attribute;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
@@ -97,14 +97,14 @@ public class ApiDebuggerDefaultRunConfiguration extends LocatableConfigurationBa
         if (StringUtil.isEmpty(filePath)) {
             throw new RuntimeConfigurationException(ApiDebuggerBundle.message("api.debugger.run.configuration.file_is_not_configured"));
         }
-        PsiFile file = ApiPsiUtils.findFileByPath(project, filePath);
+        PsiFile file = ApiPsiUtil.findFileByPath(project, filePath);
         if (file == null) {
             throw new RuntimeConfigurationException(ApiDebuggerBundle.message("api.debugger.run.configuration.file_doesnt_exists"));
         }
         if (file instanceof ApiPsiFile && mSettings.getRunFileType() == RunFileType.ALL_IN_FILE) {
             return new ApiDebuggerFileExecutionConfig(file);
         }
-        ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(file);
+        ApiApiBlock[] apiBlocks = ApiPsiUtil.findApiBlocks(file);
         int index = mSettings.getIndexInFile();
         int length = apiBlocks.length;
         if (index >= length || index < 0) {

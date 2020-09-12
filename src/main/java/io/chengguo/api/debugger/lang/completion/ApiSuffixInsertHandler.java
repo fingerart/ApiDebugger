@@ -9,7 +9,7 @@ import com.intellij.openapi.editor.EditorModificationUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiDocumentManager;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import org.jetbrains.annotations.NotNull;
 
 public class ApiSuffixInsertHandler implements InsertHandler<LookupElement> {
@@ -31,7 +31,7 @@ public class ApiSuffixInsertHandler implements InsertHandler<LookupElement> {
             Editor editor = context.getEditor();
             Document document = editor.getDocument();
             // 跳过空格
-            int offset = ApiPsiUtils.skipWhitespacesForward(editor.getCaretModel().getOffset(), document.getCharsSequence());
+            int offset = ApiPsiUtil.skipWhitespacesForward(editor.getCaretModel().getOffset(), document.getCharsSequence());
             if (document.getTextLength() == offset || !this.isEqualsToSuffix(document, offset)) {
                 EditorModificationUtil.insertStringAtCaret(editor, this.mSuffix);
                 PsiDocumentManager.getInstance(project).commitDocument(editor.getDocument());

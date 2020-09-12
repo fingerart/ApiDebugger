@@ -1,7 +1,7 @@
 package io.chengguo.api.debugger.lang.run;
 
 import com.intellij.psi.PsiFile;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class ApiDebuggerFileExecutionConfig implements ApiDebuggerExecutionConfi
 
     @Override
     public List<ApiApiBlock> getApiBlocks() {
-        return Arrays.asList(ApiPsiUtils.findApiBlocks(mFile));
+        return Arrays.asList(ApiPsiUtil.findApiBlocks(mFile));
     }
 
     @Override

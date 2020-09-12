@@ -4,7 +4,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import io.chengguo.api.debugger.lang.ApiFileType;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import org.jetbrains.annotations.NotNull;
 
 public final class ApiPsiGenerator {
@@ -14,7 +14,7 @@ public final class ApiPsiGenerator {
 
     public static ApiVariable createVariable(Project project, String variableName) {
         PsiFile dummyFile = createDummyFile(project, "- title:value\r\n\r\nGET {{" + variableName + "}}\r\n\r\nbody");
-        return ApiPsiUtils.findFirstVariable(dummyFile);
+        return ApiPsiUtil.findFirstVariable(dummyFile);
     }
 
     @NotNull

@@ -20,17 +20,17 @@ public class ApiTypeHandler extends TypedHandlerDelegate {
         if (fileType != ApiFileType.INSTANCE || (c != '{' && c != '#')) {
             return super.beforeCharTyped(c, project, editor, file, fileType);
         }
-        final int offset = editor.getCaretModel().getOffset();
-        final Document document = editor.getDocument();
-        final char charBefore = getCharAt(document, offset - 1);
-        final char charAfter = getCharAt(document, offset);
+        int offset = editor.getCaretModel().getOffset();
+        Document document = editor.getDocument();
+        char charBefore = getCharAt(document, offset - 1);
+        char charAfter = getCharAt(document, offset);
         if (charBefore == '{') {
             if (c == '{' && charAfter != '}') {
                 return addBrace(project, editor, document, "{}}", 1);
             }
         } else if (charBefore == '#') {
             if (c == '#' && charAfter != '#') {
-                return addBrace(project, editor, document, "###", 3);
+                return addBrace(project, editor, document, "##", 2);
             }
         }
         return super.beforeCharTyped(c, project, editor, file, fileType);

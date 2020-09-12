@@ -8,7 +8,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtilCore;
 import io.chengguo.api.debugger.lang.ApiFileType;
 import io.chengguo.api.debugger.lang.ApiLanguage;
-import io.chengguo.api.debugger.lang.ApiPsiUtils;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.psi.ApiRequest;
 import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +31,7 @@ public class ApiTemplateContextType extends FileTypeBasedContextType {
     }
 
     protected boolean isInContext(@NotNull final PsiElement element) {
-        if (!ApiPsiUtils.isOfType(element, ApiTypes.Api_METHOD)) {
+        if (!ApiPsiUtil.isOfType(element, ApiTypes.Api_METHOD)) {
             return false;
         }
         ApiRequest request = PsiTreeUtil.getParentOfType(element, ApiRequest.class);

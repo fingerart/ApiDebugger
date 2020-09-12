@@ -7,6 +7,7 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.impl.manipulators.SimpleTagManipulator;
 import com.intellij.util.IncorrectOperationException;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
+import io.chengguo.api.debugger.lang.psi.impl.ApiVariableImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,12 +17,11 @@ import org.jetbrains.annotations.Nullable;
  * 参考 {@link SimpleTagManipulator}
  */
 @Deprecated
-public class ApiIdentifierManipulator extends AbstractElementManipulator<ApiVariable> {
-
+public class ApiIdentifierManipulator extends AbstractElementManipulator<ApiVariableImpl> {
     @Nullable
     @Override
-    public ApiVariable handleContentChange(
-            @NotNull ApiVariable variable, @NotNull TextRange range, String newContent)
+    public ApiVariableImpl handleContentChange(
+            @NotNull ApiVariableImpl variable, @NotNull TextRange range, String newContent)
             throws IncorrectOperationException {
         PsiReference reference = variable.getReference();
         if (reference != null && reference.getElement() instanceof PsiNamedElement) {

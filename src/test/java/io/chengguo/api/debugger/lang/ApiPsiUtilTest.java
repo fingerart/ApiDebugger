@@ -6,7 +6,7 @@ import com.intellij.psi.tree.TokenSet;
 import io.chengguo.api.debugger.ApiDebuggerTestCase;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiPsiUtilsTest extends ApiDebuggerTestCase {
+public class ApiPsiUtilTest extends ApiDebuggerTestCase {
     private static final String FILE_NAME = "testPsiUtils.api";
 
     @Override
@@ -21,9 +21,9 @@ public class ApiPsiUtilsTest extends ApiDebuggerTestCase {
     }
 
     public void testIsOfTypes() {
-        ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
+        ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
         assertNotNull(apiBlock);
-        ApiPsiUtils.isOfTypes(apiBlock.getRequest().getRequestLine().getMethod(), TokenSet.create(
+        ApiPsiUtil.isOfTypes(apiBlock.getRequest().getRequestLine().getMethod(), TokenSet.create(
                 ApiTypes.Api_GET,
                 ApiTypes.Api_POST,
                 ApiTypes.Api_PUT
@@ -31,81 +31,81 @@ public class ApiPsiUtilsTest extends ApiDebuggerTestCase {
     }
 
     public void testFindFirstApiBlock() {
-        ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
+        ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
         assertNotNull(apiBlock);
     }
 
     public void testFindApiBlocks() {
-        ApiApiBlock[] apiBlocks = ApiPsiUtils.findApiBlocks(myFixture.getFile());
+        ApiApiBlock[] apiBlocks = ApiPsiUtil.findApiBlocks(myFixture.getFile());
         assertSize(1, apiBlocks);
     }
 
     public void testFindApiRequests() {
-        ApiRequest apiRequest = ApiPsiUtils.findFirstApiRequest(myFixture.getFile());
+        ApiRequest apiRequest = ApiPsiUtil.findFirstApiRequest(myFixture.getFile());
         assertNotNull(apiRequest);
     }
 
     public void testFindFirstApiRequest() {
-        ApiRequest[] apiRequests = ApiPsiUtils.findApiRequests(myFixture.getFile());
+        ApiRequest[] apiRequests = ApiPsiUtil.findApiRequests(myFixture.getFile());
         assertSize(1, apiRequests);
     }
 
     public void testFindFirstVariable() {
-        ApiVariable variable = ApiPsiUtils.findFirstVariable(myFixture.getFile());
+        ApiVariable variable = ApiPsiUtil.findFirstVariable(myFixture.getFile());
         assertNotNull(variable);
         assertEquals("address", variable.getName());
     }
 
     public void testFindVariables() {
-        ApiVariable[] variables = ApiPsiUtils.findVariables(myFixture.getFile());
+        ApiVariable[] variables = ApiPsiUtil.findVariables(myFixture.getFile());
         assertSize(1, variables);
         assertEquals("address", variables[0].getName());
     }
 
     public void testFindFileByPath() {
         String path = getTestDataPath() + "/" + FILE_NAME;
-        PsiFile psiFile = ApiPsiUtils.findFileByPath(getProject(), path);
+        PsiFile psiFile = ApiPsiUtil.findFileByPath(getProject(), path);
         assertNotNull(psiFile);
         assertSame(psiFile.getFileType(), ApiFileType.INSTANCE);
     }
 
     public void testIsLeafElement() {
-        ApiVariable variable = ApiPsiUtils.findFirstVariable(myFixture.getFile());
+        ApiVariable variable = ApiPsiUtil.findFirstVariable(myFixture.getFile());
         assertNotNull(variable);
 
-        boolean isLeafElement = ApiPsiUtils.isLeafElement(variable);
+        boolean isLeafElement = ApiPsiUtil.isLeafElement(variable);
         assertFalse(isLeafElement);
 
-        isLeafElement = ApiPsiUtils.isLeafElement(variable.getIdentifier());
+        isLeafElement = ApiPsiUtil.isLeafElement(variable.getIdentifier());
         assertTrue(isLeafElement);
     }
 
     public void testSkipWhitespacesForward() {
-        int offset = ApiPsiUtils.skipWhitespacesForward(0, "  This is my test text.");
+        int offset = ApiPsiUtil.skipWhitespacesForward(0, "  This is my test text.");
         assertEquals(2, offset);
     }
 
     public void testIsOfType() {
-        ApiVariable variable = ApiPsiUtils.findFirstVariable(myFixture.getFile());
+        ApiVariable variable = ApiPsiUtil.findFirstVariable(myFixture.getFile());
         assertNotNull(variable);
-        boolean ofType = ApiPsiUtils.isOfType(variable, ApiTypes.Api_VARIABLE);
+        boolean ofType = ApiPsiUtil.isOfType(variable, ApiTypes.Api_VARIABLE);
         assertTrue(ofType);
     }
 
     public void testGetPrevSiblingIgnoreWhitespace() {
-        ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
+        ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
         assertNotNull(apiBlock);
         ApiRequest requestElement = apiBlock.getRequest();
-        PsiElement psiElement = ApiPsiUtils.getPrevSiblingIgnoreWhitespace(requestElement);
+        PsiElement psiElement = ApiPsiUtil.getPrevSiblingIgnoreWhitespace(requestElement);
         assertNotNull(psiElement);
         assertEquals(ApiTypes.Api_DESCRIPTION, psiElement.getNode().getElementType());
     }
 
     public void testGetNextSiblingByType() {
-        ApiApiBlock apiBlock = ApiPsiUtils.findFirstApiBlock(myFixture.getFile());
+        ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
         assertNotNull(apiBlock);
         ApiDescription descriptionElement = apiBlock.getDescriptionByKey("title");
-        PsiElement psiElement = ApiPsiUtils.getNextSiblingByType(descriptionElement, ApiTypes.Api_REQUEST, true);
+        PsiElement psiElement = ApiPsiUtil.getNextSiblingByType(descriptionElement, ApiTypes.Api_REQUEST, true);
         assertNotNull(psiElement);
     }
 }

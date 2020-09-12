@@ -12,25 +12,19 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiRequestMessageGroupImpl extends ApiBodyMixin implements ApiRequestMessageGroup {
+public class ApiInputFileImpl extends ApiInputFileMixin implements ApiInputFile {
 
-  public ApiRequestMessageGroupImpl(ASTNode node) {
+  public ApiInputFileImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
-    visitor.visitRequestMessageGroup(this);
+    visitor.visitInputFile(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<ApiInputFile> getInputFileList() {
-    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiInputFile.class);
   }
 
 }

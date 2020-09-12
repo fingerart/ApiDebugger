@@ -36,6 +36,11 @@ public class ApiPsiImplUtils {
         return element == null ? "" : element.getText();
     }
 
+    public static PsiElement getRelativeFilePathElement(ApiInputFile element) {
+        ASTNode node = element.getNode().findChildByType(ApiTypes.Api_RELATIVE_FILE_PATH);
+        return node != null ? null : node.getPsi();
+    }
+
     /**
      * 获取HTTP scheme，默认http
      *
