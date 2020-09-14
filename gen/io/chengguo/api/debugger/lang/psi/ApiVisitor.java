@@ -16,6 +16,10 @@ public class ApiVisitor extends PsiElementVisitor {
     visitKeyValueElement(o);
   }
 
+  public void visitFilePath(@NotNull ApiFilePath o) {
+    visitElement(o);
+  }
+
   public void visitHeaderField(@NotNull ApiHeaderField o) {
     visitKeyValueElement(o);
   }
@@ -70,6 +74,10 @@ public class ApiVisitor extends PsiElementVisitor {
 
   public void visitRequest(@NotNull ApiRequest o) {
     visitRequestElement(o);
+  }
+
+  public void visitRequestBody(@NotNull ApiRequestBody o) {
+    visitElement(o);
   }
 
   public void visitRequestLine(@NotNull ApiRequestLine o) {

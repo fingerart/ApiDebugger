@@ -37,7 +37,7 @@ public abstract class ApiNamedElementImpl extends ApiElementImpl implements ApiN
     @Override
     public String getName() {
         if (mCachedName == null) {
-            mCachedName = ApiPsiImplUtils.getElementTextNotNull(getIdentifier());
+            mCachedName = ApiPsiImplUtil.getElementTextNotNull(getIdentifier());
         }
         return mCachedName;
     }

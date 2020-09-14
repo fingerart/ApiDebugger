@@ -7,9 +7,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiInputFile extends ApiElement {
-
-  @Nullable
-  ApiFilePath getFilePath();
+public interface ApiFilePath extends ApiElement {
 
 }

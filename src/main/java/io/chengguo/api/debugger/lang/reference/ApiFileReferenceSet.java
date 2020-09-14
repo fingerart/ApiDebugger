@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,15 +23,20 @@ import java.util.List;
  * @see IgnoreReferenceSet
  */
 public class ApiFileReferenceSet extends FileReferenceSet {
-    public ApiFileReferenceSet(String str, @NotNull PsiElement element, int startInElement, PsiReferenceProvider provider, boolean caseSensitive, boolean endingSlashNotAllowed, @Nullable FileType[] suitableFileTypes) {
+
+    private final boolean mSoft;
+
+    public ApiFileReferenceSet(String str, @NotNull PsiElement element, int startInElement, PsiReferenceProvider provider, boolean caseSensitive, boolean endingSlashNotAllowed, @Nullable FileType[] suitableFileTypes, boolean soft) {
         super(str, element, startInElement, provider, caseSensitive, endingSlashNotAllowed, suitableFileTypes);
+        mSoft = soft;
     }
+
     protected boolean isUrlEncoded() {
         return true;
     }
 
     protected boolean isSoft() {
-        return true;
+        return mSoft;
     }
 
     @NotNull
@@ -50,8 +54,7 @@ public class ApiFileReferenceSet extends FileReferenceSet {
         Collection<PsiFileSystemItem> items = ContainerUtil.newSmartList();
         if (ScratchUtil.isScratch(containingFile.getVirtualFile())) {
             items.addAll(toFileSystemItems(ProjectRootManager.getInstance(containingFile.getProject()).getContentRoots()));
-        }
-        else {
+        } else {
             items.addAll(super.computeDefaultContexts());
         }
         return items;

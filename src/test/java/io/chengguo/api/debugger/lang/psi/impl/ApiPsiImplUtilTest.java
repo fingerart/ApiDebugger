@@ -7,11 +7,12 @@ import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.psi.ApiDescription;
+import io.chengguo.api.debugger.lang.psi.ApiRequestTarget;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
 
 import java.util.List;
 
-public class ApiPsiImplUtilsTest extends ApiDebuggerTestCase {
+public class ApiPsiImplUtilTest extends ApiDebuggerTestCase {
 
     @Override
     protected String getBasePath() {
@@ -21,13 +22,13 @@ public class ApiPsiImplUtilsTest extends ApiDebuggerTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        myFixture.configureByFile("testPsiUtils.api");
+        myFixture.configureByFile("testPsiImplUtils.api");
     }
 
     public void testGetIdentifier() {
         ApiVariable variable = ApiPsiUtil.findFirstVariable(myFixture.getFile());
         assertNotNull(variable);
-        PsiElement identifier = ApiPsiImplUtils.getIdentifier(variable);
+        PsiElement identifier = ApiPsiImplUtil.getIdentifier(variable);
         assertNotNull(identifier);
         assertEquals("address", identifier.getText());
     }
@@ -35,30 +36,31 @@ public class ApiPsiImplUtilsTest extends ApiDebuggerTestCase {
     public void testGetElementTextNotNull() {
         ApiVariable variable = ApiPsiUtil.findFirstVariable(myFixture.getFile());
         assertNotNull(variable);
-        String idText = ApiPsiImplUtils.getElementTextNotNull(variable.getIdentifier());
+        String idText = ApiPsiImplUtil.getElementTextNotNull(variable.getIdentifier());
         assertEquals("address", idText);
-        String emptyIdText = ApiPsiImplUtils.getElementTextNotNull(null);
+        String emptyIdText = ApiPsiImplUtil.getElementTextNotNull(null);
         assertNotNull(emptyIdText);
     }
 
     public void testGetScheme() {
         ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
-        assertTrue(apiBlock != null && apiBlock.getRequest() != null);
-        String scheme = ApiPsiImplUtils.getScheme(apiBlock.getRequest().getRequestLine().getRequestTarget().getScheme());
+        assertNotNull(apiBlock);
+        String scheme = ApiPsiImplUtil.getScheme(apiBlock.getRequest().getRequestLine().getRequestTarget().getScheme());
         assertEquals("https", scheme);
     }
 
     public void testGetUrl() {
         ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
-        assertTrue(apiBlock != null && apiBlock.getRequest() != null);
-        String url = ApiPsiImplUtils.getUrl(apiBlock.getRequest().getRequestLine().getRequestTarget(), ApiVariableReplacer.EMPTY);
-        assertEquals("https://echo.tenon.dev/post", url);
+        assertNotNull(apiBlock);
+        ApiRequestTarget requestTarget = apiBlock.getRequest().getRequestLine().getRequestTarget();
+        String url = ApiPsiImplUtil.getUrl(requestTarget, ApiVariableReplacer.EMPTY);
+        assertEquals("https://echo.tenon.dev/put/userinfo/", url);
     }
 
     public void testGetParameters() {
         ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
-        assertTrue(apiBlock != null && apiBlock.getRequest() != null);
-        List<Pair<String, String>> parameters = ApiPsiImplUtils.getParameters(apiBlock.getRequest().getRequestLine().getRequestTarget().getQuery(), ApiVariableReplacer.EMPTY);
+        assertNotNull(apiBlock);
+        List<Pair<String, String>> parameters = ApiPsiImplUtil.getParameters(apiBlock.getRequest().getRequestLine().getRequestTarget().getQuery(), ApiVariableReplacer.EMPTY);
         assertSize(3, parameters);
         assertEquals("apiDebugger", parameters.get(0).second);
         assertEquals("18", parameters.get(1).second);

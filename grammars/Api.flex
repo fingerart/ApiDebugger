@@ -112,7 +112,7 @@ SEPARATOR = "###"
 HEADER_FIELD_NAME = [^ \r\n\t\f:] ([^\r\n\t\f:{]* [^ \r\n\t\f:{])?
 HEADER_FIELD_VALUE = [^ \r\n\t\f;] ([^\r\n;{]* [^ \r\n\t\f;{])?
 BODY_SEPARATOR = {WS}* {NL} {NL} ({WS} | {NL})*
-MESSAGE_TEXT = [^ \t\f\r\n\#] ([^\r\n]* ([\r\n]+ [^\r\n\#])? )*
+MESSAGE_TEXT = [^ \t\f\r\n\#\<] ([^\r\n]* ([\r\n]+ [^\r\n\#\<])? )*
 MESSAGE_TEXT_BOUNDARY = [^ \t\f\r\n\-\<\#] ([^\r\n]* ([\r\n]+ [^\r\n\-\<\#])? )*
 MESSAGE_BOUNDARY = "--" [^ \r\n\t\f]*
 MESSAGE_BOUNDARY_END = "--" [^ \r\n\t\f]* "--"
@@ -132,7 +132,6 @@ INPUT_FILE_PATH = [^\t\f\r\n]+
 %state BEFORE_BODY
 %state IN_MESSAGE_BODY
 %state IN_MESSAGE_MULTIPART
-%state IN_INPUT_FILE
 %state IN_INPUT_FILE_PATH
 %state IN_VARIABLE
 %state IN_DESCRIPTION
@@ -253,23 +252,19 @@ INPUT_FILE_PATH = [^\t\f\r\n]+
 <IN_MESSAGE_BODY> {
     ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
     {SEPARATOR}                                 { yypushback(yylength()); reset(); }
-    {MESSAGE_TEXT}                              { reset(); return Api_MESSAGE_TEXT; }
-}
-
-<IN_INPUT_FILE> {
-    {INPUT_SIGNAL}                              { pushState(IN_INPUT_FILE_PATH); return Api_INPUT_SIGNAL;}
-    ({WS} | {NL})+                              { yypushback(yylength()); popState(); }
+    {MESSAGE_TEXT}                              { return Api_MESSAGE_TEXT; }
+    {INPUT_SIGNAL}                              { pushState(IN_INPUT_FILE_PATH); return Api_INPUT_SIGNAL; }
 }
 
 <IN_INPUT_FILE_PATH> {
-    {INPUT_FILE_PATH}                           { popState(); return Api_RELATIVE_FILE_PATH;}
+    {INPUT_FILE_PATH}                           { popState(); return Api_RELATIVE_FILE_PATH; }
 }
 
 <IN_MESSAGE_MULTIPART> {
     ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
     {SEPARATOR}                                 { yypushback(yylength()); reset(); }
     {MESSAGE_TEXT_BOUNDARY}                     { return Api_MESSAGE_TEXT; }
-    {INPUT_SIGNAL}                              { yypushback(yylength()); pushState(IN_INPUT_FILE);}
+    {INPUT_SIGNAL}                              { pushState(IN_INPUT_FILE_PATH); return Api_INPUT_SIGNAL; }
     {MESSAGE_BOUNDARY_END}                      { reset(); return Api_MESSAGE_BOUNDARY_END; }
     {MESSAGE_BOUNDARY}                          { pushState(IN_HEADER); return Api_MESSAGE_BOUNDARY; }
 }

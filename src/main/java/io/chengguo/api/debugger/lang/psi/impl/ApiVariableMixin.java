@@ -37,7 +37,7 @@ public abstract class ApiVariableMixin extends ApiNamedElementImpl implements Ap
     @Nullable
     @Override
     public PsiElement getIdentifier() {
-        return ApiPsiImplUtils.getIdentifier(this);
+        return ApiPsiImplUtil.getIdentifier(this);
     }
 
 

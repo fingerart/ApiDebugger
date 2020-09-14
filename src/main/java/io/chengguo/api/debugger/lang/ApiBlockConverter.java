@@ -1,10 +1,7 @@
 package io.chengguo.api.debugger.lang;
 
 import com.intellij.openapi.util.Pair;
-import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
-import io.chengguo.api.debugger.lang.psi.ApiRequest;
-import io.chengguo.api.debugger.lang.psi.ApiRequestLine;
-import io.chengguo.api.debugger.lang.psi.ApiRequestTarget;
+import io.chengguo.api.debugger.lang.psi.*;
 import io.chengguo.api.debugger.lang.run.ApiRequestInvalidException;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 
@@ -20,10 +17,11 @@ public class ApiBlockConverter {
     public static ApiDebuggerRequest toApiBlock(ApiApiBlock element, ApiVariableReplacer replacer) throws ApiRequestInvalidException {
         ApiRequestLine reqLineElement = element.getRequest().getRequestLine();
         ApiRequestTarget reqTargetElement = reqLineElement.getRequestTarget();
-        ApiDebuggerRequest request = new ApiDebuggerRequest();
-        request.method = reqLineElement.getMethod().getText();
-        request.url = reqTargetElement.getUrl(replacer);
-        request.parameters = pairToMap(reqTargetElement.getParameters(replacer));
+        ApiDebuggerRequest request = new ApiDebuggerRequest(reqLineElement.getMethod().getText(), reqTargetElement.getUrl(replacer));
+        request.addParameter(pairToMap(reqTargetElement.getParameters(replacer)));
+        request.addHeader(pairToMap(element.getRequest().getHeaders(replacer)));
+        ApiRequestBody requestBody = element.getRequest().getRequestBody();
+        request.setRequestBody(requestBody == null ? "" : requestBody.getText());
         return request;
     }
 

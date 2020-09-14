@@ -12,25 +12,19 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiInputFileImpl extends ApiElementImpl implements ApiInputFile {
+public class ApiFilePathImpl extends ApiFilePathMixin implements ApiFilePath {
 
-  public ApiInputFileImpl(ASTNode node) {
+  public ApiFilePathImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
-    visitor.visitInputFile(this);
+    visitor.visitFilePath(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ApiVisitor) accept((ApiVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public ApiFilePath getFilePath() {
-    return findChildByClass(ApiFilePath.class);
   }
 
 }

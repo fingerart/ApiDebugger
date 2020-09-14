@@ -56,13 +56,13 @@ public class ApiVariableDefinitionReference<T extends ApiVariable> extends PsiPo
         Project project = myElement.getProject();
         PsiFile containingFile = myElement.getContainingFile();
         GlobalSearchScope scope = ApiEnvironmentIndex.getSearchScope(project, containingFile);
-        final List<ResolveResult> result = new ArrayList<>();
-        String defaultEnv = "env";
+        List<ResolveResult> result = new ArrayList<>();
+        String defaultEnv = "default env";// TODO 当前的默认环境优先
         addVariableDefinitions(project, mIdentifier, defaultEnv, result, scope);
 
-        for (final String env : FileBasedIndex.getInstance().getAllKeys(ApiEnvironmentIndex.KEY, project)) {
-            if (!StringUtil.equals(env, defaultEnv)) {
-                addVariableDefinitions(project, mIdentifier, env, result, scope);
+        for (String environment : ApiEnvironmentIndex.getAllEnvironments(project, scope)) {
+            if (!StringUtil.equals(environment, defaultEnv)) {
+                addVariableDefinitions(project, mIdentifier, environment, result, scope);
             }
         }
         return result.isEmpty() ? ResolveResult.EMPTY_ARRAY : result.toArray(ResolveResult.EMPTY_ARRAY);

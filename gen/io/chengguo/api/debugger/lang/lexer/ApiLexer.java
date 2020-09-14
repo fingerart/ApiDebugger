@@ -36,12 +36,11 @@ public class ApiLexer implements FlexLexer {
   public static final int BEFORE_BODY = 20;
   public static final int IN_MESSAGE_BODY = 22;
   public static final int IN_MESSAGE_MULTIPART = 24;
-  public static final int IN_INPUT_FILE = 26;
-  public static final int IN_INPUT_FILE_PATH = 28;
-  public static final int IN_VARIABLE = 30;
-  public static final int IN_DESCRIPTION = 32;
-  public static final int IN_DESCRIPTION_KEY = 34;
-  public static final int IN_DESCRIPTION_VALUE = 36;
+  public static final int IN_INPUT_FILE_PATH = 26;
+  public static final int IN_VARIABLE = 28;
+  public static final int IN_DESCRIPTION = 30;
+  public static final int IN_DESCRIPTION_KEY = 32;
+  public static final int IN_DESCRIPTION_VALUE = 34;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -52,7 +51,7 @@ public class ApiLexer implements FlexLexer {
   private static final int ZZ_LEXSTATE[] = { 
      0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7, 
      8,  8,  9,  9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 
-    16, 16, 17, 17, 18, 18
+    16, 16, 17, 17
   };
 
   /** 
@@ -85,21 +84,21 @@ public class ApiLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\23\0\1\1\1\2\11\1\1\3\1\4\7\1\1\5"+
+    "\22\0\1\1\1\2\11\1\1\3\1\4\7\1\1\5"+
     "\1\6\1\7\1\10\1\5\1\11\1\12\2\13\1\1"+
     "\1\14\1\15\1\16\1\17\1\20\1\21\1\22\2\2"+
     "\1\22\1\23\1\24\1\25\1\2\1\24\1\26\2\1"+
-    "\1\27\1\1\1\30\2\1\1\13\1\1\1\31\1\32"+
-    "\1\1\1\25\1\2\1\33\1\34\1\35\1\2\1\36"+
-    "\1\2\1\37\1\40\23\0\1\5\1\41\1\0\1\42"+
-    "\3\0\1\43\5\0\1\44\1\45\1\46\1\47\1\0"+
-    "\1\40\2\0\1\50\4\0\1\51\3\0\1\52\1\0"+
-    "\1\53\3\0\1\54\1\5\1\55\1\45\1\40\7\0"+
-    "\1\56\2\0\1\57\2\0\1\60\1\61\3\0\1\62"+
-    "\1\63\2\0\1\64\2\0\1\65\1\0\1\66\1\67";
+    "\1\27\2\1\1\27\1\1\1\30\1\31\1\1\1\25"+
+    "\1\2\1\32\1\33\1\34\1\2\1\35\1\2\1\36"+
+    "\1\37\23\0\1\5\1\40\1\0\1\41\2\0\1\13"+
+    "\1\0\1\42\4\0\1\43\1\0\1\44\1\45\1\0"+
+    "\1\37\2\0\1\46\4\0\1\47\3\0\1\50\1\0"+
+    "\1\51\3\0\1\52\1\5\1\53\1\44\1\37\7\0"+
+    "\1\54\2\0\1\55\2\0\1\56\1\57\3\0\1\60"+
+    "\1\61\2\0\1\62\2\0\1\63\1\0\1\64\1\65";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[176];
+    int [] result = new int[173];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -127,28 +126,28 @@ public class ApiLexer implements FlexLexer {
     "\0\0\0\45\0\112\0\157\0\224\0\271\0\336\0\u0103"+
     "\0\u0128\0\u014d\0\u0172\0\u0197\0\u01bc\0\u01e1\0\u0206\0\u022b"+
     "\0\u0250\0\u0275\0\u029a\0\u02bf\0\u02e4\0\u0309\0\u032e\0\u0353"+
-    "\0\u0378\0\u039d\0\u03c2\0\u03e7\0\u040c\0\u0431\0\u02bf\0\u0456"+
+    "\0\u0378\0\u039d\0\u03c2\0\u03e7\0\u040c\0\u029a\0\u0431\0\u0456"+
     "\0\u047b\0\u04a0\0\u04c5\0\u04ea\0\u050f\0\u0534\0\u0559\0\u057e"+
-    "\0\u05a3\0\u02bf\0\u05c8\0\u05ed\0\u02bf\0\u0612\0\u0637\0\u02bf"+
-    "\0\u065c\0\u0681\0\u06a6\0\u06cb\0\u02bf\0\u06f0\0\u02bf\0\u0715"+
-    "\0\u073a\0\u075f\0\u0784\0\u02bf\0\u07a9\0\u07ce\0\u07f3\0\u0818"+
-    "\0\u02bf\0\u083d\0\u0862\0\u0887\0\u08ac\0\u08d1\0\u08f6\0\u091b"+
-    "\0\u0940\0\u0965\0\u098a\0\u09af\0\u09d4\0\u02bf\0\u09f9\0\u02bf"+
-    "\0\u02bf\0\u0a1e\0\u0a43\0\u0a68\0\u0a8d\0\u0ab2\0\u0ad7\0\u0afc"+
+    "\0\u029a\0\u05a3\0\u05c8\0\u029a\0\u05ed\0\u0612\0\u029a\0\u0637"+
+    "\0\u065c\0\u0681\0\u06a6\0\u029a\0\u06cb\0\u029a\0\u06f0\0\u0715"+
+    "\0\u073a\0\u075f\0\u029a\0\u0784\0\u07a9\0\u07ce\0\u07f3\0\u029a"+
+    "\0\u0818\0\u083d\0\u0862\0\u0887\0\u08ac\0\u08d1\0\u08f6\0\u091b"+
+    "\0\u0940\0\u0965\0\u029a\0\u098a\0\u029a\0\u029a\0\u09af\0\u09d4"+
+    "\0\u09f9\0\u0a1e\0\u0a43\0\u0a68\0\u0a8d\0\u0ab2\0\u0ad7\0\u0afc"+
     "\0\u0b21\0\u0b46\0\u0b6b\0\u0b90\0\u0bb5\0\u0bda\0\u0bff\0\u0c24"+
     "\0\u0c49\0\u0c6e\0\u0c93\0\u0cb8\0\u0cdd\0\u0d02\0\u0d27\0\u0d4c"+
-    "\0\u0d71\0\u0d96\0\u0dbb\0\u02bf\0\u0715\0\u0de0\0\u073a\0\u07a9"+
-    "\0\u07ce\0\u0e05\0\u083d\0\u0862\0\u0e2a\0\u0e4f\0\u0e74\0\u02bf"+
-    "\0\u0e99\0\u02bf\0\u02bf\0\u0a1e\0\u0ebe\0\u0ee3\0\u0f08\0\u02bf"+
-    "\0\u0f2d\0\u0f52\0\u0f77\0\u0f9c\0\u0fc1\0\u0fe6\0\u100b\0\u1030"+
-    "\0\u02bf\0\u1055\0\u02bf\0\u107a\0\u109f\0\u10c4\0\u02bf\0\u10e9"+
-    "\0\u02bf\0\u110e\0\u02bf\0\u0ebe\0\u1133\0\u1158\0\u117d\0\u11a2"+
-    "\0\u11c7\0\u11ec\0\u02bf\0\u1211\0\u1236\0\u02bf\0\u125b\0\u1280"+
-    "\0\u12a5\0\u110e\0\u12ca\0\u12ef\0\u1314\0\u02bf\0\u02bf\0\u1339"+
-    "\0\u135e\0\u057e\0\u1383\0\u13a8\0\u02bf\0\u13cd\0\u02bf\0\u02bf";
+    "\0\u029a\0\u06f0\0\u0d71\0\u0715\0\u0784\0\u0d96\0\u07a9\0\u0dbb"+
+    "\0\u0818\0\u083d\0\u0de0\0\u0e05\0\u029a\0\u0e2a\0\u0e4f\0\u029a"+
+    "\0\u09af\0\u0e74\0\u0e99\0\u0ebe\0\u029a\0\u0ee3\0\u0f08\0\u0f2d"+
+    "\0\u0f52\0\u0f77\0\u0f9c\0\u0fc1\0\u0fe6\0\u029a\0\u100b\0\u029a"+
+    "\0\u1030\0\u1055\0\u107a\0\u029a\0\u109f\0\u029a\0\u10c4\0\u029a"+
+    "\0\u0e74\0\u10e9\0\u110e\0\u1133\0\u1158\0\u117d\0\u11a2\0\u029a"+
+    "\0\u11c7\0\u11ec\0\u029a\0\u1211\0\u1236\0\u125b\0\u10c4\0\u1280"+
+    "\0\u12a5\0\u12ca\0\u029a\0\u029a\0\u12ef\0\u1314\0\u0559\0\u1339"+
+    "\0\u135e\0\u029a\0\u1383\0\u029a\0\u029a";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[176];
+    int [] result = new int[173];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -171,84 +170,84 @@ public class ApiLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\24\2\25\2\24\1\26\1\24\1\27\1\30\1\31"+
-    "\3\24\1\32\1\24\1\33\1\24\1\34\3\24\1\35"+
-    "\2\24\1\36\1\24\1\25\2\24\1\37\11\24\1\40"+
-    "\4\24\1\41\1\42\1\43\3\24\1\44\1\24\1\45"+
-    "\1\24\1\46\3\24\1\47\4\24\1\40\12\24\1\50"+
-    "\1\51\3\50\1\52\22\50\1\24\1\53\4\50\1\54"+
-    "\3\50\1\55\2\50\1\56\1\57\3\56\1\60\20\56"+
-    "\1\61\1\56\2\60\10\56\1\60\2\56\1\24\1\60"+
-    "\2\24\1\62\1\60\20\24\1\61\1\24\1\60\11\24"+
-    "\1\60\2\24\1\63\1\57\3\63\1\60\22\63\1\60"+
-    "\11\63\1\60\2\63\1\64\1\57\24\64\1\61\14\64"+
-    "\1\65\1\64\1\66\1\57\24\66\1\61\15\66\1\67"+
-    "\1\70\1\71\1\72\23\70\1\73\2\70\1\74\1\72"+
-    "\12\70\1\75\1\76\1\77\23\75\1\100\3\75\1\77"+
-    "\1\101\11\75\1\24\1\102\1\103\27\24\1\103\12\24"+
-    "\1\104\2\25\25\104\1\105\1\104\1\25\12\104\1\106"+
-    "\2\25\25\106\1\105\1\106\1\25\1\106\1\107\1\110"+
-    "\7\106\1\24\2\111\27\24\1\111\1\24\1\112\10\24"+
-    "\1\113\1\24\30\113\1\24\12\113\3\24\1\114\3\24"+
-    "\17\114\1\24\1\115\6\24\4\114\4\24\1\116\1\117"+
-    "\26\24\1\120\1\117\2\24\1\121\7\24\1\122\1\24"+
-    "\1\117\26\122\1\24\1\123\12\122\1\124\1\60\1\117"+
-    "\27\124\1\125\12\124\46\0\2\25\27\0\1\25\17\0"+
-    "\1\126\1\127\46\0\1\130\43\0\1\131\10\0\1\132"+
-    "\1\0\1\133\46\0\1\134\36\0\1\133\44\0\1\135"+
-    "\44\0\1\136\35\0\1\137\65\0\1\140\16\0\1\40"+
-    "\27\0\1\40\22\0\1\141\43\0\1\142\10\0\1\143"+
-    "\1\0\1\144\46\0\1\145\36\0\1\146\44\0\1\147"+
-    "\44\0\1\150\35\0\1\151\35\0\1\50\1\0\3\50"+
-    "\1\0\22\50\2\0\10\50\1\0\2\50\1\0\1\51"+
-    "\50\0\1\152\37\0\1\50\1\0\3\50\1\0\22\50"+
-    "\2\0\5\50\1\153\2\50\1\0\2\50\1\56\1\0"+
-    "\3\56\1\0\20\56\1\0\1\56\2\0\10\56\1\0"+
-    "\2\56\1\0\1\57\71\0\1\154\22\0\1\62\40\0"+
-    "\1\63\1\0\3\63\1\0\22\63\1\0\11\63\1\0"+
-    "\2\63\1\64\1\0\24\64\1\0\14\64\1\0\1\64"+
-    "\1\66\1\0\24\66\1\0\15\66\1\0\1\70\1\0"+
-    "\1\155\23\70\1\0\2\70\2\0\12\70\1\0\1\156"+
-    "\44\0\1\157\1\72\27\0\1\72\12\0\1\70\1\0"+
-    "\1\155\23\70\1\154\2\70\2\0\12\70\1\75\1\0"+
-    "\1\160\23\75\1\0\3\75\1\160\1\0\11\75\1\0"+
-    "\1\111\44\0\1\161\1\77\27\0\1\77\12\0\1\75"+
-    "\1\0\1\160\23\75\1\154\3\75\1\160\1\0\11\75"+
-    "\1\0\1\162\44\0\1\163\1\164\27\0\1\164\12\0"+
-    "\1\104\1\165\43\104\30\0\1\166\14\0\1\106\1\167"+
-    "\43\106\2\0\1\170\77\0\1\171\10\0\2\111\27\0"+
-    "\1\111\14\0\1\172\42\0\1\113\1\0\30\113\1\0"+
-    "\12\113\3\0\2\114\2\0\17\114\10\0\4\114\32\0"+
-    "\1\173\17\0\1\117\27\0\1\117\12\0\1\122\1\0"+
-    "\1\174\26\122\1\0\14\122\1\0\1\123\26\122\1\0"+
-    "\1\123\12\122\1\124\1\0\44\124\1\0\1\125\27\124"+
-    "\1\125\12\124\1\126\1\0\43\126\6\127\1\175\36\127"+
-    "\11\0\1\176\47\0\1\133\41\0\1\177\44\0\1\200"+
-    "\53\0\1\201\44\0\1\202\47\0\1\203\34\0\1\204"+
-    "\61\0\1\205\25\0\1\206\47\0\1\207\41\0\1\210"+
-    "\44\0\1\211\53\0\1\212\35\0\1\213\53\0\1\214"+
-    "\47\0\1\215\34\0\1\216\36\0\1\217\37\0\1\50"+
-    "\1\0\3\50\1\0\22\50\2\0\5\50\1\220\2\50"+
-    "\1\0\2\50\1\0\2\156\27\0\1\156\13\0\2\162"+
-    "\27\0\1\162\12\0\1\104\1\165\26\104\1\0\14\104"+
-    "\30\0\1\221\14\0\1\106\1\167\26\106\1\0\3\106"+
-    "\2\0\7\106\1\171\2\0\27\171\1\0\2\171\1\222"+
-    "\7\171\5\127\1\223\1\224\36\127\12\0\1\225\57\0"+
-    "\1\226\44\0\1\227\40\0\1\200\41\0\1\230\41\0"+
-    "\1\231\31\0\1\205\1\0\43\205\12\0\1\232\43\0"+
-    "\1\233\60\0\1\234\44\0\1\235\40\0\1\236\41\0"+
-    "\1\237\41\0\1\240\31\0\1\50\1\0\3\50\1\0"+
-    "\22\50\2\0\6\50\1\241\1\50\1\0\2\50\1\171"+
-    "\2\0\27\171\1\0\2\171\1\242\7\171\7\0\1\243"+
-    "\54\0\1\200\43\0\1\200\37\0\1\227\51\0\1\244"+
-    "\35\0\1\245\54\0\1\246\43\0\1\247\37\0\1\250"+
-    "\51\0\1\251\26\0\1\50\1\0\3\50\1\0\22\50"+
-    "\2\0\7\50\1\252\1\0\2\50\13\0\1\253\56\0"+
-    "\1\133\32\0\1\254\47\0\1\255\53\0\1\256\33\0"+
-    "\1\200\44\0\1\257\41\0\1\260\33\0";
+    "\1\23\2\24\2\23\1\25\1\23\1\26\1\27\1\30"+
+    "\3\23\1\31\1\23\1\32\1\23\1\33\3\23\1\34"+
+    "\2\23\1\35\1\23\1\24\2\23\1\36\11\23\1\37"+
+    "\4\23\1\40\1\41\1\42\3\23\1\43\1\23\1\44"+
+    "\1\23\1\45\3\23\1\46\4\23\1\37\12\23\1\47"+
+    "\1\50\3\47\1\51\22\47\1\23\1\52\4\47\1\53"+
+    "\3\47\1\54\2\47\1\55\1\56\3\55\1\57\20\55"+
+    "\1\60\1\55\2\57\10\55\1\57\2\55\1\23\1\57"+
+    "\2\23\1\61\1\57\20\23\1\60\1\23\1\57\11\23"+
+    "\1\57\2\23\1\62\1\56\3\62\1\57\22\62\1\57"+
+    "\11\62\1\57\2\62\1\63\1\56\24\63\1\60\14\63"+
+    "\1\64\1\63\1\65\1\56\24\65\1\60\15\65\1\66"+
+    "\1\67\1\70\1\71\23\67\1\72\2\67\1\73\1\71"+
+    "\12\67\1\74\1\75\1\76\23\74\1\77\3\74\1\76"+
+    "\1\100\11\74\1\23\1\101\1\102\27\23\1\102\12\23"+
+    "\1\103\2\24\25\103\1\104\1\103\1\24\1\103\1\105"+
+    "\10\103\1\106\2\24\25\106\1\104\1\106\1\24\1\106"+
+    "\1\105\1\107\7\106\1\110\1\23\30\110\1\23\12\110"+
+    "\3\23\1\111\3\23\17\111\1\23\1\112\6\23\4\111"+
+    "\4\23\1\113\1\114\26\23\1\115\1\114\2\23\1\116"+
+    "\7\23\1\117\1\23\1\114\26\117\1\23\1\120\12\117"+
+    "\1\121\1\57\1\114\27\121\1\122\12\121\46\0\2\24"+
+    "\27\0\1\24\17\0\1\123\1\124\46\0\1\125\43\0"+
+    "\1\126\10\0\1\127\1\0\1\130\46\0\1\131\36\0"+
+    "\1\130\44\0\1\132\44\0\1\133\35\0\1\134\65\0"+
+    "\1\135\16\0\1\37\27\0\1\37\22\0\1\136\43\0"+
+    "\1\137\10\0\1\140\1\0\1\141\46\0\1\142\36\0"+
+    "\1\143\44\0\1\144\44\0\1\145\35\0\1\146\35\0"+
+    "\1\47\1\0\3\47\1\0\22\47\2\0\10\47\1\0"+
+    "\2\47\1\0\1\50\50\0\1\147\37\0\1\47\1\0"+
+    "\3\47\1\0\22\47\2\0\5\47\1\150\2\47\1\0"+
+    "\2\47\1\55\1\0\3\55\1\0\20\55\1\0\1\55"+
+    "\2\0\10\55\1\0\2\55\1\0\1\56\71\0\1\151"+
+    "\22\0\1\61\40\0\1\62\1\0\3\62\1\0\22\62"+
+    "\1\0\11\62\1\0\2\62\1\63\1\0\24\63\1\0"+
+    "\14\63\1\0\1\63\1\65\1\0\24\65\1\0\15\65"+
+    "\1\0\1\67\1\0\1\152\23\67\1\0\2\67\2\0"+
+    "\12\67\1\0\1\153\44\0\1\154\1\71\27\0\1\71"+
+    "\12\0\1\67\1\0\1\152\23\67\1\151\2\67\2\0"+
+    "\12\67\1\74\1\0\1\155\23\74\1\0\3\74\1\155"+
+    "\1\0\11\74\1\0\1\156\44\0\1\157\1\76\27\0"+
+    "\1\76\12\0\1\74\1\0\1\155\23\74\1\151\3\74"+
+    "\1\155\1\0\11\74\1\0\1\160\44\0\1\161\1\162"+
+    "\27\0\1\162\12\0\1\103\1\163\43\103\30\0\1\164"+
+    "\16\0\1\165\42\0\1\106\1\166\43\106\35\0\1\167"+
+    "\7\0\1\110\1\0\30\110\1\0\12\110\3\0\2\111"+
+    "\2\0\17\111\10\0\4\111\32\0\1\170\17\0\1\114"+
+    "\27\0\1\114\12\0\1\117\1\0\1\171\26\117\1\0"+
+    "\14\117\1\0\1\120\26\117\1\0\1\120\12\117\1\121"+
+    "\1\0\44\121\1\0\1\122\27\121\1\122\12\121\1\123"+
+    "\1\0\43\123\6\124\1\172\36\124\11\0\1\173\47\0"+
+    "\1\130\41\0\1\174\44\0\1\175\53\0\1\176\44\0"+
+    "\1\177\47\0\1\200\34\0\1\201\61\0\1\202\25\0"+
+    "\1\203\47\0\1\204\41\0\1\205\44\0\1\206\53\0"+
+    "\1\207\35\0\1\210\53\0\1\211\47\0\1\212\34\0"+
+    "\1\213\36\0\1\214\37\0\1\47\1\0\3\47\1\0"+
+    "\22\47\2\0\5\47\1\215\2\47\1\0\2\47\1\0"+
+    "\2\153\27\0\1\153\13\0\2\156\27\0\1\156\13\0"+
+    "\2\160\27\0\1\160\12\0\1\103\1\163\26\103\1\0"+
+    "\3\103\1\0\10\103\30\0\1\216\14\0\1\106\1\166"+
+    "\26\106\1\0\3\106\2\0\7\106\1\167\2\0\27\167"+
+    "\1\0\2\167\1\217\7\167\5\124\1\220\1\221\36\124"+
+    "\12\0\1\222\57\0\1\223\44\0\1\224\40\0\1\175"+
+    "\41\0\1\225\41\0\1\226\31\0\1\202\1\0\43\202"+
+    "\12\0\1\227\43\0\1\230\60\0\1\231\44\0\1\232"+
+    "\40\0\1\233\41\0\1\234\41\0\1\235\31\0\1\47"+
+    "\1\0\3\47\1\0\22\47\2\0\6\47\1\236\1\47"+
+    "\1\0\2\47\1\167\2\0\27\167\1\0\2\167\1\237"+
+    "\7\167\7\0\1\240\54\0\1\175\43\0\1\175\37\0"+
+    "\1\224\51\0\1\241\35\0\1\242\54\0\1\243\43\0"+
+    "\1\244\37\0\1\245\51\0\1\246\26\0\1\47\1\0"+
+    "\3\47\1\0\22\47\2\0\7\47\1\247\1\0\2\47"+
+    "\13\0\1\250\56\0\1\130\32\0\1\251\47\0\1\252"+
+    "\53\0\1\253\33\0\1\175\44\0\1\254\41\0\1\255"+
+    "\33\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[5106];
+    int [] result = new int[5032];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -286,17 +285,18 @@ public class ApiLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\23\0\1\11\12\1\1\11\12\1\1\11\2\1\1\11"+
+    "\22\0\1\11\12\1\1\11\12\1\1\11\2\1\1\11"+
     "\2\1\1\11\4\1\1\11\1\1\1\11\4\1\1\11"+
-    "\4\1\1\11\14\1\1\11\1\1\2\11\6\1\23\0"+
-    "\1\1\1\11\1\0\1\1\3\0\1\1\5\0\1\11"+
-    "\1\1\2\11\1\0\1\1\2\0\1\11\4\0\1\1"+
-    "\3\0\1\11\1\0\1\11\3\0\1\11\1\1\1\11"+
-    "\1\1\1\11\7\0\1\11\2\0\1\11\2\0\2\1"+
-    "\3\0\2\11\2\0\1\1\2\0\1\11\1\0\2\11";
+    "\4\1\1\11\12\1\1\11\1\1\2\11\6\1\23\0"+
+    "\1\1\1\11\1\0\1\1\2\0\1\1\1\0\1\1"+
+    "\4\0\1\11\1\0\1\1\1\11\1\0\1\1\2\0"+
+    "\1\11\4\0\1\1\3\0\1\11\1\0\1\11\3\0"+
+    "\1\11\1\1\1\11\1\1\1\11\7\0\1\11\2\0"+
+    "\1\11\2\0\2\1\3\0\2\11\2\0\1\1\2\0"+
+    "\1\11\1\0\2\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[176];
+    int [] result = new int[173];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -701,277 +701,267 @@ public class ApiLexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             } 
             // fall through
-          case 56: break;
+          case 54: break;
           case 2: 
             { return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 57: break;
+          case 55: break;
           case 3: 
             { yypushback(yylength()); pushState(IN_DESCRIPTION);
             } 
             // fall through
-          case 58: break;
+          case 56: break;
           case 4: 
             { pushState(IN_HTTP_TARGET); return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 59: break;
+          case 57: break;
           case 5: 
             { yypushback(yylength()); pushState(IN_HTTP_REQUEST_HOST);
             } 
             // fall through
-          case 60: break;
+          case 58: break;
           case 6: 
             { onPathFinish();
             } 
             // fall through
-          case 61: break;
+          case 59: break;
           case 7: 
             { pushState(IN_HTTP_PATH_SEGMENT); return Api_SLASH;
             } 
             // fall through
-          case 62: break;
+          case 60: break;
           case 8: 
             { pushState(IN_HTTP_REQUEST_PORT); return Api_COLON;
             } 
             // fall through
-          case 63: break;
+          case 61: break;
           case 9: 
             { pushState(IN_HTTP_QUERY); return Api_QUESTION_MARK;
             } 
             // fall through
-          case 64: break;
+          case 62: break;
           case 10: 
             { return Api_HOST_VALUE;
             } 
             // fall through
-          case 65: break;
+          case 63: break;
           case 11: 
             { yypushback(yylength()); popState();
             } 
             // fall through
-          case 66: break;
+          case 64: break;
           case 12: 
             { return Api_PORT_SEGMENT;
             } 
             // fall through
-          case 67: break;
+          case 65: break;
           case 13: 
             { return Api_SEGMENT;
             } 
             // fall through
-          case 68: break;
+          case 66: break;
           case 14: 
             { return Api_QUERY_NAME;
             } 
             // fall through
-          case 69: break;
+          case 67: break;
           case 15: 
             { pushState(IN_HTTP_QUERY_VALUE); return Api_EQUALS;
             } 
             // fall through
-          case 70: break;
+          case 68: break;
           case 16: 
             { return Api_QUERY_VALUE;
             } 
             // fall through
-          case 71: break;
+          case 69: break;
           case 17: 
             { popState(); return Api_AMPERSAND;
             } 
             // fall through
-          case 72: break;
+          case 70: break;
           case 18: 
             { return Api_HEADER_FIELD_NAME;
             } 
             // fall through
-          case 73: break;
+          case 71: break;
           case 19: 
             { pushState(IN_HEADER_VALUE); return Api_COLON;
             } 
             // fall through
-          case 74: break;
+          case 72: break;
           case 20: 
             { handleContentTypeHeader(); return Api_HEADER_FIELD_VALUE;
             } 
             // fall through
-          case 75: break;
+          case 73: break;
           case 21: 
             { popState(); return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 76: break;
+          case 74: break;
           case 22: 
             { return Api_SEMICOLON;
             } 
             // fall through
-          case 77: break;
+          case 75: break;
           case 23: 
-            { reset(); return Api_MESSAGE_TEXT;
-            } 
-            // fall through
-          case 78: break;
-          case 24: 
             { return Api_MESSAGE_TEXT;
             } 
             // fall through
-          case 79: break;
-          case 25: 
+          case 76: break;
+          case 24: 
             { popState(); return Api_RELATIVE_FILE_PATH;
             } 
             // fall through
-          case 80: break;
-          case 26: 
+          case 77: break;
+          case 25: 
             { return Api_IDENTIFIER;
             } 
             // fall through
-          case 81: break;
-          case 27: 
+          case 78: break;
+          case 26: 
             { pushState(IN_DESCRIPTION_VALUE); return Api_COLON;
             } 
             // fall through
-          case 82: break;
-          case 28: 
+          case 79: break;
+          case 27: 
             { pushState(IN_DESCRIPTION_KEY); return Api_HYPHEN;
             } 
             // fall through
-          case 83: break;
-          case 29: 
+          case 80: break;
+          case 28: 
             { popState(); return Api_DESCRIPTION_KEY;
             } 
             // fall through
-          case 84: break;
-          case 30: 
+          case 81: break;
+          case 29: 
             { return Api_LINE_TEXT;
             } 
             // fall through
-          case 85: break;
-          case 31: 
+          case 82: break;
+          case 30: 
             { return Api_LINE_COMMENT;
             } 
             // fall through
-          case 86: break;
-          case 32: 
+          case 83: break;
+          case 31: 
             { return Api_MULTILINE_COMMENT;
             } 
             // fall through
-          case 87: break;
-          case 33: 
+          case 84: break;
+          case 32: 
             { pushState(IN_VARIABLE); return Api_LBRACES;
             } 
             // fall through
-          case 88: break;
-          case 34: 
+          case 85: break;
+          case 33: 
             { yypushback(yylength()); pushState(BEFORE_BODY);
             } 
             // fall through
-          case 89: break;
-          case 35: 
+          case 86: break;
+          case 34: 
             { pushState(inMessageBodyState()); return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 90: break;
-          case 36: 
-            { yypushback(yylength()); pushState(IN_INPUT_FILE);
-            } 
-            // fall through
-          case 91: break;
-          case 37: 
-            { pushState(IN_HEADER); return Api_MESSAGE_BOUNDARY;
-            } 
-            // fall through
-          case 92: break;
-          case 38: 
+          case 87: break;
+          case 35: 
             { pushState(IN_INPUT_FILE_PATH); return Api_INPUT_SIGNAL;
             } 
             // fall through
-          case 93: break;
-          case 39: 
+          case 88: break;
+          case 36: 
+            { pushState(IN_HEADER); return Api_MESSAGE_BOUNDARY;
+            } 
+            // fall through
+          case 89: break;
+          case 37: 
             { popState(); return Api_RBRACES;
             } 
             // fall through
-          case 94: break;
-          case 40: 
+          case 90: break;
+          case 38: 
             { yypushback(yylength()); pushState(IN_HTTP_REQUEST);
             } 
             // fall through
-          case 95: break;
-          case 41: 
+          case 91: break;
+          case 39: 
             { return Api_SEPARATOR;
             } 
             // fall through
-          case 96: break;
-          case 42: 
+          case 92: break;
+          case 40: 
             { return Api_PUT;
             } 
             // fall through
-          case 97: break;
-          case 43: 
+          case 93: break;
+          case 41: 
             { return Api_GET;
             } 
             // fall through
-          case 98: break;
-          case 44: 
+          case 94: break;
+          case 42: 
             { return Api_SCHEME_SEPARATOR;
             } 
             // fall through
-          case 99: break;
-          case 45: 
+          case 95: break;
+          case 43: 
             { yypushback(yylength()); reset();
             } 
             // fall through
-          case 100: break;
-          case 46: 
+          case 96: break;
+          case 44: 
             { return Api_POST;
             } 
             // fall through
-          case 101: break;
-          case 47: 
+          case 97: break;
+          case 45: 
             { return Api_HEAD;
             } 
             // fall through
-          case 102: break;
-          case 48: 
+          case 98: break;
+          case 46: 
             { return Api_HTTP;
             } 
             // fall through
-          case 103: break;
-          case 49: 
+          case 99: break;
+          case 47: 
             { reset(); return Api_MESSAGE_BOUNDARY_END;
             } 
             // fall through
-          case 104: break;
-          case 50: 
+          case 100: break;
+          case 48: 
             { return Api_PATCH;
             } 
             // fall through
-          case 105: break;
-          case 51: 
+          case 101: break;
+          case 49: 
             { return Api_TRACE;
             } 
             // fall through
-          case 106: break;
-          case 52: 
+          case 102: break;
+          case 50: 
             { return Api_HTTPS;
             } 
             // fall through
-          case 107: break;
-          case 53: 
+          case 103: break;
+          case 51: 
             { return Api_DELETE;
             } 
             // fall through
-          case 108: break;
-          case 54: 
+          case 104: break;
+          case 52: 
             { return Api_OPTIONS;
             } 
             // fall through
-          case 109: break;
-          case 55: 
+          case 105: break;
+          case 53: 
             { return Api_CONNECT;
             } 
             // fall through
-          case 110: break;
+          case 106: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
