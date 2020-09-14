@@ -46,7 +46,7 @@ public class ApiReferenceContributor extends PsiReferenceContributor {
 
         @Override
         public boolean createReferences(@NotNull PsiElement psiElement, int offset, String text, @NotNull List<PsiReference> references, boolean soft) {
-            ContainerUtil.addAll(references, new ApiFileReferenceSet(text, psiElement, offset, null, true, true, FileType.EMPTY_ARRAY).getAllReferences());
+            ContainerUtil.addAll(references, new ApiFileReferenceSet(text, psiElement, offset, null, true, true, FileType.EMPTY_ARRAY, soft).getAllReferences());
             return true;
         }
     };

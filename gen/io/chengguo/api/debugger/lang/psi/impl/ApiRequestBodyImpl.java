@@ -12,14 +12,14 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiInputFileImpl extends ApiElementImpl implements ApiInputFile {
+public class ApiRequestBodyImpl extends ApiElementImpl implements ApiRequestBody {
 
-  public ApiInputFileImpl(ASTNode node) {
+  public ApiRequestBodyImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
-    visitor.visitInputFile(this);
+    visitor.visitRequestBody(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -29,8 +29,14 @@ public class ApiInputFileImpl extends ApiElementImpl implements ApiInputFile {
 
   @Override
   @Nullable
-  public ApiFilePath getFilePath() {
-    return findChildByClass(ApiFilePath.class);
+  public ApiMultipartMessage getMultipartMessage() {
+    return findChildByClass(ApiMultipartMessage.class);
+  }
+
+  @Override
+  @Nullable
+  public ApiRequestMessageGroup getRequestMessageGroup() {
+    return findChildByClass(ApiRequestMessageGroup.class);
   }
 
 }

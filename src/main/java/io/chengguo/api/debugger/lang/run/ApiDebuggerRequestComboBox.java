@@ -32,11 +32,15 @@ public class ApiDebuggerRequestComboBox extends ComboBox<ApiDebuggerRequestCombo
         ApiVariableReplacer variableReplacer = environment == ApiEnvironment.empty() ? ApiVariableReplacer.PLAIN : ApiVariableReplacer.create(environment);
         List<RequestItem> items = findAllRequestItems(psiFile, variableReplacer);
         RequestItem selectedRequestItem = findSelectedRequestItem(items, selectedIndex);
+        System.out.println("items: " + items);
+        System.out.println("selectedRequestItem: " + selectedRequestItem);
         setModel(new CollectionComboBoxModel<>(items));
         setSelectedItem(selectedRequestItem);
         setRenderer(new ColoredListCellRenderer<RequestItem>() {
             @Override
             protected void customizeCellRenderer(@NotNull JList<? extends RequestItem> list, RequestItem item, int index, boolean selected, boolean hasFocus) {
+                System.out.println("list = " + list + ", item = " + item + ", index = " + index + ", selected = " + selected + ", hasFocus = " + hasFocus);
+                if (item == null) return;
                 append(String.format("%d # ", item.index), SimpleTextAttributes.GRAYED_ATTRIBUTES);
                 append(String.format(" %s ", item.getMethod()), SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES);
                 append(StringUtil.notNullize(item.getUri()));
@@ -59,7 +63,7 @@ public class ApiDebuggerRequestComboBox extends ComboBox<ApiDebuggerRequestCombo
         for (int index = 0; index < apiBlocks.length; index++) {
             try {
                 ApiDebuggerRequest request = ApiBlockConverter.toApiBlock(apiBlocks[index], variableReplacer);
-                results.add(new RequestItem(index + 1, request.method, request.url, true));
+                results.add(new RequestItem(index + 1, request.getMethod(), request.getUrl(), true));
             } catch (ApiRequestInvalidException e) {
                 LOG.error(e);
                 results.add(new RequestItem(index + 1, null, null, false));

@@ -6,6 +6,7 @@ import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.progress.*;
 import com.intellij.openapi.progress.impl.BackgroundableProcessIndicator;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.net.HttpConfigurable;
 import com.intellij.util.net.IdeHttpClientHelpers;
 import com.intellij.util.net.ssl.CertificateManager;
@@ -22,18 +23,22 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 
@@ -49,7 +54,7 @@ public class ApiDebuggerExecutor {
 
     public void execute(ApiDebuggerRequest request, IDebugListener debugListener, boolean isWithProgress) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        Task.Backgroundable task = new Task.Backgroundable(mProject, request.url, true) {
+        Task.Backgroundable task = new Task.Backgroundable(mProject, request.getUrl(), true) {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
                 try {
@@ -68,10 +73,7 @@ public class ApiDebuggerExecutor {
                     HttpEntity entity = response.getEntity();
                     InputStream body = entity.getContent();
                     ContentType contentType = ContentType.getOrDefault(entity);
-                    Charset charset = contentType.getCharset();
-                    if (charset == null) {
-                        charset = HTTP.DEF_CONTENT_CHARSET;
-                    }
+                    Charset charset = (charset = contentType.getCharset()) == null ? HTTP.DEF_CONTENT_CHARSET : charset;
                     CountingInputStream countingInputStream = new CountingInputStream(body);
                     InputStreamReader in = new InputStreamReader(countingInputStream, charset);
                     StringBuilder sb = new StringBuilder();
@@ -100,8 +102,29 @@ public class ApiDebuggerExecutor {
     }
 
     private HttpRequestBase createHttpRequest(ApiDebuggerRequest apiRequest) {
-        final String url = apiRequest.url;
-        final String method = apiRequest.method;
+        HttpRequestBase httpRequest = createHttpRequestBase(apiRequest);
+        addHeaders(httpRequest, apiRequest);
+        addEntity(httpRequest, apiRequest);
+        return httpRequest;
+    }
+
+    private void addEntity(HttpRequestBase httpRequest, ApiDebuggerRequest apiRequest) {
+        if (httpRequest instanceof HttpEntityEnclosingRequestBase) {
+            HttpEntityEnclosingRequestBase request = (HttpEntityEnclosingRequestBase) httpRequest;
+            HttpEntity entity = new StringEntity(StringUtil.notNullize(apiRequest.mBodyText), StandardCharsets.UTF_8);
+            // MultipartEntityBuilder
+            request.setEntity(entity);
+        }
+    }
+
+    private void addHeaders(HttpRequestBase httpRequest, ApiDebuggerRequest apiRequest) {
+        apiRequest.getHeaders().forEach(httpRequest::addHeader);
+    }
+
+    @NotNull
+    private HttpRequestBase createHttpRequestBase(ApiDebuggerRequest apiRequest) {
+        String url = apiRequest.getFullUrl();
+        String method = apiRequest.getMethod();
         if (Api_GET.equals(method)) {
             return new HttpGet(url);
         } else if (Api_POST.equals(method)) {

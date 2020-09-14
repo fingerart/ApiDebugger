@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ApiPsiImplUtils {
+public class ApiPsiImplUtil {
 
     /**
      * 获取 Identifier Element
@@ -36,11 +36,6 @@ public class ApiPsiImplUtils {
         return element == null ? "" : element.getText();
     }
 
-    public static PsiElement getRelativeFilePathElement(ApiInputFile element) {
-        ASTNode node = element.getNode().findChildByType(ApiTypes.Api_RELATIVE_FILE_PATH);
-        return node != null ? null : node.getPsi();
-    }
-
     /**
      * 获取HTTP scheme，默认http
      *
@@ -49,6 +44,12 @@ public class ApiPsiImplUtils {
      */
     public static String getScheme(ApiScheme element) {
         return element == null ? ApiTypes.Api_HTTP.toString() : element.getText();
+    }
+
+    @Nullable
+    public static String getSegment(ApiSegmentBlock element) {
+        ASTNode node = element.getNode().findChildByType(ApiTypes.Api_SEGMENT);
+        return node == null ? null : node.getText();
     }
 
     /**
@@ -65,8 +66,9 @@ public class ApiPsiImplUtils {
         if (element.getPort() != null) {
             sb.append(ApiTypes.Api_COLON).append(replacer.getValue(element.getPort()));
         }
-        for (ApiSegmentBlock segment : element.getSegmentBlockList()) {
-            sb.append(segment.getText());
+        for (ApiSegmentBlock segmentBlock : element.getSegmentBlockList()) {
+            String segment = StringUtil.notNullize(getSegment(segmentBlock));
+            sb.append(ApiTypes.Api_SLASH).append(segment);
         }
         return sb.toString();
     }

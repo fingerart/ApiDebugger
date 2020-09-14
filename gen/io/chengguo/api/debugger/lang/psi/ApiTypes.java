@@ -12,6 +12,7 @@ public interface ApiTypes {
 
   IElementType Api_API_BLOCK = new ApiElementType("Api_API_BLOCK");
   IElementType Api_DESCRIPTION = new ApiElementType("Api_DESCRIPTION");
+  IElementType Api_FILE_PATH = new ApiElementType("Api_FILE_PATH");
   IElementType Api_HEADER_FIELD = new ApiElementType("Api_HEADER_FIELD");
   IElementType Api_HEADER_FIELD_KEY = new ApiElementType("Api_HEADER_FIELD_KEY");
   IElementType Api_HEADER_FIELD_VAL = new ApiElementType("Api_HEADER_FIELD_VAL");
@@ -26,6 +27,7 @@ public interface ApiTypes {
   IElementType Api_QUERY_PARAMETER_KEY = new ApiElementType("Api_QUERY_PARAMETER_KEY");
   IElementType Api_QUERY_PARAMETER_VALUE = new ApiElementType("Api_QUERY_PARAMETER_VALUE");
   IElementType Api_REQUEST = new ApiElementType("Api_REQUEST");
+  IElementType Api_REQUEST_BODY = new ApiElementType("Api_REQUEST_BODY");
   IElementType Api_REQUEST_LINE = new ApiElementType("Api_REQUEST_LINE");
   IElementType Api_REQUEST_MESSAGE_GROUP = new ApiElementType("Api_REQUEST_MESSAGE_GROUP");
   IElementType Api_REQUEST_TARGET = new ApiElementType("Api_REQUEST_TARGET");
@@ -82,6 +84,9 @@ public interface ApiTypes {
       else if (type == Api_DESCRIPTION) {
         return new ApiDescriptionImpl(node);
       }
+      else if (type == Api_FILE_PATH) {
+        return new ApiFilePathImpl(node);
+      }
       else if (type == Api_HEADER_FIELD) {
         return new ApiHeaderFieldImpl(node);
       }
@@ -123,6 +128,9 @@ public interface ApiTypes {
       }
       else if (type == Api_REQUEST) {
         return new ApiRequestImpl(node);
+      }
+      else if (type == Api_REQUEST_BODY) {
+        return new ApiRequestBodyImpl(node);
       }
       else if (type == Api_REQUEST_LINE) {
         return new ApiRequestLineImpl(node);

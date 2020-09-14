@@ -21,7 +21,7 @@ public class ApiEnvironmentInputFilter extends DefaultFileTypeSpecificInputFilte
         return super.acceptInput(file) && isApiEnvFile(file);
     }
 
-    public static boolean isApiEnvFile(@Nullable final VirtualFile file) {
+    public static boolean isApiEnvFile(@Nullable VirtualFile file) {
         if (file != null) {
             String fileName = file.getName();
             return ArrayUtil.contains(fileName, ENV_FILE_NAMES) || isPrivateEnvFile(fileName);

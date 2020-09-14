@@ -6,7 +6,6 @@ import io.chengguo.api.debugger.lang.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiRequestTarget;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.List;
 
 public abstract class ApiRequestTargetMixin extends ApiElementImpl implements ApiRequestTarget {
@@ -16,11 +15,11 @@ public abstract class ApiRequestTargetMixin extends ApiElementImpl implements Ap
 
     @Override
     public String getUrl(ApiVariableReplacer replacer) {
-        return ApiPsiImplUtils.getUrl(this, replacer);
+        return ApiPsiImplUtil.getUrl(this, replacer);
     }
 
     @Override
     public List<Pair<String, String>> getParameters(ApiVariableReplacer replacer) {
-        return ApiPsiImplUtils.getParameters(getQuery(), replacer);
+        return ApiPsiImplUtil.getParameters(getQuery(), replacer);
     }
 }

@@ -57,7 +57,7 @@ public abstract class RunApiRequestAction extends ApiDebuggerBaseAction {
                 @NotNull
                 @Override
                 public String getName() {
-                    return request.url;
+                    return request.getUrl();
                 }
 
                 @Nullable

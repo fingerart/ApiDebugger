@@ -70,7 +70,7 @@ public abstract class ApiEnvironment {
     }
 
     private static class ApiEmptyEnvironment extends ApiEnvironment {
-        private static final ApiEmptyEnvironment EMPTY_ENVIRONMENT = new ApiEmptyEnvironment("<Default Environment>");
+        private static final ApiEmptyEnvironment EMPTY_ENVIRONMENT = new ApiEmptyEnvironment("<NO Environment>");
 
         public ApiEmptyEnvironment(String name) {
             super(name);

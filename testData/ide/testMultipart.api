@@ -12,8 +12,7 @@ sdfsf
 Content-Disposition: form-data; name="file"; filename="channel.ini"
 Content-Type: application/octet-stream
 
-
-< ./
+< ../variable/testVariableReplacer.api
 --__X__BOUNDARY__--
 
 ###

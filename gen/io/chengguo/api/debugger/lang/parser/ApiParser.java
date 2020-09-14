@@ -172,6 +172,18 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // RELATIVE_FILE_PATH
+  public static boolean file_path(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "file_path")) return false;
+    if (!nextTokenIs(builder, Api_RELATIVE_FILE_PATH)) return false;
+    boolean result;
+    Marker marker = enter_section_(builder);
+    result = consumeToken(builder, Api_RELATIVE_FILE_PATH);
+    exit_section_(builder, marker, Api_FILE_PATH, result);
+    return result;
+  }
+
+  /* ********************************************************** */
   // ':' port
   static boolean full_port(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "full_port")) return false;
@@ -356,26 +368,17 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '< ' RELATIVE_FILE_PATH
+  // '< ' file_path
   public static boolean input_file(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "input_file")) return false;
     if (!nextTokenIs(builder, Api_INPUT_SIGNAL)) return false;
     boolean result, pinned;
     Marker marker = enter_section_(builder, level, _NONE_, Api_INPUT_FILE, null);
-    result = consumeTokens(builder, 1, Api_INPUT_SIGNAL, Api_RELATIVE_FILE_PATH);
+    result = consumeToken(builder, Api_INPUT_SIGNAL);
     pinned = result; // pin = 1
+    result = result && file_path(builder, level + 1);
     exit_section_(builder, level, marker, result, pinned, null);
     return result || pinned;
-  }
-
-  /* ********************************************************** */
-  // request_message_group  | multipart_message
-  static boolean message_body(PsiBuilder builder, int level) {
-    if (!recursion_guard_(builder, level, "message_body")) return false;
-    boolean result;
-    result = request_message_group(builder, level + 1);
-    if (!result) result = multipart_message(builder, level + 1);
-    return result;
   }
 
   /* ********************************************************** */
@@ -655,7 +658,7 @@ public class ApiParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // request_line header_field* message_body?
+  // request_line header_field* request_body?
   public static boolean request(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request")) return false;
     boolean result;
@@ -678,11 +681,23 @@ public class ApiParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // message_body?
+  // request_body?
   private static boolean request_2(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "request_2")) return false;
-    message_body(builder, level + 1);
+    request_body(builder, level + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // request_message_group  | multipart_message
+  public static boolean request_body(PsiBuilder builder, int level) {
+    if (!recursion_guard_(builder, level, "request_body")) return false;
+    boolean result;
+    Marker marker = enter_section_(builder, level, _NONE_, Api_REQUEST_BODY, "<request body>");
+    result = request_message_group(builder, level + 1);
+    if (!result) result = multipart_message(builder, level + 1);
+    exit_section_(builder, level, marker, result, false, null);
+    return result;
   }
 
   /* ********************************************************** */

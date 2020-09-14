@@ -12,15 +12,10 @@ public class ApiVariableReplacerTest extends ApiDebuggerTestCase {
     private VirtualFile mApiFile;
     private ApiVariableReplacer variableReplacer;
 
-    @Override
-    protected String getBasePath() {
-        return "variable";
-    }
-
     public void setUp() throws Exception {
         super.setUp();
-        myFixture.copyFileToProject("api.env.json");
-        mApiFile = myFixture.copyFileToProject("testVariableReplacer.api");
+        myFixture.copyFileToProject("env/api.env.json");
+        mApiFile = myFixture.copyFileToProject("variable/testVariableReplacer.api");
         variableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(getProject(), "product"));
     }
 

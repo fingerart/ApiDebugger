@@ -15,7 +15,7 @@ public abstract class ApiBlockMixin extends ApiElementImpl implements ApiApiBloc
     @Nullable
     @Override
     public ApiDescription getDescriptionByKey(String key) {
-        return ApiPsiImplUtils.getDescriptionByKey(getDescriptionList(), key);
+        return ApiPsiImplUtil.getDescriptionByKey(getDescriptionList(), key);
     }
 
     @Override

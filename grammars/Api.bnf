@@ -12,7 +12,7 @@
   psiImplClassSuffix="Impl"
   psiPackage="io.chengguo.api.debugger.lang.psi"
   psiImplPackage="io.chengguo.api.debugger.lang.psi.impl"
-  psiImplUtilClass="io.chengguo.api.debugger.lang.psi.impl.ApiPsiImplUtils"
+  psiImplUtilClass="io.chengguo.api.debugger.lang.psi.impl.ApiPsiImplUtil"
   psiTreeUtilClass="io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil"
 
   elementTypePrefix="Api_"
@@ -54,7 +54,7 @@
   extends("variable") = "io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"
   extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
   extends("header_field") = "io.chengguo.api.debugger.lang.psi.impl.ApiHeaderFieldMixin"
-  extends("input_file") = "io.chengguo.api.debugger.lang.psi.impl.ApiInputFileMixin"
+  extends("file_path") = "io.chengguo.api.debugger.lang.psi.impl.ApiFilePathMixin"
   implements("api_block") = "io.chengguo.api.debugger.lang.psi.ApiBlockElement"
   extends("api_block") = "io.chengguo.api.debugger.lang.psi.impl.ApiBlockMixin"
   implements("request_target")="io.chengguo.api.debugger.lang.psi.ApiRequestTargetElement"
@@ -71,7 +71,7 @@ api_block ::= comment* description* comment* request {
 
 description ::= '-' DESCRIPTION_KEY ':' LINE_TEXT? {pin=1}
 
-request ::= request_line header_field* message_body?
+request ::= request_line header_field* request_body?
 
 request_line ::= method request_target
 
@@ -105,9 +105,10 @@ header_field_key ::= (variable | HEADER_FIELD_NAME)+
 header_field_val ::= header_field_val_item (';' header_field_val_item?)*
 private header_field_val_item ::= (variable | HEADER_FIELD_VALUE)+
 
-private message_body ::= request_message_group  | multipart_message
+request_body ::= request_message_group  | multipart_message
 request_message_group ::= (MESSAGE_TEXT | input_file)+
-input_file ::= '< ' RELATIVE_FILE_PATH {pin=1}
+input_file ::= '< ' file_path {pin=1}
+file_path ::= RELATIVE_FILE_PATH
 multipart_message ::= MESSAGE_BOUNDARY (multipart_field MESSAGE_BOUNDARY)* (multipart_field MESSAGE_BOUNDARY_END)
 multipart_field ::= header_field* request_message_group?
 
