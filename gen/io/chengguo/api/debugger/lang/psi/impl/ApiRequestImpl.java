@@ -35,14 +35,20 @@ public class ApiRequestImpl extends ApiRequestMixin implements ApiRequest {
 
   @Override
   @Nullable
-  public ApiRequestBody getRequestBody() {
-    return findChildByClass(ApiRequestBody.class);
+  public ApiMultipartMessage getMultipartMessage() {
+    return findChildByClass(ApiMultipartMessage.class);
   }
 
   @Override
   @NotNull
   public ApiRequestLine getRequestLine() {
     return findNotNullChildByClass(ApiRequestLine.class);
+  }
+
+  @Override
+  @Nullable
+  public ApiRequestMessageGroup getRequestMessageGroup() {
+    return findChildByClass(ApiRequestMessageGroup.class);
   }
 
 }

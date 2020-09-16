@@ -4,7 +4,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -129,5 +129,10 @@ public class ApiPsiImplUtil {
             }
         }
         return null;
+    }
+
+    @NotNull
+    public static List<ApiRequestMessageElement> getRequestMessages(ApiBodyMixin element) {
+        return ApiPsiTreeUtil.getChildrenOfTypeAsList(element, ApiRequestMessageElement.class);
     }
 }

@@ -10,9 +10,9 @@ import com.intellij.psi.PsiElement;
 public interface ApiHeaderField extends ApiKeyValueElement {
 
   @NotNull
-  ApiHeaderFieldKey getHeaderFieldKey();
+  ApiHeaderKey getHeaderKey();
 
   @Nullable
-  ApiHeaderFieldVal getHeaderFieldVal();
+  ApiHeaderValue getHeaderValue();
 
 }

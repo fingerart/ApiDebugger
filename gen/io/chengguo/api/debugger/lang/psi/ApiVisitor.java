@@ -24,11 +24,11 @@ public class ApiVisitor extends PsiElementVisitor {
     visitKeyValueElement(o);
   }
 
-  public void visitHeaderFieldKey(@NotNull ApiHeaderFieldKey o) {
+  public void visitHeaderKey(@NotNull ApiHeaderKey o) {
     visitElement(o);
   }
 
-  public void visitHeaderFieldVal(@NotNull ApiHeaderFieldVal o) {
+  public void visitHeaderValue(@NotNull ApiHeaderValue o) {
     visitElement(o);
   }
 
@@ -37,7 +37,11 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitInputFile(@NotNull ApiInputFile o) {
-    visitElement(o);
+    visitRequestMessageElement(o);
+  }
+
+  public void visitMessageBody(@NotNull ApiMessageBody o) {
+    visitRequestMessageElement(o);
   }
 
   public void visitMethod(@NotNull ApiMethod o) {
@@ -49,7 +53,7 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitMultipartMessage(@NotNull ApiMultipartMessage o) {
-    visitElement(o);
+    visitBodyMessageElement(o);
   }
 
   public void visitPort(@NotNull ApiPort o) {
@@ -76,16 +80,13 @@ public class ApiVisitor extends PsiElementVisitor {
     visitRequestElement(o);
   }
 
-  public void visitRequestBody(@NotNull ApiRequestBody o) {
-    visitElement(o);
-  }
-
   public void visitRequestLine(@NotNull ApiRequestLine o) {
     visitElement(o);
   }
 
   public void visitRequestMessageGroup(@NotNull ApiRequestMessageGroup o) {
-    visitElement(o);
+    visitRequestMessageGroupElement(o);
+    // visitBodyMessageElement(o);
   }
 
   public void visitRequestTarget(@NotNull ApiRequestTarget o) {
@@ -108,6 +109,10 @@ public class ApiVisitor extends PsiElementVisitor {
     visitElement(o);
   }
 
+  public void visitBodyMessageElement(@NotNull ApiBodyMessageElement o) {
+    visitElement(o);
+  }
+
   public void visitKeyValueElement(@NotNull ApiKeyValueElement o) {
     visitElement(o);
   }
@@ -117,6 +122,14 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitRequestElement(@NotNull ApiRequestElement o) {
+    visitElement(o);
+  }
+
+  public void visitRequestMessageElement(@NotNull ApiRequestMessageElement o) {
+    visitElement(o);
+  }
+
+  public void visitRequestMessageGroupElement(@NotNull ApiRequestMessageGroupElement o) {
     visitElement(o);
   }
 

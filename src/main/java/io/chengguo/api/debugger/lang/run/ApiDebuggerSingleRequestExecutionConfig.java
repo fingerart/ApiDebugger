@@ -2,7 +2,7 @@ package io.chengguo.api.debugger.lang.run;
 
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.containers.ContainerUtil;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.psi.ApiDescription;
 
@@ -29,6 +29,6 @@ public class ApiDebuggerSingleRequestExecutionConfig implements ApiDebuggerExecu
         if (StringUtil.isNotEmpty(descrTitle)) {
             return descrTitle;
         }
-        return apiApiBlock.getRequest().getRequestLine().getRequestTarget().getUrl(ApiVariableReplacer.EMPTY);
+        return apiApiBlock.getRequest().getRequestLine().getRequestTarget().getUrl(ApiVariableReplacer.PLAIN);
     }
 }

@@ -10,7 +10,7 @@ import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.ApiDebuggerIcons;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
 import io.chengguo.api.debugger.lang.ApiPsiUtil;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.psi.ApiRequestTarget;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +29,15 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
     private final Icon mIcon;
     private final Boolean mIsValid;
 
+
+    public static ApiStructureViewElement create(PsiElement psiElement, String text, Icon icon) {
+        return new ApiStructureViewElement(psiElement, text, icon, true);
+    }
+
+    public static StructureViewTreeElement createApiBlockViewTreeElement(ApiApiBlock apiBlock, String text, Boolean isValid) {
+        return new ApiStructureViewElement(apiBlock, text, ApiDebuggerIcons.API_REQUEST_NAV, isValid);
+    }
+
     public ApiStructureViewElement(PsiElement psiElement, String text, Icon icon, Boolean isValid) {
         super(psiElement);
         mPresentableText = text;
@@ -45,7 +54,7 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
             ApiApiBlock[] apiBlocks = ApiPsiUtil.findApiBlocks(element.getContainingFile());
             for (ApiApiBlock apiBlock : apiBlocks) {
                 ApiRequestTarget requestTarget = apiBlock.getRequest().getRequestLine().getRequestTarget();
-                String baseUrl = requestTarget.getUrl(ApiVariableReplacer.EMPTY);
+                String baseUrl = requestTarget.getUrl(ApiVariableReplacer.PLAIN);
                 treeElements.add(createApiBlockViewTreeElement(apiBlock, baseUrl, true));
             }
             return treeElements;
@@ -67,17 +76,9 @@ public class ApiStructureViewElement extends PsiTreeElementBase<PsiElement> impl
     @Nullable
     @Override
     public TextAttributesKey getTextAttributesKey() {
-        if (!this.mIsValid) {
+        if (!mIsValid) {
             return CodeInsightColors.ERRORS_ATTRIBUTES;
         }
         return null;
-    }
-
-    public static ApiStructureViewElement create(PsiElement psiElement, String text, Icon icon) {
-        return new ApiStructureViewElement(psiElement, text, icon, true);
-    }
-
-    public static StructureViewTreeElement createApiBlockViewTreeElement(ApiApiBlock apiBlock, String text, Boolean isValid) {
-        return new ApiStructureViewElement(apiBlock, text, ApiDebuggerIcons.API_REQUEST_NAV, isValid);
     }
 }

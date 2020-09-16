@@ -52,13 +52,16 @@
   extends("description") = "io.chengguo.api.debugger.lang.psi.impl.ApiDescriptionMixin"
   implements("variable") = "io.chengguo.api.debugger.lang.psi.ApiNamedElement"
   extends("variable") = "io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"
-  extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
   extends("header_field") = "io.chengguo.api.debugger.lang.psi.impl.ApiHeaderFieldMixin"
   extends("file_path") = "io.chengguo.api.debugger.lang.psi.impl.ApiFilePathMixin"
   implements("api_block") = "io.chengguo.api.debugger.lang.psi.ApiBlockElement"
   extends("api_block") = "io.chengguo.api.debugger.lang.psi.impl.ApiBlockMixin"
-  implements("request_target")="io.chengguo.api.debugger.lang.psi.ApiRequestTargetElement"
-  extends("request_target")="io.chengguo.api.debugger.lang.psi.impl.ApiRequestTargetMixin"
+  implements("request_target") = "io.chengguo.api.debugger.lang.psi.ApiRequestTargetElement"
+  extends("request_target") = "io.chengguo.api.debugger.lang.psi.impl.ApiRequestTargetMixin"
+  implements("request_message_group") = "io.chengguo.api.debugger.lang.psi.ApiRequestMessageGroupElement"
+  extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
+  implements("request_message_group|multipart_message") = "io.chengguo.api.debugger.lang.psi.ApiBodyMessageElement"
+  implements("message_body|input_file") = "io.chengguo.api.debugger.lang.psi.ApiRequestMessageElement"
 }
 
 apiFile ::= api_*
@@ -100,13 +103,14 @@ query_parameter ::= query_parameter_key ('=' query_parameter_value)?
 query_parameter_key ::= (variable | QUERY_NAME)+
 query_parameter_value ::= (variable | QUERY_VALUE)+
 
-header_field ::= header_field_key (':' header_field_val?)?
-header_field_key ::= (variable | HEADER_FIELD_NAME)+
-header_field_val ::= header_field_val_item (';' header_field_val_item?)*
-private header_field_val_item ::= (variable | HEADER_FIELD_VALUE)+
+header_field ::= header_key (':' header_value?)?
+header_key ::= (variable | HEADER_FIELD_NAME)+
+header_value ::= header_field_value_item (';' header_field_value_item?)*
+private header_field_value_item ::= (variable | HEADER_FIELD_VALUE)+
 
-request_body ::= request_message_group  | multipart_message
-request_message_group ::= (MESSAGE_TEXT | input_file)+
+private request_body ::= request_message_group  | multipart_message
+request_message_group ::= (message_body | input_file)+
+message_body ::= MESSAGE_TEXT
 input_file ::= '< ' file_path {pin=1}
 file_path ::= RELATIVE_FILE_PATH
 multipart_message ::= MESSAGE_BOUNDARY (multipart_field MESSAGE_BOUNDARY)* (multipart_field MESSAGE_BOUNDARY_END)

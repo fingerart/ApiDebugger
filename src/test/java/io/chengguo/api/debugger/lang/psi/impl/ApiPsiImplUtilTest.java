@@ -4,11 +4,8 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.psi.PsiElement;
 import io.chengguo.api.debugger.ApiDebuggerTestCase;
 import io.chengguo.api.debugger.lang.ApiPsiUtil;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
-import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
-import io.chengguo.api.debugger.lang.psi.ApiDescription;
-import io.chengguo.api.debugger.lang.psi.ApiRequestTarget;
-import io.chengguo.api.debugger.lang.psi.ApiVariable;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.psi.*;
 
 import java.util.List;
 
@@ -82,5 +79,28 @@ public class ApiPsiImplUtilTest extends ApiDebuggerTestCase {
         assertNotNull(titleDescription);
         String value = titleDescription.getValue();
         assertEquals("Create Dummy File", value);
+    }
+
+    public void testGetRequestMessages() {
+        ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
+        assertNotNull(apiBlock);
+        ApiRequestBody requestBody = apiBlock.getRequest().getRequestBody();
+        assertNotNull(requestBody);
+        ApiRequestMessageGroup requestMessageGroup = requestBody.getRequestMessageGroup();
+        assertNotNull(requestMessageGroup);
+        List<ApiRequestMessageElement> requestMessages = requestMessageGroup.getRequestMessageList();
+        assertSize(2, requestMessages);
+
+        ApiRequestMessageElement messageBodyElement = requestMessages.get(0);
+        assertInstanceOf(messageBodyElement, ApiMessageBody.class);
+        String messageBody = messageBodyElement.getText();
+        assertEquals("k1=v1&k2=v2", messageBody);
+
+        ApiRequestMessageElement inputFileElement = requestMessages.get(1);
+        assertInstanceOf(inputFileElement, ApiInputFile.class);
+        ApiFilePath filePathElement = ((ApiInputFile) inputFileElement).getFilePath();
+        assertNotNull(filePathElement);
+        String filePath = filePathElement.getText();
+        assertEquals("filepath", filePath);
     }
 }

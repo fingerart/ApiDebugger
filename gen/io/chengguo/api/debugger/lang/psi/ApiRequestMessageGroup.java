@@ -7,9 +7,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiRequestMessageGroup extends ApiElement {
+public interface ApiRequestMessageGroup extends ApiRequestMessageGroupElement, ApiBodyMessageElement {
 
   @NotNull
   List<ApiInputFile> getInputFileList();
+
+  @NotNull
+  List<ApiMessageBody> getMessageBodyList();
 
 }

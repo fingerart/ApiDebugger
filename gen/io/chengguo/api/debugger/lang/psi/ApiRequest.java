@@ -13,9 +13,12 @@ public interface ApiRequest extends ApiRequestElement {
   List<ApiHeaderField> getHeaderFieldList();
 
   @Nullable
-  ApiRequestBody getRequestBody();
+  ApiMultipartMessage getMultipartMessage();
 
   @NotNull
   ApiRequestLine getRequestLine();
+
+  @Nullable
+  ApiRequestMessageGroup getRequestMessageGroup();
 
 }

@@ -12,14 +12,14 @@ import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 import io.chengguo.api.debugger.lang.psi.*;
 
-public class ApiHeaderFieldValImpl extends ApiElementImpl implements ApiHeaderFieldVal {
+public class ApiHeaderKeyImpl extends ApiElementImpl implements ApiHeaderKey {
 
-  public ApiHeaderFieldValImpl(ASTNode node) {
+  public ApiHeaderKeyImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ApiVisitor visitor) {
-    visitor.visitHeaderFieldVal(this);
+    visitor.visitHeaderKey(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
