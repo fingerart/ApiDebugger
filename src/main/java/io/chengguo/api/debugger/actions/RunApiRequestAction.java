@@ -12,7 +12,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.lang.ApiBlockConverter;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.run.ApiDebuggerSingleRequestExecutionConfig;

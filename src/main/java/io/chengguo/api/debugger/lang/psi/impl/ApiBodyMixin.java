@@ -1,19 +1,18 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.*;
+import com.intellij.psi.ElementManipulators;
+import com.intellij.psi.LiteralTextEscaper;
+import com.intellij.psi.PsiLanguageInjectionHost;
+import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.util.PsiTreeUtil;
-import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
-import io.chengguo.api.debugger.lang.psi.ApiRequest;
+import io.chengguo.api.debugger.lang.psi.ApiRequestMessageElement;
+import io.chengguo.api.debugger.lang.psi.ApiRequestMessageGroupElement;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public abstract class ApiBodyMixin extends ApiElementImpl implements PsiLanguageInjectionHost {
+public abstract class ApiBodyMixin extends ApiElementImpl implements PsiLanguageInjectionHost, ApiRequestMessageGroupElement {
 
     public ApiBodyMixin(@NotNull ASTNode node) {
         super(node);
@@ -39,5 +38,10 @@ public abstract class ApiBodyMixin extends ApiElementImpl implements PsiLanguage
     @Override
     public PsiReference[] getReferences() {
         return ReferenceProvidersRegistry.getReferencesFromProviders(this);
+    }
+
+    @Override
+    public List<ApiRequestMessageElement> getRequestMessageList() {
+        return ApiPsiImplUtil.getRequestMessages(this);
     }
 }

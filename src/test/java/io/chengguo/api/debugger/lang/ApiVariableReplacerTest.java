@@ -6,6 +6,7 @@ import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import io.chengguo.api.debugger.lang.psi.ApiQuery;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 
 public class ApiVariableReplacerTest extends ApiDebuggerTestCase {
 

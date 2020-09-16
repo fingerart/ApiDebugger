@@ -4,15 +4,15 @@ import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.containers.ContainerUtil;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.psi.ApiBodyMessageElement;
+import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
 import io.chengguo.api.debugger.lang.psi.ApiRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public abstract class ApiRequestMixin extends ApiElementImpl implements ApiRequest {
@@ -62,5 +62,11 @@ public abstract class ApiRequestMixin extends ApiElementImpl implements ApiReque
 
     private static boolean isValidMimeType(@Nullable String value) {
         return StringUtil.isNotEmpty(value) && !StringUtil.containsAnyChar(value, "\";,");
+    }
+
+    @Nullable
+    @Override
+    public ApiBodyMessageElement getBody() {
+        return ApiPsiTreeUtil.getChildOfType(this, ApiBodyMessageElement.class);
     }
 }

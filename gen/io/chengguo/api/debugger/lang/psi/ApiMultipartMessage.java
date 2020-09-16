@@ -7,7 +7,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiMultipartMessage extends ApiElement {
+public interface ApiMultipartMessage extends ApiBodyMessageElement {
 
   @NotNull
   List<ApiMultipartField> getMultipartFieldList();

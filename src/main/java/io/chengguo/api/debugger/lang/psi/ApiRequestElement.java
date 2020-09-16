@@ -1,7 +1,7 @@
 package io.chengguo.api.debugger.lang.psi;
 
 import com.intellij.openapi.util.Pair;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,4 +20,7 @@ public interface ApiRequestElement extends ApiElement {
 
     @NotNull
     public List<Pair<String, String>> getHeaders(ApiVariableReplacer replacer);
+
+    @Nullable
+    public ApiBodyMessageElement getBody();
 }

@@ -29,14 +29,14 @@ public class ApiHeaderFieldImpl extends ApiHeaderFieldMixin implements ApiHeader
 
   @Override
   @NotNull
-  public ApiHeaderFieldKey getHeaderFieldKey() {
-    return findNotNullChildByClass(ApiHeaderFieldKey.class);
+  public ApiHeaderKey getHeaderKey() {
+    return findNotNullChildByClass(ApiHeaderKey.class);
   }
 
   @Override
   @Nullable
-  public ApiHeaderFieldVal getHeaderFieldVal() {
-    return findChildByClass(ApiHeaderFieldVal.class);
+  public ApiHeaderValue getHeaderValue() {
+    return findChildByClass(ApiHeaderValue.class);
   }
 
 }

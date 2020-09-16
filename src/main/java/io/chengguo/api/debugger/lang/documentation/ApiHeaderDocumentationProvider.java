@@ -70,7 +70,7 @@ public class ApiHeaderDocumentationProvider extends DocumentationProviderEx {
             if (contextElement != null && ApiPsiUtil.isOfTypes(contextElement, ApiTokenTypes.HEADER)) {
                 contextElement = contextElement.getParent();
             }
-            if (contextElement instanceof ApiHeaderFieldKey || contextElement instanceof ApiHeaderFieldVal) {
+            if (contextElement instanceof ApiHeaderKey || contextElement instanceof ApiHeaderValue) {
                 return contextElement.getParent();
             }
         }

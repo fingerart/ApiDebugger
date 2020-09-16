@@ -1,7 +1,7 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiDescription;
 import org.jetbrains.annotations.NotNull;
 

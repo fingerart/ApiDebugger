@@ -33,4 +33,10 @@ public class ApiRequestMessageGroupImpl extends ApiBodyMixin implements ApiReque
     return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiInputFile.class);
   }
 
+  @Override
+  @NotNull
+  public List<ApiMessageBody> getMessageBodyList() {
+    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiMessageBody.class);
+  }
+
 }

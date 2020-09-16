@@ -7,7 +7,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiHeaderFieldKey extends ApiElement {
+public interface ApiHeaderValue extends ApiElement {
 
   @NotNull
   List<ApiVariable> getVariableList();

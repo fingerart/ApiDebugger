@@ -15,7 +15,7 @@ import com.intellij.util.xmlb.annotations.Attribute;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.lang.ApiPsiFile;
 import io.chengguo.api.debugger.lang.ApiPsiUtil;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.ApiApiBlock;
 import org.jdom.Element;

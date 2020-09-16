@@ -2,7 +2,7 @@ package io.chengguo.api.debugger.lang.psi;
 
 import io.chengguo.api.debugger.ApiDebuggerTestCase;
 import io.chengguo.api.debugger.lang.ApiPsiUtil;
-import io.chengguo.api.debugger.lang.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 
 import java.util.List;
