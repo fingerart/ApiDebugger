@@ -7,7 +7,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiHeaderField extends ApiKeyValueElement {
+public interface ApiHeaderField extends ApiKeyValueElement, ApiHeaderFieldElement {
 
   @NotNull
   ApiHeaderKey getHeaderKey();

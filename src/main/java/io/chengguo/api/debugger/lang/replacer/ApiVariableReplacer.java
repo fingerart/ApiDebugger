@@ -3,7 +3,9 @@ package io.chengguo.api.debugger.lang.replacer;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
+import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
+import io.chengguo.api.debugger.lang.psi.ApiTypes;
 import io.chengguo.api.debugger.lang.psi.ApiVariable;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,14 +25,14 @@ public class ApiVariableReplacer extends ApiElementReplacer<ApiVariable> {
     }
 
     @Override
-    public String getTargetValue(ApiVariable element) {
-        String value = mEnvironment.getVariableValue(element.getName());
-        return StringUtil.notNullize(value);
+    protected boolean isTargetElement(PsiElement element) {
+        return ApiPsiUtil.isOfType(element, ApiTypes.Api_VARIABLE);
     }
 
     @Override
-    protected boolean isTargetElement(PsiElement element) {
-        return element instanceof ApiVariable;
+    public String getTargetValue(ApiVariable element) {
+        String value = mEnvironment.getVariableValue(element.getName());
+        return StringUtil.notNullize(value);
     }
 
     private static class ApiVariablePlainReplacer extends ApiVariableReplacer {

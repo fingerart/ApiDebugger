@@ -15,23 +15,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
+import static io.chengguo.api.debugger.constants.HeaderFields.CONTENT_DISPOSITION;
+import static io.chengguo.api.debugger.constants.HeaderFields.CONTENT_TYPE;
+
 public class HttpHeadersDictionary {
-    private static final List<String> CONTENT_TYPES = ContainerUtil.newArrayList("application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "audio/mpeg", "audio/vorbis", "multipart/form-data", "text/css", "text/html", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif");
+    private static final List<String> CONTENT_TYPES = ContainerUtil.newArrayList("application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/octet-stream", "application/sql", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "audio/mpeg", "audio/vorbis", "multipart/form-data", "text/css", "text/html", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif");
     private static final List<String> ENCODINGS = ContainerUtil.newArrayList("compress", "deflate", "exi", "gzip", "identity", "pack200-gzip", "br", "bzip2", "lzma", "peerdist", "sdch", "xpress", "xz");
+    private static final List<String> CONTENT_DISPOSITIONS = ContainerUtil.newArrayList("form-data");
     private static Map<String, HttpHeaderDocumentation> ourHeaders = null;
     private static Map<String, List<String>> ourHeaderValues;
     private static final Map<String, List<String>> ourHeaderOptionNames = new HashMap<>();
 
     static {
-        ourHeaderOptionNames.put("Content-Type", ContainerUtil.newArrayList("charset", "boundary"));
+        ourHeaderOptionNames.put(CONTENT_TYPE, ContainerUtil.newArrayList("charset", "boundary"));
+        ourHeaderOptionNames.put(CONTENT_DISPOSITION, ContainerUtil.newArrayList("name", "filename"));
     }
 
     @NotNull
     public static synchronized Map<String, HttpHeaderDocumentation> getHeaders() {
-        if (HttpHeadersDictionary.ourHeaders == null) {
-            HttpHeadersDictionary.ourHeaders = readHeaders();
+        if (ourHeaders == null) {
+            ourHeaders = readHeaders();
         }
-        return HttpHeadersDictionary.ourHeaders;
+        return ourHeaders;
     }
 
     @Nullable
@@ -69,33 +74,34 @@ public class HttpHeadersDictionary {
 
     @NotNull
     public static Collection<String> getHeaderValues(@NotNull Project project, @NotNull String headerName) {
-        if (HttpHeadersDictionary.ourHeaderValues == null) {
-            HttpHeadersDictionary.ourHeaderValues = readHeaderValues();
+        if (ourHeaderValues == null) {
+            ourHeaderValues = readHeaderValues();
         }
         if (StringUtil.equals(headerName, "Accept")) {
             ApiDebuggerDataProvider[] extensions = ApiDebuggerDataProvider.EP_NAME.getExtensions();
             if (extensions.length > 0) {
-                List<String> mimeTypes = new ArrayList<>(HttpHeadersDictionary.ourHeaderValues.get(headerName));
+                List<String> mimeTypes = new ArrayList<>(ourHeaderValues.get(headerName));
                 for (ApiDebuggerDataProvider extension : extensions) {
                     Collections.addAll(mimeTypes, extension.getAllMimeTypes(project));
                 }
                 return mimeTypes;
             }
         }
-        return HttpHeadersDictionary.ourHeaderValues.containsKey(headerName) ? HttpHeadersDictionary.ourHeaderValues.get(headerName) : ContainerUtil.emptyList();
+        return ourHeaderValues.containsKey(headerName) ? ourHeaderValues.get(headerName) : ContainerUtil.emptyList();
     }
 
     @NotNull
     public static Collection<String> getHeaderOptionNames(@NotNull String headerName) {
-        return HttpHeadersDictionary.ourHeaderOptionNames.containsKey(headerName) ? HttpHeadersDictionary.ourHeaderOptionNames.get(headerName) : ContainerUtil.emptyList();
+        return ourHeaderOptionNames.containsKey(headerName) ? ourHeaderOptionNames.get(headerName) : ContainerUtil.emptyList();
     }
 
     @NotNull
     private static Map<String, List<String>> readHeaderValues() {
         Map<String, List<String>> values = new HashMap<>();
-        values.put("Accept", HttpHeadersDictionary.CONTENT_TYPES);
-        values.put("Content-Type", HttpHeadersDictionary.CONTENT_TYPES);
-        values.put("Accept-Encoding", HttpHeadersDictionary.ENCODINGS);
+        values.put("Accept", CONTENT_TYPES);
+        values.put("Content-Type", CONTENT_TYPES);
+        values.put("Accept-Encoding", ENCODINGS);
+        values.put("Content-Disposition", CONTENT_DISPOSITIONS);
         return values;
     }
 }

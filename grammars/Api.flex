@@ -117,7 +117,7 @@ MESSAGE_TEXT_BOUNDARY = [^ \t\f\r\n\-\<\#] ([^\r\n]* ([\r\n]+ [^\r\n\-\<\#])? )*
 MESSAGE_BOUNDARY = "--" [^ \r\n\t\f]*
 MESSAGE_BOUNDARY_END = "--" [^ \r\n\t\f]* "--"
 INPUT_SIGNAL = "< "
-INPUT_FILE_PATH = [^\t\f\r\n]+
+INPUT_FILE_PATH = [^\t\f\r\n ] ([^\r\n]* [^\t\f\r\n ])?
 
 
 %state IN_HTTP_REQUEST
@@ -257,6 +257,7 @@ INPUT_FILE_PATH = [^\t\f\r\n]+
 }
 
 <IN_INPUT_FILE_PATH> {
+    ({WS} | {NL})+                              { return TokenType.WHITE_SPACE; }
     {INPUT_FILE_PATH}                           { popState(); return Api_RELATIVE_FILE_PATH; }
 }
 

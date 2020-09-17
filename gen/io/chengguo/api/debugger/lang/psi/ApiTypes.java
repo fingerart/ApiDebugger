@@ -14,6 +14,7 @@ public interface ApiTypes {
   IElementType Api_DESCRIPTION = new ApiElementType("Api_DESCRIPTION");
   IElementType Api_FILE_PATH = new ApiElementType("Api_FILE_PATH");
   IElementType Api_HEADER_FIELD = new ApiElementType("Api_HEADER_FIELD");
+  IElementType Api_HEADER_FIELD_VALUE_ITEM = new ApiElementType("Api_HEADER_FIELD_VALUE_ITEM");
   IElementType Api_HEADER_KEY = new ApiElementType("Api_HEADER_KEY");
   IElementType Api_HEADER_VALUE = new ApiElementType("Api_HEADER_VALUE");
   IElementType Api_HOST = new ApiElementType("Api_HOST");
@@ -89,6 +90,9 @@ public interface ApiTypes {
       }
       else if (type == Api_HEADER_FIELD) {
         return new ApiHeaderFieldImpl(node);
+      }
+      else if (type == Api_HEADER_FIELD_VALUE_ITEM) {
+        return new ApiHeaderFieldValueItemImpl(node);
       }
       else if (type == Api_HEADER_KEY) {
         return new ApiHeaderKeyImpl(node);

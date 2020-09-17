@@ -4,22 +4,22 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.psi.PsiElement;
 import io.chengguo.api.debugger.ApiDebuggerTestCase;
 import io.chengguo.api.debugger.lang.ApiPsiUtil;
-import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
+import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.*;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 
 import java.util.List;
 
 public class ApiPsiImplUtilTest extends ApiDebuggerTestCase {
 
-    @Override
-    protected String getBasePath() {
-        return "util";
-    }
+    private ApiVariableReplacer mVariableReplacer;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        myFixture.configureByFile("testPsiImplUtils.api");
+        myFixture.copyFileToProject("env/api.env.json");
+        myFixture.configureByFile("util/testPsiImplUtils.api");
+        mVariableReplacer = ApiVariableReplacer.create(ApiEnvironment.create(getProject(), "product"));
     }
 
     public void testGetIdentifier() {
@@ -68,7 +68,7 @@ public class ApiPsiImplUtilTest extends ApiDebuggerTestCase {
         assertNotNull(apiBlock);
         ApiDescription titleDescription = apiBlock.getDescriptionByKey("title");
         assertNotNull(titleDescription);
-        String key = titleDescription.getKey();
+        String key = titleDescription.getKey();// test point
         assertEquals("title", key);
     }
 
@@ -77,18 +77,16 @@ public class ApiPsiImplUtilTest extends ApiDebuggerTestCase {
         assertNotNull(apiBlock);
         ApiDescription titleDescription = apiBlock.getDescriptionByKey("title");
         assertNotNull(titleDescription);
-        String value = titleDescription.getValue();
+        String value = titleDescription.getValue();// test point
         assertEquals("Create Dummy File", value);
     }
 
     public void testGetRequestMessages() {
         ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
         assertNotNull(apiBlock);
-        ApiRequestBody requestBody = apiBlock.getRequest().getRequestBody();
-        assertNotNull(requestBody);
-        ApiRequestMessageGroup requestMessageGroup = requestBody.getRequestMessageGroup();
-        assertNotNull(requestMessageGroup);
-        List<ApiRequestMessageElement> requestMessages = requestMessageGroup.getRequestMessageList();
+        ApiBodyMessageElement requestBody = apiBlock.getRequest().getBody();
+        assertInstanceOf(requestBody, ApiRequestMessageGroup.class);
+        List<ApiRequestMessageElement> requestMessages = ((ApiRequestMessageGroup) requestBody).getRequestMessageList();// test point
         assertSize(2, requestMessages);
 
         ApiRequestMessageElement messageBodyElement = requestMessages.get(0);
@@ -102,5 +100,14 @@ public class ApiPsiImplUtilTest extends ApiDebuggerTestCase {
         assertNotNull(filePathElement);
         String filePath = filePathElement.getText();
         assertEquals("filepath", filePath);
+    }
+
+    public void testGetHeaderFieldItem() {
+        ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
+        assertNotNull(apiBlock);
+        ApiHeaderField contentTypeField = apiBlock.getRequest().getHeaderField("Content-Type");
+        assertNotNull(contentTypeField);
+        String boundary = contentTypeField.getHeaderValueItem("boundary", mVariableReplacer);
+        assertEquals("go language", boundary);
     }
 }

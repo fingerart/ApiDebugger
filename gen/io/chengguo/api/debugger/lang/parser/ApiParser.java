@@ -249,18 +249,18 @@ public class ApiParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // (variable | HEADER_FIELD_VALUE)+
-  static boolean header_field_value_item(PsiBuilder builder, int level) {
+  public static boolean header_field_value_item(PsiBuilder builder, int level) {
     if (!recursion_guard_(builder, level, "header_field_value_item")) return false;
-    if (!nextTokenIs(builder, "", Api_HEADER_FIELD_VALUE, Api_LBRACES)) return false;
+    if (!nextTokenIs(builder, "<header field value item>", Api_HEADER_FIELD_VALUE, Api_LBRACES)) return false;
     boolean result;
-    Marker marker = enter_section_(builder);
+    Marker marker = enter_section_(builder, level, _NONE_, Api_HEADER_FIELD_VALUE_ITEM, "<header field value item>");
     result = header_field_value_item_0(builder, level + 1);
     while (result) {
       int pos = current_position_(builder);
       if (!header_field_value_item_0(builder, level + 1)) break;
       if (!empty_element_parsed_guard_(builder, "header_field_value_item", pos)) break;
     }
-    exit_section_(builder, marker, null, result);
+    exit_section_(builder, level, marker, result, false, null);
     return result;
   }
 

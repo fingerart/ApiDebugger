@@ -7,12 +7,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ApiMultipartField extends ApiMultipartFieldElement {
+public interface ApiHeaderFieldValueItem extends ApiElement {
 
   @NotNull
-  List<ApiHeaderField> getHeaderFieldList();
-
-  @Nullable
-  ApiRequestMessageGroup getRequestMessageGroup();
+  List<ApiVariable> getVariableList();
 
 }

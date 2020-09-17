@@ -5,15 +5,17 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.lang.psi.ApiBodyMessageElement;
-import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
-import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
+import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import io.chengguo.api.debugger.lang.psi.ApiRequest;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.chengguo.api.debugger.constants.HeaderFields.CONTENT_TYPE;
 
 public abstract class ApiRequestMixin extends ApiElementImpl implements ApiRequest {
     public ApiRequestMixin(@NotNull ASTNode node) {
@@ -23,14 +25,7 @@ public abstract class ApiRequestMixin extends ApiElementImpl implements ApiReque
     @Nullable
     @Override
     public String getMimeType() {
-        ApiHeaderField contentTypeField = getHeaderField("Content-Type");
-        if (contentTypeField != null) {
-            String mimeType = StringUtil.toLowerCase(contentTypeField.getValue());
-            if (isValidMimeType(mimeType)) {
-                return mimeType;
-            }
-        }
-        return null;
+        return ApiPsiImplUtil.getMimeType(this);
     }
 
     @Nullable
@@ -42,26 +37,13 @@ public abstract class ApiRequestMixin extends ApiElementImpl implements ApiReque
     @Nullable
     @Override
     public ApiHeaderField getHeaderField(String key) {
-        for (ApiHeaderField headerField : getHeaderFieldList()) {
-            if (StringUtil.equalsIgnoreCase(key, headerField.getKey())) {
-                return headerField;
-            }
-        }
-        return null;
+        return ApiPsiImplUtil.getHeaderField(getHeaderFieldList(), key);
     }
 
     @NotNull
     @Override
     public List<Pair<String, String>> getHeaders(ApiVariableReplacer replacer) {
-        List<Pair<String, String>> result = new ArrayList<>();
-        for (ApiHeaderField headerField : getHeaderFieldList()) {
-            result.add(Pair.create(headerField.getKey(replacer), headerField.getValue(replacer)));
-        }
-        return result;
-    }
-
-    private static boolean isValidMimeType(@Nullable String value) {
-        return StringUtil.isNotEmpty(value) && !StringUtil.containsAnyChar(value, "\";,");
+        return ApiPsiImplUtil.getHeaders(this, replacer);
     }
 
     @Nullable

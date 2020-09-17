@@ -7,12 +7,12 @@ import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import io.chengguo.api.debugger.lang.psi.ApiRequestMessageElement;
-import io.chengguo.api.debugger.lang.psi.ApiRequestMessageGroupElement;
+import io.chengguo.api.debugger.lang.psi.ApiRequestMessageGroup;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public abstract class ApiBodyMixin extends ApiElementImpl implements PsiLanguageInjectionHost, ApiRequestMessageGroupElement {
+public abstract class ApiBodyMixin extends ApiElementImpl implements PsiLanguageInjectionHost, ApiRequestMessageGroup {
 
     public ApiBodyMixin(@NotNull ASTNode node) {
         super(node);
@@ -40,6 +40,7 @@ public abstract class ApiBodyMixin extends ApiElementImpl implements PsiLanguage
         return ReferenceProvidersRegistry.getReferencesFromProviders(this);
     }
 
+    @NotNull
     @Override
     public List<ApiRequestMessageElement> getRequestMessageList() {
         return ApiPsiImplUtil.getRequestMessages(this);

@@ -4,14 +4,19 @@ import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
-import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
+import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.lang.psi.*;
+import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static io.chengguo.api.debugger.constants.HeaderFields.CONTENT_DISPOSITION;
+import static io.chengguo.api.debugger.constants.HeaderFields.CONTENT_TYPE;
 
 public class ApiPsiImplUtil {
 
@@ -132,7 +137,84 @@ public class ApiPsiImplUtil {
     }
 
     @NotNull
-    public static List<ApiRequestMessageElement> getRequestMessages(ApiBodyMixin element) {
+    public static List<ApiRequestMessageElement> getRequestMessages(ApiRequestMessageGroup element) {
         return ApiPsiTreeUtil.getChildrenOfTypeAsList(element, ApiRequestMessageElement.class);
+    }
+
+    @NotNull
+    public static List<ApiRequestMessageElement> getRequestMessages(ApiMultipartField element) {
+        ApiRequestMessageGroup messageGroup = element.getRequestMessageGroup();
+        return messageGroup != null ? messageGroup.getRequestMessageList() : ContainerUtil.emptyList();
+    }
+
+    @NotNull
+    public static List<ApiHeaderFieldValueItem> getHeaderValueItems(ApiHeaderField element) {
+        return ApiPsiTreeUtil.getChildrenOfTypeAsList(element.getHeaderValue(), ApiHeaderFieldValueItem.class);
+    }
+
+    @Nullable
+    public static String getHeaderValueItem(ApiHeaderField element, String itemName, ApiVariableReplacer replacer) {
+        for (ApiHeaderFieldValueItem valueItem : element.getHeaderValueItems()) {
+            String item = replacer.getValue(valueItem).trim();
+            if (item.length() > itemName.length() + 1 && item.startsWith(itemName) && item.charAt(itemName.length()) == '=') {
+                return StringUtil.unquoteString(item.substring(itemName.length() + 1));
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public static ApiHeaderField getHeaderField(List<ApiHeaderField> headerFields, String key) {
+        for (ApiHeaderField headerField : headerFields) {
+            if (StringUtil.equalsIgnoreCase(key, headerField.getKey())) {
+                return headerField;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public static ApiHeaderField getContentDispositionField(ApiMultipartField element) {
+        for (ApiHeaderField headerField : element.getHeaderFieldList()) {
+            if (CONTENT_DISPOSITION.equals(headerField.getKey())) {
+                return headerField;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public static ApiHeaderField getContentTypeField(ApiMultipartField element) {
+        for (ApiHeaderField headerField : element.getHeaderFieldList()) {
+            if (CONTENT_TYPE.equals(headerField.getKey())) {
+                return headerField;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public static String getMimeType(ApiRequest element) {
+        ApiHeaderField contentTypeField = element.getHeaderField(CONTENT_TYPE);
+        if (contentTypeField != null) {
+            String mimeType = StringUtil.toLowerCase(contentTypeField.getValue());
+            if (isValidMimeType(mimeType)) {
+                return mimeType;
+            }
+        }
+        return null;
+    }
+
+    private static boolean isValidMimeType(@Nullable String value) {
+        return StringUtil.isNotEmpty(value) && !StringUtil.containsAnyChar(value, "\";,");
+    }
+
+    @NotNull
+    public static List<Pair<String, String>> getHeaders(ApiRequest element, ApiVariableReplacer replacer) {
+        List<Pair<String, String>> result = new ArrayList<>();
+        for (ApiHeaderField headerField : element.getHeaderFieldList()) {
+            result.add(Pair.create(headerField.getKey(replacer), headerField.getValue(replacer)));
+        }
+        return result;
     }
 }

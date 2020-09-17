@@ -1,6 +1,6 @@
 package io.chengguo.api.debugger.lang.run;
 
-public class ApiRequestInvalidException extends  Exception {
+public class ApiRequestInvalidException extends Exception {
     public ApiRequestInvalidException() {
     }
 

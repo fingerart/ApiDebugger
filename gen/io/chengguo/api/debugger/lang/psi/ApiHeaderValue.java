@@ -10,6 +10,6 @@ import com.intellij.psi.PsiElement;
 public interface ApiHeaderValue extends ApiElement {
 
   @NotNull
-  List<ApiVariable> getVariableList();
+  List<ApiHeaderFieldValueItem> getHeaderFieldValueItemList();
 
 }

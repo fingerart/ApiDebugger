@@ -33,7 +33,7 @@ public abstract class ApiElementReplacer<T extends PsiElement> {
         if (element instanceof ApiElement) {
             StringBuilder builder = new StringBuilder();
             for (PsiElement child = element.getFirstChild(); child != null; child = child.getNextSibling()) {
-                if (isTargetElement(element)) {
+                if (isTargetElement(child)) {
                     builder.append(getTargetValue(((T) child)));
                 } else if (filter.value(child)) {
                     if (ApiPsiUtil.isLeafElement(child) || !deepTraversal) {

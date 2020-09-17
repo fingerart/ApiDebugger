@@ -52,6 +52,7 @@
   extends("description") = "io.chengguo.api.debugger.lang.psi.impl.ApiDescriptionMixin"
   implements("variable") = "io.chengguo.api.debugger.lang.psi.ApiNamedElement"
   extends("variable") = "io.chengguo.api.debugger.lang.psi.impl.ApiVariableMixin"
+  implements("header_field") = "io.chengguo.api.debugger.lang.psi.ApiHeaderFieldElement"
   extends("header_field") = "io.chengguo.api.debugger.lang.psi.impl.ApiHeaderFieldMixin"
   extends("file_path") = "io.chengguo.api.debugger.lang.psi.impl.ApiFilePathMixin"
   implements("api_block") = "io.chengguo.api.debugger.lang.psi.ApiBlockElement"
@@ -62,6 +63,8 @@
   extends("request_message_group") = "io.chengguo.api.debugger.lang.psi.impl.ApiBodyMixin"
   implements("request_message_group|multipart_message") = "io.chengguo.api.debugger.lang.psi.ApiBodyMessageElement"
   implements("message_body|input_file") = "io.chengguo.api.debugger.lang.psi.ApiRequestMessageElement"
+  implements("multipart_field") = "io.chengguo.api.debugger.lang.psi.ApiMultipartFieldElement"
+  extends("multipart_field") = "io.chengguo.api.debugger.lang.psi.impl.ApiMultipartFieldMixin"
 }
 
 apiFile ::= api_*
@@ -106,7 +109,7 @@ query_parameter_value ::= (variable | QUERY_VALUE)+
 header_field ::= header_key (':' header_value?)?
 header_key ::= (variable | HEADER_FIELD_NAME)+
 header_value ::= header_field_value_item (';' header_field_value_item?)*
-private header_field_value_item ::= (variable | HEADER_FIELD_VALUE)+
+header_field_value_item ::= (variable | HEADER_FIELD_VALUE)+
 
 private request_body ::= request_message_group  | multipart_message
 request_message_group ::= (message_body | input_file)+
