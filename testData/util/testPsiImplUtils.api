@@ -2,7 +2,7 @@
 - title: Create Dummy File
 
 PUT https://echo.tenon.dev/put/userinfo/?name=apiDebugger&age=18&address={{address}}
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/x-www-form-urlencoded; boundary={{language}} language
 
 k1=v1&k2=v2
 < filepath

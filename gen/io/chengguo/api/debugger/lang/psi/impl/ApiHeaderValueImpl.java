@@ -29,8 +29,8 @@ public class ApiHeaderValueImpl extends ApiElementImpl implements ApiHeaderValue
 
   @Override
   @NotNull
-  public List<ApiVariable> getVariableList() {
-    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiVariable.class);
+  public List<ApiHeaderFieldValueItem> getHeaderFieldValueItemList() {
+    return ApiPsiTreeUtil.getChildrenOfTypeAsList(this, ApiHeaderFieldValueItem.class);
   }
 
 }

@@ -22,6 +22,11 @@ public class ApiVisitor extends PsiElementVisitor {
 
   public void visitHeaderField(@NotNull ApiHeaderField o) {
     visitKeyValueElement(o);
+    // visitHeaderFieldElement(o);
+  }
+
+  public void visitHeaderFieldValueItem(@NotNull ApiHeaderFieldValueItem o) {
+    visitElement(o);
   }
 
   public void visitHeaderKey(@NotNull ApiHeaderKey o) {
@@ -49,7 +54,7 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitMultipartField(@NotNull ApiMultipartField o) {
-    visitElement(o);
+    visitMultipartFieldElement(o);
   }
 
   public void visitMultipartMessage(@NotNull ApiMultipartMessage o) {
@@ -114,6 +119,10 @@ public class ApiVisitor extends PsiElementVisitor {
   }
 
   public void visitKeyValueElement(@NotNull ApiKeyValueElement o) {
+    visitElement(o);
+  }
+
+  public void visitMultipartFieldElement(@NotNull ApiMultipartFieldElement o) {
     visitElement(o);
   }
 

@@ -12,6 +12,7 @@ import com.intellij.psi.PsiFileSystemItem;
 import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet;
 import com.intellij.util.containers.ContainerUtil;
+import io.chengguo.api.debugger.lang.psi.ApiFilePath;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

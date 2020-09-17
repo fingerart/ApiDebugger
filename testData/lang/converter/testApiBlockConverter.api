@@ -1,0 +1,34 @@
+- title: converter1
+
+POST https://{{host}}/post?name=tenon&age=18&language={{language}}
+Content-Type: {{ct_octet_stream}}
+
+< testPostFile.txt
+
+###
+
+- title: converter2
+
+POST http://{{host}}/post
+Content-Type: multipart/form-data; boundary={{boundary}}
+
+--__X__BOUNDARY__
+Content-Disposition: form-data; name="txt"; filename="testPostFile.txt"
+Content-Type: {{ct_text_plain}}
+
+< testPostFile.txt
+
+--__X__BOUNDARY__
+Content-Disposition: form-data; name="userInfo"
+Content-Type: application/json
+
+{
+    "username": "go"
+}
+
+--__X__BOUNDARY__
+Content-Disposition: form-data; name="avator"; filename="avator.png"
+Content-Type: image/png
+
+< testPostFile.png
+--__X__BOUNDARY__--

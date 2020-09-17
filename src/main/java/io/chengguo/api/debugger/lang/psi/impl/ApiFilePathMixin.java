@@ -1,9 +1,11 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.PsiReference;
 import com.intellij.util.ArrayUtil;
 import io.chengguo.api.debugger.lang.psi.ApiFilePath;
+import io.chengguo.api.debugger.lang.reference.ApiFileReferenceSet;
 import io.chengguo.api.debugger.lang.reference.ApiReferenceContributor;
 import org.jetbrains.annotations.NotNull;
 
