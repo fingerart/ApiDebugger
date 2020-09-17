@@ -12,10 +12,16 @@ sdfsf
 Content-Disposition: form-data; name="file"; filename="channel.ini"
 Content-Type: application/octet-stream
 
+
 < ../variable/testVariableReplacer.api
 --__X__BOUNDARY__--
 
 ###
 
-###
+DELETE http://httpbin.org/delete
+Content-Type: multipart/form-data; charset=utf-8; boundary=bb
 
+--bb
+Content-Disposition: form-data; filename=""
+
+--bb--

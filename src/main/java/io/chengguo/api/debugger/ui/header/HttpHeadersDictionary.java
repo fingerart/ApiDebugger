@@ -33,16 +33,12 @@ public class HttpHeadersDictionary {
 
     @NotNull
     public static synchronized Map<String, HttpHeaderDocumentation> getHeaders() {
-        if (ourHeaders == null) {
-            ourHeaders = readHeaders();
-        }
-        return ourHeaders;
+        return ourHeaders == null ? (ourHeaders = readHeaders()) : ourHeaders;
     }
 
     @Nullable
     public static HttpHeaderDocumentation getDocumentation(@NotNull String fieldName) {
-        Map<String, HttpHeaderDocumentation> headers = getHeaders();
-        return headers.get(fieldName);
+        return getHeaders().get(fieldName);
     }
 
     @NotNull
@@ -58,10 +54,9 @@ public class HttpHeadersDictionary {
                     for (JsonElement element : array) {
                         if (element.isJsonObject()) {
                             HttpHeaderDocumentation header = HttpHeaderDocumentation.read(element.getAsJsonObject());
-                            if (header == null) {
-                                continue;
+                            if (header != null) {
+                                result.put(header.getName(), header);
                             }
-                            result.put(header.getName(), header);
                         }
                     }
                 }

@@ -75,7 +75,7 @@ public class ApiBlockConverter {
             String fileName = contentDispositionField != null ? contentDispositionField.getHeaderValueItem(MULTIPART_FILENAME, replacer) : null;
             ContentType contentType = field.getContentType(replacer);
             if (StringUtil.isNotEmpty(fileName)) {
-                File file = getFileToUpload(field);
+                File file = getFileToUpload(field, replacer);
                 formBodyPart = ApiFormBodyPart.create(fieldName, contentType, file);
             } else {
                 String content = getTextToSend(field.getContainingFile(), field.getRequestMessages(), replacer);
@@ -89,7 +89,14 @@ public class ApiBlockConverter {
         return result;
     }
 
-    private static File getFileToUpload(ApiMultipartField field) {
+    private static File getFileToUpload(ApiMultipartField field, ApiVariableReplacer replacer) throws ApiRequestInvalidException {
+        List<ApiRequestMessageElement> requestMessages = field.getRequestMessages();
+        if (requestMessages.size() == 1 && requestMessages.get(0) instanceof ApiInputFile) {
+            // 单个文件
+            return getFileToSend((ApiInputFile) requestMessages.get(0), replacer);
+        }else {
+            // 多个文件
+        }
         return null;
     }
 
