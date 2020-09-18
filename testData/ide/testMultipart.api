@@ -1,7 +1,7 @@
 
 - title: Multipart
 
-POST http://httpbin.org:{{port}}/post/
+POST http://httpbin.org:{{port}}/post
 Content-Type: multipart/form-data; charset=utf-8; boundary=__X__BOUNDARY__
 
 --__X__BOUNDARY__
@@ -12,16 +12,22 @@ sdfsf
 Content-Disposition: form-data; name="file"; filename="channel.ini"
 Content-Type: application/octet-stream
 
-
 < ../variable/testVariableReplacer.api
 --__X__BOUNDARY__--
 
 ###
 
-DELETE http://httpbin.org/delete
-Content-Type: multipart/form-data; charset=utf-8; boundary=bb
+- title: Delete请求
+
+POST http://httpbin.org/post
+Content-Type: multipart/form-data; charset=utf-8; boundary=bba
 
 --bb
-Content-Disposition: form-data; filename=""
+Content-Disposition: form-data;
 
+1
+--bb
+Content-Disposition: form-data;
+
+2
 --bb--

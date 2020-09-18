@@ -2,7 +2,6 @@ package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.text.StringUtil;
-import com.jediterm.terminal.emulator.charset.CharacterSets;
 import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
 import io.chengguo.api.debugger.lang.psi.ApiMultipartField;
 import io.chengguo.api.debugger.lang.psi.ApiRequestMessageElement;
@@ -35,8 +34,7 @@ public abstract class ApiMultipartFieldMixin extends ApiElementImpl implements A
             try {
                 String value = contentTypeField.getValue(replacer);
                 contentType = ContentType.parse(StringUtil.notNullize(StringUtil.toLowerCase(value), "*/*"));
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
         if (contentType.getCharset() == null) {

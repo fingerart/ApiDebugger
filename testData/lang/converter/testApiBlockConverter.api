@@ -31,4 +31,8 @@ Content-Disposition: form-data; name="avator"; filename="avator.png"
 Content-Type: image/png
 
 < testPostFile.png
+
+--__X__BOUNDARY__
+Content-Disposition: form-data;
+
 --__X__BOUNDARY__--

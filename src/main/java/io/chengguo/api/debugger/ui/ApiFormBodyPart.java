@@ -1,5 +1,6 @@
 package io.chengguo.api.debugger.ui;
 
+import com.intellij.openapi.util.text.StringUtil;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.FormBodyPart;
 import org.apache.http.entity.mime.FormBodyPartBuilder;
@@ -8,18 +9,18 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class ApiFormBodyPart {
     protected ContentType mContentType;
     protected String mFieldName;
-    protected Map<String, String> mHeaders;
+    protected List<KeyValuePair> mHeaders;
 
     public ApiFormBodyPart(String fieldName, ContentType contentType) {
         mContentType = contentType;
         mFieldName = fieldName;
-        mHeaders = new HashMap<>();
+        mHeaders = new ArrayList<>();
     }
 
     public static ApiFormBodyPart create(String fieldName, ContentType contentType, String content) {
@@ -35,31 +36,48 @@ public abstract class ApiFormBodyPart {
     }
 
     public void addHeader(String key, String value) {
-        mHeaders.put(key, value);
+        mHeaders.add(KeyValuePair.create(key, value));
     }
 
     public void removeHeader(String key) {
-        mHeaders.remove(key);
+        mHeaders.removeIf(pair -> StringUtil.equals(pair.key, key));
+    }
+
+    @Nullable
+    public KeyValuePair getHeader(String key) {
+        return mHeaders.stream().filter(pair -> StringUtil.equals(pair.key, key)).findFirst().orElse(null);
+    }
+
+    public String getFieldName() {
+        return mFieldName;
+    }
+
+    public ContentType getContentType() {
+        return mContentType;
     }
 
     protected FormBodyPartBuilder fillHeaders(FormBodyPartBuilder builder) {
-        mHeaders.forEach(builder::addField);
+        mHeaders.forEach(pair -> builder.addField(pair.key, pair.value));
         return builder;
     }
 
-    public abstract FormBodyPart toFormBodyPartBuilder();
+    public abstract FormBodyPart toFormBodyPart();
 
     public static class ApiFormBodyStringPart extends ApiFormBodyPart {
 
-        private String mContent;
+        private final String mContent;
 
         public ApiFormBodyStringPart(String fieldName, ContentType contentType, String content) {
             super(fieldName, contentType);
             mContent = content;
         }
 
+        public String getContent() {
+            return mContent;
+        }
+
         @Override
-        public FormBodyPart toFormBodyPartBuilder() {
+        public FormBodyPart toFormBodyPart() {
             FormBodyPartBuilder builder = FormBodyPartBuilder.create(mFieldName, new StringBody(mContent, mContentType));
             return fillHeaders(builder).build();
         }
@@ -67,8 +85,8 @@ public abstract class ApiFormBodyPart {
 
     public static class ApiFormBodyFilePart extends ApiFormBodyPart {
 
-        private File mFile;
-        private String mFileName;
+        private final File mFile;
+        private final String mFileName;
 
         public ApiFormBodyFilePart(String fieldName, ContentType contentType, File file) {
             this(fieldName, contentType, file, null);
@@ -80,8 +98,16 @@ public abstract class ApiFormBodyPart {
             mFileName = fileName;
         }
 
+        public File getFile() {
+            return mFile;
+        }
+
+        public String getFileName() {
+            return mFileName;
+        }
+
         @Override
-        public FormBodyPart toFormBodyPartBuilder() {
+        public FormBodyPart toFormBodyPart() {
             FormBodyPartBuilder builder = FormBodyPartBuilder.create(mFieldName, new FileBody(mFile, mContentType, mFileName));
             return fillHeaders(builder).build();
         }

@@ -7,6 +7,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.lang.psi.*;
 import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
+import io.chengguo.api.debugger.ui.KeyValuePair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -86,13 +87,13 @@ public class ApiPsiImplUtil {
      * @return
      */
     @NotNull
-    public static List<Pair<String, String>> getParameters(@Nullable ApiQuery element, ApiVariableReplacer replacer) {
+    public static List<KeyValuePair> getParameters(@Nullable ApiQuery element, ApiVariableReplacer replacer) {
         if (element != null) {
-            List<Pair<String, String>> result = new ArrayList<>();
+            List<KeyValuePair> result = new ArrayList<>();
             for (ApiQueryParameter parameter : element.getQueryParameterList()) {
                 String key = replacer.getValue(parameter.getQueryParameterKey());
                 String value = replacer.getValue(parameter.getQueryParameterValue());
-                result.add(Pair.createNonNull(key, value));
+                result.add(KeyValuePair.create(key, value));
             }
             return result;
         }
@@ -210,10 +211,10 @@ public class ApiPsiImplUtil {
     }
 
     @NotNull
-    public static List<Pair<String, String>> getHeaders(ApiRequest element, ApiVariableReplacer replacer) {
-        List<Pair<String, String>> result = new ArrayList<>();
+    public static List<KeyValuePair> getHeaders(ApiRequest element, ApiVariableReplacer replacer) {
+        List<KeyValuePair> result = new ArrayList<>();
         for (ApiHeaderField headerField : element.getHeaderFieldList()) {
-            result.add(Pair.create(headerField.getKey(replacer), headerField.getValue(replacer)));
+            result.add(KeyValuePair.create(headerField.getKey(replacer), headerField.getValue(replacer)));
         }
         return result;
     }

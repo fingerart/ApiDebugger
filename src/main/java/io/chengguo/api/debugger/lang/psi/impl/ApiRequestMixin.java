@@ -1,21 +1,17 @@
 package io.chengguo.api.debugger.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.containers.ContainerUtil;
 import io.chengguo.api.debugger.lang.psi.ApiBodyMessageElement;
 import io.chengguo.api.debugger.lang.psi.ApiHeaderField;
 import io.chengguo.api.debugger.lang.psi.ApiPsiTreeUtil;
 import io.chengguo.api.debugger.lang.psi.ApiRequest;
 import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
+import io.chengguo.api.debugger.ui.KeyValuePair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static io.chengguo.api.debugger.constants.HeaderFields.CONTENT_TYPE;
 
 public abstract class ApiRequestMixin extends ApiElementImpl implements ApiRequest {
     public ApiRequestMixin(@NotNull ASTNode node) {
@@ -42,7 +38,7 @@ public abstract class ApiRequestMixin extends ApiElementImpl implements ApiReque
 
     @NotNull
     @Override
-    public List<Pair<String, String>> getHeaders(ApiVariableReplacer replacer) {
+    public List<KeyValuePair> getHeaders(ApiVariableReplacer replacer) {
         return ApiPsiImplUtil.getHeaders(this, replacer);
     }
 

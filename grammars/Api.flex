@@ -157,7 +157,7 @@ INPUT_FILE_PATH = [^\t\f\r\n ] ([^\r\n]* [^\t\f\r\n ])?
 
 <IN_DESCRIPTION_KEY> {
     {WS}+                                       { return TokenType.WHITE_SPACE; }
-    [^ \r\n:] ([^\r\n:]* [^ \r\n:])?            { popState(); return Api_DESCRIPTION_KEY; } // 排除两边的空格
+    [^ \r\n\-:] ([^\r\n:]* [^ \r\n:])?            { popState(); return Api_DESCRIPTION_KEY; } // 排除两边的空格
 }
 
 <IN_DESCRIPTION_VALUE> {

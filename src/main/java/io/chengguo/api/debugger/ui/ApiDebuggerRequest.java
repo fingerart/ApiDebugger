@@ -5,16 +5,14 @@ import com.intellij.openapi.util.text.StringUtil;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ApiDebuggerRequest {
     private final String mMethod;
     private final String mBaseUrl;
-    private final Map<String, String> mParameters = new HashMap<>();
-    private final Map<String, String> mHeaders = new HashMap<>();
-    public String mBodyText;
+    private final List<KeyValuePair> mParameters = new ArrayList<>();
+    private final List<KeyValuePair> mHeaders = new ArrayList<>();
     private String mFilePath;
     private String mTextToSend;
     private String mMultipartBoundary;
@@ -34,7 +32,7 @@ public class ApiDebuggerRequest {
     }
 
     public String createQueryString() {
-        return StringUtil.join(mParameters.entrySet(), item -> {
+        return StringUtil.join(mParameters, item -> {
             try {
                 String key = URLEncoder.encode(item.getKey(), StandardCharsets.UTF_8.name());
                 String value = URLEncoder.encode(item.getValue(), StandardCharsets.UTF_8.name());
@@ -50,27 +48,39 @@ public class ApiDebuggerRequest {
     }
 
     public void addParameter(String key, String value) {
-        mParameters.put(key, value);
+        mParameters.add(KeyValuePair.create(key, value));
     }
 
-    public void addParameter(Map<String, String> headers) {
-        mParameters.putAll(headers);
+    public void addAllParameter(List<KeyValuePair> headers) {
+        mParameters.addAll(headers);
     }
 
-    public Map<String, String> getParameters() {
+    public List<KeyValuePair> getParameters() {
         return mParameters;
     }
 
     public void addAllHeader(String key, String value) {
-        mHeaders.put(key, value);
+        mHeaders.add(KeyValuePair.create(key, value));
     }
 
-    public void addAllHeader(Map<String, String> headers) {
-        mHeaders.putAll(headers);
+    public void addAllHeader(List<KeyValuePair> headers) {
+        mHeaders.addAll(headers);
     }
 
-    public Map<String, String> getHeaders() {
+    public void addHeader(KeyValuePair header) {
+        mHeaders.add(header);
+    }
+
+    public List<KeyValuePair> getHeaders() {
         return mHeaders;
+    }
+
+    public KeyValuePair getHeader(String key, String defaultValue) {
+        return mHeaders.stream().filter(pair -> StringUtil.equals(pair.first, key)).findFirst().orElse(KeyValuePair.create(key, defaultValue));
+    }
+
+    public KeyValuePair getHeader(String key) {
+        return getHeader(key, null);
     }
 
     public void setFileToSend(String filePath) {
@@ -85,6 +95,10 @@ public class ApiDebuggerRequest {
         mTextToSend = text;
     }
 
+    public String getTextToSend() {
+        return mTextToSend;
+    }
+
     public void setMultipartBoundary(String boundary) {
         mMultipartBoundary = boundary;
     }
@@ -97,6 +111,10 @@ public class ApiDebuggerRequest {
         mFormBodyParts = parts;
     }
 
+    public List<ApiFormBodyPart> getFormBodyParts() {
+        return mFormBodyParts;
+    }
+
     @Override
     public String toString() {
         return "ApiDebuggerRequest{" +
@@ -104,7 +122,6 @@ public class ApiDebuggerRequest {
                 ", mBaseUrl='" + mBaseUrl + '\'' +
                 ", mParameters=" + mParameters +
                 ", mHeaders=" + mHeaders +
-                ", mBodyText='" + mBodyText + '\'' +
                 ", mFilePath='" + mFilePath + '\'' +
                 ", mTextToSend='" + mTextToSend + '\'' +
                 ", mMultipartBoundary='" + mMultipartBoundary + '\'' +
