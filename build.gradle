@@ -14,7 +14,8 @@ dependencies {
 
 sourceSets {
     main {
-        java.srcDirs 'gen', 'grammars'
+        java.srcDirs 'gen/java', 'grammars'
+        resources.srcDirs 'gen/resources'
     }
 }
 
@@ -39,7 +40,7 @@ import org.jetbrains.grammarkit.tasks.*
 
 task generateApiLexer(type: GenerateLexer) {
     source = "grammars/Api.flex"
-    targetDir = "gen/io/chengguo/api/debugger/lang/lexer/"
+    targetDir = "gen/java/io/chengguo/api/debugger/lang/lexer/"
     targetClass = "ApiLexer"
     skeleton = 'grammars/flex.skeleton'
     purgeOldFiles = true
@@ -48,7 +49,7 @@ task generateApiLexer(type: GenerateLexer) {
 // Note: https://github.com/JetBrains/gradle-grammar-kit-plugin/issues/3
 task generateApiParser(type: GenerateParser) {
     source = "grammars/Api.bnf"
-    targetRoot = 'gen'
+    targetRoot = 'gen/java'
     pathToParser = '/io/chengguo/api/debugger/lang/parser/ApiParser.java'
     pathToPsiRoot = '/io/chengguo/api/debugger/lang/psi'
     purgeOldFiles = true
