@@ -7,6 +7,7 @@ import io.chengguo.api.debugger.lang.ApiPsiUtil;
 import io.chengguo.api.debugger.lang.environment.ApiEnvironment;
 import io.chengguo.api.debugger.lang.psi.*;
 import io.chengguo.api.debugger.lang.replacer.ApiVariableReplacer;
+import io.chengguo.api.debugger.ui.KeyValuePair;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class ApiPsiImplUtilTest extends ApiDebuggerTestCase {
     public void testGetParameters() {
         ApiApiBlock apiBlock = ApiPsiUtil.findFirstApiBlock(myFixture.getFile());
         assertNotNull(apiBlock);
-        List<Pair<String, String>> parameters = ApiPsiImplUtil.getParameters(apiBlock.getRequest().getRequestLine().getRequestTarget().getQuery(), ApiVariableReplacer.EMPTY);
+        List<KeyValuePair> parameters = ApiPsiImplUtil.getParameters(apiBlock.getRequest().getRequestLine().getRequestTarget().getQuery(), ApiVariableReplacer.EMPTY);
         assertSize(3, parameters);
         assertEquals("apiDebugger", parameters.get(0).second);
         assertEquals("18", parameters.get(1).second);

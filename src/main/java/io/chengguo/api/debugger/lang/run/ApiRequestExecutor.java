@@ -12,6 +12,7 @@ import com.intellij.util.net.IdeHttpClientHelpers;
 import com.intellij.util.net.ssl.CertificateManager;
 import io.chengguo.api.debugger.ApiDebuggerBundle;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
+import io.chengguo.api.debugger.ui.ApiFormBodyPart;
 import org.apache.commons.io.input.CountingInputStream;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -23,6 +24,7 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.BasicCredentialsProvider;
@@ -31,24 +33,27 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.NotNull;
 
+import javax.activation.MimetypesFileTypeMap;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import static io.chengguo.api.debugger.constants.HeaderFields.ACCEPT_CHARSET;
+import static io.chengguo.api.debugger.constants.HeaderFields.CONTENT_TYPE;
 import static io.chengguo.api.debugger.lang.psi.ApiTypes.*;
 
 
-public class ApiDebuggerExecutor {
-    private static final Logger LOG = Logger.getInstance(ApiDebuggerExecutor.class);
+public class ApiRequestExecutor {
+    private static final Logger LOG = Logger.getInstance(ApiRequestExecutor.class);
 
     private final Project mProject;
 
-    public ApiDebuggerExecutor(Project project) {
+    public ApiRequestExecutor(Project project) {
         mProject = project;
     }
 
@@ -108,17 +113,44 @@ public class ApiDebuggerExecutor {
         return httpRequest;
     }
 
+    private void addHeaders(HttpRequestBase httpRequest, ApiDebuggerRequest apiRequest) {
+        apiRequest.getHeaders().forEach(pair -> httpRequest.addHeader(pair.key, pair.value));
+    }
+
     private void addEntity(HttpRequestBase httpRequest, ApiDebuggerRequest apiRequest) {
         if (httpRequest instanceof HttpEntityEnclosingRequestBase) {
             HttpEntityEnclosingRequestBase request = (HttpEntityEnclosingRequestBase) httpRequest;
-            HttpEntity entity = new StringEntity(StringUtil.notNullize(apiRequest.mBodyText), StandardCharsets.UTF_8);
-            // MultipartEntityBuilder
-            request.setEntity(entity);
+            if (StringUtil.isNotEmpty(apiRequest.getTextToSend())) {
+                ContentType contentType = getContentType(apiRequest);
+                if (contentType.getCharset() == null) {
+                    contentType = contentType.withCharset(getEncoding(apiRequest));
+                }
+                request.setEntity(new StringEntity(StringUtil.notNullize(apiRequest.getTextToSend()), contentType));
+            } else if (StringUtil.isNotEmpty(apiRequest.getFileToSend())) {
+                File file = new File(apiRequest.getFileToSend());
+                request.setEntity(new FileEntity(file, getContentType(apiRequest)));
+            } else if (StringUtil.isNotEmpty(apiRequest.getMultipartBoundary())) {
+                MultipartEntityBuilder multipartBuilder = MultipartEntityBuilder.create();
+                multipartBuilder.setBoundary(apiRequest.getMultipartBoundary());
+                for (ApiFormBodyPart bodyPart : apiRequest.getFormBodyParts()) {
+                    multipartBuilder.addPart(bodyPart.toFormBodyPart());
+                }
+                request.setEntity(multipartBuilder.build());
+            }
         }
     }
 
-    private void addHeaders(HttpRequestBase httpRequest, ApiDebuggerRequest apiRequest) {
-        apiRequest.getHeaders().forEach(httpRequest::addHeader);
+    private String getEncoding(ApiDebuggerRequest apiRequest) {
+        return apiRequest.getHeader(ACCEPT_CHARSET, StandardCharsets.UTF_8.name()).value;
+    }
+
+    private ContentType getContentType(ApiDebuggerRequest apiRequest) {
+        String contentType = apiRequest.getHeader(CONTENT_TYPE).value;
+        if (StringUtil.isEmpty(contentType) && StringUtil.isNotEmpty(apiRequest.getFileToSend())) {
+            File file = new File(apiRequest.getFileToSend());
+            contentType = new MimetypesFileTypeMap().getContentType(file);
+        }
+        return ContentType.create(StringUtil.defaultIfEmpty(contentType, "*/*"));
     }
 
     @NotNull

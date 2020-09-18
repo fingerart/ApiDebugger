@@ -44,8 +44,8 @@ public class HttpHeadersDictionary {
     @NotNull
     private static Map<String, HttpHeaderDocumentation> readHeaders() {
         Map<String, HttpHeaderDocumentation> result = new HashMap<>();
-        InputStream stream = HttpHeadersDictionary.class.getResourceAsStream("/raw/http-headers.json");
         try {
+            InputStream stream = HttpHeadersDictionary.class.getResourceAsStream("/raw/http-headers.json");
             String text = (stream != null) ? FileUtil.loadTextAndClose(stream) : "";
             if (StringUtil.isNotEmpty(text)) {
                 JsonElement root = new JsonParser().parse(text);

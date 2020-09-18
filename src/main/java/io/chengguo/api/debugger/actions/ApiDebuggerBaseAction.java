@@ -30,8 +30,8 @@ public abstract class ApiDebuggerBaseAction extends AnAction implements ActionId
         super(text, description, icon);
     }
 
-    protected void showErrorBalloon(@NotNull final String message, @NotNull final AnActionEvent event) {
-        final Project project = event.getProject();
+    protected void showErrorBalloon(@NotNull String message, @NotNull AnActionEvent event) {
+        Project project = event.getProject();
         JBPopupFactory.getInstance()
                 .createHtmlTextBalloonBuilder(message, MessageType.ERROR, null)
                 .setFadeoutTime(1500L)

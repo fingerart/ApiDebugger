@@ -5,7 +5,7 @@ import com.intellij.openapi.project.Project;
 import io.chengguo.api.debugger.ui.ApiDebuggerRequest;
 import org.jetbrains.annotations.NotNull;
 
-public class ApiDebuggerBuiltinExecutor extends ApiDebuggerExecutor {
+public class ApiDebuggerBuiltinExecutor extends ApiRequestExecutor {
     private final ApiDebuggerRequest mRequest;
     private final ApiDebuggerRequestConsole mConsole;
     private final ProcessHandler mProcessHandler;

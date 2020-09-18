@@ -1,7 +1,6 @@
 package io.chengguo.api.debugger.lang;
 
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VfsUtilCore;
@@ -22,9 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.intellij.util.io.URLUtil.FILE_PROTOCOL;
 import static io.chengguo.api.debugger.constants.HeaderFields.*;
@@ -39,8 +36,8 @@ public class ApiBlockConverter {
         ApiRequestLine reqLineElement = requestElement.getRequestLine();
         ApiRequestTarget reqTargetElement = reqLineElement.getRequestTarget();
         ApiDebuggerRequest request = new ApiDebuggerRequest(reqLineElement.getMethod().getText(), reqTargetElement.getUrl(replacer));
-        request.addParameter(pairToMap(reqTargetElement.getParameters(replacer)));
-        request.addAllHeader(pairToMap(requestElement.getHeaders(replacer)));
+        request.addAllParameter(reqTargetElement.getParameters(replacer));
+        request.addAllHeader(requestElement.getHeaders(replacer));
         ApiBodyMessageElement bodyMessageElement = requestElement.getBody();
 
         if (bodyMessageElement instanceof ApiRequestMessageGroup) {
@@ -75,29 +72,37 @@ public class ApiBlockConverter {
             String fileName = contentDispositionField != null ? contentDispositionField.getHeaderValueItem(MULTIPART_FILENAME, replacer) : null;
             ContentType contentType = field.getContentType(replacer);
             if (StringUtil.isNotEmpty(fileName)) {
-                File file = getFileToUpload(field, replacer);
-                formBodyPart = ApiFormBodyPart.create(fieldName, contentType, file);
+                File file = getFileToUpload(field, fieldName, replacer);
+                formBodyPart = ApiFormBodyPart.create(fieldName, contentType, file, fileName);
+                result.add(formBodyPart);
             } else {
                 String content = getTextToSend(field.getContainingFile(), field.getRequestMessages(), replacer);
                 formBodyPart = ApiFormBodyPart.create(fieldName, contentType, content);
+                result.add(formBodyPart);
             }
             for (ApiHeaderField headerField : field.getHeaderFieldList()) {
                 formBodyPart.addHeader(headerField.getKey(replacer), headerField.getValue(replacer));
             }
-            result.add(formBodyPart);
         }
         return result;
     }
 
-    private static File getFileToUpload(ApiMultipartField field, ApiVariableReplacer replacer) throws ApiRequestInvalidException {
+    private static File getFileToUpload(ApiMultipartField field, String fieldName, ApiVariableReplacer replacer) throws ApiRequestInvalidException {
         List<ApiRequestMessageElement> requestMessages = field.getRequestMessages();
         if (requestMessages.size() == 1 && requestMessages.get(0) instanceof ApiInputFile) {
             // 单个文件
             return getFileToSend((ApiInputFile) requestMessages.get(0), replacer);
-        }else {
+        } else {
             // 多个文件
+            try {
+                String content = getTextToSend(field.getContainingFile(), requestMessages, replacer);
+                File file = FileUtil.createTempFile("", "");
+                FileUtil.writeToFile(file, content);
+                return file;
+            } catch (Exception e) {
+                throw new ApiRequestInvalidException("无法获取字段" + fieldName + "的内容", e);
+            }
         }
-        return null;
     }
 
     private static String getTextToSend(PsiFile psiFile, List<ApiRequestMessageElement> messages, ApiVariableReplacer replacer) throws ApiRequestInvalidException {
@@ -106,7 +111,7 @@ public class ApiBlockConverter {
         // TODO 支持变量替换
         for (ApiRequestMessageElement message : messages) {
             if (message instanceof ApiMessageBody) {
-                sb.append(((ApiMessageBody) messages).getText());
+                sb.append(message.getText());
             } else if (message instanceof ApiInputFile) {
                 sb.append(loadFileContent(resolveFileUrl((ApiInputFile) message)));
             }
@@ -139,14 +144,6 @@ public class ApiBlockConverter {
             return VfsUtilCore.pathToUrl(path);
         }
         throw new ApiRequestInvalidException("找不到定义的文件: " + path);
-    }
-
-    private static Map<String, String> pairToMap(List<Pair<String, String>> pairs) {
-        HashMap<String, String> result = new HashMap<>();
-        for (Pair<String, String> pair : pairs) {
-            result.put(pair.first, pair.second);
-        }
-        return result;
     }
 
     public static String loadFileContent(String url) throws ApiRequestInvalidException {
