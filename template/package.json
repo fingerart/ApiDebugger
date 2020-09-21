@@ -4,8 +4,10 @@
   "description": "",
   "private": true,
   "scripts": {
-    "copyAssets": "grunt copyAssets",
-    "buildStyle": "grunt buildStyle -v"
+    "clean": "grunt clean",
+    "buildDevelopment": "grunt development",
+    "buildRelease": "grunt release",
+    "start": "grunt start"
   },
   "repository": {
     "type": "git",
@@ -25,14 +27,16 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "^1.3.0",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-connect": "^3.0.0",
     "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-htmlmin": "^3.1.0",
     "grunt-contrib-less": "^2.0.0",
     "grunt-contrib-uglify": "^5.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-ts": "^6.0.0-beta.22",
     "less-plugin-autoprefix": "^2.0.0",
     "less-plugin-clean-css": "^1.5.1",
-    "normalize.css": "^8.0.1",
     "typescript": "^4.0.2"
   }
 }
