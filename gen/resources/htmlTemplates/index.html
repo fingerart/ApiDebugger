@@ -6,9 +6,39 @@
     <!--TODO 根据系统主题动态更换favicon-->
     <link rel="alternate icon" class="js-site-favicon" type="image/png" href="assets/images/favicon.png">
     <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="style.min.css">
 </head>
 <body>
-
-<script src="app.min.js"></script>
+<header>
+    <div class="brand"></div>
+    <div class="toolbar-right">
+        <div class="toggle-group">
+            <span class="left"></span><span class="right"></span>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="sidebar">
+        <div class="splitter"></div>
+        <div class="toolbar"></div>
+        <div class="main">
+            <ul>
+                <li>用户
+                    <ol>
+                        <li>获取用户信息</li>
+                        <li>修改昵称</li>
+                    </ol>
+                </li>
+                <li>账户
+                    <ol>
+                        <li>登录</li>
+                        <li>修改密码</li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="main.min.js"></script>
 </body>
 </html>
