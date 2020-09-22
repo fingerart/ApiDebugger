@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <title>ApiDebugger print</title>
@@ -22,17 +22,20 @@
         <div class="splitter"></div>
         <div class="toolbar"></div>
         <div class="main">
-            <ul>
-                <li>用户
+            <ul class="project-view">
+                <li>
+                    <span class="group active"><span class="triangle expand"></span><span class="folder expand"></span>用户</span>
                     <ol>
-                        <li>获取用户信息</li>
-                        <li>修改昵称</li>
+                        <li class="title">获取用户信息<div class="description"><span class="method">POST</span><span class="uri">/account/login</span></div></li>
+                        <li class="title">修改昵称<div class="description"><span class="method">POST</span><span class="uri">/account/login</span></div></li>
                     </ol>
                 </li>
-                <li>账户
+                <li>
+                    <span class="group"><span class="triangle"></span><span class="folder"></span>账户</span>
                     <ol>
-                        <li>登录</li>
-                        <li>修改密码</li>
+                        <li class="title">登录<div class="description"><span class="method">POST</span><span class="uri">/account/login</span></div>
+                        </li>
+                        <li class="title">修改密码<div class="description"><span class="method">POST</span><span class="uri">/account/login</span></div></li>
                     </ol>
                 </li>
             </ul>
