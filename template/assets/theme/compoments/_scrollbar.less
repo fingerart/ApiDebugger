@@ -1,0 +1,46 @@
+//
+// Scrollbar
+//
+
+::-webkit-scrollbar {
+  margin-right: 4px;
+  height: 4px !important;
+  overflow: scroll !important;
+  width: 8px !important;
+  -webkit-appearance: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: lighten(@black-color, 5%) !important;
+  background-clip: padding-box !important;
+  border: 1px solid darken(@black-color, 10%) !important;
+  border-image: initial !important;
+  min-height: 50px !important;
+  padding: 50px 0 0 !important;
+  opacity: .6;
+  border-radius: 20px !important;
+  transition: all 350ms ease !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: lighten(@black-color, 10%) !important;
+  background-clip: padding-box !important;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background-clip: padding-box !important;
+}
+
+::-webkit-scrollbar-button {
+  height: 0 !important;
+  width: 0 !important;
+}
+
+::-webkit-scrollbar-track {
+
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+

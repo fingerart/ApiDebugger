@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="17px" viewBox="0 0 20 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>Icons / Folder - Expand / Dark</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-6.2%" y="-7.8%" width="112.5%" height="115.6%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="0.5" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.3 0" type="matrix" in="shadowOffsetOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path d="M1.12591765,3.51080014 L1.12591765,1.33333333 C1.12591765,0.59696 1.73585344,0 2.48824813,0 L7.93757005,0 C8.68996474,0 9.29990053,0.59696 9.29990053,1.33333333 L17.4738834,1.33333333 C18.2262713,1.33333333 18.7584248,1.84265153 18.7584248,2.57902486 C18.7584248,2.99522672 18.7584248,3.30581848 18.7584248,3.51080014 L1.12591765,3.51080014 Z M18.7584248,4.79931529 C19.4850314,4.79931529 19.9854938,5.2877048 20,6.06035456 L18.9450695,14.7406267 C18.9049625,15.4471821 18.3078803,16 17.584837,16 L2.37728908,16 C1.65425493,16 1.05716346,15.4471821 1.01705673,14.7406267 L-3.40313281e-13,6.06035456 C-0.0417353226,5.32510922 0.376898954,4.84016195 1.12813485,4.79931529 L18.7584248,4.79931529 Z" id="path-2"></path>
+    </defs>
+    <g id="页面" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页" transform="translate(-25.000000, -250.000000)">
+            <g id="Sidebar" transform="translate(0.000000, 97.000000)">
+                <g id="Icons-/-Folder---Expand-/-Dark" transform="translate(25.000000, 153.000000)">
+                    <g id="编组" filter="url(#filter-1)">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <g id="蒙版"></g>
+                        <polygon id="Fill-1" fill="#7F7F7F" mask="url(#mask-3)" points="-3.33333333 4.57142857 24.4444444 4.57142857 24.4444444 -6.85714286 -3.33333333 -6.85714286"></polygon>
+                        <polygon id="底部" fill="#A1A1A2" mask="url(#mask-3)" points="-3.33333333 17.1428571 24.3175889 17.1428571 24.3175889 4.57142857 -3.33333333 4.57142857"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
