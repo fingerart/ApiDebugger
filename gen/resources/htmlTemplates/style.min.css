@@ -434,60 +434,168 @@ textarea {
   background: transparent !important;
 }
 .button {
-  min-width: 32px;
+  border: 0 none;
+  background: none;
+  width: 32px;
+  height: 25px;
+  position: relative;
+  float: left;
+}
+.button,
+.overlayButton,
+.dropdownToolbarButton {
+  margin: 3px 2px 4px 0;
+}
+.button-group:hover > .button,
+.button-group.toggled > .button,
+.button.textButton {
+  background-color: hsla(0, 0%, 0%, 0.12);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.05)), to(hsla(0, 0%, 100%, 0)));
+  background-image: linear-gradient(hsla(0, 0%, 100%, 0.05), hsla(0, 0%, 100%, 0));
+  background-clip: padding-box;
+  border: 1px solid hsla(0, 0%, 0%, 0.35);
+  border-color: hsla(0, 0%, 0%, 0.32) hsla(0, 0%, 0%, 0.38) hsla(0, 0%, 0%, 0.42);
+  -webkit-box-shadow: 0 1px 0 hsla(0, 0%, 100%, 0.05) inset, 0 0 1px hsla(0, 0%, 100%, 0.15) inset, 0 1px 0 hsla(0, 0%, 100%, 0.05);
+          box-shadow: 0 1px 0 hsla(0, 0%, 100%, 0.05) inset, 0 0 1px hsla(0, 0%, 100%, 0.15) inset, 0 1px 0 hsla(0, 0%, 100%, 0.05);
+  -webkit-transition-property: background-color, border-color, -webkit-box-shadow;
+  transition-property: background-color, border-color, -webkit-box-shadow;
+  transition-property: background-color, border-color, box-shadow;
+  transition-property: background-color, border-color, box-shadow, -webkit-box-shadow;
+  -webkit-transition-duration: 150ms;
+          transition-duration: 150ms;
+  -webkit-transition-timing-function: ease;
+          transition-timing-function: ease;
+}
+.button-group > .button:hover,
+.dropdownToolbarButton:hover,
+.overlayButton:hover,
+.button.textButton:hover {
+  background-color: hsla(0, 0%, 0%, 0.2);
+  -webkit-box-shadow: 0 1px 0 hsla(0, 0%, 100%, 0.05) inset, 0 0 1px hsla(0, 0%, 100%, 0.15) inset, 0 0 1px hsla(0, 0%, 0%, 0.05);
+          box-shadow: 0 1px 0 hsla(0, 0%, 100%, 0.05) inset, 0 0 1px hsla(0, 0%, 100%, 0.15) inset, 0 0 1px hsla(0, 0%, 0%, 0.05);
+  z-index: 199;
+}
+.button-group {
+  margin: 3px 2px 4px 0;
+  position: relative;
+  float: left;
   display: inline-block;
-  -webkit-box-sizing: content-box;
-          box-sizing: content-box;
-  cursor: pointer;
-  -webkit-transition-property: all;
-  transition-property: all;
-  text-decoration: none;
-  background-color: transparent;
-  background-image: none;
+}
+.button-group > .button:first-child {
+  position: relative;
+  margin: 0;
+  margin-right: -1px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-right-color: transparent;
+}
+.button-group > .button:last-child {
+  position: relative;
+  margin: 0;
+  margin-left: -1px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-left-color: transparent;
+}
+.button-group .splitToolbarButtonSeparator {
+  float: left;
+  padding: 8px 0;
+  width: 1px;
+  background-color: hsla(0, 0%, 0%, 0.5);
+  z-index: 99;
+  -webkit-box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.08);
+          box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.08);
+  display: inline-block;
+  margin: 5px 0 4px 0;
+}
+.button-group:hover > .splitToolbarButtonSeparator,
+.button-group.toggled > .splitToolbarButtonSeparator {
+  padding: 12px 0;
+  margin: 1px 0 0 0;
+  -webkit-box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.03);
+          box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.03);
+  -webkit-transition-property: padding;
+  transition-property: padding;
+  -webkit-transition-duration: 10ms;
+          transition-duration: 10ms;
+  -webkit-transition-timing-function: ease;
+          transition-timing-function: ease;
+}
+.button-group > .button {
+  position: relative;
+  border-radius: 0;
+  float: left;
+}
+.button {
+  min-width: 16px;
+  padding: 2px 6px 0;
   border: 1px solid transparent;
-  -webkit-box-shadow: none;
-          box-shadow: none;
   border-radius: 2px;
-  height: 25px;
-  line-height: 25px;
-  padding: 0 5px;
+  color: hsla(0, 0%, 100%, 0.8);
+  font-size: 12px;
+  line-height: 14px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  /* Opera does not support user-select, use <... unselectable="on"> instead */
+  cursor: default;
 }
-.button.button-m {
-  height: 25px;
-  line-height: 25px;
-  padding: 0 5px;
+.button::before {
+  /* All matching images have a size of 16x16
+     * All relevant containers have a size of 32x25 */
+  position: absolute;
+  display: inline-block;
+  top: 4px;
+  left: 7px;
 }
-.button.button-hover {
-  background-color: rgba(0, 0, 0, 0.12);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.05)), to(rgba(255, 255, 255, 0)));
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-  border: 1px solid rgba(0, 0, 0, 0.35);
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  border-radius: 2px;
+.button:hover {
+  background-color: hsla(0, 0%, 0%, 0.12);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.05)), to(hsla(0, 0%, 100%, 0)));
+  background-image: linear-gradient(hsla(0, 0%, 100%, 0.05), hsla(0, 0%, 100%, 0));
+  background-clip: padding-box;
+  border: 1px solid hsla(0, 0%, 0%, 0.35);
+  border-color: hsla(0, 0%, 0%, 0.32) hsla(0, 0%, 0%, 0.38) hsla(0, 0%, 0%, 0.42);
+  -webkit-box-shadow: 0 1px 0 hsla(0, 0%, 100%, 0.05) inset, 0 0 1px hsla(0, 0%, 100%, 0.15) inset, 0 1px 0 hsla(0, 0%, 100%, 0.05);
+          box-shadow: 0 1px 0 hsla(0, 0%, 100%, 0.05) inset, 0 0 1px hsla(0, 0%, 100%, 0.15) inset, 0 1px 0 hsla(0, 0%, 100%, 0.05);
 }
-.button.button-active {
-  background-color: rgba(0, 0, 0, 0.3);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.05)), to(rgba(255, 255, 255, 0)));
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-  border: 1px solid rgba(0, 0, 0, 0.45);
-  -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 1px 1px 0 rgba(0, 0, 0, 0.10), inset 0 0 1px 0 rgba(0, 0, 0, 0.20);
-          box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 1px 1px 0 rgba(0, 0, 0, 0.10), inset 0 0 1px 0 rgba(0, 0, 0, 0.20);
-  border-radius: 2px;
+.button:hover:active {
+  background-color: hsla(0, 0%, 0%, 0.2);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(hsla(0, 0%, 100%, 0.05)), to(hsla(0, 0%, 100%, 0)));
+  background-image: linear-gradient(hsla(0, 0%, 100%, 0.05), hsla(0, 0%, 100%, 0));
+  border-color: hsla(0, 0%, 0%, 0.35) hsla(0, 0%, 0%, 0.4) hsla(0, 0%, 0%, 0.45);
+  -webkit-box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.1) inset, 0 0 1px hsla(0, 0%, 0%, 0.2) inset, 0 1px 0 hsla(0, 0%, 100%, 0.05);
+          box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.1) inset, 0 0 1px hsla(0, 0%, 0%, 0.2) inset, 0 1px 0 hsla(0, 0%, 100%, 0.05);
+  -webkit-transition-property: background-color, border-color, -webkit-box-shadow;
+  transition-property: background-color, border-color, -webkit-box-shadow;
+  transition-property: background-color, border-color, box-shadow;
+  transition-property: background-color, border-color, box-shadow, -webkit-box-shadow;
+  -webkit-transition-duration: 10ms;
+          transition-duration: 10ms;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
 }
-.button.button-disable {
-  background-color: transparent;
-  background-image: none;
-  border: 1px solid transparent;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  border-radius: 2px;
+.button.button-disable,
+.button[disabled] {
   opacity: 0.5;
 }
-.button-group .button:not(:last-child) {
-  border-right: none !important;
-  border-bottom-right-radius: 0px !important;
-  border-top-right-radius: 0px !important;
+.button.favicon:before {
+  content: url("/assets/images/favicon_dark.svg");
+}
+.button.locationRequest:before {
+  content: url("/assets/images/ic_location_request.svg");
+}
+.verticalToolbarSeparator {
+  display: block;
+  padding: 8px 0;
+  margin: 8px 4px;
+  width: 1px;
+  background-color: hsla(0, 0%, 0%, 0.5);
+  -webkit-box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.08);
+          box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.08);
+  margin-left: 2px;
+  position: relative;
+  float: left;
 }
 html {
   width: 100%;
@@ -515,46 +623,18 @@ body > header {
   position: relative;
   margin-bottom: 1px;
   background-color: #474747;
-  background-image: url("./assets/images/texture.png"), -webkit-gradient(linear, left top, left bottom, from(rgba(82, 82, 82, 0.99)), to(rgba(69, 69, 69, 0.95)));
-  background-image: url("./assets/images/texture.png"), linear-gradient(180deg, rgba(82, 82, 82, 0.99) 0%, rgba(69, 69, 69, 0.95) 100%);
+  background-image: url("/assets/images/texture.png"), -webkit-gradient(linear, left top, left bottom, from(rgba(82, 82, 82, 0.99)), to(rgba(69, 69, 69, 0.95)));
+  background-image: url("/assets/images/texture.png"), linear-gradient(180deg, rgba(82, 82, 82, 0.99) 0%, rgba(69, 69, 69, 0.95) 100%);
   -webkit-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
           box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
 }
-body > header .toolbar-right {
+body > header .header-right {
   display: inline-block;
   position: absolute;
   top: 50%;
   right: 20px;
   -webkit-transform: translate(0, -50%);
           transform: translate(0, -50%);
-}
-body > header .toolbar-right .toggle-group {
-  display: inline;
-}
-body > header .toolbar-right .toggle-group .left {
-  width: 32px;
-  height: 25px;
-  display: inline-block;
-  background-color: rgba(0, 0, 0, 0.3);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.05)), to(rgba(255, 255, 255, 0)));
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-  border: 1px solid rgba(0, 0, 0, 0.45);
-  -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 0 1px 0 rgba(0, 0, 0, 0.2);
-          box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 0 1px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 2px 0 0 2px;
-}
-body > header .toolbar-right .toggle-group .right {
-  width: 32px;
-  height: 25px;
-  display: inline-block;
-  background-color: rgba(0, 0, 0, 0.12);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.05)), to(rgba(255, 255, 255, 0)));
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-  border: 1px solid rgba(0, 0, 0, 0.38);
-  border-left: 0;
-  -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 0 1px 0 rgba(255, 255, 255, 0.15);
-          box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 0 1px 0 rgba(255, 255, 255, 0.15);
-  border-radius: 0 2px 2px 0;
 }
 .container {
   height: calc(100% - 50px - 1px);
@@ -563,24 +643,35 @@ body > header .toolbar-right .toggle-group .right {
   height: 100%;
   width: 250px;
   position: relative;
-  background-image: url("./assets/images/texture.png");
+  background-image: url("/assets/images/texture.png");
   background-color: rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.25);
           box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.25);
 }
 .container .sidebar .toolbar {
+  position: relative;
   width: 100%;
-  height: 30px;
-  background-image: url("./assets/images/texture.png") /*, linear-gradient(180deg, rgba(77,77,77,0.99) 0%, rgba(64,64,64,0.95) 100%)*/;
+  height: 32px;
+  background-image: url("/assets/images/texture.png") /*, linear-gradient(180deg, rgba(77,77,77,0.99) 0%, rgba(64,64,64,0.95) 100%)*/;
   background-color: #424242;
   -webkit-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 0 1px 0 rgba(0, 0, 0, 0.1), inset -1px 0 0 0 rgba(0, 0, 0, 0.25), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
           box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 0 1px 0 rgba(0, 0, 0, 0.1), inset -1px 0 0 0 rgba(0, 0, 0, 0.25), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
 }
+.container .sidebar .toolbar .toolbar-right {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
 .container .sidebar .main {
-  height: calc(100% - 30px);
+  height: calc(100% - 32px);
   width: 100%;
+  overflow: hidden;
+}
+.container .sidebar .main:hover {
   overflow-y: auto;
-  overflow-x: hidden;
 }
 .container .sidebar .main ul.project-view li .group {
   display: -webkit-box;
@@ -602,7 +693,7 @@ body > header .toolbar-right .toggle-group .right {
   -webkit-transform: rotate(-90deg);
           transform: rotate(-90deg);
   background: rgba(255, 255, 255, 0.45);
-  -webkit-mask: url("./assets/images/ic_triangle_expand_dark.svg") no-repeat center center;
+  -webkit-mask: url("/assets/images/ic_triangle_expand_dark.svg") no-repeat center center;
 }
 .container .sidebar .main ul.project-view li .group .triangle.expand {
   -webkit-transform: rotate(0deg);
@@ -615,10 +706,10 @@ body > header .toolbar-right .toggle-group .right {
   overflow: hidden;
   margin-right: 3px;
   background: rgba(255, 255, 255, 0.45);
-  -webkit-mask: url("./assets/images/ic_folder_unexpand_dark.svg") no-repeat center center;
+  -webkit-mask: url("/assets/images/ic_folder_unexpand_dark.svg") no-repeat center center;
 }
 .container .sidebar .main ul.project-view li .group .folder.expand {
-  -webkit-mask: url("./assets/images/ic_folder_expand_dark.svg") no-repeat center center;
+  -webkit-mask: url("/assets/images/ic_folder_expand_dark.svg") no-repeat center center;
 }
 .container .sidebar .main ul.project-view li ol li.title {
   color: white;

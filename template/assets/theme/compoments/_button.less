@@ -2,56 +2,175 @@
 // Buttons
 //
 
-.button-style(@bg-color, @bg-image, @border-color, @box-shadow: none, @border-radius: 2px) {
-  background-color: @bg-color;
-  background-image: @bg-image;
-  border: 1px solid @border-color;
-  box-shadow: @box-shadow;
-  border-radius: @border-radius;
+.button-hover-style() {
+  &:hover {
+    background-color: hsla(0, 0%, 0%, .12);
+    background-image: linear-gradient(hsla(0, 0%, 100%, .05), hsla(0, 0%, 100%, 0));
+    background-clip: padding-box;
+    border: 1px solid hsla(0, 0%, 0%, .35);
+    border-color: hsla(0, 0%, 0%, .32) hsla(0, 0%, 0%, .38) hsla(0, 0%, 0%, .42);
+    box-shadow: 0 1px 0 hsla(0, 0%, 100%, .05) inset, 0 0 1px hsla(0, 0%, 100%, .15) inset, 0 1px 0 hsla(0, 0%, 100%, .05);
+  }
 }
 
-.button {
-  height: 25px;
-  min-width: 32px;
-  display: inline-block;
-  line-height: 25px;
-  padding: 0 5px;
-  box-sizing: content-box;
-  cursor: pointer;
-  transition-property: all;
-  text-decoration: none;
-  .button-style(transparent, none, transparent);
-  .button-m;
-
-  &.button-m {
-    height: 25px;
-    line-height: 25px;
-    padding: 0 5px;
-  }
-
-  &.button-hover {
-    .button-style(rgba(0, 0, 0, 0.12), linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%), rgba(0, 0, 0, 0.35));
-  }
-
-  &.button-active {
-    .button-style(rgba(0, 0, 0, 0.30),
-            linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%),
-            rgba(0, 0, 0, 0.45),
-            ~"0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 1px 1px 0 rgba(0, 0, 0, 0.10), inset 0 0 1px 0 rgba(0, 0, 0, 0.20)"
-    );
-  }
-
-  &.button-disable {
-    .button-style(transparent, none, transparent);
-    opacity: .5;
+.button-active-style() {
+  &:hover:active {
+    background-color: hsla(0, 0%, 0%, .2);
+    background-image: linear-gradient(hsla(0, 0%, 100%, .05), hsla(0, 0%, 100%, 0));
+    border-color: hsla(0, 0%, 0%, .35) hsla(0, 0%, 0%, .4) hsla(0, 0%, 0%, .45);
+    box-shadow: 0 1px 1px hsla(0, 0%, 0%, .1) inset,
+    0 0 1px hsla(0, 0%, 0%, .2) inset,
+    0 1px 0 hsla(0, 0%, 100%, .05);
+    transition-property: background-color, border-color, box-shadow;
+    transition-duration: 10ms;
+    transition-timing-function: linear;
   }
 }
 
 // 按钮组
 
+.button {
+  border: 0 none;
+  background: none;
+  width: 32px;
+  height: 25px;
+  position: relative;
+  float: left;
+}
+
+.button,
+.overlayButton,
+.dropdownToolbarButton {
+  margin: 3px 2px 4px 0;
+}
+
+.button-group:hover > .button,
+.button-group.toggled > .button,
+.button.textButton {
+  background-color: hsla(0, 0%, 0%, .12);
+  background-image: linear-gradient(hsla(0, 0%, 100%, .05), hsla(0, 0%, 100%, 0));
+  background-clip: padding-box;
+  border: 1px solid hsla(0, 0%, 0%, .35);
+  border-color: hsla(0, 0%, 0%, .32) hsla(0, 0%, 0%, .38) hsla(0, 0%, 0%, .42);
+  box-shadow: 0 1px 0 hsla(0, 0%, 100%, .05) inset, 0 0 1px hsla(0, 0%, 100%, .15) inset, 0 1px 0 hsla(0, 0%, 100%, .05);
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+.button-group > .button:hover,
+.dropdownToolbarButton:hover,
+.overlayButton:hover,
+.button.textButton:hover {
+  background-color: hsla(0, 0%, 0%, .2);
+  box-shadow: 0 1px 0 hsla(0, 0%, 100%, .05) inset, 0 0 1px hsla(0, 0%, 100%, .15) inset, 0 0 1px hsla(0, 0%, 0%, .05);
+  z-index: 199;
+}
+
 .button-group {
-  .button:not(:last-child) {
-    border-right: none !important;
-    .border-right-radius(0px) !important;
+  margin: 3px 2px 4px 0;
+  position: relative;
+  float: left;
+  display: inline-block;
+
+  > .button:first-child {
+    position: relative;
+    margin: 0;
+    margin-right: -1px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-right-color: transparent;
   }
+
+  > .button:last-child {
+    position: relative;
+    margin: 0;
+    margin-left: -1px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-left-color: transparent;
+  }
+
+  .splitToolbarButtonSeparator {
+    float: left;
+    padding: 8px 0;
+    width: 1px;
+    background-color: hsla(0, 0%, 0%, .5);
+    z-index: 99;
+    box-shadow: 0 0 0 1px hsla(0, 0%, 100%, .08);
+    display: inline-block;
+    margin: 5px 0 4px 0;
+  }
+
+  &:hover > .splitToolbarButtonSeparator,
+  &.toggled > .splitToolbarButtonSeparator {
+    padding: 12px 0;
+    margin: 1px 0 0 0;
+    box-shadow: 0 0 0 1px hsla(0, 0%, 100%, .03);
+    transition-property: padding;
+    transition-duration: 10ms;
+    transition-timing-function: ease;
+  }
+
+  > .button {
+    position: relative;
+    border-radius: 0;
+    float: left;
+  }
+}
+
+.button {
+  min-width: 16px;
+  padding: 2px 6px 0;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: hsla(0, 0%, 100%, .8);
+  font-size: 12px;
+  line-height: 14px;
+  user-select: none;
+  /* Opera does not support user-select, use <... unselectable="on"> instead */
+  cursor: default;
+  //transition-property: background-color, border-color, box-shadow;
+  //transition-duration: 150ms;
+  //transition-timing-function: ease;
+
+  &::before {
+    /* All matching images have a size of 16x16
+     * All relevant containers have a size of 32x25 */
+    position: absolute;
+    display: inline-block;
+    top: 4px;
+    left: 7px;
+  }
+
+  .button-hover-style();
+
+  .button-active-style();
+
+  &.button-disable, &[disabled] {
+    opacity: .5;
+  }
+}
+
+.button {
+  &.favicon:before {
+    content: url("@{imgUrl}assets/images/favicon_dark.svg");
+  }
+
+  &.locationRequest:before {
+    content: url("@{imgUrl}assets/images/ic_location_request.svg");
+  }
+}
+
+
+.verticalToolbarSeparator {
+  display: block;
+  padding: 8px 0;
+  margin: 8px 4px;
+  width: 1px;
+  background-color: hsla(0, 0%, 0%, .5);
+  box-shadow: 0 0 0 1px hsla(0, 0%, 100%, .08);
+  margin-left: 2px;
+  position: relative;
+  float: left;
 }

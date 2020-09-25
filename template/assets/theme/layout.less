@@ -21,42 +21,16 @@ body > header {
   position: relative;
   margin-bottom: @header-margin-top;
   background-color: #474747;
-  background-image: url("@{imgUrl}/assets/images/texture.png"), linear-gradient(180deg, rgba(82, 82, 82, 0.99) 0%, rgba(69, 69, 69, 0.95) 100%);
+  background-image: url("@{imgUrl}assets/images/texture.png"), linear-gradient(180deg, rgba(82, 82, 82, 0.99) 0%, rgba(69, 69, 69, 0.95) 100%);
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 1px 1px 0 rgba(0, 0, 0, 0.10), inset 0 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
 
-  .toolbar-right {
+
+  .header-right {
     display: inline-block;
     position: absolute;
     top: 50%;
     right: 20px;
     transform: translate(0, -50%);
-
-    .toggle-group {
-      display: inline;
-
-      .left {
-        width: 32px;
-        height: 25px;
-        display: inline-block;
-        background-color: rgba(0, 0, 0, 0.30);
-        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%);
-        border: 1px solid rgba(0, 0, 0, 0.45);
-        box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 1px 1px 0 rgba(0, 0, 0, 0.10), inset 0 0 1px 0 rgba(0, 0, 0, 0.20);
-        border-radius: 2px 0 0 2px;
-      }
-
-      .right {
-        width: 32px;
-        height: 25px;
-        display: inline-block;
-        background-color: rgba(0, 0, 0, 0.12);
-        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%);
-        border: 1px solid rgba(0, 0, 0, 0.38);
-        border-left: 0;
-        box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.05), inset 0 0 1px 0 rgba(255, 255, 255, 0.15);
-        border-radius: 0 2px 2px 0;
-      }
-    }
   }
 }
 
@@ -67,23 +41,35 @@ body > header {
     height: 100%;
     width: @sidebar-width;
     position: relative;
-    background-image: url("@{imgUrl}/assets/images/texture.png");
+    background-image: url("@{imgUrl}assets/images/texture.png");
     background-color: rgba(0, 0, 0, 0.10);
     box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.25);
 
     .toolbar {
+      position: relative;
       width: 100%;
       height: @sidebar-toolbar-height;
-      background-image: url("@{imgUrl}/assets/images/texture.png") /*, linear-gradient(180deg, rgba(77,77,77,0.99) 0%, rgba(64,64,64,0.95) 100%)*/;
+      background-image: url("@{imgUrl}assets/images/texture.png") /*, linear-gradient(180deg, rgba(77,77,77,0.99) 0%, rgba(64,64,64,0.95) 100%)*/;
       background-color: #424242;
       box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 0 1px 0 rgba(0, 0, 0, 0.10), inset -1px 0 0 0 rgba(0, 0, 0, 0.25), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
+
+      .toolbar-right {
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translate(0, -50%);
+      }
     }
 
     .main {
       height: calc(100% - @sidebar-toolbar-height);
       width: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden;
+
+      &:hover {
+        overflow-y: auto;
+      }
 
       ul.project-view {
         li {
@@ -102,7 +88,7 @@ body > header {
               margin-right: 3px;
               transform: rotate(-90deg);
               background: rgba(255, 255, 255, 0.45);
-              -webkit-mask: url("@{imgUrl}/assets/images/ic_triangle_expand_dark.svg") no-repeat center center;
+              -webkit-mask: url("@{imgUrl}assets/images/ic_triangle_expand_dark.svg") no-repeat center center;
 
               &.expand {
                 transform: rotate(0deg);
@@ -116,10 +102,10 @@ body > header {
               overflow: hidden;
               margin-right: 3px;
               background: rgba(255, 255, 255, 0.45);
-              -webkit-mask: url("@{imgUrl}/assets/images/ic_folder_unexpand_dark.svg") no-repeat center center;
+              -webkit-mask: url("@{imgUrl}assets/images/ic_folder_unexpand_dark.svg") no-repeat center center;
 
               &.expand {
-                -webkit-mask: url("@{imgUrl}/assets/images/ic_folder_expand_dark.svg") no-repeat center center;
+                -webkit-mask: url("@{imgUrl}assets/images/ic_folder_expand_dark.svg") no-repeat center center;
               }
             }
           }
