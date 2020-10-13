@@ -9,161 +9,227 @@ body {
   height: 100%;
   font-family: "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", "微软雅黑", "Helvetica Neue", Helvetica, Arial, Arial, sans-serif;
   user-select: none;
+  -webkit-user-drag: none;
 
   input, textarea, select, button {
     font-family: "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", "微软雅黑", "Helvetica Neue", Helvetica, Arial, Arial, sans-serif;
   }
-}
 
-body > header {
-  height: @header-height;
-  width: 100%;
-  position: relative;
-  margin-bottom: @header-margin-top;
-  background-color: #474747;
-  background-image: url("@{imgUrl}assets/images/texture.png"), linear-gradient(180deg, rgba(82, 82, 82, 0.99) 0%, rgba(69, 69, 69, 0.95) 100%);
-  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 1px 1px 0 rgba(0, 0, 0, 0.10), inset 0 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
-
-
-  .header-right {
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translate(0, -50%);
-  }
-}
-
-.container {
-  height: calc(100% - @header-height - @header-margin-top);
-
-  .sidebar {
-    height: 100%;
-    width: @sidebar-width;
+  header {
+    height: @header-height;
+    width: 100%;
     position: relative;
-    background-image: url("@{imgUrl}assets/images/texture.png");
-    background-color: rgba(0, 0, 0, 0.10);
-    box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.25);
+    margin-bottom: @header-margin-top;
+    background-color: #474747;
+    background-image: url("@{imgUrl}assets/images/texture.png"), linear-gradient(180deg, rgba(82, 82, 82, 0.99) 0%, rgba(69, 69, 69, 0.95) 100%);
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 1px 1px 0 rgba(0, 0, 0, 0.10), inset 0 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
 
-    .toolbar {
-      position: relative;
-      width: 100%;
-      height: @sidebar-toolbar-height;
-      background-image: url("@{imgUrl}assets/images/texture.png") /*, linear-gradient(180deg, rgba(77,77,77,0.99) 0%, rgba(64,64,64,0.95) 100%)*/;
-      background-color: #424242;
-      box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 0 1px 0 rgba(0, 0, 0, 0.10), inset -1px 0 0 0 rgba(0, 0, 0, 0.25), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
+    .brand {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      left: 30px;
+      transform: translate(0, -50%);
 
-      .toolbar-right {
-        display: inline-block;
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translate(0, -50%);
+      .logo {
+        max-height: 40px;
+        max-width: 40px;
+        width: 30px;
+        height: 30px;
+        margin-right: 20px;
+        vertical-align: middle;
+      }
+
+      .title {
+        color: white;
+        font-size: 16px;
+        vertical-align: middle;
+        letter-spacing: 1px;
       }
     }
 
-    .main {
-      height: calc(100% - @sidebar-toolbar-height);
-      width: 100%;
-      overflow: hidden;
+    .header-right {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translate(0, -50%);
+    }
+  }
 
-      &:hover {
-        overflow-y: auto;
+  .container {
+    width: 100%;
+    height: calc(100% - @header-height - @header-margin-top);
+    display: flex;
+
+    .sidebar {
+      height: 100%;
+      width: @sidebar-width;
+      display: inline-block;
+      position: relative;
+      background-image: url("@{imgUrl}assets/images/texture.png");
+      background-color: rgba(0, 0, 0, 0.10);
+      box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.25);
+
+      .toolbar {
+        position: relative;
+        width: 100%;
+        height: @sidebar-toolbar-height;
+        background-image: url("@{imgUrl}assets/images/texture.png") /*, linear-gradient(180deg, rgba(77,77,77,0.99) 0%, rgba(64,64,64,0.95) 100%)*/;
+        background-color: #424242;
+        box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 0 1px 0 rgba(0, 0, 0, 0.10), inset -1px 0 0 0 rgba(0, 0, 0, 0.25), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
+
+        .toolbar-right {
+          display: inline-block;
+          position: absolute;
+          top: 50%;
+          right: 20px;
+          transform: translate(0, -50%);
+        }
       }
 
-      ul.project-view {
-        li {
-          .group {
-            display: flex;
-            color: #D3D3D3;
-            font-size: 14px;
-            padding: 10px;
-            align-items: center;
+      .sidebar-body {
+        width: 100%;
+        height: calc(100% - @sidebar-toolbar-height);
+        overflow: hidden;
 
-            .triangle {
-              display: inline-block;
-              width: 15px;
-              height: 15px;
-              overflow: hidden;
-              margin-right: 3px;
-              transform: rotate(-90deg);
-              background: rgba(255, 255, 255, 0.45);
-              -webkit-mask: url("@{imgUrl}assets/images/ic_triangle_expand_dark.svg") no-repeat center center;
+        &:hover {
+          overflow-y: auto;
+        }
 
-              &.expand {
-                transform: rotate(0deg);
-              }
-            }
-
-            .folder {
-              display: inline-block;
-              width: 25px;
-              height: 20px;
-              overflow: hidden;
-              margin-right: 3px;
-              background: rgba(255, 255, 255, 0.45);
-              -webkit-mask: url("@{imgUrl}assets/images/ic_folder_unexpand_dark.svg") no-repeat center center;
-
-              &.expand {
-                -webkit-mask: url("@{imgUrl}assets/images/ic_folder_expand_dark.svg") no-repeat center center;
-              }
-            }
-          }
-
-          ol {
-            li.title {
-              color: white;
+        ul.project-view {
+          li {
+            .group {
+              display: flex;
+              color: #D3D3D3;
               font-size: 14px;
-              padding: 10px 0 10px 40px;
-
-              .description {
-                padding-top: 10px;
-
-                .method {
-                  font-size: 12px;
-                  color: rgba(255, 255, 255, 0.51);
-                  letter-spacing: 0.08px;
-                  margin-right: 10px;
-                }
-
-                .uri {
-                  font-size: 11px;
-                  color: rgba(255, 255, 255, 0.60);
-                }
-              }
-            }
-          }
-
-          .group, ol > li.title {
-
-            &.active {
-              color: white;
-              background: #027AFF;
+              padding: 10px;
+              align-items: center;
 
               .triangle {
-                background: white;
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                overflow: hidden;
+                margin-right: 3px;
+                transform: rotate(-90deg);
+                background: rgba(255, 255, 255, 0.45);
+                -webkit-mask: url("@{imgUrl}assets/images/ic_triangle_expand_dark.svg") no-repeat center center;
+
+                &.expand {
+                  transform: rotate(0deg);
+                }
               }
 
               .folder {
-                background: white;
+                display: inline-block;
+                width: 25px;
+                height: 20px;
+                overflow: hidden;
+                margin-right: 3px;
+                background: rgba(255, 255, 255, 0.45);
+                -webkit-mask: url("@{imgUrl}assets/images/ic_folder_unexpand_dark.svg") no-repeat center center;
 
                 &.expand {
+                  -webkit-mask: url("@{imgUrl}assets/images/ic_folder_expand_dark.svg") no-repeat center center;
+                }
+              }
+            }
+
+            ol {
+              li.title {
+                color: white;
+                font-size: 14px;
+                padding: 10px 0 10px 40px;
+
+                .description {
+                  padding-top: 10px;
+
+                  .method {
+                    font-size: 12px;
+                    color: rgba(255, 255, 255, 0.51);
+                    letter-spacing: 0.08px;
+                    margin-right: 10px;
+                  }
+
+                  .uri {
+                    font-size: 11px;
+                    color: rgba(255, 255, 255, 0.60);
+                  }
+                }
+              }
+            }
+
+            .group, ol > li.title {
+
+              &.active {
+                color: white;
+                background: #027AFF;
+
+                .triangle {
                   background: white;
+                }
+
+                .folder {
+                  background: white;
+
+                  &.expand {
+                    background: white;
+                  }
                 }
               }
             }
           }
         }
       }
+
+      .splitter {
+        width: 3px;
+        height: 100%;
+        z-index: 100;
+        position: absolute;
+        right: -1px;
+        cursor: col-resize;
+      }
     }
 
-    .splitter {
-      width: 3px;
+    .container-body {
+      width: 60%;
       height: 100%;
-      z-index: 100;
-      position: absolute;
-      right: -1px;
-      cursor: col-resize;
+
+      .api-detail {
+        padding-left: 10px;
+
+        .title {
+          color: white;
+          border-bottom: 1px solid white;
+          padding: 10px 0 10px 10px;
+        }
+
+        .target {
+          .label {
+            color: white;
+          }
+        }
+
+        .params {
+
+          .label {
+            color: white;
+          }
+
+          table {
+            thead tr th {
+              background: #f8f9f9;
+            }
+
+            thead tr th, tbody tr td {
+              padding: .75rem;
+              border: 1px solid #dee1e1;
+            }
+          }
+        }
+      }
     }
   }
 }

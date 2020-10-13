@@ -10,7 +10,9 @@
 </head>
 <body>
 <header>
-    <div class="brand"></div>
+    <div class="brand">
+        <img class="logo" src="assets/images/favicon_dark.svg" alt="LOGO"><span class="title">Api文档中心</span>
+    </div>
     <div class="header-right">
         <div class="button-group">
             <button class="button favicon"></button>
@@ -33,24 +35,72 @@
                 </div>
             </div>
         </div>
-        <div class="main">
+        <div class="sidebar-body">
             <ul class="project-view">
                 <li>
                     <span class="group active"><span class="triangle expand"></span><span class="folder expand"></span>用户</span>
                     <ol>
-                        <li class="title">获取用户信息<div class="description"><span class="method">POST</span><span class="uri">/account/login</span></div></li>
-                        <li class="title">修改昵称<div class="description"><span class="method">POST</span><span class="uri">/account/login</span></div></li>
+                        <li class="title">获取用户信息
+                            <div class="description">
+                                <span class="method">POST</span><span class="uri">/account/login</span>
+                            </div>
+                        </li>
+                        <li class="title">修改昵称
+                            <div class="description">
+                                <span class="method">POST</span><span class="uri">/account/login</span>
+                            </div>
+                        </li>
                     </ol>
                 </li>
                 <li>
                     <span class="group"><span class="triangle"></span><span class="folder"></span>账户</span>
                     <ol>
-                        <li class="title">登录<div class="description"><span class="method">POST</span><span class="uri">/account/login</span></div>
+                        <li class="title">登录
+                            <div class="description">
+                                <span class="method">POST</span><span class="uri">/account/login</span>
+                            </div>
                         </li>
-                        <li class="title">修改密码<div class="description"><span class="method">POST</span><span class="uri">/account/login</span></div></li>
+                        <li class="title">修改密码
+                            <div class="description">
+                                <span class="method">POST</span><span class="uri">/account/login</span>
+                            </div>
+                        </li>
                     </ol>
                 </li>
             </ul>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="api-detail">
+            <p class="title">获取用户信息</p>
+            <div class="target">
+                <p class="label">URL</p>
+                <span class="url">/account/login</span>
+                <span class="method">POST</span>
+            </div>
+            <div class="params">
+                <p class="label">请求参数</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名称</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>位置</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>access_token</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>header</td>
+                        <td>授权成功后返回的 access_token</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
