@@ -610,6 +610,7 @@ body {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-user-drag: none;
 }
 body input,
 body textarea,
@@ -617,7 +618,7 @@ body select,
 body button {
   font-family: "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", "微软雅黑", "Helvetica Neue", Helvetica, Arial, Arial, sans-serif;
 }
-body > header {
+body header {
   height: 50px;
   width: 100%;
   position: relative;
@@ -628,7 +629,29 @@ body > header {
   -webkit-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
           box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
 }
-body > header .header-right {
+body header .brand {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+body header .brand .logo {
+  max-height: 40px;
+  max-width: 40px;
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+body header .brand .title {
+  color: white;
+  font-size: 16px;
+  vertical-align: middle;
+  letter-spacing: 1px;
+}
+body header .header-right {
   display: inline-block;
   position: absolute;
   top: 50%;
@@ -636,19 +659,24 @@ body > header .header-right {
   -webkit-transform: translate(0, -50%);
           transform: translate(0, -50%);
 }
-.container {
+body .container {
+  width: 100%;
   height: calc(100% - 50px - 1px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
-.container .sidebar {
+body .container .sidebar {
   height: 100%;
   width: 250px;
+  display: inline-block;
   position: relative;
   background-image: url("/assets/images/texture.png");
   background-color: rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.25);
           box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.25);
 }
-.container .sidebar .toolbar {
+body .container .sidebar .toolbar {
   position: relative;
   width: 100%;
   height: 32px;
@@ -657,7 +685,7 @@ body > header .header-right {
   -webkit-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 0 1px 0 rgba(0, 0, 0, 0.1), inset -1px 0 0 0 rgba(0, 0, 0, 0.25), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
           box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15), 0 0 1px 0 rgba(0, 0, 0, 0.1), inset -1px 0 0 0 rgba(0, 0, 0, 0.25), inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
 }
-.container .sidebar .toolbar .toolbar-right {
+body .container .sidebar .toolbar .toolbar-right {
   display: inline-block;
   position: absolute;
   top: 50%;
@@ -665,15 +693,15 @@ body > header .header-right {
   -webkit-transform: translate(0, -50%);
           transform: translate(0, -50%);
 }
-.container .sidebar .main {
-  height: calc(100% - 32px);
+body .container .sidebar .sidebar-body {
   width: 100%;
+  height: calc(100% - 32px);
   overflow: hidden;
 }
-.container .sidebar .main:hover {
+body .container .sidebar .sidebar-body:hover {
   overflow-y: auto;
 }
-.container .sidebar .main ul.project-view li .group {
+body .container .sidebar .sidebar-body ul.project-view li .group {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -684,7 +712,7 @@ body > header .header-right {
       -ms-flex-align: center;
           align-items: center;
 }
-.container .sidebar .main ul.project-view li .group .triangle {
+body .container .sidebar .sidebar-body ul.project-view li .group .triangle {
   display: inline-block;
   width: 15px;
   height: 15px;
@@ -695,11 +723,11 @@ body > header .header-right {
   background: rgba(255, 255, 255, 0.45);
   -webkit-mask: url("/assets/images/ic_triangle_expand_dark.svg") no-repeat center center;
 }
-.container .sidebar .main ul.project-view li .group .triangle.expand {
+body .container .sidebar .sidebar-body ul.project-view li .group .triangle.expand {
   -webkit-transform: rotate(0deg);
           transform: rotate(0deg);
 }
-.container .sidebar .main ul.project-view li .group .folder {
+body .container .sidebar .sidebar-body ul.project-view li .group .folder {
   display: inline-block;
   width: 25px;
   height: 20px;
@@ -708,49 +736,75 @@ body > header .header-right {
   background: rgba(255, 255, 255, 0.45);
   -webkit-mask: url("/assets/images/ic_folder_unexpand_dark.svg") no-repeat center center;
 }
-.container .sidebar .main ul.project-view li .group .folder.expand {
+body .container .sidebar .sidebar-body ul.project-view li .group .folder.expand {
   -webkit-mask: url("/assets/images/ic_folder_expand_dark.svg") no-repeat center center;
 }
-.container .sidebar .main ul.project-view li ol li.title {
+body .container .sidebar .sidebar-body ul.project-view li ol li.title {
   color: white;
   font-size: 14px;
   padding: 10px 0 10px 40px;
 }
-.container .sidebar .main ul.project-view li ol li.title .description {
+body .container .sidebar .sidebar-body ul.project-view li ol li.title .description {
   padding-top: 10px;
 }
-.container .sidebar .main ul.project-view li ol li.title .description .method {
+body .container .sidebar .sidebar-body ul.project-view li ol li.title .description .method {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.51);
   letter-spacing: 0.08px;
   margin-right: 10px;
 }
-.container .sidebar .main ul.project-view li ol li.title .description .uri {
+body .container .sidebar .sidebar-body ul.project-view li ol li.title .description .uri {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.6);
 }
-.container .sidebar .main ul.project-view li .group.active,
-.container .sidebar .main ul.project-view li ol > li.title.active {
+body .container .sidebar .sidebar-body ul.project-view li .group.active,
+body .container .sidebar .sidebar-body ul.project-view li ol > li.title.active {
   color: white;
   background: #027AFF;
 }
-.container .sidebar .main ul.project-view li .group.active .triangle,
-.container .sidebar .main ul.project-view li ol > li.title.active .triangle {
+body .container .sidebar .sidebar-body ul.project-view li .group.active .triangle,
+body .container .sidebar .sidebar-body ul.project-view li ol > li.title.active .triangle {
   background: white;
 }
-.container .sidebar .main ul.project-view li .group.active .folder,
-.container .sidebar .main ul.project-view li ol > li.title.active .folder {
+body .container .sidebar .sidebar-body ul.project-view li .group.active .folder,
+body .container .sidebar .sidebar-body ul.project-view li ol > li.title.active .folder {
   background: white;
 }
-.container .sidebar .main ul.project-view li .group.active .folder.expand,
-.container .sidebar .main ul.project-view li ol > li.title.active .folder.expand {
+body .container .sidebar .sidebar-body ul.project-view li .group.active .folder.expand,
+body .container .sidebar .sidebar-body ul.project-view li ol > li.title.active .folder.expand {
   background: white;
 }
-.container .sidebar .splitter {
+body .container .sidebar .splitter {
   width: 3px;
   height: 100%;
   z-index: 100;
   position: absolute;
   right: -1px;
   cursor: col-resize;
+}
+body .container .container-body {
+  width: 60%;
+  height: 100%;
+}
+body .container .container-body .api-detail {
+  padding-left: 10px;
+}
+body .container .container-body .api-detail .title {
+  color: white;
+  border-bottom: 1px solid white;
+  padding: 10px 0 10px 10px;
+}
+body .container .container-body .api-detail .target .label {
+  color: white;
+}
+body .container .container-body .api-detail .params .label {
+  color: white;
+}
+body .container .container-body .api-detail .params table thead tr th {
+  background: #f8f9f9;
+}
+body .container .container-body .api-detail .params table thead tr th,
+body .container .container-body .api-detail .params table tbody tr td {
+  padding: 0.75rem;
+  border: 1px solid #dee1e1;
 }
