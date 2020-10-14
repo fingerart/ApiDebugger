@@ -38,9 +38,10 @@ module.exports = function (grunt) {
         // 编译 TS
         ts: {
             options: {
+                allowSyntheticDefaultImports: true,
                 comments: false,               // same as !removeComments. [true | false (default)]
                 target: 'es5',                 // target javascript language. [es3 | es5 (grunt-ts default) | es6]
-                module: 'amd',                 // target javascript module style. [amd (default) | commonjs]
+                module: 'commonjs',                 // target javascript module style. [amd (default) | commonjs]
                 sourceMap: false,               // generate a source map for every output js file. [true (default) | false]
                 declaration: false,            // generate a declaration .d.ts file for every output js file. [true | false (default)]
                 locale: "zh-cn",
@@ -149,6 +150,15 @@ module.exports = function (grunt) {
                     open: true,
                     base: '../gen/resources/htmlTemplates'
                 }
+            },
+            'pdf.js': {
+                options: {
+                    hostname: 'localhost',
+                    useAvailablePort: true,
+                    livereload: false,
+                    open: true,
+                    base: '../../pdf.js'
+                }
             }
         },
     });
@@ -164,5 +174,5 @@ module.exports = function (grunt) {
 
     grunt.registerTask("development", ["clean:build", "copy:assets", "htmlmin:dev", "less:development", "ts:build"]);
     grunt.registerTask("release", ["clean:build", "copy:assets", "htmlmin:dist", "less:production", "ts:build", "uglify:min"]);
-    grunt.registerTask("start", ["clean:build", "development", "connect:server", "watch"]);
+    grunt.registerTask("start", ["clean:build", "development", "connect:server", "connect:pdf.js", "watch"]);
 };
