@@ -73,14 +73,21 @@
     <div class="container-body">
         <div class="api-detail">
             <p class="title">获取用户信息</p>
+            <div class="separator horizontal"></div>
+            <div class="description">
+                <p class="label">描述</p>
+                <div class="content">获取用户的基本信息</div>
+            </div>
             <div class="target">
                 <p class="label">URL</p>
-                <span class="url">/account/login</span>
-                <span class="method">POST</span>
+                <div class="content">
+                    <div class="method">POST</div>
+                    <div class="url">/account/login</div>
+                </div>
             </div>
             <div class="params">
                 <p class="label">请求参数</p>
-                <table>
+                <table class="content">
                     <thead>
                     <tr>
                         <th>参数名称</th>
@@ -98,8 +105,65 @@
                         <td>header</td>
                         <td>授权成功后返回的 access_token</td>
                     </tr>
+                    <tr>
+                        <td>access_token</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>header</td>
+                        <td>授权成功后返回的 access_token</td>
+                    </tr>
+                    <tr>
+                        <td>access_token</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>header</td>
+                        <td>授权成功后返回的 access_token</td>
+                    </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="response">
+                <p class="label">响应数据</p>
+                <table class="content">
+                    <thead>
+                    <tr>
+                        <th>参数名称</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>位置</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>access_token</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>header</td>
+                        <td>授权成功后返回的 access_token</td>
+                    </tr>
+                    <tr>
+                        <td>access_token</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>header</td>
+                        <td>授权成功后返回的 access_token</td>
+                    </tr>
+                    <tr>
+                        <td>access_token</td>
+                        <td>string</td>
+                        <td>是</td>
+                        <td>header</td>
+                        <td>授权成功后返回的 access_token</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="example-response">
+                <p class="label">响应示例</p>
+                <div class="content">
+                    <pre><code>{"hello": 1234}</code></pre>
+                </div>
             </div>
         </div>
     </div>
