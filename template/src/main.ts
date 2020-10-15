@@ -1,4 +1,5 @@
-import {highlightBlock} from "highlight.js";
+import {Login} from "./login";
+import hl from 'highlight.js';
 
 class Main {
 
@@ -8,10 +9,11 @@ class Main {
     }
 
     private setupEvent() {
+        hl.registerLanguage("json", hljs => hljs.requireLanguage("json"))
         document.addEventListener("DOMContentLoaded", evt => {
             document.querySelectorAll('pre code').forEach((block) => {
-                highlightBlock(null)
-                console.log("end")
+                console.log("end", "over", ".")
+                new Login().doLogin()
             });
         })
     }
