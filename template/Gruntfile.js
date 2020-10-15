@@ -40,15 +40,17 @@ module.exports = function (grunt) {
             options: {
                 allowSyntheticDefaultImports: true,
                 comments: false,               // same as !removeComments. [true | false (default)]
-                target: 'es5',                 // target javascript language. [es3 | es5 (grunt-ts default) | es6]
+                target: 'es6',                 // target javascript language. [es3 | es5 (grunt-ts default) | es6]
                 module: 'commonjs',                 // target javascript module style. [amd (default) | commonjs]
                 sourceMap: false,               // generate a source map for every output js file. [true (default) | false]
                 declaration: false,            // generate a declaration .d.ts file for every output js file. [true | false (default)]
                 locale: "zh-cn",
+                allowJs: true,
             },
             build: {
                 src: ["src/**/*.ts"],             // The source typescript files, http://gruntjs.com/configuring-tasks#files
-                out: "../gen/resources/htmlTemplates/main.min.js",       // If specified, generate an out.js file which is the merged js file
+                outDir: "../gen/resources/htmlTemplates/"
+                // out: "../gen/resources/htmlTemplates/main.min.js",       // If specified, generate an out.js file which is the merged js file
             }
         },
         // 压缩 JS
@@ -147,7 +149,7 @@ module.exports = function (grunt) {
                     hostname: 'localhost',
                     useAvailablePort: true,
                     livereload: true,
-                    open: true,
+                    open: false,
                     base: '../gen/resources/htmlTemplates'
                 }
             },
@@ -156,7 +158,7 @@ module.exports = function (grunt) {
                     hostname: 'localhost',
                     useAvailablePort: true,
                     livereload: false,
-                    open: true,
+                    open: false,
                     base: '../../pdf.js'
                 }
             }

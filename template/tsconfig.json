@@ -1,14 +1,11 @@
 {
-  "files": [
-    "src/**/*.ts"
-  ],
   "compilerOptions": {
     "noImplicitAny": true,
     "noLib": false,
+    "target": "ES5",
     "module": "CommonJS",
-    "target": "es5",
+    "sourceMap": true,
     "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "outFile": "../gen/resources/htmlTemplates/main.min.js"
+    "allowSyntheticDefaultImports": true
   }
 }
